@@ -1,0 +1,25 @@
+logging:
+  level.root: WARN
+  level.no: ${LOG_LEVEL:DEBUG}
+  level.org.springframework: WARN
+  level.org.springframework.web: WARN
+  level.org.apache.jena: ERROR
+server:
+  port: 8080
+application:
+  uri:
+    datasets: ${DATASETS_HOST:http://fdk-dataset-harvester:8080}/catalogs
+
+---
+spring:
+  config.activate.on-profile: develop
+application:
+  uri:
+    datasets: https://datasets.staging.fellesdatakatalog.digdir.no/catalogs
+
+---
+spring:
+  config.activate.on-profile: integration-test
+application:
+  uri:
+    datasets: http://localhost:5000/datasets/catalogs
