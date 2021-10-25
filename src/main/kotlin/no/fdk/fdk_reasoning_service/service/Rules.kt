@@ -1,6 +1,6 @@
 package no.fdk.fdk_reasoning_service.service
 
-const val datasetRules = """
+val datasetRules = """
     @prefix dcat: <http://www.w3.org/ns/dcat#> .
     @prefix dct: <http://purl.org/dc/terms/> .
     @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -12,4 +12,17 @@ const val datasetRules = """
         equal(?provenance, <http://data.brreg.no/datakatalog/provinens/nasjonal>)
 
         -> (?dataset fdk:isAuthoritative 'true'^^xsd:boolean) ]
+
+    ${napThemes.joinToString { napRuleForTheme(it) }}
+"""
+
+private fun napRuleForTheme(theme: String): String = """
+    [$theme:
+        (?dataset rdf:type dcat:Dataset)
+        (?dataset dct:accessRights ?rights)
+        equal(?rights, <http://publications.europa.eu/resource/authority/access-right/PUBLIC>)
+        (?dataset dcat:theme ?theme)
+        equal(?theme, <$theme>)
+        -> (?dataset fdk:isRelatedToTransportportal 'true'^^xsd:boolean)
+    ]
 """

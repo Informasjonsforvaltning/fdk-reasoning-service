@@ -47,7 +47,8 @@
                                      dcat:hadRole  <http://registry.it.csiro.au/def/isotc211/CI_RoleCode/contributor> ;
                                      prov:agent    <https://data.brreg.no/enhetsregisteret/api/enheter/984582021>
                                    ] ;
-        fdk:isAuthoritative             true .
+        fdk:isAuthoritative             true ;
+        fdk:isRelatedToTransportportal  true .
 
 <http://brreg.no/catalogs/910244132/datasets/c32b7a4f-655f-45f6-88f6-d01f05d0f7c2>
         a                         dcat:Dataset ;
