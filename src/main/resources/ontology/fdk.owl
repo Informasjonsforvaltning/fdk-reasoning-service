@@ -1,0 +1,35 @@
+@prefix fdk: <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/master/src/main/resources/ontology/fdk.owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+
+fdk:
+  a owl:Ontology ;
+  rdfs:label "FDK vocabulary"@en ;
+  rdfs:comment "Definition of custom triples for internal use"@en .
+
+fdk:isOpenData
+  a owl:DatatypeProperty ;
+  rdfs:domain dcat:Dataset ;
+  rdfs:range xsd:boolean ;
+  rdfs:label "A boolean value to flag an open data resource"@en ;
+  rdfs:comment "A boolean value to flag an open data resource."@en ;
+  rdfs:isDefinedBy fdk: .
+
+fdk:isAuthoritative
+  a owl:DatatypeProperty ;
+  rdfs:domain dcat:Dataset ;
+  rdfs:range xsd:boolean ;
+  rdfs:label "A boolean value to flag a resource with an authoritative origin"@en ;
+  rdfs:comment "A boolean value to flag a resource with an authoritative origin."@en ;
+  rdfs:isDefinedBy fdk: .
+
+fdk:isRelatedToTransportportal
+  a owl:DatatypeProperty ;
+  rdfs:domain dcat:Dataset ;
+  rdfs:range xsd:boolean ;
+  rdfs:label "A boolean value to flag a resource related to Transportportal"@en ;
+  rdfs:comment "A boolean value to flag a resource related to Transportportal."@en ;
+  rdfs:isDefinedBy fdk: .
