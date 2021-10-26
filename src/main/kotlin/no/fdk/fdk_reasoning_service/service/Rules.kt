@@ -7,22 +7,18 @@ val datasetRules = """
     @prefix fdk: <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/master/src/main/resources/ontology/fdk.owl#> .
 
     [isAuthoritative:
-        (?dataset rdf:type dcat:Dataset)
-        (?dataset dct:provenance ?provenance)
+        (?dataset rdf:type dcat:Dataset),
+        (?dataset dct:provenance ?provenance),
         equal(?provenance, <http://data.brreg.no/datakatalog/provinens/nasjonal>)
-
         -> (?dataset fdk:isAuthoritative 'true'^^xsd:boolean) ]
 
-    ${napThemes.joinToString { napRuleForTheme(it) }}
-"""
-
-private fun napRuleForTheme(theme: String): String = """
-    [$theme:
-        (?dataset rdf:type dcat:Dataset)
-        (?dataset dct:accessRights ?rights)
-        equal(?rights, <http://publications.europa.eu/resource/authority/access-right/PUBLIC>)
-        (?dataset dcat:theme ?theme)
-        equal(?theme, <$theme>)
+    [isRelatedToTransportportal:
+        (?dataset rdf:type dcat:Dataset),
+        (?dataset dct:accessRights ?rights),
+        equal(?rights, <http://publications.europa.eu/resource/authority/access-right/PUBLIC>),
+        (?dataset dcat:theme ?theme),
+        strConcat(?theme,?themeStr),
+        regex(?themeStr, '${napThemes.joinToString(separator = "|") { it -> "${it}" }}')
         -> (?dataset fdk:isRelatedToTransportportal 'true'^^xsd:boolean)
     ]
 """
