@@ -78,7 +78,8 @@
                                                        dct:language  <http://publications.europa.eu/resource/authority/language/NOB>
                                                      ]
                                   ] ;
-        fdk:isAuthoritative       true .
+        fdk:isAuthoritative       true ;
+        fdk:isOpenData            true .
 
 <https://fellesdatakatalog.brreg.no/api/concepts/ac207ee9-972a-4ba9-a2d6-c368135caf0b>
         a                skos:Concept ;

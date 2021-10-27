@@ -21,4 +21,27 @@ val datasetRules = """
         regex(?themeStr, '${napThemes.joinToString(separator = "|")}')
         -> (?dataset fdk:isRelatedToTransportportal 'true'^^xsd:boolean)
     ]
+
+    [isOpenData-license:
+        (?dataset rdf:type dcat:Dataset),
+        (?dataset dct:accessRights ?rights),
+        equal(?rights, <http://publications.europa.eu/resource/authority/access-right/PUBLIC>),
+        (?dataset dcat:distribution ?distribution),
+        (?distribution dct:license ?license),
+        strConcat(?license,?licenseStr),
+        regex(?licenseStr, '${openDataURIs.joinToString(separator = "|")}')
+        -> (?dataset fdk:isOpenData 'true'^^xsd:boolean)
+    ]
+
+    [isOpenData-source:
+        (?dataset rdf:type dcat:Dataset),
+        (?dataset dct:accessRights ?rights),
+        equal(?rights, <http://publications.europa.eu/resource/authority/access-right/PUBLIC>),
+        (?dataset dcat:distribution ?distribution),
+        (?distribution dct:license ?license),
+        (?license dct:source ?source),
+        strConcat(?source,?sourceStr),
+        regex(?sourceStr, '${openDataURIs.joinToString(separator = "|")}')
+        -> (?dataset fdk:isOpenData 'true'^^xsd:boolean)
+    ]
 """
