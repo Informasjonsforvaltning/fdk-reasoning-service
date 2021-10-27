@@ -3,9 +3,6 @@ package no.fdk.fdk_reasoning_service.service
 import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import org.apache.jena.rdf.model.Model
-import org.apache.jena.rdf.model.ModelFactory
-import org.apache.jena.riot.Lang
-import java.io.StringReader
 
 const val RECORDS_PARAM_TRUE = "catalogrecords=true"
 

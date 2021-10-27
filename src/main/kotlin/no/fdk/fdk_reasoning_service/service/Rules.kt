@@ -18,7 +18,7 @@ val datasetRules = """
         equal(?rights, <http://publications.europa.eu/resource/authority/access-right/PUBLIC>),
         (?dataset dcat:theme ?theme),
         strConcat(?theme,?themeStr),
-        regex(?themeStr, '${napThemes.joinToString(separator = "|") { it -> "${it}" }}')
+        regex(?themeStr, '${napThemes.joinToString(separator = "|")}')
         -> (?dataset fdk:isRelatedToTransportportal 'true'^^xsd:boolean)
     ]
 """
