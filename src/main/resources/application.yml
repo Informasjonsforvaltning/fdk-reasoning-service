@@ -9,6 +9,7 @@ server:
 application:
   uri:
     datasets: ${DATASETS_HOST:http://fdk-dataset-harvester:8080}/catalogs
+    organizations: ${ORGANIZATION_CATALOGUE_HOST}/organizations
 
 ---
 spring:
@@ -16,6 +17,7 @@ spring:
 application:
   uri:
     datasets: https://datasets.staging.fellesdatakatalog.digdir.no/catalogs
+    organizations: https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations
 
 ---
 spring:
@@ -23,3 +25,4 @@ spring:
 application:
   uri:
     datasets: http://localhost:5000/datasets/catalogs
+    organizations: http://localhost:5000/organizations

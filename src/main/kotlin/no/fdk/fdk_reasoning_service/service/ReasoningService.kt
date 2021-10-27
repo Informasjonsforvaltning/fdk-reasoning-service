@@ -21,11 +21,16 @@ class ReasoningService(
     fun catalogReasoning(catalogType: CatalogType): Model {
         LOGGER.debug("Starting $catalogType reasoning")
         val catalog = RDFDataMgr.loadModel(catalogType.uri(uris), Lang.TURTLE)
+        val orgs = RDFDataMgr.loadModel(uris.organizations, Lang.TURTLE)
+
+        val publishers = orgs?.createModelOfPublishersWithOrgData(
+            catalog?.extractInadequatePublishers() ?: emptySet(), uris.organizations
+        )
 
         val reasoner = GenericRuleReasoner(Rule.parseRules(datasetRules))
         val infModel = ModelFactory.createInfModel(reasoner, catalog)
         infModel.fdkPrefix()
 
-        return infModel
+        return infModel.union(publishers)
     }
 }

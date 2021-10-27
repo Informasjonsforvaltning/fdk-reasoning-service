@@ -8,7 +8,6 @@ import no.fdk.fdk_reasoning_service.service.ReasoningService
 import no.fdk.fdk_reasoning_service.utils.ApiTestContext
 import no.fdk.fdk_reasoning_service.utils.LOCAL_SERVER_PORT
 import no.fdk.fdk_reasoning_service.utils.TestResponseReader
-import org.apache.jena.rdf.model.ModelFactory
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import kotlin.test.assertTrue
@@ -24,6 +23,8 @@ class Reasoning: ApiTestContext() {
     fun testDatasets() {
         whenever(uris.datasets)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/datasets/catalogs")
+        whenever(uris.organizations)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         val result = reasoningService.catalogReasoning(CatalogType.DATASETS)
 
         val expected = responseReader.parseTurtleFile("fdk_ready_datasets.ttl")

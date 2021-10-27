@@ -13,6 +13,8 @@ fun startMockServer() {
         mockserver.stubFor(get(urlEqualTo("/ping"))
             .willReturn(aResponse().withStatus(200)))
 
+        mockserver.stubFor(get(urlEqualTo("/organizations"))
+            .willReturn(ok(File("src/test/resources/orgs.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/datasets/catalogs?catalogrecords=true"))
             .willReturn(ok(File("src/test/resources/datasets.ttl").readText())))
 

@@ -2,7 +2,13 @@ package no.fdk.fdk_reasoning_service.service
 
 import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.model.CatalogType
-import org.apache.jena.rdf.model.Model
+import no.fdk.fdk_reasoning_service.rdf.BR
+import org.apache.jena.rdf.model.*
+import org.apache.jena.sparql.vocabulary.FOAF
+import org.apache.jena.vocabulary.DCTerms
+import org.apache.jena.vocabulary.RDF
+import org.apache.jena.vocabulary.ROV
+import org.apache.jena.vocabulary.SKOS
 
 const val RECORDS_PARAM_TRUE = "catalogrecords=true"
 
@@ -13,6 +19,96 @@ fun CatalogType.uri(uris: ApplicationURI): String =
     when (this) {
         CatalogType.DATASETS -> "${uris.datasets}?$RECORDS_PARAM_TRUE"
     }
+
+fun Model.createModelOfPublishersWithOrgData(publisherURIs: Set<String>, orgsURI: String): Model {
+    val model = ModelFactory.createDefaultModel()
+    model.setNsPrefixes(nsPrefixMap)
+
+    publisherURIs.map { Pair(it, orgResourceForPublisher(it, orgsURI)) }
+        .filter { it.second != null }
+        .forEach {
+            model.createResource(it.first).addPropertiesFromOrgResource(it.second)
+        }
+
+    return model
+}
+
+fun Model.orgResourceForPublisher(publisherURI: String, orgsURI: String): Resource? =
+    orgIdFromURI(publisherURI)
+        ?.let { getResource("$orgsURI/$it") }
+
+fun Resource.addPropertiesFromOrgResource(orgResource: Resource?) {
+    if (orgResource != null) {
+        safeAddProperty(RDF.type, orgResource.getProperty(RDF.type)?.`object`)
+        safeAddProperty(DCTerms.identifier, orgResource.getProperty(DCTerms.identifier)?.`object`)
+        safeAddProperty(BR.orgPath, orgResource.getProperty(BR.orgPath)?.`object`)
+        safeAddProperty(ROV.legalName, orgResource.getProperty(ROV.legalName)?.`object`)
+        safeAddProperty(FOAF.name, orgResource.getProperty(FOAF.name)?.`object`)
+        addOrgType(orgResource)
+    }
+}
+
+fun Resource.safeAddProperty(property: Property, value: RDFNode?): Resource =
+    if (value == null) this
+    else addProperty(property, value)
+
+private fun Resource.addOrgType(orgResource: Resource): Resource {
+    val orgType = orgResource.getProperty(ROV.orgType)
+    if (orgType != null && orgType.isResourceProperty()) {
+        orgType.resource
+            .getProperty(SKOS.prefLabel)
+            ?.`object`
+            ?.let {
+                addProperty(
+                    ROV.orgType,
+                    model.createResource(SKOS.Concept)
+                        .addProperty(SKOS.prefLabel, it))
+            }
+    }
+
+    return this
+}
+
+fun Model.extractInadequatePublishers(): Set<String> =
+    listResourcesWithProperty(DCTerms.publisher)
+        .toList()
+        .flatMap { it.listProperties(DCTerms.publisher).toList() }
+        .asSequence()
+        .filter { it.isResourceProperty() }
+        .map { it.resource }
+        .filter {  it.isURIResource }
+        .filter { it.dctIdentifierIsInadequate() }
+        .mapNotNull { it.uri }
+        .toSet()
+
+fun Statement.isResourceProperty(): Boolean =
+    try {
+        resource.isResource
+    } catch (ex: ResourceRequiredException) {
+        false
+    }
+
+fun Resource.dctIdentifierIsInadequate(): Boolean =
+    listProperties(DCTerms.identifier)
+        .toList()
+        .map { it.`object` }
+        .mapNotNull { it.extractPublisherId() }
+        .isEmpty()
+
+fun RDFNode.extractPublisherId(): String? =
+    when {
+        isURIResource -> orgIdFromURI(asResource().uri)
+        isLiteral -> orgIdFromURI(asLiteral().string)
+        else -> null
+    }
+
+fun orgIdFromURI(uri: String): String? {
+    val regex = Regex("""[0-9]{9}""")
+    val allMatching = regex.findAll(uri).toList()
+
+    return if (allMatching.size == 1) allMatching.first().value
+    else null
+}
 
 val napThemes: Set<String> = setOf(
     "https://psi.norge.no/los/tema/mobilitetstilbud",
