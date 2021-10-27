@@ -29,7 +29,7 @@ val datasetRules = """
         (?dataset dcat:distribution ?distribution),
         (?distribution dct:license ?license),
         strConcat(?license,?licenseStr),
-        regex(?licenseStr, '${openDataURIs.joinToString(separator = "|")}')
+        regex(?licenseStr, '${openDataURIBases.flatMap { openDataURIVariants(it) }.joinToString(separator = "|")}')
         -> (?dataset fdk:isOpenData 'true'^^xsd:boolean)
     ]
 
@@ -41,7 +41,15 @@ val datasetRules = """
         (?distribution dct:license ?license),
         (?license dct:source ?source),
         strConcat(?source,?sourceStr),
-        regex(?sourceStr, '${openDataURIs.joinToString(separator = "|")}')
+        regex(?sourceStr, '${openDataURIBases.flatMap { openDataURIVariants(it) }.joinToString(separator = "|")}')
         -> (?dataset fdk:isOpenData 'true'^^xsd:boolean)
     ]
 """
+
+private fun openDataURIVariants(uriBase: String): List<String> =
+    listOf(
+        "http://$uriBase",
+        "http://$uriBase/",
+        "https://$uriBase",
+        "https://$uriBase/"
+    )
