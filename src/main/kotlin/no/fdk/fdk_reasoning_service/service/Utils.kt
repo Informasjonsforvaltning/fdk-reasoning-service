@@ -21,6 +21,8 @@ fun CatalogType.uri(uris: ApplicationURI): String =
         CatalogType.DATASERVICES -> "${uris.dataservices}?$RECORDS_PARAM_TRUE"
         CatalogType.CONCEPTS -> "${uris.concepts}?$RECORDS_PARAM_TRUE"
         CatalogType.INFORMATIONMODELS -> "${uris.informationmodels}?$RECORDS_PARAM_TRUE"
+        CatalogType.EVENTS -> "${uris.events}?$RECORDS_PARAM_TRUE"
+        CatalogType.PUBLICSERVICES -> "${uris.publicservices}?$RECORDS_PARAM_TRUE"
     }
 
 fun Model.createModelOfPublishersWithOrgData(publisherURIs: Set<String>, orgsURI: String): Model {
@@ -72,10 +74,10 @@ private fun Resource.addOrgType(orgResource: Resource): Resource {
     return this
 }
 
-fun Model.extractInadequatePublishers(): Set<String> =
-    listResourcesWithProperty(DCTerms.publisher)
+fun Model.extractInadequatePublishers(publisherPredicate: Property): Set<String> =
+    listResourcesWithProperty(publisherPredicate)
         .toList()
-        .flatMap { it.listProperties(DCTerms.publisher).toList() }
+        .flatMap { it.listProperties(publisherPredicate).toList() }
         .asSequence()
         .filter { it.isResourceProperty() }
         .map { it.resource }

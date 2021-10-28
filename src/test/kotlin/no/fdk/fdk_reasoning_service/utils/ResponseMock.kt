@@ -23,6 +23,10 @@ fun startMockServer() {
             .willReturn(ok(File("src/test/resources/infomodels.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/datasets/catalogs?catalogrecords=true"))
             .willReturn(ok(File("src/test/resources/datasets.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/events?catalogrecords=true"))
+            .willReturn(ok(File("src/test/resources/events.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/public-services?catalogrecords=true"))
+            .willReturn(ok(File("src/test/resources/public_services.ttl").readText())))
 
         mockserver.start()
     }

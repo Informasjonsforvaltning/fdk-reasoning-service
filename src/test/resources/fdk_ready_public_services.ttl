@@ -1,0 +1,850 @@
+@prefix br:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#> .
+@prefix rov:   <http://www.w3.org/ns/regorg#> .
+@prefix cpsv:   <http://purl.org/vocab/cpsv#> .
+@prefix cv:     <http://data.europa.eu/m8g/> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix eli:    <http://data.europa.eu/eli/ontology#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <http://schema.org/> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/8>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        cv:value              2832 ;
+        dct:description       "Endring som skal kunngjøres - Aksjeselskap: - Endring av foretaksnavn, medregnet endring som følge av omdanning: papir kr 2832,-" , "Endring som skal kunngjøres - Aksjeselskap: - Endring av foretaksnavn, medregnet endring som følge av omdanning" ;
+        dct:identifier        "8" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/public-service-dataset/2>
+        a               cv:PublicServiceDataset ;
+        dct:identifier  "2" ;
+        dct:name        "Foretaksregisteret"@nb .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/bb537e5b-11ca-3bca-bbe5-2f8763543740>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "bb537e5b-11ca-3bca-bbe5-2f8763543740" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/6> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/1>
+        a               cv:CriterionRequirement ;
+        dct:identifier  "1" ;
+        dct:title       "Over 18 år"@nb ;
+        dct:type        <https://data.norge.no/concepts/150> .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/ccec51fe-a499-32b4-8c08-62c1676692d2>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "ccec51fe-a499-32b4-8c08-62c1676692d2" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/15> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/output/3>
+        a                cv:Output ;
+        dct:description  "Skjenkebevilling"@nb ;
+        dct:identifier   "3" ;
+        dct:title        "Skjenkebevilling"@nb ;
+        dct:type         <https://data.norge.no/concepts/205> .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/0ac9dc02-7ec0-38b8-9345-19b304127c3b>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "0ac9dc02-7ec0-38b8-9345-19b304127c3b" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-04-12T11:00:03.341Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/11> .
+
+<https://data.norge.no/concepts/205>
+        a               skos:Concept ;
+        skos:prefLabel  "Permit"@en , "Tillatelse"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/2>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        cv:value              6797 ;
+        dct:description       "Nyregistrering - Aksjeselskap, Allmennaksjeselskap, Boligbyggelag/borretslag, Kommandittselskap: papir kr 6797,-" , "Nyregistrering - Aksjeselskap, Allmennaksjeselskap, Boligbyggelag/borretslag, Kommandittselskap" ;
+        dct:identifier        "2" .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/7e3805d3-c187-3feb-9cc8-7015eb357ac7>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "7e3805d3-c187-3feb-9cc8-7015eb357ac7" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/13> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/15>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/3> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/2> ;
+        cv:value              4.27 ;
+        dct:description       "Pr. vareliter for alkoholholdig drikk i gruppe 3" ;
+        dct:identifier        "15" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/legalresource/1>
+        a                eli:LegalResource ;
+        dct:description  "Lov om Enhetsregisteret"@nb ;
+        xsd:seeAlso      <https://lovdata.no/eli/lov/1994/06/03/15/nor/html> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/12>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910244132> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
+        dct:description           "Søknad om driftsstøtte til anlegg."@nb ;
+        dct:identifier            "12" ;
+        dct:title                 "Søknad om driftsstøtte til anlegg"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/participation/1>
+        a                cv:Participation ;
+        cv:role          <https://data.norge.no/concepts/101> ;
+        dct:description  "Statistisk sentralbyrås Virksomhets- og foretaksregister"@nb ;
+        dct:identifier   "1" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/9>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910298062> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
+        dct:description           "Søknad om internasjonal grunnstøtte."@nb ;
+        dct:identifier            "9" ;
+        dct:title                 "Søknad om internasjonal grunnstøtte"@nb .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/c9a00b57-f1b1-3718-a9aa-0837dd297eec>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "c9a00b57-f1b1-3718-a9aa-0837dd297eec" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-04-12T11:00:03.341Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/7> .
+
+<https://data.norge.no/concepts/16>
+        a               skos:Concept ;
+        skos:prefLabel  "Kafé"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/evidence/2>
+        a                cv:Evidence ;
+        dct:description  "Vandelsattest"@nb ;
+        dct:identifier   "2" ;
+        dct:title        "Vandelsattest"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/6>
+        a               cv:CriterionRequirement ;
+        dct:identifier  "6" ;
+        dct:title       "Bevillingssøker kan enten være en fysisk eller jurdisk person"@nb ;
+        dct:type        <https://data.norge.no/concepts/152> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/3>
+        a                         cpsv:PublicService ;
+        cv:hasChannel             <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/964983291> ;
+        cv:hasContactPoint        <http://public-service-publisher.fellesdatakatalog.digdir.no/contact/3> ;
+        cv:hasCriterion           <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/5> , <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/6> ;
+        cv:hasLegalResource       <http://public-service-publisher.fellesdatakatalog.digdir.no/legalresource/4> ;
+        cv:hasParticipation       <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/6> ;
+        cv:isClassifiedBy         <http://data.brreg.no/begrep/60813> , <https://data.norge.no/concepts/17> , <https://data.norge.no/concepts/16> , <https://data.norge.no/concepts/14> , <https://data.norge.no/concepts/18> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/ece8c4c0-2fa9-412a-a3fd-6eefe0681728> ;
+        cv:processingTime         "P1D" ;
+        cv:sector                 <https://data.norge.no/concepts/2> ;
+        dct:description           "Søknad om serveringbevilling"@nb ;
+        dct:identifier            "3" ;
+        dct:language              <http://publications.europa.eu/resource/authority/language/NOB> , <http://publications.europa.eu/resource/authority/language/NNO> ;
+        dct:requires              <http://public-service-publisher.fellesdatakatalog.digdir.no/services/1> ;
+        dct:spatial               <https://data.geonorge.no/administrativeEnheter/kommune/id/172833> ;
+        dct:title                 "Søknad om serveringbevilling"@nb ;
+        cpsv:follows              <http://public-service-publisher.fellesdatakatalog.digdir.no/rule/1> ;
+        cpsv:hasInput             <http://public-service-publisher.fellesdatakatalog.digdir.no/evidence/2> ;
+        cpsv:produces             <http://public-service-publisher.fellesdatakatalog.digdir.no/output/4> ;
+        dcat:keyword              "Catering"@nb , "Serveringsbevilling"@nb , "Matservering"@nb , "Restaurantdrift"@nb , "Matproduksjon"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1>
+        a               cv:PublicOrganisation ;
+        dct:identifier  "1" ;
+        dct:spatial     <http://publications.europa.eu/resource/authority/country/NOR> ;
+        dct:title       "Brønnøysundregistrene"@nb ;
+        skos:prefLabel  "Brønnøysundregistrene"@nb .
+
+<https://data.norge.no/concepts/10>
+        a               skos:Concept ;
+        skos:prefLabel  "Alminnelig bevilling"@nb .
+
+<https://data.norge.no/concepts/153>
+        a               skos:Concept ;
+        skos:prefLabel  "Attest"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/7>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        cv:value              1440 ;
+        dct:description       "Endring som skal kunngjøres - Aksjeselskap: - Endring av foretaksnavn, medregnet endring som følge av omdanning: elektronisk kr 1440,-" , "Endring som skal kunngjøres - Aksjeselskap: - Endring av foretaksnavn, medregnet endring som følge av omdanning" ;
+        dct:identifier        "7" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/public-service-dataset/1>
+        a               cv:PublicServiceDataset ;
+        dct:identifier  "1" ;
+        dct:name        "Enhetsregisteret"@nb .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/487787c8-03c4-3b9d-9382-710f21219d91>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "487787c8-03c4-3b9d-9382-710f21219d91" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/17> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/participation/6>
+        a                cv:Participation ;
+        cv:role          <https://data.norge.no/concepts/100> ;
+        dct:description  "Mattilsynet i kommunen"@nb ;
+        dct:identifier   "6" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/17>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/991825827> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/cc466e4c-1e08-4915-9475-4b4a4cee62ec> ;
+        dct:description           "‘Oppgjør etter dødsfall’ (Altinn dødsbo) er et samarbeidsprosjekt mellom Digitaliseringsdirektoratet, Brønnøysundregistrene, domstolene, finansnæringen, Skatteetaten, Statens kartverk og Statens vegvesen. Prosjektet vil levere en MVP (minimum viable product) for tjenesten Altinn dødsbo. MVP vil dekke prosessene fra dødsfall er registrert til det er utstedt skifteattest for privat skifte og det er mulig å bruke en digital representasjon av skifteattest eller fullmakten til fullmektig i oppgjørsprosessen."@nb ;
+        dct:identifier            "17" ;
+        dct:title                 "Oppgjør etter dødsfall"@nb .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/536bfa22-0126-3032-b31a-af8d05b7b0ae>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "536bfa22-0126-3032-b31a-af8d05b7b0ae" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-04-12T11:00:03.341Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/9> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/output/2>
+        a                cv:Output ;
+        dct:description  "Registerutskrift"@nb ;
+        dct:identifier   "2" ;
+        dct:title        "Registerutskrift"@nb ;
+        dct:type         <https://data.norge.no/concepts/201> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/1>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        cv:value              5570 ;
+        dct:description       "Nyregistrering - Aksjeselskap, Allmennaksjeselskap, Boligbyggelag/borretslag, Kommandittselskap: elektronisk kr 5570,-" , "Nyregistrering - Aksjeselskap, Allmennaksjeselskap, Boligbyggelag/borretslag, Kommandittselskap" ;
+        dct:identifier        "1" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/14>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/3> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/2> ;
+        cv:value              1.29 ;
+        dct:description       "Pr. vareliter for alkoholholdig drikk i gruppe 2" ;
+        dct:identifier        "14" .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/7a04cd11-13cb-3dc2-9e31-822e9135ad08>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "7a04cd11-13cb-3dc2-9e31-822e9135ad08" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/14> .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/0f0ef27a-9a7e-341e-8ee6-e5a6cf09e7a4>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "0f0ef27a-9a7e-341e-8ee6-e5a6cf09e7a4" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/16> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/11>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/964983291> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
+        dct:description           "Søknad om kulturmidler."@nb ;
+        dct:identifier            "11" ;
+        dct:title                 "Søknad om kulturmidler"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/8>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/972417793> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> , <http://public-service-publisher.fellesdatakatalog.digdir.no/events/207ca059-5f03-48f5-a231-aa73322c36e2> ;
+        dct:description           "Søknad om nasjonal grunnstøtte."@nb ;
+        dct:identifier            "8" ;
+        dct:title                 "Søknad om nasjonal grunnstøtte"@nb .
+
+<https://data.norge.no/concepts/2>
+        a               skos:Concept ;
+        skos:prefLabel  "Nacekode: 56.1"@nb .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/88dac895-0c38-30d0-97d3-404181dd17cc>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "88dac895-0c38-30d0-97d3-404181dd17cc" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-04-12T11:00:03.341Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/8> .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/a8ad6252-55a6-3ea8-b714-c80c115f5d07>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "a8ad6252-55a6-3ea8-b714-c80c115f5d07" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/5> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/evidence/1>
+        a                cv:Evidence ;
+        dct:description  "Dokumentasjon på bestått kunnskapsprøve"@nb ;
+        dct:identifier   "1" ;
+        dct:title        "Dokumentasjon på bestått kunnskapsprøve"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/5>
+        a               cv:CriterionRequirement ;
+        dct:identifier  "5" ;
+        dct:title       "Krav om vandel"@nb ;
+        dct:type        <https://data.norge.no/concepts/153> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/2>
+        a                         cpsv:PublicService ;
+        cv:hasChannel             <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/964983291> ;
+        cv:hasContactPoint        <http://public-service-publisher.fellesdatakatalog.digdir.no/contact/2> ;
+        cv:hasCost                <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/15> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/17> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/13> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/16> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/14> ;
+        cv:hasCriterion           <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/4> , <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/5> , <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/3> ;
+        cv:hasLegalResource       <http://public-service-publisher.fellesdatakatalog.digdir.no/legalresource/3> , <http://public-service-publisher.fellesdatakatalog.digdir.no/legalresource/2> ;
+        cv:hasParticipation       <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/4> , <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/5> , <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/6> ;
+        cv:isClassifiedBy         <https://data.norge.no/concepts/10> , <https://data.norge.no/concepts/12> , <https://data.norge.no/concepts/11> , <http://data.brreg.no/begrep/60813> , <https://data.norge.no/concepts/13> , <https://data.norge.no/concepts/7> , <http://begrepskatalogen/begrep/adcad8a7-e67e-11e8-b878-0050568204d6> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/ece8c4c0-2fa9-412a-a3fd-6eefe0681728> ;
+        cv:processingTime         "P1D" ;
+        cv:sector                 <https://data.norge.no/concepts/2> ;
+        dct:description           "Søknad om skjenkebevilling"@nb ;
+        dct:identifier            "2" ;
+        dct:language              <http://publications.europa.eu/resource/authority/language/NNO> , <http://publications.europa.eu/resource/authority/language/NOB> ;
+        dct:requires              <http://public-service-publisher.fellesdatakatalog.digdir.no/services/1> ;
+        dct:spatial               <https://data.geonorge.no/administrativeEnheter/kommune/id/172833> ;
+        dct:title                 "Søknad om skjenkebevilling"@nb ;
+        cpsv:follows              <http://public-service-publisher.fellesdatakatalog.digdir.no/rule/1> ;
+        cpsv:hasInput             <http://public-service-publisher.fellesdatakatalog.digdir.no/evidence/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/evidence/1> ;
+        cpsv:produces             <http://public-service-publisher.fellesdatakatalog.digdir.no/output/3> ;
+        dcat:keyword              "Nattklubb"@nb , "Alkoholservering"@nb , "Skjenkebevilling"@nb , "Bar"@nb .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/62966d9d-a547-3a66-a588-3fdf0f97d885>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "62966d9d-a547-3a66-a588-3fdf0f97d885" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-04-12T11:00:03.341Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/12> .
+
+<https://data.norge.no/concepts/152>
+        a               skos:Concept ;
+        skos:prefLabel  "Stilling"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/6>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        cv:value              2832 ;
+        dct:description       "Endring som skal kunngjøres - Aksjeselskap: - Fusjon og fisjon: papir kr 2832,-" , "Endring som skal kunngjøres - Aksjeselskap: - Fusjon og fisjon" ;
+        dct:identifier        "6" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/16>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/974760746> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/c46e44f7-0cbf-4651-b73a-483d9950147b> ;
+        dct:description           "Permanent oppholdstillatelse gir deg rett til å oppholde deg og arbeide i Norge på ubestemt tid. Når du har bodd sammenhengende i Norge i tre år, kan du få en permanent oppholdstillatelse. Det er et krav at du da har gjennomført pliktig norskopplæring i henhold til introduksjonsloven, eller du dokumenterer at kommunen har fattet vedtak om fritak fra plikten til norskopplæring. Kravet om norskkunnskaper gjelder for alle mellom 16 og 55 år og som fikk innvilget sin første oppholdstillatelse som danner grunnlag for permanent oppholdstillatelse etter 1. september 2005."@nb ;
+        dct:identifier            "16" ;
+        dct:title                 "Søknad om permanent oppholdstillatelse"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/participation/5>
+        a                cv:Participation ;
+        cv:role          <https://data.norge.no/concepts/100> ;
+        dct:description  "Kemner"@nb ;
+        dct:identifier   "5" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/output/1>
+        a                cv:Output ;
+        dct:description  "Firmaattest"@nb ;
+        dct:identifier   "1" ;
+        dct:title        "Firmaattest"@nb ;
+        dct:type         <https://data.norge.no/concepts/200> , <https://data.norge.no/concepts/201> , <https://data.norge.no/concepts/206> .
+
+<https://data.norge.no/concepts/7>
+        a               skos:Concept ;
+        skos:prefLabel  "Skjenkeansvarlig"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/contact/3>
+        a                 schema:ContactPoint ;
+        schema:email      "postmottak@bronnoy.kommune.no" ;
+        schema:name       "Brønnøy kommune" ;
+        schema:telephone  "75 01 20 00" ;
+        schema:url        <https://kommune24-7.no/1813/702429> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/13>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/3> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/2> ;
+        cv:value              0.49 ;
+        dct:description       "Pr. vareliter for alkoholholdig drikk i gruppe 1" ;
+        dct:identifier        "13" .
+
+<https://data.brreg.no/enhetsregisteret/api/enheter/974761076>
+        a               dct:Agent ;
+        cv:playsRole    <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/5> ;
+        dct:identifier  "974761076" ;
+        dct:title       "Skatteetaten"@nb ;
+        foaf:name       "SKATTEETATEN" .
+
+<https://data.norge.no/concepts/257>
+        a               skos:Concept ;
+        skos:prefLabel  "Post"@nb , "Mail"@en .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/10>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/972417793> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
+        dct:description           "Nasjonal tilskuddsordning for å inkludere barn og unge."@nb ;
+        dct:identifier            "10" ;
+        dct:title                 "Nasjonal tilskuddsordning for å inkludere barn og unge"@nb .
+
+<https://data.brreg.no/enhetsregisteret/api/enheter/982531950>
+        a               dct:Agent ;
+        cv:playsRole    <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/4> ;
+        dct:identifier  "982531950" ;
+        dct:title       "Politidirektoratet"@nb ;
+        foaf:name       "POLITIDIREKTORATET"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/7>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/972417866> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
+        dct:description           "Anlegg for idrett og fysisk aktivitet."@nb ;
+        dct:identifier            "7" ;
+        dct:title                 "Anlegg for idrett og fysisk aktivitet"@nb .
+
+<https://data.norge.no/concepts/14>
+        a               skos:Concept ;
+        skos:prefLabel  "Etablererprøve"@nb .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/d5d0c07c-c14f-3741-9aa3-126960958cf0>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "d5d0c07c-c14f-3741-9aa3-126960958cf0" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-08-25T08:00:03.178Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/1> .
+
+<https://data.norge.no/concepts/251>
+        a               skos:Concept ;
+        skos:prefLabel  "Hjemmeside"@nb , "Homepage"@en .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/4>
+        a               cv:CriterionRequirement ;
+        dct:identifier  "4" ;
+        dct:title       "Krever en fysisk person som styrer /stedfortreder som har styringsrett over skjenking"@nb ;
+        dct:type        <https://data.norge.no/concepts/152> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/channel/3>
+        a               cv:Channel ;
+        cv:ownedBy      <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/2> ;
+        dct:identifier  "3" ;
+        dct:type        <https://data.norge.no/concepts/251> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/1>
+        a                         cpsv:PublicService ;
+        cv:hasChannel             <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/974760673> ;
+        cv:hasContactPoint        <http://public-service-publisher.fellesdatakatalog.digdir.no/contact/1> ;
+        cv:hasCost                <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/5> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/12> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/9> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/6> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/4> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/10> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/3> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/7> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/11> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/8> ;
+        cv:hasCriterion           <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/1> ;
+        cv:hasLegalResource       <http://public-service-publisher.fellesdatakatalog.digdir.no/legalresource/1> ;
+        cv:hasParticipation       <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/3> , <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/2> ;
+        cv:isClassifiedBy         <http://begrepskatalogen/begrep/d67e2d32-6dcf-11e6-be2b-ba992a0501a6> , <https://data.norge.no/concepts/6> , <http://data.brreg.no/begrep/43180> , <http://data.brreg.no/begrep/28155> ;
+        cv:isDescribedAt          <https://registrering.fellesdatakatalog.digdir.no/catalogs/974760673/datasets/63086dda-9b72-43f0-bbc2-3ced4bc2edd6> , <https://registrering.fellesdatakatalog.digdir.no/catalogs/974760673/datasets/ef600ed8-cba1-4bc4-863f-6d41c836f18c> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/ece8c4c0-2fa9-412a-a3fd-6eefe0681728> , <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> , <http://public-service-publisher.fellesdatakatalog.digdir.no/events/745d1372-2b71-4e20-bcc4-49023379e7cf> ;
+        cv:processingTime         "P7D" ;
+        cv:sector                 <https://data.norge.no/concepts/2> ;
+        dct:description           "Elektronisk skjema for registrering av selskap"@nb ;
+        dct:identifier            "1" ;
+        dct:language              <http://publications.europa.eu/resource/authority/language/NOB> , <http://publications.europa.eu/resource/authority/language/NNO> ;
+        dct:spatial               <http://publications.europa.eu/resource/authority/country/NOR> ;
+        dct:title                 "Samordnet registermelding"@nb ;
+        cpsv:follows              <http://public-service-publisher.fellesdatakatalog.digdir.no/rule/1> ;
+        cpsv:produces             <http://public-service-publisher.fellesdatakatalog.digdir.no/output/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/output/1> ;
+        dcat:keyword              "Selskapsregistrering"@nb , "Organisasjonsnummer"@nb , "Firmaattest"@nb .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/da906206-b621-306c-bd75-f2bfe5cc9b4f>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "da906206-b621-306c-bd75-f2bfe5cc9b4f" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/4> .
+
+<https://data.norge.no/concepts/151>
+        a               skos:Concept ;
+        skos:prefLabel  "Sertifisering"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/5>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        cv:value              1440 ;
+        dct:description       "Endring som skal kunngjøres - Aksjeselskap: - Fusjon og fisjon: elektronisk kr 1440,-" , "Endring som skal kunngjøres - Aksjeselskap: - Fusjon og fisjon" ;
+        dct:identifier        "5" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/legalresource/4>
+        a                eli:LegalResource ;
+        dct:description  "Lov om serveringsvirksomhet (serveringsloven)"@nb ;
+        xsd:seeAlso      <https://lovdata.no/eli/lov/1997/06/13/55/nor/html> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/15>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/889640782> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/e6b08964-05fe-44b4-bf7a-b6e8d4722547> ;
+        dct:description           "Har du blitt arbeidsledig, kan du ha rett til dagpenger eller annen økonomisk støtte fra NAV."@nb ;
+        dct:identifier            "15" ;
+        dct:title                 "Søknad om dagpenger"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/participation/4>
+        a                cv:Participation ;
+        cv:role          <https://data.norge.no/concepts/100> ;
+        dct:description  "Politi"@nb ;
+        dct:identifier   "4" .
+
+<https://data.brreg.no/enhetsregisteret/api/enheter/985399077>
+        a               dct:Agent ;
+        cv:playsRole    <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/6> ;
+        dct:identifier  "985399077" ;
+        dct:title       "Mattilsynet"@nb ;
+        foaf:name       "MATTILSYNET" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/contact/2>
+        a                 schema:ContactPoint ;
+        schema:email      "postmottak@bronnoy.kommune.no" ;
+        schema:name       "Brønnøy kommune" ;
+        schema:telephone  "75 01 20 00" ;
+        schema:url        <https://kommune24-7.no/1813/702431> .
+
+<https://data.norge.no/concepts/6>
+        a               skos:Concept ;
+        skos:prefLabel  "Kontaktperson"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/rule/1>
+        a                cpsv:Rule ;
+        dct:description  "Lov om behandlingsmåten i forvaltningssaker (https://lovdata.no/lov/1967-02-10)"@nb ;
+        dct:identifier   "1" ;
+        dct:language     <http://publications.europa.eu/resource/authority/language/NOB> ;
+        dct:title        "Lov om behandlingsmåten i forvaltningssaker"@nb ;
+        cpsv:implements  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/services/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/services/3> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/12>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        cv:value              0 ;
+        dct:description       "Oppløsning og sletting i Foretaksregisteret: papir kr 0,-" , "Oppløsning og sletting i Foretaksregisteret" ;
+        dct:identifier        "12" .
+
+<https://data.brreg.no/enhetsregisteret/api/enheter/971526920>
+        a               dct:Agent ;
+        cv:playsRole    <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/1> ;
+        dct:identifier  "971526920" ;
+        dct:title       "Statistisk sentralbyrå"@nb ;
+        foaf:name       "STATISTISK SENTRALBYRÅ" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/50>
+        a                         cpsv:PublicService ;
+        cv:hasChannel             <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/974760673> ;
+        cv:hasContactPoint        <http://public-service-publisher.fellesdatakatalog.digdir.no/contact/1> ;
+        cv:hasCost                <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/8> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/7> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/12> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/9> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/6> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/5> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/4> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/3> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/11> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/10> ;
+        cv:hasCriterion           <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/1> ;
+        cv:hasLegalResource       <http://public-service-publisher.fellesdatakatalog.digdir.no/legalresource/1> ;
+        cv:hasParticipation       <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/3> ;
+        cv:isClassifiedBy         <http://data.brreg.no/begrep/28155> , <http://begrepskatalogen/begrep/d67e2d32-6dcf-11e6-be2b-ba992a0501a6> , <http://data.brreg.no/begrep/43180> , <https://data.norge.no/concepts/6> ;
+        cv:isDescribedAt          <http://public-service-publisher.fellesdatakatalog.digdir.no/public-service-dataset/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/public-service-dataset/1> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/1> ;
+        cv:processingTime         "P7D" ;
+        cv:sector                 <https://data.norge.no/concepts/2> ;
+        dct:description           "Elektronisk skjema for registrering av selskap"@nb ;
+        dct:identifier            "50" ;
+        dct:language              <http://publications.europa.eu/resource/authority/language/NOB> , <http://publications.europa.eu/resource/authority/language/NNO> ;
+        dct:spatial               <http://publications.europa.eu/resource/authority/country/NOR> ;
+        dct:title                 "Samordnet registermelding 2"@nb ;
+        cpsv:follows              <http://public-service-publisher.fellesdatakatalog.digdir.no/rule/1> ;
+        cpsv:produces             <http://public-service-publisher.fellesdatakatalog.digdir.no/output/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/output/2> ;
+        dcat:keyword              "Selskapsregistrering"@nb , "Firmaattest"@nb , "Organisasjonsnummer"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/6>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/964983291> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/ece8c4c0-2fa9-412a-a3fd-6eefe0681728> ;
+        cv:processingTime         "P2D" ;
+        cv:sector                 <https://data.norge.no/concepts/2> ;
+        dct:description           "Oppdatert beskrivelse for registrering av ny fettutskiller."@nb ;
+        dct:identifier            "6" ;
+        dct:language              <http://publications.europa.eu/resource/authority/language/NOB> , <http://publications.europa.eu/resource/authority/language/NNO> ;
+        dct:title                 "Registrering av ny fettutskiller"@nb ;
+        dcat:keyword              "Avløp"@nb , "Offentlig avløpsnett"@nb , "Avfall"@nb , "Fettutskiller"@nb .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/0801ece7-8e74-385f-9db4-44e5c6508c44>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "0801ece7-8e74-385f-9db4-44e5c6508c44" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-04-12T11:00:03.341Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/10> .
+
+<https://data.norge.no/concepts/13>
+        a               skos:Concept ;
+        skos:prefLabel  "Vandel"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/3>
+        a               cv:CriterionRequirement ;
+        dct:identifier  "3" ;
+        dct:title       "Bestått kunnskapsprøven"@nb ;
+        dct:type        <https://data.norge.no/concepts/151> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2>
+        a               cv:Channel ;
+        cv:ownedBy      <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        dct:identifier  "2" ;
+        dct:type        <https://data.norge.no/concepts/257> .
+
+<https://data.norge.no/concepts/150>
+        a               skos:Concept ;
+        skos:prefLabel  "Alder"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/4>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        cv:value              2832 ;
+        dct:description       "Endring som skal kunngjøres - Aksjeselskap: - Kapitalnedsettelse: papir kr 2832,-" , "Endring som skal kunngjøres - Aksjeselskap: - Kapitalnedsettelse" ;
+        dct:identifier        "4" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/17>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/3> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/2> ;
+        cv:value              380 ;
+        dct:description       "Bevillingsgebyret for ambulerende bevilling kan bevillingsmyndigheten kreve et gebyr på inntil kr 380 pr. gang." ;
+        dct:identifier        "17" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/legalresource/3>
+        a                eli:LegalResource ;
+        dct:description  "Forskrift om omsetning av alkoholholdig drikk mv. (alkoholforskriften)"@nb ;
+        xsd:seeAlso      <https://lovdata.no/eli/forskrift/2005/06/08/538/nor/html> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/participation/3>
+        a                cv:Participation ;
+        cv:role          <https://data.norge.no/concepts/101> ;
+        dct:description  "Arbeidsgiverdelen av Arbeidsgiver-/arbeidstakerregisteret"@nb ;
+        dct:identifier   "3" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/14>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/889640782> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/35c09856-6485-48dc-b590-ca14608bc2be> ;
+        dct:description           "Pleiepenger er for deg som må være borte fra jobb fordi du skal være sammen med et barn som er blitt sykt, eller som er under utredning for sykdom, og som trenger din omsorg og pleie hele tiden. Hvor mye pleiepenger du får avhenger av hvor mye du kan jobbe og hvor mye barnet ditt er i et omsorgstilbud. Omsorgstilbud kan være barnehage, skole eller andre organiserte tilbud."@nb ;
+        dct:identifier            "14" ;
+        dct:title                 "Søknad om pleiepenger for sykt barn"@nb .
+
+<https://data.norge.no/concepts/201>
+        a               skos:Concept ;
+        skos:prefLabel  "Fysisk objekt"@nb , "Physical object"@en .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/209c12a4-0b55-3dfc-9905-576d56b58f85>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "209c12a4-0b55-3dfc-9905-576d56b58f85" ;
+        dct:issued         "2021-02-15T10:57:04.883Z"^^xsd:dateTime ;
+        dct:modified       "2021-02-15T10:57:04.883Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/50> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/contact/1>
+        a                   schema:ContactPoint ;
+        schema:contactType  "Kontakt brukerveiledning ved Brønnøysundregistrene"@nb ;
+        schema:description  "Her kan du registrere nye virksomheter, eller endre registrerte opplysninger. De aller fleste organisasjonsformene kan bruke tjenesten. Dette gjelder blant annet enkeltpersonforetak, foreninger, aksjeselskap, ansvarlige selskap og samvirkeforetak. Det er kommet en ny og enklere tjeneste for søknad om registrering i Merverdiavgiftsregisteret. Du finner tjenesten på Skatteetaten sine nettsider." ;
+        schema:email        "altinn@eksempel.no" ;
+        schema:name         "Registrere nye og endre eksisterende virksomheter - Samordnet registermelding" ;
+        schema:telephone    "75 00 75 00" ;
+        schema:url          <https://www.altinn.no/skjemaoversikt/bronnoysundregistrene/registrere-nye-og-endre-eksisterende-foretak-og-enheter---samordnet-registermelding/> .
+
+<https://data.norge.no/concepts/18>
+        a               skos:Concept ;
+        skos:prefLabel  "Gatekjøkken"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/11>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        cv:value              0 ;
+        dct:description       "Oppløsning og sletting i Foretaksregisteret: elektronisk kr 0,-" , "Oppløsning og sletting i Foretaksregisteret" ;
+        dct:identifier        "11" .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/6ce4e524-3226-3591-ad99-c026705d4259>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "6ce4e524-3226-3591-ad99-c026705d4259" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-04-12T11:00:03.341Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/2> .
+
+<https://data.norge.no/concepts/101>
+        a               skos:Concept ;
+        skos:prefLabel  "Datakonsument"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/5>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/964983291> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/ece8c4c0-2fa9-412a-a3fd-6eefe0681728> ;
+        cv:processingTime         "P2D" ;
+        cv:sector                 <https://data.norge.no/concepts/2> ;
+        dct:description           "Søke om søndagsåpnet eller uteservering."@nb ;
+        dct:identifier            "5" ;
+        dct:language              <http://publications.europa.eu/resource/authority/language/NOB> , <http://publications.europa.eu/resource/authority/language/NNO> ;
+        dct:relation              <http://public-service-publisher.fellesdatakatalog.digdir.no/services/3> ;
+        dct:title                 "Søke om søndagsåpnet eller uteservering"@nb ;
+        dcat:keyword              "Uteservering"@nb , "Helligdag"@nb , "Skjenketid"@nb , "Åpningstid"@nb .
+
+<https://data.norge.no/concepts/12>
+        a               skos:Concept ;
+        skos:prefLabel  "Selskap"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/9>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        cv:value              0 ;
+        dct:description       "Endring som skal kunngjøres - Aksjeselskap: - andre endringer: elektronisk kr 0,-" , "Endring som skal kunngjøres - Aksjeselskap: - andre endringer" ;
+        dct:identifier        "9" .
+
+<https://data.brreg.no/enhetsregisteret/api/enheter/889640782>
+        a               dct:Agent ;
+        cv:playsRole    <http://public-service-publisher.fellesdatakatalog.digdir.no/participation/3> ;
+        dct:identifier  "889640782" ;
+        dct:title       "Arbeids- og velferdsetaten (NAV)"@nb ;
+        foaf:name       "ARBEIDS- OG VELFERDSETATEN" .
+
+<https://www.staging.fellesdatakatalog.digdir.no/public-services/31249174-df02-3746-9d61-59fc61b4c5f9>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "31249174-df02-3746-9d61-59fc61b4c5f9" ;
+        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        dct:modified       "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/3> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/2>
+        a               cv:CriterionRequirement ;
+        dct:identifier  "2" ;
+        dct:title       "Over 20 år"@nb ;
+        dct:type        <https://data.norge.no/concepts/150> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1>
+        a               cv:Channel ;
+        cv:ownedBy      <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        dct:identifier  "1" ;
+        dct:type        <https://data.norge.no/concepts/251> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/output/4>
+        a                cv:Output ;
+        dct:description  "Serveringsbevilling"@nb ;
+        dct:identifier   "4" ;
+        dct:title        "Serveringsbevilling"@nb ;
+        dct:type         <https://data.norge.no/concepts/205> .
+
+<https://data.norge.no/concepts/206>
+        a               skos:Concept ;
+        skos:prefLabel  "Anerkjennelse"@nb , "Recognition"@en .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/3>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        cv:value              1440 ;
+        dct:description       "Endring som skal kunngjøres - Aksjeselskap: - Kapitalnedsettelse: elektronisk kr 1440,-" , "Endring som skal kunngjøres - Aksjeselskap: - Kapitalnedsettelse" ;
+        dct:identifier        "3" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/16>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/3> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/2> ;
+        cv:value              5300 ;
+        dct:description       "Bevillingsgebyret utgjør pr. år minimum kr 5300. Bevillingsmyndigheten kan likevel i særlige tilfeller bestemme at gebyret skal settes lavere. For ambulerende bevilling kan bevillingsmyndigheten kreve et gebyr på inntil kr 380 pr. gang." ;
+        dct:identifier        "16" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/legalresource/2>
+        a                eli:LegalResource ;
+        dct:description  "Lov om omsetning av alkoholholdig drikk m.v. (alkoholloven)"@nb ;
+        xsd:seeAlso      <https://lovdata.no/eli/lov/1989/06/02/27/nor/html> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/13>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/889640782> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/09c9429e-af32-4387-b14b-f24ac0c37265> ;
+        dct:description           "Foreldrepengene skal erstatte inntekten din når du skal være hjemme med barnet. Vanligvis er det 3 krav du må fylle for å få foreldrepenger."@nb ;
+        dct:identifier            "13" ;
+        dct:title                 "Søknad om foreldrepenger"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/participation/2>
+        a                cv:Participation ;
+        cv:role          <https://data.norge.no/concepts/101> ;
+        dct:description  "Merverdiavgiftsregisteret"@nb ;
+        dct:identifier   "2" .
+
+<https://data.norge.no/concepts/200>
+        a               skos:Concept ;
+        skos:prefLabel  "Erklæring"@nb , "Declaration"@en .
+
+<https://data.norge.no/concepts/17>
+        a               skos:Concept ;
+        skos:prefLabel  "Spiserestaurant"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/cost/10>
+        a                     cv:Cost ;
+        cv:currency           <http://publications.europa.eu/resource/authority/currency/NOK> ;
+        cv:ifAccessedThrough  <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
+        cv:isDefinedBy        <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        cv:value              0 ;
+        dct:description       "Endring som skal kunngjøres - Aksjeselskap: - andre endringer: papir kr 0,-" , "Endring som skal kunngjøres - Aksjeselskap: - andre endringer" ;
+        dct:identifier        "10" .
+
+<https://data.norge.no/concepts/100>
+        a               skos:Concept ;
+        skos:prefLabel  "Dataleverandør"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/4>
+        a                         cpsv:PublicService ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/985399077> ;
+        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/ece8c4c0-2fa9-412a-a3fd-6eefe0681728> ;
+        cv:processingTime         "P2D" ;
+        cv:sector                 <https://data.norge.no/concepts/2> ;
+        dct:description           "Dette skjemaet  brukes for å registrere en ny virksomhet, eller søke om godkjenning av en ny næringsmiddelvirksomhet. Skjemaet skal også brukes dersom du vil utvide aktiviteten i en allerede eksisterende virksomhet og starte med en ny aktivitet som ikke er registrert."@nb ;
+        dct:identifier            "4" ;
+        dct:language              <http://publications.europa.eu/resource/authority/language/NOB> , <http://publications.europa.eu/resource/authority/language/NNO> ;
+        dct:title                 "Ny næringsmiddelvirksomhet inkl. matkontaktmaterialer"@nb ;
+        dcat:keyword              "Restaurantdrift"@nb , "Næringsmiddel"@nb , "Matproduksjon"@nb , "Matservering"@nb .
+
+<https://data.norge.no/concepts/11>
+        a               skos:Concept ;
+        skos:prefLabel  "Bevilling for lukket"@nb .
+
+<https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910298062>
+        a                     rov:RegisteredOrganization ;
+        dct:identifier        "910298062" ;
+        rov:legalName         "KARMSUND OG KYSNESSTRAND REVISJON" ;
+        foaf:name             "Karmsund og kysnesstrand revisjon"@nb ;
+        br:orgPath            "/ANNET/910298062" .
+
+<https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910244132>
+        a                     rov:RegisteredOrganization ;
+        dct:identifier        "910244132" ;
+        rov:legalName         "RAMSUND OG ROGNAN REVISJON" ;
+        rov:orgType           [ a               skos:Concept ;
+                                skos:prefLabel  "ASA"
+                              ] ;
+        foaf:name             "Ramsund og Rognand revisjon"@nb ;
+        br:orgPath            "/ANNET/910244132" .

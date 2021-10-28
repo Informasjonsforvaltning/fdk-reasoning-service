@@ -70,4 +70,30 @@ class Reasoning: ApiTestContext() {
 
         assertTrue(result.isIsomorphicWith(expected))
     }
+
+    @Test
+    fun testEvents() {
+        whenever(uris.events)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/events")
+        whenever(uris.organizations)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
+        val result = reasoningService.catalogReasoning(CatalogType.EVENTS)
+
+        val expected = responseReader.parseTurtleFile("fdk_ready_events.ttl")
+
+        assertTrue(result.isIsomorphicWith(expected))
+    }
+
+    @Test
+    fun testPublicServices() {
+        whenever(uris.publicservices)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/public-services")
+        whenever(uris.organizations)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
+        val result = reasoningService.catalogReasoning(CatalogType.PUBLICSERVICES)
+
+        val expected = responseReader.parseTurtleFile("fdk_ready_public_services.ttl")
+
+        assertTrue(result.isIsomorphicWith(expected))
+    }
 }

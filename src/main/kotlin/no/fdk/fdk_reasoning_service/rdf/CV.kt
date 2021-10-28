@@ -1,0 +1,15 @@
+package no.fdk.fdk_reasoning_service.rdf
+
+import org.apache.jena.rdf.model.Property
+import org.apache.jena.rdf.model.ResourceFactory
+
+class CV {
+
+    companion object {
+        const val uri =
+            "http://data.europa.eu/m8g/"
+
+        val hasCompetentAuthority: Property = ResourceFactory.createProperty("${uri}hasCompetentAuthority")
+    }
+
+}

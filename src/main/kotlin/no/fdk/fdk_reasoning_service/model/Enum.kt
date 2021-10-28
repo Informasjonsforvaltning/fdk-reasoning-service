@@ -4,5 +4,7 @@ enum class CatalogType {
     DATASETS,
     CONCEPTS,
     INFORMATIONMODELS,
-    DATASERVICES
+    DATASERVICES,
+    EVENTS,
+    PUBLICSERVICES
 }
