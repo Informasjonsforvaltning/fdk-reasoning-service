@@ -34,9 +34,17 @@ class ReasoningService(
                 rdfData[1].createModelOfPublishersWithOrgData(
                     rdfData[0]?.extractInadequatePublishers() ?: emptySet(), uris.organizations)
             },
-            async { ModelFactory.createInfModel(GenericRuleReasoner(Rule.parseRules(datasetRules)), rdfData[0]) }
+            async { catalogType.infModel(rdfData[0]) }
         ).let { runBlocking { it.awaitAll() } }
 
-        return models[0].union(models[1]).fdkPrefix()
+        return models[0].union(models[1])
     }
+
+    private fun CatalogType.infModel(rdfData: Model): Model =
+        when(this) {
+            CatalogType.DATASETS -> ModelFactory.createInfModel(
+                GenericRuleReasoner(Rule.parseRules(datasetRules)),
+                rdfData.fdkPrefix())
+            else -> rdfData
+        }
 }

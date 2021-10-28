@@ -31,4 +31,17 @@ class Reasoning: ApiTestContext() {
 
         assertTrue(result.isIsomorphicWith(expected))
     }
+
+    @Test
+    fun testDataServices() {
+        whenever(uris.dataservices)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/dataservices/catalogs")
+        whenever(uris.organizations)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
+        val result = reasoningService.catalogReasoning(CatalogType.DATASERVICES)
+
+        val expected = responseReader.parseTurtleFile("fdk_ready_dataservices.ttl")
+
+        assertTrue(result.isIsomorphicWith(expected))
+    }
 }

@@ -1,0 +1,43 @@
+@prefix br:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#> .
+@prefix rov:   <http://www.w3.org/ns/regorg#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/catalogs/910298062>
+        a              dcat:Catalog ;
+        dct:publisher  <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910298062> ;
+        dct:title      "Data service catalog (910298062)"@en ;
+        dcat:service   <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f586b0cdbffd544ae76a5e5> , <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e> .
+
+<https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e>
+        a                  dcat:DataService ;
+        dct:description    "Beskrivelse av apiet"@nb ;
+        dct:title          "API - Høgskolen for IT og arkitektur"@nb ;
+        dcat:contactPoint  [ a         vcard:Organization ;
+                             vcard:fn  "Contact information | (910298062)"
+                           ] ;
+        dcat:endpointURL   <https://aho.no/> .
+
+<https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f586b0cdbffd544ae76a5e5>
+        a                         dcat:DataService ;
+        dct:description           "Spesifisert summert XXXskattegrunnlag inneholder summert informasjon om en skatteyters inntekt, formue og fradrag og formuesfradrag, med spesifikasjoner."@nb ;
+        dct:title                 "Spesifisert summert YYYskattegrunnlag API"@nb ;
+        dcat:contactPoint         [ a                          vcard:Organization ;
+                                    vcard:fn                   "Contact information | (910298062)" ;
+                                    vcard:hasOrganizationName  "Brukerstøtte datasamarbeid"@nb ;
+                                    vcard:hasURL               <https://www.skatteetaten.no/bedrift-og-organisasjon/starte-og-drive/ZZZbestill-attester-og-tilgang-pa-data/skatteetatens-datasamarbeid/skatte--og-inntektsopplysninger/brukerstotte-datasamarbeid/>
+                                  ] ;
+        dcat:endpointDescription  <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-testdata/master/testdata/Spesifisert%20Summert%20Skattegrunnlag%20v1.0.0.json> ;
+        dcat:endpointURL          <https://api-at.sits.no> , <https://api.skatteetaten.no> ;
+        dcat:servesDataset        <http://brreg.no/catalogs/910244132/datasets/09b578b5-4d30-4d63-ad13-9871a2e708ce> , <http://brreg.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858> .
+
+<https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910298062>
+        a                     rov:RegisteredOrganization ;
+        dct:identifier        "910298062" ;
+        rov:legalName         "KARMSUND OG KYSNESSTRAND REVISJON" ;
+        foaf:name             "Karmsund og kysnesstrand revisjon"@nb ;
+        br:orgPath            "/ANNET/910298062" .
