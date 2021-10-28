@@ -17,6 +17,8 @@ fun startMockServer() {
             .willReturn(ok(File("src/test/resources/orgs.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/dataservices/catalogs?catalogrecords=true"))
             .willReturn(ok(File("src/test/resources/dataservices.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/concepts?catalogrecords=true"))
+            .willReturn(ok(File("src/test/resources/concepts.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/datasets/catalogs?catalogrecords=true"))
             .willReturn(ok(File("src/test/resources/datasets.ttl").readText())))
 

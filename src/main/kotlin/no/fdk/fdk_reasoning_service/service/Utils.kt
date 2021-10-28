@@ -19,6 +19,7 @@ fun CatalogType.uri(uris: ApplicationURI): String =
     when (this) {
         CatalogType.DATASETS -> "${uris.datasets}?$RECORDS_PARAM_TRUE"
         CatalogType.DATASERVICES -> "${uris.dataservices}?$RECORDS_PARAM_TRUE"
+        CatalogType.CONCEPTS -> "${uris.concepts}?$RECORDS_PARAM_TRUE"
     }
 
 fun Model.createModelOfPublishersWithOrgData(publisherURIs: Set<String>, orgsURI: String): Model {

@@ -8,5 +8,6 @@ import org.springframework.boot.context.properties.ConstructorBinding
 data class ApplicationURI(
     val organizations: String,
     val dataservices: String,
+    val concepts: String,
     val datasets: String
 )

@@ -1,0 +1,53 @@
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skosno: <http://difi.no/skosno#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<http://begrepskatalogen/begrep/20b2e1a1-9fe1-11e5-a9f8-e4115b280940>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a           skosno:Definisjon ;
+                                        rdfs:label  "koder for entydig angivelse av spesifikke språk etter ISO 639-1"@nb ;
+                                        dct:source  [ rdfs:label  "ISO 639 Koder for representasjon av navn på språk"@nb ]
+                                      ] ;
+        dct:identifier                "20b2e1a1-9fe1-11e5-a9f8-e4115b280940" ;
+        dct:modified                  "2018-11-30"^^xsd:date ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/910298062> ;
+        dct:subject                   "Eksterne autoritative kilder"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "språkkode"@nb
+                                      ] ;
+        dcat:contactPoint             [ a                       vcard:Organization ;
+                                        vcard:hasEmail          <mailto:begrepskatalogen@skatteetaten.no> ;
+                                        vcard:organizationUnit  "Informasjonsforvaltning - innhenting"
+                                      ] .
+
+<http://begrepskatalogen/begrep/46f4d710-4c6c-11e8-bb3e-005056821322>
+        a                             skos:Concept ;
+        skosno:betydningsbeskrivelse  [ a                       skosno:Definisjon ;
+                                        rdfs:label              "retten til å råde over en formuesgjenstand innenfor lovlige rammer, så lenge det ikke strider mot andres rettigheter"@nb ;
+                                        skosno:forholdTilKilde  <http://example.com/basertPåKilde> ;
+                                        dct:source              [ rdfs:seeAlso  <http://example.com/www.snl.no> ] ;
+                                        skos:scopeNote          "Eiendomsrett omfatter både rettslige disposisjoner, som rett til å selge, låne bort eller pantsette, og faktiske disposisjoner, som rett til å bruke tingen, male huset, kjøre med bilen, hogge trær i skogen osv. "@nb
+                                      ] ;
+        skosno:datastrukturterm       "eiendomsrett"@nb ;
+        dct:identifier                "46f4d710-4c6c-11e8-bb3e-005056821322" ;
+        dct:modified                  "2018-04-10"^^xsd:date ;
+        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/910244132> ;
+        dct:subject                   "Formues- og inntektsskatt"@nb ;
+        skosxl:prefLabel              [ a                   skosxl:Label ;
+                                        skosxl:literalForm  "eiendomsrett"@nb
+                                      ] ;
+        dcat:contactPoint             [ a                       vcard:Organization ;
+                                        vcard:hasEmail          <mailto:begrepskatalogen@skatteetaten.no> ;
+                                        vcard:organizationUnit  "Informasjonsforvaltning - innhenting"
+                                      ] .
+
+<https://data.brreg.no/enhetsregisteret/api/enheter/910244132>
+    a                     foaf:Agent ;
+    dct:identifier        "910244132" ;
+    foaf:name             "Do not overwrite"@nb ;
