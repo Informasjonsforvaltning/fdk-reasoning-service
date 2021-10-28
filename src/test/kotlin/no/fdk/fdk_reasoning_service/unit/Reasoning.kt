@@ -57,4 +57,17 @@ class Reasoning: ApiTestContext() {
 
         assertTrue(result.isIsomorphicWith(expected))
     }
+
+    @Test
+    fun testInformationModels() {
+        whenever(uris.informationmodels)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/informationmodels/catalogs")
+        whenever(uris.organizations)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
+        val result = reasoningService.catalogReasoning(CatalogType.INFORMATIONMODELS)
+
+        val expected = responseReader.parseTurtleFile("fdk_ready_infomodels.ttl")
+
+        assertTrue(result.isIsomorphicWith(expected))
+    }
 }

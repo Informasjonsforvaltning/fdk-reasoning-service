@@ -11,6 +11,7 @@ application:
     datasets: ${DATASETS_HOST:http://fdk-dataset-harvester:8080}/catalogs
     dataservices: ${DATASERVICES_HOST:http://fdk-dataservice-harvester:8080}/catalogs
     concepts: ${CONCEPTS_HOST:http://fdk-concept-harvester:8080}/collections
+    informationmodels: ${INFOMODELS_HOST:http://fdk-informationmodel-harvester:8080}/catalogs
     organizations: ${ORGANIZATION_CATALOGUE_HOST}/organizations
 
 ---
@@ -21,6 +22,7 @@ application:
     datasets: https://datasets.staging.fellesdatakatalog.digdir.no/catalogs
     dataservices: https://dataservices.staging.fellesdatakatalog.digdir.no/catalogs
     concepts: https://concepts.staging.fellesdatakatalog.digdir.no/collections
+    informationmodels: https://informationmodels.staging.fellesdatakatalog.digdir.no/catalogs
     organizations: https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations
 
 ---
@@ -31,4 +33,5 @@ application:
     datasets: http://localhost:5000/datasets/catalogs
     dataservices: http://localhost:5000/dataservices/catalogs
     concepts: http://localhost:5000/collections
+    informationmodels: http://localhost:5000/informationmodels/catalogs
     organizations: http://localhost:5000/organizations

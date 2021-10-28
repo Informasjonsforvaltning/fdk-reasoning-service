@@ -9,5 +9,6 @@ data class ApplicationURI(
     val organizations: String,
     val dataservices: String,
     val concepts: String,
+    val informationmodels: String,
     val datasets: String
 )

@@ -1,0 +1,413 @@
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix modelldcatno: <https://data.norge.no/vocabulary/modelldcatno#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix pass:  <http://data.skatteetaten.no/ns/modell/PassStellBarn/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix locn:  <http://www.w3.org/ns/locn#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix skebase: <http://data.skatteetaten.no/ns/modell/basetyper/> .
+
+pass:Oppgavegiver  a              modelldcatno:ObjectType , owl:NamedIndividual ;
+        dct:description           "tredjepart som har opplysningsplikt om å sende inn oppgaver til Skatteetaten"@nb ;
+        dct:identifier            "urn:ske:oppgaveoverpassogstellavbarn-2.0/oppgavegiver"^^xsd:anyURI ;
+        dct:subject               <https://data.skatteetaten.no/begreper/20b52aba-9fe1-11e5-a9f8-e4115b280940> ;
+        dct:title                 "Oppgavegiver"@nb ;
+        modelldcatno:hasProperty  pass:organisasjonsnummer , pass:organisasjonsnavn , pass:kontaktinformasjon .
+
+skebase:EpostadresseType
+        a                             modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/epostadresseType"^^xsd:anyURI ;
+        dct:title                     "Epostadresse"@nb ;
+        xsd:maxLength                 "254"^^xsd:nonNegativeInteger ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+pass:Ingenoppgaver  a   modelldcatno:CodeElement , owl:NamedIndividual ;
+        dct:identifier  "urn:ske:oppgaveoverpassogstellavbarn-2.0/ingenoppgaver" ;
+        skos:inScheme   pass:Leveransetype ;
+        skos:notation   "Ingenoppgaver" ;
+        skos:prefLabel  "Ingen oppgaver"@nb .
+
+skebase:TelefonnummerType
+        a                             modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/telefonnummerType"^^xsd:anyURI ;
+        dct:title                     "Telefonnummer"@nb ;
+        xsd:maxLength                 "20"^^xsd:nonNegativeInteger ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+pass:varselEpostadresse
+        a                           modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description             "navngitt elektronisk adresse for mottak av e-post"@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/varselEpostadresse"^^xsd:anyURI ;
+        dct:title                   "varselEpostadresse"@nb ;
+        modelldcatno:hasSimpleType  skebase:EpostadresseType .
+
+<https://data.brreg.no/enhetsregisteret/oppslag/enheter/974761076>
+        a          foaf:Agent , owl:NamedIndividual ;
+        dct:type   "Organisasjonsledd"@nb ;
+        foaf:name  "Skatteetaten"@nb .
+
+pass:oppgaveeierRolle
+        a                           modelldcatno:Role , owl:NamedIndividual ;
+        dct:description             "Forsørger som har betalt for pass og stell av barn.  Se type Oppgaveeier.\noppgaveeier: den oppgaven gjelder. Normalt en skattpliktig, men kan også være en virksomhet som ikke er skattepliktig."@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/Oppgaveeier"^^xsd:anyURI ;
+        dct:title                   "oppgaveeier"@nb ;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs               "1"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasObjectType  pass:Oppgaveeier .
+
+pass:sumBeløp  a                    modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description             "Sum av alle påløpte beløp i oppgavene til en leveranse. Beløpet oppgis som et heltall"@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/sumBeløp"^^xsd:anyURI ;
+        dct:title                   "sumBeløp"@nb ;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs               "1"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasSimpleType  skebase:BeløpType .
+
+pass:leveransetype  a              modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description            "type av leveranse som angir om leveransen inneholder ordinære oppgaver eller om oppgavegiver angir at det ikke er noen oppgaver å innrapportere\nleveransetype: type av leveranse som angir om leveransen inneholder ordinære oppgaver eller om oppgavegiver angir at det ikke er noen oppgaver å innrapportere"@nb ;
+        dct:identifier             "urn:ske:oppgaveoverpassogstellavbarn-2.0/leveransetype"^^xsd:anyURI ;
+        dct:title                  "leveransetype"@nb ;
+        xsd:maxOccurs              "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs              "1"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasValueFrom  pass:Leveransetype .
+
+pass:oppgavegiverRolle
+        a                           modelldcatno:Role , owl:NamedIndividual ;
+        dct:description             "oppgavegiver: tredjepart som rapporterer opplysning til Skatteetaten"@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/oppgavegiverRolle"^^xsd:anyURI ;
+        dct:title                   "oppgavegiver"@nb ;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs               "1"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasObjectType  pass:Oppgavegiver .
+
+skebase:BoolskType  a                 modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/boolskType"^^xsd:anyURI ;
+        dct:title                     "BoolskType"@nb ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#boolean"^^xsd:anyURI .
+
+pass:KontaktOss  a                 vcard:Kind , owl:NamedIndividual ;
+        vcard:hasOrganizationName  "Skatteetaten"@nb , "The Norwegian Tax Administration"@en , "Skatteetaten"@nn ;
+        vcard:hasTelephone         <tel:80080000> .
+
+pass:Melding  a                   modelldcatno:RootObjectType , owl:NamedIndividual ;
+        dct:description           "innholdet i en innsending"@nb ;
+        dct:identifier            "urn:ske:oppgaveoverpassogstellavbarn-2.0/melding"^^xsd:anyURI ;
+        dct:subject               <https://data.skatteetaten.no/begrep/20b2e303-9fe1-11e5-a9f8-e4115b280940> ;
+        dct:title                 "Melding"@nb ;
+        modelldcatno:hasProperty  pass:leveranseRolle .
+
+pass:oppgaveRolle  a                modelldcatno:Role , owl:NamedIndividual ;
+        dct:description             "oppgave: samling av opplysninger i en leveranse, gjeldende én oppgaveeier (normalt skattepliktig). Fellesbetegnelse for ligningsoppgave og kontrolloppgave."@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/oppgaveRolle"^^xsd:anyURI ;
+        dct:title                   "oppgave"@nb ;
+        xsd:maxOccurs               "*"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs               "0"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasObjectType  pass:OppgaveBarnepass .
+
+pass:Leveransetype  a    modelldcatno:CodeList , owl:NamedIndividual ;
+        dct:description  "type av leveranse som angir om leveransen inneholder ordinære oppgaver eller om oppgavegiver angir at det ikke er noen oppgaver å innrapportere"@nb ;
+        dct:identifier   "urn:ske:oppgaveoverpassogstellavbarn-2.0/leveransetype"^^xsd:anyURI ;
+        dct:title        "Leveransetype"@nb .
+
+pass:fødselsnummer  a               modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description             "Oppgaveeiers (forsørgers) fødselsnummer eller d-nummer.  Ellevesifret identifikasjonsnummer for personer bosatt i Norge, der de seks første sifrene angir fødselsdato og de fem siste personnumme.\nfødselsnummer: personidentifikasjonsnummer for de som er, eller har vært, bosatt i Norge, samt personer som er \"ikke bosatt\""@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/fødselsnummer"^^xsd:anyURI ;
+        dct:title                   "fødselsnummer"@nb ;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs               "1"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasSimpleType  skebase:FødselsnummerType .
+
+pass:KontaktinformasjonType
+        a                         owl:NamedIndividual , modelldcatno:DataType ;
+        dct:description           "informasjon som kan brukes for uformell kontakt med parten"@nb ;
+        dct:identifier            "urn:ske:oppgaveoverpassogstellavbarn-2.0/kontaktinformasjonType" ;
+        dct:subject               <https://data.skatteetaten.no/begreper/20b52ad9-9fe1-11e5-a9f8-e4115b280940> ;
+        dct:title                 "KontaktinformasjonType"@nb ;
+        modelldcatno:hasProperty  pass:varselEpostadresse , pass:telefonnummer , pass:varselSmsMobilnummer , pass:navn .
+
+pass:NavnType  a                  modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier            "urn:ske:oppgaveoverpassogstellavbarn-2.0/navnType"^^xsd:anyURI ;
+        dct:title                 "Navn"@nb ;
+        xsd:maxLength             "100"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasProperty  pass:NameTypeNote ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+pass:kontaktinformasjon
+        a                         modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description           "Generell kontaktinformasjon for Skatteetaten knyttet til innrapportering av denne oppgavetypen. Varsel om melding i Altinn vil også bruke denne informasjonen for formidling. Må fylles inn hvis en innsender sender på vegne av flere oppgavegivere, dvs. det sendes flere leveranser. For innsender som kun sender på vegne av seg selv (dvs. innsender = oppgavegiver) vil denne informasjonen være levert i Altinn innsendingsskjema, og kan utelukkes fra filen.\nkontaktinformasjon: informasjon som kan brukes for uformell kontakt med parten"@nb ;
+        dct:identifier            "urn:ske:oppgaveoverpassogstellavbarn-2.0/kontaktinformasjon"^^xsd:anyURI ;
+        dct:title                 "kontaktinformasjon"@nb ;
+        xsd:maxOccurs             "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs             "0"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasDataType  pass:KontaktinformasjonType .
+
+pass:NameTypeNote  a               modelldcatno:Note , owl:NamedIndividual ;
+        dct:identifier             "urn:ske:oppgaveoverpassogstellavbarn-2.0/NameTypeNote"^^xsd:anyURI ;
+        modelldcatno:propertyNote  "Lokalt definert enekelttype"@nb .
+
+pass:oppgavegiversLeveransereferanse
+        a                           modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description             "referanse til en leveranse som er gitt av oppgavegiver\noppgavegivers leveranse referanse: oppgavegivers referanse til leveransen"@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/oppgavegiversLeveransereferanse"^^xsd:anyURI ;
+        dct:title                   "oppgavegiversLeveransereferanse"@nb ;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs               "0"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasSimpleType  skebase:LeveranseReferanseType .
+
+pass:påløptBeløp  a                 modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description             "Sum beløp som er fakturert en foresatt/forsørger fra barnepassvirksomhet(er) i løpet av inntektsåret. Oppgavegiver skal oppgi ett summert beløp per oppgaveeier.  Beløpet oppgis som et positivt heltall.\nkostnader for pass og stell av barn: summen av beløp som en gitt skattepliktig avstår for tilsyn av barn, og/eller kostnader for merkjøring for å bringe og hente barn i en bestemt skattleggingsperiode, for barn som gir rett til foreldrefradrag  "@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/påløptBeløp"^^xsd:anyURI ;
+        dct:title                   "påløptBeløp"@nb ;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs               "1"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasSimpleType  skebase:BeløpType .
+
+pass:organisasjonsnavn
+        a                modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description  "navn på organisasjon"@nb ;
+        dct:identifier   "urn:ske:oppgaveoverpassogstellavbarn-2.0/organisasjonsnavn"^^xsd:anyURI ;
+        dct:title        "organisasjonsnavn"@nb ;
+        xsd:maxOccurs    "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs    "1"^^xsd:nonNegativeInteger .
+
+skebase:TekstType  a                  modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/tekstType"^^xsd:anyURI ;
+        dct:title                     "Tekst"@nb ;
+        xsd:maxLength                 4000 ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+skebase:KildesystemType
+        a                             modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/kildesystemType"^^xsd:anyURI ;
+        dct:title                     "Kildesystem"@nb ;
+        xsd:maxLength                 "100"^^xsd:nonNegativeInteger ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+pass:OppgaveOverPassOgStellAvBarn
+        a                  owl:NamedIndividual , modelldcatno:InformationModel ;
+        dct:description    "Skatteetatens oppgave over utgifter til stell og pass av barn"@nb ;
+        dct:identifier     "urn:ske:oppgaveoverpassogstellavbarn-2.0/OppgaveOverPassOgStellAvBarn"^^xsd:anyURI ;
+        dct:issued         "2020-03-30T18:35:07.950+02:00"^^xsd:dateTime ;
+        dct:language       <http://publications.europa.eu/resource/authority/language/NOB> ;
+        dct:license        <https://creativecommons.org/licenses/by-nc-sa/4.0/> ;
+        dct:publisher      <https://data.brreg.no/enhetsregisteret/oppslag/enheter/910244132> ;
+        dct:temporal       pass:gyldighetsintervall ;
+        dct:title          "Oppgåve over kostnadar til pass og stell av barn"@nn , "Skatteetatens oppgave over utgifter til stell og pass av barn"@nb ;
+        dcat:contactPoint  pass:KontaktOss ;
+        dcat:keyword       "Barnepass"@nb , "Innberettning"@nb ;
+        dcat:theme         <http://publications.europa.eu/resource/authority/data-theme/ECON> ;
+        foaf:homepage      <http://www.skatteetaten.no/Barnepassiden> ;
+        modelldcatno:containsModelElement
+                pass:OppgaveBarnepass , skebase:organisasjonsnavnType , skebase:ÅrstallType , skebase:DatoType , skebase:AntallType , pass:Leveransetype , pass:Oppgavegiver , skebase:BeløpType , skebase:OrganisasjonsnummerType , pass:Oppgaveoppsumering , skebase:FødselsnummerType , skebase:TekstType , skebase:KildesystemType , pass:Leveranse , skebase:beløpSomHeltallType , skebase:EpostadresseType , skebase:LeveranseReferanseType , pass:KontaktinformasjonType , pass:Oppgaveeier , pass:Melding , skebase:BoolskType , skebase:TelefonnummerType ;
+        modelldcatno:informationModelIdentifier
+                "urn:ske:fastsetting:innsamling:barnepass:v2"^^xsd:anyURI .
+
+skebase:BeløpType  a                  modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/beløpType"^^xsd:anyURI ;
+        dct:title                     "Beløp"@nb ;
+        xsd:minInclusive              0 ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#integer"^^xsd:anyURI .
+
+pass:antallOppgaver  a              modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/antallOppgaver"^^xsd:anyURI ;
+        dct:title                   "antallOppgaver"@nb ;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs               "1"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasSimpleType  skebase:AntallType .
+
+pass:telefonnummer  a               modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description             "tallkode som telenettet bruker for å få fram teletrafikk til riktig adressat"@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/telefonnummer"^^xsd:anyURI ;
+        dct:title                   "telefonnummer"@nb ;
+        modelldcatno:hasSimpleType  skebase:TelefonnummerType .
+
+pass:leveranseRolle  a              modelldcatno:Role , owl:NamedIndividual ;
+        dct:description             "everanse: en samling oppgaver fra en og samme oppgavegiver, som er levert samtidig. Inngår i en innsending."@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/leveranseRolle"^^xsd:anyURI ;
+        dct:title                   "leveranse"@nb ;
+        xsd:maxOccurs               "*"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs               "1"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasObjectType  pass:Leveranse .
+
+pass:oppgaveeiernavn  a             modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description             "Navnet på oppgaveeier (forsørger). Valgfri rekkefølge på fornavn og etternavn, men ønsket format er fornavn, mellomnavn og etternavn med blankt tegn imellom hver. Tekststreng på maks 100 tegn.\nnavn: ord som noen eller noe kalles for å referere til"@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/oppgaveeiernavn"^^xsd:anyURI ;
+        dct:title                   "navn"@nb ;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs               "1"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasSimpleType  pass:NavnType .
+
+pass:organisasjonsnummer
+        a                modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description  "nisifret identifikasjonsnummer og starter på tallet 8 eller 9\norganisasjonsnummer: organisasjonsnummer brukes for å identifisere juridiske personer (enheter) i Norge, og tildeles ved registrering i Enhetsregisteret. Organisasjonsnummeret består av ni siffer og starter på tallet 8 eller 9."@nb ;
+        dct:identifier   "urn:ske:oppgaveoverpassogstellavbarn-2.0/organisasjonsnummer"^^xsd:anyURI ;
+        dct:title        "organisasjonsnummer"@nb ;
+        xsd:maxOccurs    "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs    "1"^^xsd:nonNegativeInteger .
+
+pass:oppgavesummeringRolle
+        a                           modelldcatno:Role , owl:NamedIndividual ;
+        dct:description             "oppsummering av alle oppgavene i en leveranse med kontrollsummer av antall oppgaver og utvalgte beløpsfelt\noppgaveoppsummering: kontrollsummer for oppgaver beregnet på leveransenivå."@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/oppgaveoppsummering"^^xsd:anyURI ;
+        dct:title                   "oppgavesummering"@nb ;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs               "1"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasObjectType  pass:Oppgaveoppsumering .
+
+skebase:AntallType  a                 modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/antallType"^^xsd:anyURI ;
+        dct:title                     "Antall"@nb ;
+        xsd:maxInclusive              "9223372036854775807"^^xsd:int ;
+        xsd:minInclusive              "-9223372036854775808"^^xsd:int ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#long"^^xsd:anyURI .
+
+pass:Oppgaveeier  a               modelldcatno:ObjectType , owl:NamedIndividual ;
+        dct:description           "den som oppgaven vanligvis gjelder"@nb ;
+        dct:identifier            "urn:ske:oppgaveoverpassogstellavbarn-2.0/oppgaveeier"^^xsd:anyURI ;
+        dct:subject               <https://data.skatteetaten.no/begreper/20b52ab9-9fe1-11e5-a9f8-e4115b280940> ;
+        dct:title                 "Oppgaveeier"@nb ;
+        modelldcatno:hasProperty  pass:oppgaveeiernavn , pass:fødselsnummer .
+
+<http://www.skatteetaten.no/Barnepassiden>
+        a          foaf:Document , owl:NamedIndividual ;
+        dct:title  "Skatteetatens landingsside for barnepassoppgaver"@nb .
+
+skebase:FødselsnummerType
+        a                             modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/fødselsnummerType"^^xsd:anyURI ;
+        dct:title                     "Fødselsnummer"@nb ;
+        xsd:length                    "11"^^xsd:nonNegativeInteger ;
+        xsd:pattern                   "[0-9]+"^^xsd:nonNegativeInteger ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+pass:gyldighetsintervall
+        a               dct:PeriodOfTime , owl:NamedIndividual ;
+        dcat:startDate  "2019-10-10T16:00:00Z"^^xsd:dateTime .
+
+pass:OppgaveBarnepass
+        a                         modelldcatno:ObjectType , owl:NamedIndividual ;
+        dct:description           "ligningsoppgave over kostnader for pass og stell av barn"@nb ;
+        dct:identifier            "urn:ske:oppgaveoverpassogstellavbarn-2.0/oppgavebarnepass"^^xsd:anyURI ;
+        dct:subject               <https://data.skatteetaten.no/begreper/20b2e22a-9fe1-11e5-a9f8-e4115b280940> ;
+        dct:title                 "Oppgave barnepass"@nb ;
+        modelldcatno:hasProperty  pass:påløptBeløp , pass:oppgaveeierRolle .
+
+pass:inntektsår  a                  modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description             "årstallet som oppgave eller likning gjelder for\ninntektsår: det kalenderår inntekter og kostnader henføres til"@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/inntektsår"^^xsd:anyURI ;
+        dct:title                   "inntektsår"@nb ;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs               "1"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasSimpleType  pass:InntektsårType .
+
+pass:navn  a                        modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description             "navn: ord som noen eller noe kalles for å referere til"@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/navn"^^xsd:anyURI ;
+        dct:title                   "navn"@nb ;
+        modelldcatno:hasSimpleType  pass:NavnType .
+
+pass:Leveranse  a                 owl:NamedIndividual , modelldcatno:ObjectType ;
+        dct:description           "samling av oppgaver fra en og samme oppgavegiver for en oppgavetype"@nb ;
+        dct:identifier            "urn:ske:oppgaveoverpassogstellavbarn-2.0/leveranse"^^xsd:anyURI ;
+        dct:subject               <https://data.skatteetaten.no/begreper/20b2e302-9fe1-11e5-a9f8-e4115b280940> ;
+        dct:title                 "Leveranse"@nb ;
+        modelldcatno:hasProperty  pass:leveransetype , pass:oppgavesummeringRolle , pass:inntektsår , pass:oppgaveRolle , pass:oppgavegiverRolle , pass:oppgavegiversLeveransereferanse , pass:kildesystem .
+
+pass:Oppgaveoppsumering
+        a                         modelldcatno:ObjectType , owl:NamedIndividual ;
+        dct:description           "oppsummering av alle oppgavene for gave til organisasjoner i en leveranse med kontrollsummer av antall oppgaver og utvalgte beløpsfelt"@nb ;
+        dct:identifier            "urn:ske:oppgaveoverpassogstellavbarn-2.0/oppgaveoppsummering"^^xsd:anyURI ;
+        dct:subject               <https://data.skatteetaten.no/begreper/20b52abc-9fe1-11e5-a9f8-e4115b280940> ;
+        dct:title                 "Oppgaveoppsumering"@nb ;
+        modelldcatno:hasProperty  pass:sumBeløp , pass:antallOppgaver .
+
+skebase:OrganisasjonsnummerType
+        a                             modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/organisasjonsnummerType"^^xsd:anyURI ;
+        dct:title                     "Organisasjonsnummer"@nb ;
+        xsd:length                    "9"^^xsd:nonNegativeInteger ;
+        xsd:pattern                   "[0-9]+" ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+skebase:LeveranseReferanseType
+        a                             modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/leveranseReferanseType"^^xsd:anyURI ;
+        dct:title                     "LeveranseReferanseType"@nb ;
+        xsd:maxLength                 "100" ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+pass:InntektsårType  a   modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:description  "Lokal definert enkeltype"@nb ;
+        dct:identifier   "urn:ske:oppgaveoverpassogstellavbarn-2.0/inntektsårType" ;
+        dct:title        "Inntektsår"@nb ;
+        xsd:totalDigits  "4"^^xsd:nonNegativeInteger ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#integer"^^xsd:anyURI .
+
+skebase:ÅrstallType  a                modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/årstalltype"^^xsd:anyURI ;
+        dct:title                     "Årstall"@nb ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#gYear"^^xsd:anyURI .
+
+pass:SkattKatalog  a        dcat:Catalog , owl:NamedIndividual ;
+        dct:description     "En modell fra Skatteetaten"@nb , "One information models from The Tax Administration"@en ;
+        dct:identifier      "http://data.skatteetaten.no/ns/katalog/SkattKatalog"^^xsd:anyURI ;
+        dct:issued          "2020-03-30T16:00:00+02:00"^^xsd:dateTime ;
+        dct:license         <https://creativecommons.org/licenses/by-nc-sa/4.0/> ;
+        dct:publisher       <https://data.brreg.no/enhetsregisteret/oppslag/enheter/974761076> ;
+        dct:title           "Skattemodellkatalogen™"@nb , "The tax catalog™"@en ;
+        modelldcatno:model  pass:OppgaveOverPassOgStellAvBarn .
+
+pass:kildesystem  a                 modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/kildesystem"^^xsd:anyURI ;
+        dct:title                   "kildesystem"@nb ;
+        xsd:maxOccurs               "1"^^xsd:nonNegativeInteger ;
+        xsd:minOccurs               "0"^^xsd:nonNegativeInteger ;
+        modelldcatno:hasSimpleType  skebase:KildesystemType .
+
+skebase:DatoType  a                   modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/DatoType"^^xsd:anyURI ;
+        dct:title                     "Dato"@nb ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#date"^^xsd:anyURI .
+
+pass:Ordinær  a         modelldcatno:CodeElement , owl:NamedIndividual ;
+        dct:identifier  "urn:ske:oppgaveoverpassogstellavbarn-2.0/ordinær"^^xsd:anyURI ;
+        skos:inScheme   pass:Leveransetype ;
+        skos:notation   "Ordinær" ;
+        skos:prefLabel  "Ordinær"@nb .
+
+pass:varselSmsMobilnummer
+        a                           modelldcatno:Attribute , owl:NamedIndividual ;
+        dct:description             "t nummer som entydig identifiserer et abonnement i et GSM- eller UMTS-mobilnett og som dermed kan benyttes for å adressere beskjeder i et \"meldingssystem for korte beskjeder\" innen mobilnett"@nb ;
+        dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/varselSmsMobilnummer"^^xsd:anyURI ;
+        dct:title                   "varselSmsMobilnummer"@nb ;
+        modelldcatno:hasSimpleType  skebase:TelefonnummerType .
