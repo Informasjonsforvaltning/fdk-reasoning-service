@@ -27,40 +27,50 @@ class ReasoningService(
         LOGGER.debug("Starting $catalogType reasoning")
 
         val rdfData = listOf(
-            async { RDFDataMgr.loadModel(catalogType.uri(uris), Lang.TURTLE) },
-            async { RDFDataMgr.loadModel(uris.organizations, Lang.TURTLE) }
-        ).let { runBlocking { it.awaitAll() } }
-
-        val models = listOf(
             async {
-                catalogType.extendedPublishersModel(orgData = rdfData[1], catalogData = rdfData[0])
-                    ?: ModelFactory.createDefaultModel()
+                try {
+                    RDFDataMgr.loadModel(catalogType.uri(uris), Lang.TURTLE)
+                } catch (ex: Exception) {
+                    LOGGER.error("Download failed for ${catalogType.uri(uris)}", ex)
+                    ModelFactory.createDefaultModel()
+                }
             },
-            async { catalogType.infModel(rdfData[0]) }
+            async {
+                try {
+                    RDFDataMgr.loadModel(uris.organizations, Lang.TURTLE)
+                } catch (ex: Exception) {
+                    LOGGER.error("Download failed for ${uris.organizations}", ex)
+                    ModelFactory.createDefaultModel()
+                }
+            }
         ).let { runBlocking { it.awaitAll() } }
 
-        return models[0].union(models[1])
+        val deductions = listOf(
+            async { catalogType.extendedPublishersModel(orgData = rdfData[1], catalogData = rdfData[0]) },
+            async { catalogType.deductionsModel(rdfData[0]) }
+        ).let { runBlocking { it.awaitAll() } }
+
+        return rdfData[0].union(deductions[0]).union(deductions[1])
     }
 
-    private fun CatalogType.extendedPublishersModel(orgData: Model?, catalogData: Model?): Model? {
+    private fun CatalogType.extendedPublishersModel(orgData: Model, catalogData: Model): Model {
         val publisherPredicate = when (this) {
             CatalogType.EVENTS -> CV.hasCompetentAuthority
             CatalogType.PUBLICSERVICES -> CV.hasCompetentAuthority
             else -> DCTerms.publisher
         }
-        return orgData?.createModelOfPublishersWithOrgData(
-            publisherURIs = catalogData?.extractInadequatePublishers(publisherPredicate)
-                ?: emptySet(),
+        return orgData.createModelOfPublishersWithOrgData(
+            publisherURIs = catalogData.extractInadequatePublishers(publisherPredicate),
             orgsURI = uris.organizations
         )
     }
 
-    private fun CatalogType.infModel(rdfData: Model): Model =
+    private fun CatalogType.deductionsModel(rdfData: Model): Model =
         when (this) {
             CatalogType.DATASETS -> ModelFactory.createInfModel(
                 GenericRuleReasoner(Rule.parseRules(datasetRules)),
                 rdfData.fdkPrefix()
-            )
-            else -> rdfData
+            ).deductionsModel
+            else -> ModelFactory.createDefaultModel()
         }
 }
