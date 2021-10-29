@@ -42,12 +42,20 @@ class ReasoningService(
                     LOGGER.error("Download failed for ${uris.organizations}", ex)
                     ModelFactory.createDefaultModel()
                 }
+            },
+            async {
+                try {
+                    RDFDataMgr.loadModel(uris.los, Lang.RDFXML)
+                } catch (ex: Exception) {
+                    LOGGER.error("Download failed for ${uris.los}", ex)
+                    ModelFactory.createDefaultModel()
+                }
             }
         ).let { runBlocking { it.awaitAll() } }
 
         val deductions = listOf(
             async { catalogType.extendedPublishersModel(orgData = rdfData[1], catalogData = rdfData[0]) },
-            async { catalogType.deductionsModel(rdfData[0]) }
+            async { catalogType.deductionsModel(catalogData = rdfData[0], losData = rdfData[2]) }
         ).let { runBlocking { it.awaitAll() } }
 
         return rdfData[0].union(deductions[0]).union(deductions[1])
@@ -65,11 +73,11 @@ class ReasoningService(
         )
     }
 
-    private fun CatalogType.deductionsModel(rdfData: Model): Model =
+    private fun CatalogType.deductionsModel(catalogData: Model, losData: Model): Model =
         when (this) {
             CatalogType.DATASETS -> ModelFactory.createInfModel(
-                GenericRuleReasoner(Rule.parseRules(datasetRules)),
-                rdfData.fdkPrefix()
+                GenericRuleReasoner(Rule.parseRules(datasetRules)).bindSchema(losData),
+                catalogData.fdkPrefix()
             ).deductionsModel
             else -> ModelFactory.createDefaultModel()
         }

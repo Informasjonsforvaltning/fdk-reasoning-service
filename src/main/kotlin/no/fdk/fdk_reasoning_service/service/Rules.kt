@@ -4,6 +4,7 @@ val datasetRules = """
     @prefix dcat: <http://www.w3.org/ns/dcat#> .
     @prefix dct: <http://purl.org/dc/terms/> .
     @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+    @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
     @prefix fdk: <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/master/src/main/resources/ontology/fdk.owl#> .
 
     [isAuthoritative:
@@ -43,6 +44,27 @@ val datasetRules = """
         strConcat(?source,?sourceStr),
         regex(?sourceStr, '${openDataURIBases.flatMap { openDataURIVariants(it) }.joinToString(separator = "|")}')
         -> (?dataset fdk:isOpenData 'true'^^xsd:boolean)
+    ]
+
+    [exactMatch:
+        (?dataset rdf:type dcat:Dataset),
+        (?dataset dcat:theme ?theme),
+        (?theme skos:exactMatch ?exactMatch)
+        -> (?dataset dcat:theme ?exactMatch)
+    ]
+
+    [closeMatch:
+        (?dataset rdf:type dcat:Dataset),
+        (?dataset dcat:theme ?theme),
+        (?theme skos:closeMatch ?exactMatch)
+        -> (?dataset dcat:theme ?exactMatch)
+    ]
+
+    [broadMatch:
+        (?dataset rdf:type dcat:Dataset),
+        (?dataset dcat:theme ?theme),
+        (?theme skos:broadMatch ?exactMatch)
+        -> (?dataset dcat:theme ?exactMatch)
     ]
 """
 

@@ -15,6 +15,8 @@ fun startMockServer() {
 
         mockserver.stubFor(get(urlEqualTo("/organizations"))
             .willReturn(ok(File("src/test/resources/orgs.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/los"))
+            .willReturn(ok(File("src/test/resources/los.rdf").readText())))
         mockserver.stubFor(get(urlEqualTo("/dataservices/catalogs?catalogrecords=true"))
             .willReturn(ok(File("src/test/resources/dataservices.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/concepts?catalogrecords=true"))

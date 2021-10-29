@@ -12,5 +12,6 @@ data class ApplicationURI(
     val dataservices: String,
     val concepts: String,
     val informationmodels: String,
-    val datasets: String
+    val datasets: String,
+    val los: String
 )

@@ -15,6 +15,7 @@ application:
     events: ${EVENTS_HOST:http://fdk-event-harvester:8080}/events
     publicservices: ${PUBLIC_SERVICES_HOST:http://fdk-public-service-harvester:8080}/public-services
     organizations: ${ORGANIZATION_CATALOGUE_HOST}/organizations
+    los: ${LOS_HOST:https://psi.norge.no/los/all.rdf}
 
 ---
 spring:

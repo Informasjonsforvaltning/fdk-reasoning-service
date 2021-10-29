@@ -35,7 +35,7 @@
         dcat:contactPoint          [ a                        vcard:Organization ;
                                      vcard:organization-unit  "Ny test"
                                    ] ;
-        dcat:theme                 <https://psi.norge.no/los/tema/trafikkinformasjon> , <https://psi.norge.no/los/tema/mobilitetstilbud> , <https://psi.norge.no/los/tema/helse-og-omsorg> , <https://psi.norge.no/los/ord/drivstoff-og-ladestasjoner> , <https://psi.norge.no/los/ord/reisebillett> , <https://psi.norge.no/los/tema/lov-og-rett> , <https://psi.norge.no/los/ord/ruteplanlegger> , <https://psi.norge.no/los/tema/kultur-idrett-og-fritid> ;
+        dcat:theme                 <https://psi.norge.no/los/tema/trafikkinformasjon> , <https://psi.norge.no/los/tema/mobilitetstilbud> , <https://psi.norge.no/los/tema/helse-og-omsorg> , <http://publications.europa.eu/resource/authority/data-theme/HEAL> , <https://psi.norge.no/los/ord/drivstoff-og-ladestasjoner> , <https://psi.norge.no/los/ord/reisebillett> , <https://psi.norge.no/los/tema/lov-og-rett> , <http://publications.europa.eu/resource/authority/data-theme/JUST> , <https://psi.norge.no/los/ord/ruteplanlegger> , <https://psi.norge.no/los/tema/kultur-idrett-og-fritid> , <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
         dqv:hasQualityAnnotation   [ a                dqv:QualityAnnotation ;
                                      dqv:inDimension  <iso:Currentness> ;
                                      prov:hasBody     []
@@ -97,7 +97,7 @@
         dct:publisher     <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910298062> ;
         dct:relation      [ a  rdfs:Resource ] ;
         dct:title         "Datter"@nb ;
-        dcat:theme        <https://psi.norge.no/los/tema/arbeid> .
+        dcat:theme        <https://psi.norge.no/los/tema/energi> , <http://publications.europa.eu/resource/authority/data-theme/ENER> .
 
 <https://fellesdatakatalog.brreg.no/api/concepts/5869bbec-f894-47a7-a8de-39a6941a76d1>
         a                skos:Concept ;
