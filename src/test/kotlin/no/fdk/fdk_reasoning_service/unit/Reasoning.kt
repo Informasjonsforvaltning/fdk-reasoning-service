@@ -4,12 +4,15 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.model.CatalogType
+import no.fdk.fdk_reasoning_service.rdf.CV
 import no.fdk.fdk_reasoning_service.service.ReasoningService
+import no.fdk.fdk_reasoning_service.service.catalogRecordURI
 import no.fdk.fdk_reasoning_service.utils.ApiTestContext
 import no.fdk.fdk_reasoning_service.utils.LOCAL_SERVER_PORT
 import no.fdk.fdk_reasoning_service.utils.TestResponseReader
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.riot.Lang
+import org.apache.jena.vocabulary.RDF
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import java.io.ByteArrayOutputStream
@@ -24,13 +27,11 @@ class Reasoning: ApiTestContext() {
 
     @Test
     fun testDatasets() {
-        whenever(uris.datasets)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/datasets/catalogs")
         whenever(uris.organizations)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         whenever(uris.los)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
-        val result = reasoningService.catalogReasoning(CatalogType.DATASETS)
+        val result = reasoningService.catalogReasoning(responseReader.parseTurtleFile("datasets.ttl"), CatalogType.DATASETS)
 
         val expected = responseReader.parseTurtleFile("fdk_ready_datasets.ttl")
 
@@ -39,13 +40,11 @@ class Reasoning: ApiTestContext() {
 
     @Test
     fun testDataServices() {
-        whenever(uris.dataservices)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/dataservices/catalogs")
         whenever(uris.organizations)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         whenever(uris.los)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
-        val result = reasoningService.catalogReasoning(CatalogType.DATASERVICES)
+        val result = reasoningService.catalogReasoning(responseReader.parseTurtleFile("dataservices.ttl"), CatalogType.DATASERVICES)
 
         val expected = responseReader.parseTurtleFile("fdk_ready_dataservices.ttl")
 
@@ -54,13 +53,11 @@ class Reasoning: ApiTestContext() {
 
     @Test
     fun testConcepts() {
-        whenever(uris.concepts)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/concepts")
         whenever(uris.organizations)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         whenever(uris.los)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
-        val result = reasoningService.catalogReasoning(CatalogType.CONCEPTS)
+        val result = reasoningService.catalogReasoning(responseReader.parseTurtleFile("concepts.ttl"), CatalogType.CONCEPTS)
 
         val expected = responseReader.parseTurtleFile("fdk_ready_concepts.ttl")
 
@@ -69,13 +66,11 @@ class Reasoning: ApiTestContext() {
 
     @Test
     fun testInformationModels() {
-        whenever(uris.informationmodels)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/informationmodels/catalogs")
         whenever(uris.organizations)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         whenever(uris.los)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
-        val result = reasoningService.catalogReasoning(CatalogType.INFORMATIONMODELS)
+        val result = reasoningService.catalogReasoning(responseReader.parseTurtleFile("infomodels.ttl"), CatalogType.INFORMATIONMODELS)
 
         val expected = responseReader.parseTurtleFile("fdk_ready_infomodels.ttl")
 
@@ -84,13 +79,11 @@ class Reasoning: ApiTestContext() {
 
     @Test
     fun testEvents() {
-        whenever(uris.events)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/events")
         whenever(uris.organizations)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         whenever(uris.los)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
-        val result = reasoningService.catalogReasoning(CatalogType.EVENTS)
+        val result = reasoningService.catalogReasoning(responseReader.parseTurtleFile("events.ttl"), CatalogType.EVENTS)
 
         val expected = responseReader.parseTurtleFile("fdk_ready_events.ttl")
 
@@ -99,13 +92,11 @@ class Reasoning: ApiTestContext() {
 
     @Test
     fun testPublicServices() {
-        whenever(uris.publicservices)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/public-services")
         whenever(uris.organizations)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         whenever(uris.los)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
-        val result = reasoningService.catalogReasoning(CatalogType.PUBLICSERVICES)
+        val result = reasoningService.catalogReasoning(responseReader.parseTurtleFile("public_services.ttl"), CatalogType.PUBLICSERVICES)
 
         val expected = responseReader.parseTurtleFile("fdk_ready_public_services.ttl")
 

@@ -4,8 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 
 @ConstructorBinding
-@ConfigurationProperties("application.uri")
-data class ApplicationURI(
-    val organizations: String,
-    val los: String
+@ConfigurationProperties("spring.data.mongodb")
+data class MongoConnectionString(
+    val uri: String
 )

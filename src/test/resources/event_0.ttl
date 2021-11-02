@@ -1,0 +1,103 @@
+@prefix br:     <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#> .
+@prefix cpsv:   <http://purl.org/vocab/cpsv#> .
+@prefix cv:     <http://data.europa.eu/m8g/> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix eli:    <http://data.europa.eu/eli/ontology#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix rov:    <http://www.w3.org/ns/regorg#> .
+@prefix schema: <http://schema.org/> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+<https://data.norge.no/concepts/313>
+        a               skos:Concept ;
+        skos:broader    <https://data.norge.no/concepts/325> ;
+        skos:narrower   <https://data.norge.no/concepts/327> , <https://data.norge.no/concepts/326> ;
+        skos:prefLabel  "Losing and finding a job"@en , "Miste og finne jobb"@nb .
+
+<https://data.norge.no/concepts/311>
+        a               skos:Concept ;
+        skos:broader    <https://data.norge.no/concepts/298> ;
+        skos:narrower   <https://data.norge.no/concepts/312> ;
+        skos:prefLabel  "Having a child"@en , "Få barn"@nb .
+
+<https://data.norge.no/concepts/327>
+        a               skos:Concept ;
+        skos:broader    <https://data.norge.no/concepts/313> ;
+        skos:prefLabel  "Losing/quitting a job"@en , "Miste/slutte i en jobb"@nb .
+
+<https://www.staging.fellesdatakatalog.digdir.no/events/2fda2afd-9087-337b-8b16-23627ccaa9c4>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "2fda2afd-9087-337b-8b16-23627ccaa9c4" ;
+        dct:issued         "2021-02-15T10:00:04.475Z"^^xsd:dateTime ;
+        dct:modified       "2021-09-28T08:00:04.243Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/events/09c9429e-af32-4387-b14b-f24ac0c37265> .
+
+<https://data.norge.no/concepts/325>
+        a               skos:Concept ;
+        skos:broader    <https://data.norge.no/concepts/298> ;
+        skos:narrower   <https://data.norge.no/concepts/313> ;
+        skos:prefLabel  "Work-related conditions"@en , "Arbeidsrelaterte forhold"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/events/09c9429e-af32-4387-b14b-f24ac0c37265>
+        a                         cv:LifeEvent ;
+        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910244132> ;
+        dct:description           "ASD forvalter i dag flere ordninger i folketrygdloven med relevans for livshendelsen. Direktoratet forvalter også ordninger som tilhører BFD. I forbindelse med direktoratets langsiktige IKT-moderniseringsarbeid er det innført digitale tjenester for innsyn, dialog, samhandling og automatisert saksbehandling for foreldrepenger og pleiepenger. Dette digitaliseringsarbeidet understøtter målsettingene i digitaliseringsstrategien."@nb ;
+        dct:identifier            "09c9429e-af32-4387-b14b-f24ac0c37265" ;
+        dct:relation              <http://public-service-publisher.fellesdatakatalog.digdir.no/services/13> ;
+        dct:title                 "Få barn"@nb ;
+        dct:type                  <https://data.norge.no/concepts/311> .
+
+<https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910244132>
+        a               rov:RegisteredOrganization ;
+        dct:identifier  "910244132" ;
+        rov:legalName   "RAMSUND OG ROGNAN REVISJON" ;
+        rov:orgType     [ a               skos:Concept ;
+                          skos:prefLabel  "ASA"
+                        ] ;
+        foaf:name       "Ramsund og Rognand revisjon"@nb ;
+        br:orgPath      "/ANNET/910244132" .
+
+<https://data.norge.no/concepts/314>
+        a               skos:Concept ;
+        skos:broader    <https://data.norge.no/concepts/324> ;
+        skos:prefLabel  "Ny i Norge"@nb .
+
+<https://data.norge.no/concepts/312>
+        a               skos:Concept ;
+        skos:broader    <https://data.norge.no/concepts/332> , <https://data.norge.no/concepts/311> ;
+        skos:prefLabel  "Seriously ill child"@en , "Alvorlig sykt barn"@nb .
+
+<https://data.norge.no/concepts/328>
+        a               skos:Concept ;
+        skos:broader    <https://data.norge.no/concepts/298> ;
+        skos:narrower   <https://data.norge.no/concepts/315> ;
+        skos:prefLabel  "Death of a relative"@en , "Dødsfall i familien"@nb .
+
+<https://data.norge.no/concepts/332>
+        a               skos:Concept ;
+        skos:broader    <https://data.norge.no/concepts/298> ;
+        skos:narrower   <https://data.norge.no/concepts/312> ;
+        skos:prefLabel  "Facing an emergency / health problem"@en , "Stå overfor en nødsituasjon/helseproblem"@nb .
+
+<https://data.norge.no/concepts/326>
+        a               skos:Concept ;
+        skos:broader    <https://data.norge.no/concepts/313> ;
+        skos:prefLabel  "Looking for a new job"@en , "Lete etter en ny jobb"@nb .
+
+<https://data.norge.no/concepts/315>
+        a               skos:Concept ;
+        skos:broader    <https://data.norge.no/concepts/328> ;
+        skos:prefLabel  "Dødsfall og arv"@nb .
+
+<https://data.norge.no/concepts/298>
+        a               skos:Concept ;
+        skos:narrower   <https://data.norge.no/concepts/332> , <https://data.norge.no/concepts/328> , <https://data.norge.no/concepts/324> , <https://data.norge.no/concepts/325> , <https://data.norge.no/concepts/311> ;
+        skos:prefLabel  "Life event"@en , "Innbygger"@nb .
+
+<https://data.norge.no/concepts/324>
+        a               skos:Concept ;
+        skos:broader    <https://data.norge.no/concepts/298> ;
+        skos:narrower   <https://data.norge.no/concepts/314> ;
+        skos:prefLabel  "Moving to/from the country"@en , "Flytte til/fra landet"@nb .

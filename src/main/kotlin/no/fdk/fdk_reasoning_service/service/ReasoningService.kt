@@ -23,18 +23,10 @@ class ReasoningService(
     private val uris: ApplicationURI
 ) : CoroutineScope by CoroutineScope(Executors.newFixedThreadPool(10).asCoroutineDispatcher()) {
 
-    fun catalogReasoning(catalogType: CatalogType): Model {
+    fun catalogReasoning(catalogModel: Model, catalogType: CatalogType): Model {
         LOGGER.debug("Starting $catalogType reasoning")
 
         val rdfData = listOf(
-            async {
-                try {
-                    RDFDataMgr.loadModel(catalogType.uri(uris), Lang.TURTLE)
-                } catch (ex: Exception) {
-                    LOGGER.error("Download failed for ${catalogType.uri(uris)}", ex)
-                    ModelFactory.createDefaultModel()
-                }
-            },
             async {
                 try {
                     RDFDataMgr.loadModel(uris.organizations, Lang.TURTLE)
@@ -54,11 +46,11 @@ class ReasoningService(
         ).let { runBlocking { it.awaitAll() } }
 
         val deductions = listOf(
-            async { catalogType.extendedPublishersModel(orgData = rdfData[1], catalogData = rdfData[0]) },
-            async { catalogType.deductionsModel(catalogData = rdfData[0], losData = rdfData[2]) }
+            async { catalogType.extendedPublishersModel(orgData = rdfData[0], catalogData = catalogModel) },
+            async { catalogType.deductionsModel(catalogData = catalogModel, losData = rdfData[1]) }
         ).let { runBlocking { it.awaitAll() } }
 
-        return rdfData[0].union(deductions[0]).union(deductions[1])
+        return catalogModel.union(deductions[0]).union(deductions[1])
     }
 
     private fun CatalogType.extendedPublishersModel(orgData: Model, catalogData: Model): Model {

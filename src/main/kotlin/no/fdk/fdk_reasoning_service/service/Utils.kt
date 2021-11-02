@@ -1,29 +1,64 @@
 package no.fdk.fdk_reasoning_service.service
 
+import no.fdk.fdk_reasoning_service.Application
 import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.model.CatalogType
+import no.fdk.fdk_reasoning_service.model.TurtleDBO
 import no.fdk.fdk_reasoning_service.rdf.BR
+import org.apache.jena.query.QueryExecutionFactory
+import org.apache.jena.query.QueryFactory
 import org.apache.jena.rdf.model.*
+import org.apache.jena.riot.Lang
 import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.DCTerms
 import org.apache.jena.vocabulary.RDF
 import org.apache.jena.vocabulary.ROV
 import org.apache.jena.vocabulary.SKOS
+import org.slf4j.LoggerFactory
+import java.io.ByteArrayOutputStream
+import java.io.StringReader
+import java.util.*
+import java.util.zip.GZIPInputStream
+import java.util.zip.GZIPOutputStream
 
-const val RECORDS_PARAM_TRUE = "catalogrecords=true"
+private val logger = LoggerFactory.getLogger(Application::class.java)
+const val UNION_ID = "union-graph"
+
+fun Model.createRDFResponse(responseType: Lang): String =
+    ByteArrayOutputStream().use { out ->
+        write(out, responseType.name)
+        out.flush()
+        out.toString("UTF-8")
+    }
+
+fun parseRDFResponse(responseBody: String, rdfLanguage: Lang, rdfSource: String?): Model? {
+    val responseModel = ModelFactory.createDefaultModel()
+
+    try {
+        responseModel.read(StringReader(responseBody), "", rdfLanguage.name)
+    } catch (ex: Exception) {
+        logger.error("Parse from $rdfSource has failed", ex)
+        return null
+    }
+
+    return responseModel
+}
+
+fun gzip(content: String): String {
+    val bos = ByteArrayOutputStream()
+    GZIPOutputStream(bos).bufferedWriter(Charsets.UTF_8).use { it.write(content) }
+    return Base64.getEncoder().encodeToString(bos.toByteArray())
+}
+
+fun ungzip(base64Content: String): String {
+    val content = Base64.getDecoder().decode(base64Content)
+    return GZIPInputStream(content.inputStream())
+        .bufferedReader(Charsets.UTF_8)
+        .use { it.readText() }
+}
 
 fun Model.fdkPrefix(): Model =
     setNsPrefix("fdk", "https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/master/src/main/resources/ontology/fdk.owl#")
-
-fun CatalogType.uri(uris: ApplicationURI): String =
-    when (this) {
-        CatalogType.DATASETS -> "${uris.datasets}?$RECORDS_PARAM_TRUE"
-        CatalogType.DATASERVICES -> "${uris.dataservices}?$RECORDS_PARAM_TRUE"
-        CatalogType.CONCEPTS -> "${uris.concepts}?$RECORDS_PARAM_TRUE"
-        CatalogType.INFORMATIONMODELS -> "${uris.informationmodels}?$RECORDS_PARAM_TRUE"
-        CatalogType.EVENTS -> "${uris.events}?$RECORDS_PARAM_TRUE"
-        CatalogType.PUBLICSERVICES -> "${uris.publicservices}?$RECORDS_PARAM_TRUE"
-    }
 
 fun Model.createModelOfPublishersWithOrgData(publisherURIs: Set<String>, orgsURI: String): Model {
     val model = ModelFactory.createDefaultModel()
@@ -93,6 +128,47 @@ fun Statement.isResourceProperty(): Boolean =
         false
     }
 
+fun Model.containsTriple(subj: String, pred: String, obj: String): Boolean {
+    val askQuery = "ASK { $subj $pred $obj }"
+
+    return try {
+        val query = QueryFactory.create(askQuery)
+        return QueryExecutionFactory.create(query, this).execAsk()
+    } catch (ex: Exception) { false }
+}
+
+fun Resource.catalogRecordURI(): String? {
+    val selectQuery = "SELECT ?record { ?record <http://xmlns.com/foaf/0.1/primaryTopic> <$uri> . } LIMIT 1"
+
+    return try {
+        val query = QueryFactory.create(selectQuery)
+        return QueryExecutionFactory.create(query, model).execSelect()
+            .asSequence()
+            .firstOrNull()
+            ?.get("record")
+            ?.toString()
+    } catch (ex: Exception) {
+        logger.error("Unable to find record for $uri", ex)
+        null
+    }
+}
+
+fun Resource.fdkId(recordURI: String): String? {
+    val selectQuery = "SELECT ?fdkId { <$recordURI> <http://purl.org/dc/terms/identifier> ?fdkId . } LIMIT 1"
+
+    return try {
+        val query = QueryFactory.create(selectQuery)
+        return QueryExecutionFactory.create(query, model).execSelect()
+            .asSequence()
+            .firstOrNull()
+            ?.get("fdkId")
+            ?.toString()
+    } catch (ex: Exception) {
+        logger.error("Unable to find fdkId for $recordURI", ex)
+        null
+    }
+}
+
 fun Resource.dctIdentifierIsInadequate(): Boolean =
     listProperties(DCTerms.identifier)
         .toList()
@@ -114,6 +190,18 @@ fun orgIdFromURI(uri: String): String? {
     return if (allMatching.size == 1) allMatching.first().value
     else null
 }
+
+fun Model.createUnionDBO(): TurtleDBO =
+    TurtleDBO(
+        id = UNION_ID,
+        turtle = gzip(createRDFResponse(Lang.TURTLE))
+    )
+
+fun Model.createDBO(fdkId: String): TurtleDBO =
+    TurtleDBO(
+        id = fdkId,
+        turtle = gzip(createRDFResponse(Lang.TURTLE))
+    )
 
 val napThemes: Set<String> = setOf(
     "https://psi.norge.no/los/tema/mobilitetstilbud",
