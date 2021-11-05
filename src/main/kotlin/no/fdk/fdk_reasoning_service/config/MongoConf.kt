@@ -20,6 +20,11 @@ open class MongoConf(
 
     @Bean
     open fun eventMongoTemplate(): MongoTemplate {
-        return MongoTemplate(mongoClient(), databases.events);
+        return MongoTemplate(mongoClient(), databases.events)
+    }
+
+    @Bean
+    open fun publicServiceMongoTemplate(): MongoTemplate {
+        return MongoTemplate(mongoClient(), databases.publicServices)
     }
 }
