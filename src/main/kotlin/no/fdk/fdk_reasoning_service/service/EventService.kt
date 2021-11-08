@@ -69,10 +69,6 @@ class EventService(
         )
     }
 
-    private fun Resource.catalogRecordModel(recordURI: String): Model =
-        ModelFactory.createDefaultModel()
-            .recursiveAddNonEventOrServiceResource(model.getResource(recordURI), 4)
-
     private fun Model.recursiveAddNonEventOrServiceResource(resource: Resource, recursiveCount: Int): Model {
         val newCount = recursiveCount - 1
 

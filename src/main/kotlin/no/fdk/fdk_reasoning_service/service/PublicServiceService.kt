@@ -64,10 +64,6 @@ class PublicServiceService(
         )
     }
 
-    private fun Resource.catalogRecordModel(recordURI: String): Model =
-        ModelFactory.createDefaultModel()
-            .recursiveAddNonPublicServiceResources(model.getResource(recordURI), 4)
-
     private fun Model.recursiveAddNonPublicServiceResources(resource: Resource, recursiveCount: Int): Model {
         val newCount = recursiveCount - 1
         val types = resource.listProperties(RDF.type)

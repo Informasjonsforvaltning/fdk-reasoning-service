@@ -169,6 +169,9 @@ fun Resource.fdkId(recordURI: String): String? {
     }
 }
 
+fun Resource.catalogRecordModel(recordURI: String): Model =
+    model.getResource(recordURI).listProperties().toModel()
+
 fun Resource.dctIdentifierIsInadequate(): Boolean =
     listProperties(DCTerms.identifier)
         .toList()
