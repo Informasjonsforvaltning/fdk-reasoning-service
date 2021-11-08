@@ -247,3 +247,25 @@ val openDataURIBases: Set<String> = setOf(
     "creativecommons.org/licenses/by/4.0",
     "data.norge.no/nlod/no",
     "data.norge.no/nlod")
+
+fun Resource.extractFDKIdAndRecordURI(): FDKIdAndRecordURI? {
+
+    val recordURI = catalogRecordURI()
+    if (recordURI == null) {
+        logger.error("Unable to find record for $uri", Exception())
+        return null
+    }
+
+    val fdkId = fdkId(recordURI)
+    if (fdkId == null) {
+        logger.error("Unable to find fdkId for $recordURI", Exception())
+        return null
+    }
+
+    return FDKIdAndRecordURI(fdkId, recordURI)
+}
+
+data class FDKIdAndRecordURI(
+    val fdkId: String,
+    val recordURI: String
+)

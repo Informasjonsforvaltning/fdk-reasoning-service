@@ -60,21 +60,13 @@ class EventService(
                 eventModel = eventModel.recursiveAddNonEventOrServiceResource(it.resource, 10)
             }
 
-        val recordURI = catalogRecordURI()
-        if (recordURI == null) {
-            LOGGER.error("Unable to find record for $uri", Exception())
-            return null
-        }
+        val fdkIdAndRecordURI = extractFDKIdAndRecordURI()
 
-        eventModel = eventModel.union(catalogRecordModel(recordURI))
-
-        val fdkId = fdkId(recordURI)
-        if (fdkId == null) {
-            LOGGER.error("Unable to find fdkId for $recordURI", Exception())
-            return null
-        }
-
-        return Pair(fdkId, eventModel)
+        return if (fdkIdAndRecordURI == null) null
+        else Pair(
+            fdkIdAndRecordURI.fdkId,
+            eventModel.union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+        )
     }
 
     private fun Resource.catalogRecordModel(recordURI: String): Model =
