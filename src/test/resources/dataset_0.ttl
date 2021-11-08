@@ -1,0 +1,69 @@
+@prefix br:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#> .
+@prefix fdk:   <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/master/src/main/resources/ontology/fdk.owl#>
+@prefix rov:   <http://www.w3.org/ns/regorg#> .
+@prefix schema: <http://schema.org/> .
+@prefix dcatapi: <http://dcat.no/dcatapi/> .
+@prefix adms:  <http://www.w3.org/ns/adms#> .
+@prefix iso:   <http://iso.org/25012/2008/dataquality/> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dqv:   <http://www.w3.org/ns/dqv#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix oa:    <http://www.w3.org/ns/oa#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcatno: <http://difi.no/dcatno#> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+
+<http://brreg.no/catalogs/910244132/datasets/c32b7a4f-655f-45f6-88f6-d01f05d0f7c2>
+        a                         dcat:Dataset ;
+        dct:accessRights          <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:description           "bbbb\n\n---\nFormål: "@nb ;
+        dct:provenance            <http://data.brreg.no/datakatalog/provinens/nasjonal> ;
+        dct:publisher             <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;
+        dct:title                 "Fint datasett"@nb ;
+        dcat:distribution         [ a                dcat:Distribution ;
+                                    dct:description  "Åpent"@nb ;
+                                    dct:format       "json" ;
+                                    dct:license      [ a               dct:LicenseDocument , skos:Concept ;
+                                                       dct:source      "http://data.norge.no/nlod/" ;
+                                                       skos:prefLabel  "Norsk lisens for offentlige data"@no , "Norwegian Licence for Open Government Data"@en
+                                                     ] ;
+                                    dct:title        "TEST"@nb ;
+                                    dcat:accessURL   <https://vg.no>
+                                  ] ;
+        dcat:distribution         [ a           dcat:Distribution ;
+                                    dct:format  "xml"
+                                  ] ;
+        dcat:theme                <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
+        dqv:hasQualityAnnotation  [ a                dqv:QualityAnnotation ;
+                                    dqv:inDimension  iso:Currentness ;
+                                    oa:hasBody       [ a             oa:TextualBody ;
+                                                       dct:format    <http://publications.europa.eu/resource/authority/file-type/TXT> ;
+                                                       dct:language  <http://publications.europa.eu/resource/authority/language/NOB>
+                                                     ]
+                                  ] ;
+        fdk:isAuthoritative       true ;
+        fdk:isOpenData            true .
+
+
+<http://localhost:5000/datasets/4667277a-9d27-32c1-aed5-612fa601f393>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "4667277a-9d27-32c1-aed5-612fa601f393" ;
+        dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
+        dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
+        dct:isPartOf       <http://localhost:5000/catalogs/6e4237cc-98d6-3e7c-a892-8ac1f0ffb37f> ;
+        foaf:primaryTopic  <http://brreg.no/catalogs/910244132/datasets/c32b7a4f-655f-45f6-88f6-d01f05d0f7c2> .
+
+<https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910244132>
+        a                     rov:RegisteredOrganization ;
+        dct:identifier        "910244132" ;
+        rov:legalName         "RAMSUND OG ROGNAN REVISJON" ;
+        rov:orgType           [ a               skos:Concept ;
+                                skos:prefLabel  "ASA"
+                              ] ;
+        foaf:name             "Ramsund og Rognand revisjon"@nb ;
+        br:orgPath            "/ANNET/910244132" .

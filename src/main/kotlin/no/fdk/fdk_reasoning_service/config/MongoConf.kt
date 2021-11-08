@@ -19,6 +19,11 @@ open class MongoConf(
     }
 
     @Bean
+    open fun datasetMongoTemplate(): MongoTemplate {
+        return MongoTemplate(mongoClient(), databases.datasets)
+    }
+
+    @Bean
     open fun eventMongoTemplate(): MongoTemplate {
         return MongoTemplate(mongoClient(), databases.events)
     }

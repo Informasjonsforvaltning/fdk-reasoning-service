@@ -13,6 +13,7 @@ application:
     organizations: ${ORGANIZATION_CATALOGUE_HOST}/organizations
     los: ${LOS_HOST:https://psi.norge.no/los/all.rdf}
   databases:
+    datasets: datasetHarvester
     events: eventHarvester
     publicServices: publicServiceHarvester
 

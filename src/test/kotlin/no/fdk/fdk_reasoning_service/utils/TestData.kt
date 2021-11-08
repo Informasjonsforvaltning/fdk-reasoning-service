@@ -2,6 +2,23 @@ package no.fdk.fdk_reasoning_service.utils
 
 import no.fdk.fdk_reasoning_service.service.UNION_ID
 
+val allDatasetIds = listOf(
+    UNION_ID,
+    "6e4237cc-98d6-3e7c-a892-8ac1f0ffb37f",
+    "4667277a-9d27-32c1-aed5-612fa601f393",
+    "a1c680ca-62d7-34d5-aa4c-d39b5db033ae",
+    "0801ece7-8e74-385f-9db4-44e5c6508c44",
+    "bc56fa1c-434a-3561-8fa7-e373dc1b6b55"
+)
+
+val savedDatasetCollections = listOf(
+    "fdkCatalogs",
+    "fdkCatalogs",
+    "fdkDatasets",
+    "fdkDatasets",
+    "fdkDatasets",
+    "fdkDatasets")
+
 val allEventIds = listOf(
     UNION_ID,
     "12af419b-b010-3acd-bd4d-c52c3a62990f",
