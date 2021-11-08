@@ -7,5 +7,6 @@ import org.springframework.boot.context.properties.ConstructorBinding
 @ConfigurationProperties("application.databases")
 data class MongoDatabases(
     val events: String,
-    val publicServices: String
+    val publicServices: String,
+    val infoModels: String
 )

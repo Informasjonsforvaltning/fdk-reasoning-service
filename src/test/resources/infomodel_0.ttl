@@ -51,11 +51,6 @@ pass:varselEpostadresse
         dct:title                   "varselEpostadresse"@nb ;
         modelldcatno:hasSimpleType  skebase:EpostadresseType .
 
-<https://data.brreg.no/enhetsregisteret/oppslag/enheter/974761076>
-        a          foaf:Agent , owl:NamedIndividual ;
-        dct:type   "Organisasjonsledd"@nb ;
-        foaf:name  "Skatteetaten"@nb .
-
 pass:oppgaveeierRolle
         a                           modelldcatno:Role , owl:NamedIndividual ;
         dct:description             "Forsørger som har betalt for pass og stell av barn.  Se type Oppgaveeier.\noppgaveeier: den oppgaven gjelder. Normalt en skattpliktig, men kan også være en virksomhet som ikke er skattepliktig."@nb ;
@@ -378,15 +373,6 @@ skebase:ÅrstallType  a                modelldcatno:SimpleType , owl:NamedIndivi
         modelldcatno:typeDefinitionReference
                 "http://www.w3.org/2001/XMLSchema#gYear"^^xsd:anyURI .
 
-pass:SkattKatalog  a        dcat:Catalog , owl:NamedIndividual ;
-        dct:description     "En modell fra Skatteetaten"@nb , "One information models from The Tax Administration"@en ;
-        dct:identifier      "http://data.skatteetaten.no/ns/katalog/SkattKatalog"^^xsd:anyURI ;
-        dct:issued          "2020-03-30T16:00:00+02:00"^^xsd:dateTime ;
-        dct:license         <https://creativecommons.org/licenses/by-nc-sa/4.0/> ;
-        dct:publisher       <https://data.brreg.no/enhetsregisteret/oppslag/enheter/974761076> ;
-        dct:title           "Skattemodellkatalogen™"@nb , "The tax catalog™"@en ;
-        modelldcatno:model  pass:OppgaveOverPassOgStellAvBarn .
-
 pass:kildesystem  a                 modelldcatno:Attribute , owl:NamedIndividual ;
         dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/kildesystem"^^xsd:anyURI ;
         dct:title                   "kildesystem"@nb ;
@@ -423,13 +409,6 @@ pass:varselSmsMobilnummer
                               ] ;
         foaf:name             "Ramsund og Rognand revisjon"@nb ;
         br:orgPath            "/ANNET/910244132" .
-
-<http://localhost:5000/catalogs/f25c939d-0722-3aa3-82b1-eaa457086444>
-        a                  dcat:CatalogRecord ;
-        dct:identifier     "f25c939d-0722-3aa3-82b1-eaa457086444" ;
-        dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
-        dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
-        foaf:primaryTopic  pass:SkattKatalog .
 
 <http://localhost:5000/informationmodels/bcbe6738-85f6-388c-afcc-ef1fafd7cc45>
         a                  dcat:CatalogRecord ;

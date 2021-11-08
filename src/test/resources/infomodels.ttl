@@ -411,3 +411,18 @@ pass:varselSmsMobilnummer
         dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/varselSmsMobilnummer"^^xsd:anyURI ;
         dct:title                   "varselSmsMobilnummer"@nb ;
         modelldcatno:hasSimpleType  skebase:TelefonnummerType .
+
+<http://localhost:5000/catalogs/f25c939d-0722-3aa3-82b1-eaa457086444>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "f25c939d-0722-3aa3-82b1-eaa457086444" ;
+        dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        foaf:primaryTopic  pass:SkattKatalog .
+
+<http://localhost:5000/informationmodels/bcbe6738-85f6-388c-afcc-ef1fafd7cc45>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "bcbe6738-85f6-388c-afcc-ef1fafd7cc45" ;
+        dct:isPartOf       <http://localhost:5000/catalogs/f25c939d-0722-3aa3-82b1-eaa457086444> ;
+        dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        foaf:primaryTopic  pass:OppgaveOverPassOgStellAvBarn .

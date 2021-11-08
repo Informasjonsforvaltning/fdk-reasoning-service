@@ -15,6 +15,7 @@ application:
   databases:
     events: eventHarvester
     publicServices: publicServiceHarvester
+    infoModels: informationModelHarvester
 
 ---
 spring:
