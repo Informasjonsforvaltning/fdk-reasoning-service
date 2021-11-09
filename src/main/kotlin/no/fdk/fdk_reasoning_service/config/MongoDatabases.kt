@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.ConstructorBinding
 data class MongoDatabases(
     val datasets: String,
     val events: String,
+    val concepts: String,
     val publicServices: String,
     val infoModels: String
 )

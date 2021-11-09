@@ -33,6 +33,13 @@ val allEventIds = listOf(
     "f0fea636-c6f9-3868-9b4c-5769d142d2b8"
 )
 
+val allConceptIds = listOf(
+    UNION_ID,
+    "9b8f1c42-1161-33b1-9d43-a733ee94ddfc",
+    "7dbac738-4944-323a-a777-ad2f83bf75f8",
+    "db1b701c-b4b9-3c20-bc23-236a91236754"
+)
+
 val allPublicServiceIds = listOf(
     UNION_ID,
     "d5d0c07c-c14f-3741-9aa3-126960958cf0", "6ce4e524-3226-3591-ad99-c026705d4259",

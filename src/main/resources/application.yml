@@ -15,6 +15,7 @@ application:
   databases:
     datasets: datasetHarvester
     events: eventHarvester
+    concepts: conceptHarvester
     publicServices: publicServiceHarvester
     infoModels: informationModelHarvester
 

@@ -35,6 +35,11 @@ open class MongoConf(
     }
 
     @Bean
+    open fun conceptMongoTemplate(): MongoTemplate {
+        return MongoTemplate(mongoClient(), databases.concepts)
+    }
+
+    @Bean
     open fun publicServiceMongoTemplate(): MongoTemplate {
         return MongoTemplate(mongoClient(), databases.publicServices)
     }
