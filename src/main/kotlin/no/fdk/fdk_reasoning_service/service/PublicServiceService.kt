@@ -64,8 +64,8 @@ class PublicServiceService(
         )
     }
 
-    private fun Model.recursiveAddNonPublicServiceResources(resource: Resource, recursiveCount: Int): Model {
-        val newCount = recursiveCount - 1
+    private fun Model.recursiveAddNonPublicServiceResources(resource: Resource, maxDepth: Int): Model {
+        val newDepth = maxDepth - 1
         val types = resource.listProperties(RDF.type)
             .toList()
             .map { it.`object` }
@@ -73,10 +73,10 @@ class PublicServiceService(
         if (resourceShouldBeAdded(resource.uri, types)) {
             add(resource.listProperties())
 
-            if (newCount > 0) {
+            if (newDepth > 0) {
                 resource.listProperties().toList()
                     .filter { it.isResourceProperty() }
-                    .forEach { recursiveAddNonPublicServiceResources(it.resource, newCount) }
+                    .forEach { recursiveAddNonPublicServiceResources(it.resource, newDepth) }
             }
         }
 

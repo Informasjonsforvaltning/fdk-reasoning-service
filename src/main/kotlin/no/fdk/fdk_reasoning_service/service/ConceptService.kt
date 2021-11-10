@@ -98,16 +98,16 @@ class ConceptService(
         )
     }
 
-    private fun Model.recursiveAddNonConceptResource(resource: Resource, recursiveCount: Int): Model {
-        val newCount = recursiveCount - 1
+    private fun Model.recursiveAddNonConceptResource(resource: Resource, maxDepth: Int): Model {
+        val newDepth = maxDepth - 1
 
         if (resourceShouldBeAdded(resource)) {
             add(resource.listProperties())
 
-            if (newCount > 0) {
+            if (newDepth > 0) {
                 resource.listProperties().toList()
                     .filter { it.isResourceProperty() }
-                    .forEach { recursiveAddNonConceptResource(it.resource, newCount) }
+                    .forEach { recursiveAddNonConceptResource(it.resource, newDepth) }
             }
         }
 

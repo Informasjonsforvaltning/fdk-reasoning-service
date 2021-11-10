@@ -117,8 +117,8 @@ class InfoModelService(
         return this
     }
 
-    private fun Model.recursiveAddNonInformationModelResource(resource: Resource, recursiveCount: Int): Model {
-        val newCount = recursiveCount - 1
+    private fun Model.recursiveAddNonInformationModelResource(resource: Resource, maxDepth: Int): Model {
+        val newDepth = maxDepth - 1
         val types = resource.listProperties(RDF.type)
             .toList()
             .map { it.`object` }
@@ -126,10 +126,10 @@ class InfoModelService(
         if (resourceShouldBeAdded(resource, types)) {
             add(resource.listProperties())
 
-            if (newCount > 0) {
+            if (newDepth > 0) {
                 resource.listProperties().toList()
                     .filter { it.isResourceProperty() }
-                    .forEach { recursiveAddNonInformationModelResource(it.resource, newCount) }
+                    .forEach { recursiveAddNonInformationModelResource(it.resource, newDepth) }
             }
 
             if (types.contains(ModellDCATAPNO.CodeList)) addCodeElementsAssociatedWithCodeList(resource)

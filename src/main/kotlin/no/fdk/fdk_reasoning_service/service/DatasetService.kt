@@ -100,16 +100,16 @@ class DatasetService(
         )
     }
 
-    private fun Model.recursiveAddNonDatasetResource(resource: Resource, recursiveCount: Int): Model {
-        val newCount = recursiveCount - 1
+    private fun Model.recursiveAddNonDatasetResource(resource: Resource, maxDepth: Int): Model {
+        val newDepth = maxDepth - 1
 
         if (resourceShouldBeAdded(resource)) {
             add(resource.listProperties())
 
-            if (newCount > 0) {
+            if (newDepth > 0) {
                 resource.listProperties().toList()
                     .filter { it.isResourceProperty() }
-                    .forEach { recursiveAddNonDatasetResource(it.resource, newCount) }
+                    .forEach { recursiveAddNonDatasetResource(it.resource, newDepth) }
             }
         }
 
