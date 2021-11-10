@@ -32,3 +32,26 @@
         dcat:endpointDescription  <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-testdata/master/testdata/Spesifisert%20Summert%20Skattegrunnlag%20v1.0.0.json> ;
         dcat:endpointURL          <https://api-at.sits.no> , <https://api.skatteetaten.no> ;
         dcat:servesDataset        <http://brreg.no/catalogs/910244132/datasets/09b578b5-4d30-4d63-ad13-9871a2e708ce> , <http://brreg.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858> .
+
+<http://localhost:5000/catalogs/e422e2a7-287f-349f-876a-dc3541676f21>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "e422e2a7-287f-349f-876a-dc3541676f21" ;
+        dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
+        dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/catalogs/910298062> .
+
+<http://localhost:5000/dataservices/ea51178e-f843-3025-98c5-7d02ce887f90>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "ea51178e-f843-3025-98c5-7d02ce887f90" ;
+        dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
+        dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
+        dct:isPartOf       <http://localhost:5000/catalogs/e422e2a7-287f-349f-876a-dc3541676f21> ;
+        foaf:primaryTopic  <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e> .
+
+<http://localhost:5000/dataservices/4667277a-9d27-32c1-aed5-612fa601f393>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "4667277a-9d27-32c1-aed5-612fa601f393" ;
+        dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
+        dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
+        dct:isPartOf       <http://localhost:5000/catalogs/e422e2a7-287f-349f-876a-dc3541676f21> ;
+        foaf:primaryTopic  <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f586b0cdbffd544ae76a5e5> .

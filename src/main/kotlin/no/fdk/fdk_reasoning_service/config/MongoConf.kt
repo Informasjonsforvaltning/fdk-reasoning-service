@@ -30,6 +30,11 @@ open class MongoConf(
     }
 
     @Bean
+    open fun dataServiceMongoTemplate(): MongoTemplate {
+        return MongoTemplate(mongoClient(), databases.dataServices)
+    }
+
+    @Bean
     open fun eventMongoTemplate(): MongoTemplate {
         return MongoTemplate(mongoClient(), databases.events)
     }

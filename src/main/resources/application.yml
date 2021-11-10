@@ -14,6 +14,7 @@ application:
     los: ${LOS_HOST:https://psi.norge.no/los/all.rdf}
   databases:
     datasets: datasetHarvester
+    dataServices: dataServiceHarvester
     events: eventHarvester
     concepts: conceptHarvester
     publicServices: publicServiceHarvester
