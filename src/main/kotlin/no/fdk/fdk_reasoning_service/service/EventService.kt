@@ -22,6 +22,15 @@ class EventService(
     private val eventMongoTemplate: MongoTemplate
 ) {
 
+    fun getAllEvents(lang: Lang): String =
+        eventMongoTemplate.findById<TurtleDBO>(UNION_ID, "fdkEvent")
+            ?.toRDF(lang)
+            ?: ModelFactory.createDefaultModel().createRDFResponse(lang)
+
+    fun getEventById(id: String, lang: Lang): String? =
+        eventMongoTemplate.findById<TurtleDBO>(id, "fdkEvent")
+            ?.toRDF(lang)
+
     fun reasonHarvestedEvents() {
         eventMongoTemplate.findById<TurtleDBO>("event-union-graph", "turtle")
             ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "events") }

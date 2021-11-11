@@ -194,6 +194,13 @@ fun orgIdFromURI(uri: String): String? {
     else null
 }
 
+fun TurtleDBO.toRDF(lang: Lang): String? =
+    ungzip(turtle)
+        .let {
+            if (lang == Lang.TURTLE) it
+            else parseRDFResponse(it, Lang.TURTLE, null)?.createRDFResponse(lang)
+        }
+
 fun Model.createUnionDBO(): TurtleDBO =
     TurtleDBO(
         id = UNION_ID,

@@ -1,5 +1,12 @@
 package no.fdk.fdk_reasoning_service.utils
 
+import com.mongodb.ConnectionString
+import com.mongodb.MongoClientSettings
+import com.mongodb.client.MongoClient
+import com.mongodb.client.MongoClients
+import no.fdk.fdk_reasoning_service.utils.ApiTestContext.Companion.mongoContainer
+import org.bson.codecs.configuration.CodecRegistries
+import org.bson.codecs.pojo.PojoCodecProvider
 import org.springframework.http.*
 import java.io.BufferedReader
 import java.net.HttpURLConnection
@@ -36,3 +43,18 @@ fun apiGet(port: Int, endpoint: String, acceptHeader: String?): Map<String,Any> 
 }
 
 private fun isOK(response: Int?): Boolean = HttpStatus.resolve(response ?: 0)?.is2xxSuccessful ?: false
+
+fun populateDB() {
+    val connectionString = ConnectionString("mongodb://${MONGO_USER}:${MONGO_PASSWORD}@localhost:${mongoContainer.getMappedPort(MONGO_PORT)}/?authSource=admin&authMechanism=SCRAM-SHA-1")
+    val pojoCodecRegistry = CodecRegistries.fromRegistries(
+        MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(
+            PojoCodecProvider.builder().automatic(true).build()))
+
+    val client: MongoClient = MongoClients.create(connectionString)
+
+    val eventDatabase = client.getDatabase("eventHarvester").withCodecRegistry(pojoCodecRegistry)
+    val eventCollection = eventDatabase.getCollection("turtle")
+    eventCollection.insertOne(EVENT_UNION_DATA.mapDBO())
+
+    client.close()
+}

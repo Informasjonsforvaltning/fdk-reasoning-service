@@ -1,6 +1,16 @@
 package no.fdk.fdk_reasoning_service.utils
 
 import no.fdk.fdk_reasoning_service.service.UNION_ID
+import org.testcontainers.shaded.com.google.common.collect.ImmutableMap
+
+const val MONGO_USER = "testuser"
+const val MONGO_PASSWORD = "testpassword"
+const val MONGO_PORT = 27017
+
+val MONGO_ENV_VALUES: Map<String, String> = ImmutableMap.of(
+    "MONGO_INITDB_ROOT_USERNAME", MONGO_USER,
+    "MONGO_INITDB_ROOT_PASSWORD", MONGO_PASSWORD
+)
 
 val allDatasetIds = listOf(
     UNION_ID,
@@ -32,6 +42,7 @@ val allEventIds = listOf(
     "3b0a716a-7ce4-3c1f-9b74-071e737893f8",
     "f0fea636-c6f9-3868-9b4c-5769d142d2b8"
 )
+const val EVENT_ID_0 = "2fda2afd-9087-337b-8b16-23627ccaa9c4"
 
 val allDataServiceIds = listOf(
     UNION_ID,
