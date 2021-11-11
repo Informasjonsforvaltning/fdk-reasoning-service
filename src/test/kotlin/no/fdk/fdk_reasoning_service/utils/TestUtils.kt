@@ -68,5 +68,9 @@ fun populateDB() {
     val conceptsCollection = conceptsDatabase.getCollection("turtle")
     conceptsCollection.insertOne(CONCEPT_UNION_DATA.mapDBO())
 
+    val dataServicesDatabase = client.getDatabase("dataServiceHarvester").withCodecRegistry(pojoCodecRegistry)
+    val dataServicesCollection = dataServicesDatabase.getCollection("turtle")
+    dataServicesCollection.insertOne(DATA_SERVICE_UNION_DATA.mapDBO())
+
     client.close()
 }

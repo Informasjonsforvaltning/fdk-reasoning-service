@@ -23,6 +23,19 @@ class DataServiceService(
     private val dataServiceMongoTemplate: MongoTemplate
 ) {
 
+    fun getAllDataServiceCatalogs(lang: Lang): String =
+        dataServiceMongoTemplate.findById<TurtleDBO>(UNION_ID, "fdkCatalogs")
+            ?.toRDF(lang)
+            ?: ModelFactory.createDefaultModel().createRDFResponse(lang)
+
+    fun getDataServiceCatalogById(id: String, lang: Lang): String? =
+        dataServiceMongoTemplate.findById<TurtleDBO>(id, "fdkCatalogs")
+            ?.toRDF(lang)
+
+    fun getDataServiceById(id: String, lang: Lang): String? =
+        dataServiceMongoTemplate.findById<TurtleDBO>(id, "fdkServices")
+            ?.toRDF(lang)
+
     fun reasonHarvestedDataServices() {
         dataServiceMongoTemplate.findById<TurtleDBO>("catalog-union-graph", "turtle")
             ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "dataServices") }
