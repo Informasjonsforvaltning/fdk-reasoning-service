@@ -4,6 +4,7 @@ import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.rdf.ModellDCATAPNO
 import no.fdk.fdk_reasoning_service.repository.InformationModelRepository
 import org.apache.jena.rdf.model.Model
+import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.rdf.model.RDFNode
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang
@@ -20,6 +21,28 @@ class InfoModelService(
     private val reasoningService: ReasoningService,
     private val repository: InformationModelRepository
 ) {
+
+    fun getAllInformationModelCatalogs(lang: Lang): String =
+        repository.findReasonedUnion()
+            ?.let {
+                if (lang == Lang.TURTLE) it
+                else parseRDFResponse(it, Lang.TURTLE, null)?.createRDFResponse(lang)
+            }
+            ?: ModelFactory.createDefaultModel().createRDFResponse(lang)
+
+    fun getInformationModelCatalogById(id: String, lang: Lang): String? =
+        repository.findCatalog(id)
+            ?.let {
+                if (lang == Lang.TURTLE) it
+                else parseRDFResponse(it, Lang.TURTLE, null)?.createRDFResponse(lang)
+            }
+
+    fun getInformationModelById(id: String, lang: Lang): String? =
+        repository.findInformationModel(id)
+            ?.let {
+                if (lang == Lang.TURTLE) it
+                else parseRDFResponse(it, Lang.TURTLE, null)?.createRDFResponse(lang)
+            }
 
     fun reasonHarvestedInformationModels() {
         repository.findHarvestedUnion()

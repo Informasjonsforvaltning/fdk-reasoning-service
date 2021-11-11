@@ -18,19 +18,28 @@ class InformationModelRepository(private val informationModelGridFsTemplate: Gri
     fun findHarvestedUnion(): String? =
         readFileContent("information-model-catalogs-union-graph")
 
-    private fun saveReasonedModel(content: String, filename: String) {
+    fun saveContent(content: String, filename: String) {
         informationModelGridFsTemplate.delete(Query(Criteria.where("filename").`is`(filename)))
         informationModelGridFsTemplate.store(gzip(content).byteInputStream(), filename)
     }
 
+    fun findReasonedUnion() =
+        readFileContent(filename = "$reasonedPrefix-$UNION_ID")
+
+    fun findCatalog(fdkId: String) =
+        readFileContent(filename = "$reasonedPrefix-$catalogPrefix-$fdkId")
+
+    fun findInformationModel(fdkId: String) =
+        readFileContent(filename = "$reasonedPrefix-$infoModelPrefix-$fdkId")
+
     fun saveReasonedUnion(content: String) =
-        saveReasonedModel(content, filename = "$reasonedPrefix-$UNION_ID")
+        saveContent(content, filename = "$reasonedPrefix-$UNION_ID")
 
     fun saveCatalog(content: String, fdkId: String) =
-        saveReasonedModel(content, filename = "$reasonedPrefix-$catalogPrefix-$fdkId")
+        saveContent(content, filename = "$reasonedPrefix-$catalogPrefix-$fdkId")
 
     fun saveInformationModel(content: String, fdkId: String) =
-        saveReasonedModel(content, filename = "$reasonedPrefix-$infoModelPrefix-$fdkId")
+        saveContent(content, filename = "$reasonedPrefix-$infoModelPrefix-$fdkId")
 
     private fun readFileContent(filename: String): String? =
         informationModelGridFsTemplate.findOne(Query(Criteria.where("filename").`is`(filename)))
