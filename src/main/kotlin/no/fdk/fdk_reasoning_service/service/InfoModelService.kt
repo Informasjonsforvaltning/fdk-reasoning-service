@@ -30,7 +30,7 @@ class InfoModelService(
     }
 
     private fun Model.separateAndSaveInformationModels() {
-        repository.saveReasonedUnion(gzip(createRDFResponse(Lang.TURTLE)))
+        repository.saveReasonedUnion(createRDFResponse(Lang.TURTLE))
 
         splitCatalogsFromRDF()
             .forEach { it.saveCatalogAndInformationModels() }
@@ -38,9 +38,9 @@ class InfoModelService(
     }
 
     private fun CatalogAndInfoModels.saveCatalogAndInformationModels() {
-        repository.saveCatalog(gzip(catalog.createRDFResponse(Lang.TURTLE)), fdkId)
+        repository.saveCatalog(catalog.createRDFResponse(Lang.TURTLE), fdkId)
 
-        models.forEach { repository.saveInformationModel(gzip(it.infoModel.createRDFResponse(Lang.TURTLE)), it.fdkId) }
+        models.forEach { repository.saveInformationModel(it.infoModel.createRDFResponse(Lang.TURTLE), it.fdkId) }
     }
 
     private fun Model.splitCatalogsFromRDF(): List<CatalogAndInfoModels> =

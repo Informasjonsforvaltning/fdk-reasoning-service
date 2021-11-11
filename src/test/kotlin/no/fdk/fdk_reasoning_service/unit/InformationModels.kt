@@ -30,13 +30,13 @@ class InformationModels {
 
         argumentCaptor<String>().apply {
             verify(repository, times(1)).saveReasonedUnion(capture())
-            val savedUnion = parseRDFResponse(ungzip(firstValue), Lang.TURTLE, "")
+            val savedUnion = parseRDFResponse(firstValue, Lang.TURTLE, "")
             assertTrue(infoModelsUnion.isIsomorphicWith(savedUnion))
         }
 
         argumentCaptor<String, String>().apply {
             verify(repository, times(1)).saveCatalog(first.capture(), second.capture())
-            val savedCatalog = parseRDFResponse(ungzip(first.firstValue), Lang.TURTLE, "")
+            val savedCatalog = parseRDFResponse(first.firstValue, Lang.TURTLE, "")
             assertTrue(infoModelsUnion.isIsomorphicWith(savedCatalog))
             assertEquals(INFOMODEL_CATALOG_ID, second.firstValue)
         }
@@ -44,7 +44,7 @@ class InformationModels {
         argumentCaptor<String, String>().apply {
             verify(repository, times(1)).saveInformationModel(first.capture(), second.capture())
             val expectedInfoModel = responseReader.parseTurtleFile("infomodel_0.ttl")
-            val savedInfoModel = parseRDFResponse(ungzip(first.firstValue), Lang.TURTLE, "")
+            val savedInfoModel = parseRDFResponse(first.firstValue, Lang.TURTLE, "")
             assertTrue(expectedInfoModel.isIsomorphicWith(savedInfoModel))
             assertEquals(INFOMODEL_0_ID, second.firstValue)
         }
