@@ -20,6 +20,8 @@ val allDatasetIds = listOf(
     "0801ece7-8e74-385f-9db4-44e5c6508c44",
     "bc56fa1c-434a-3561-8fa7-e373dc1b6b55"
 )
+const val DATASET_CATALOG_ID = "6e4237cc-98d6-3e7c-a892-8ac1f0ffb37f"
+const val DATASET_ID_0 = "4667277a-9d27-32c1-aed5-612fa601f393"
 
 val savedDatasetCollections = listOf(
     "fdkCatalogs",

@@ -16,6 +16,11 @@ val PUBLIC_SERVICE_UNION_DATA = TurtleDBO(
     turtle = gzip(responseReader.readFile("public_services.ttl"))
 )
 
+val DATASET_UNION_DATA = TurtleDBO(
+    id = "catalog-union-graph",
+    turtle = gzip(responseReader.readFile("datasets.ttl"))
+)
+
 fun TurtleDBO.mapDBO(): Document =
     Document()
         .append("_id", id)

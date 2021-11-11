@@ -21,6 +21,19 @@ class DatasetService(
     private val datasetMongoTemplate: MongoTemplate
 ) {
 
+    fun getAllDatasetCatalogs(lang: Lang): String =
+        datasetMongoTemplate.findById<TurtleDBO>(UNION_ID, "fdkCatalogs")
+            ?.toRDF(lang)
+            ?: ModelFactory.createDefaultModel().createRDFResponse(lang)
+
+    fun getDatasetCatalogById(id: String, lang: Lang): String? =
+        datasetMongoTemplate.findById<TurtleDBO>(id, "fdkCatalogs")
+            ?.toRDF(lang)
+
+    fun getDatasetById(id: String, lang: Lang): String? =
+        datasetMongoTemplate.findById<TurtleDBO>(id, "fdkDatasets")
+            ?.toRDF(lang)
+
     fun reasonHarvestedDatasets() {
         datasetMongoTemplate.findById<TurtleDBO>("catalog-union-graph", "turtle")
             ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "datasets") }
