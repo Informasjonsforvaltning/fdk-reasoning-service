@@ -21,6 +21,19 @@ class ConceptService(
     private val conceptMongoTemplate: MongoTemplate
 ) {
 
+    fun getAllConceptCollections(lang: Lang): String =
+        conceptMongoTemplate.findById<TurtleDBO>(UNION_ID, "fdkCollections")
+            ?.toRDF(lang)
+            ?: ModelFactory.createDefaultModel().createRDFResponse(lang)
+
+    fun getConceptCollectionById(id: String, lang: Lang): String? =
+        conceptMongoTemplate.findById<TurtleDBO>(id, "fdkCollections")
+            ?.toRDF(lang)
+
+    fun getConceptById(id: String, lang: Lang): String? =
+        conceptMongoTemplate.findById<TurtleDBO>(id, "fdkConcepts")
+            ?.toRDF(lang)
+
     fun reasonHarvestedConcepts() {
         conceptMongoTemplate.findById<TurtleDBO>("collection-union-graph", "turtle")
             ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "concepts") }

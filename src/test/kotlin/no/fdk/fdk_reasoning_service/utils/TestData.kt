@@ -59,6 +59,8 @@ val allConceptIds = listOf(
     "7dbac738-4944-323a-a777-ad2f83bf75f8",
     "db1b701c-b4b9-3c20-bc23-236a91236754"
 )
+const val CONCEPT_COLLECTION_ID = "9b8f1c42-1161-33b1-9d43-a733ee94ddfc"
+const val CONCEPT_ID_0 = "db1b701c-b4b9-3c20-bc23-236a91236754"
 
 val allPublicServiceIds = listOf(
     UNION_ID,

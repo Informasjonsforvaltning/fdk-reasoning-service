@@ -21,6 +21,11 @@ val DATASET_UNION_DATA = TurtleDBO(
     turtle = gzip(responseReader.readFile("datasets.ttl"))
 )
 
+val CONCEPT_UNION_DATA = TurtleDBO(
+    id = "collection-union-graph",
+    turtle = gzip(responseReader.readFile("concepts.ttl"))
+)
+
 fun TurtleDBO.mapDBO(): Document =
     Document()
         .append("_id", id)
