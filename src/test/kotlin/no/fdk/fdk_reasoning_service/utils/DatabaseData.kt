@@ -11,6 +11,11 @@ val EVENT_UNION_DATA = TurtleDBO(
     turtle = gzip(responseReader.readFile("events.ttl"))
 )
 
+val PUBLIC_SERVICE_UNION_DATA = TurtleDBO(
+    id = "services-union-graph",
+    turtle = gzip(responseReader.readFile("public_services.ttl"))
+)
+
 fun TurtleDBO.mapDBO(): Document =
     Document()
         .append("_id", id)

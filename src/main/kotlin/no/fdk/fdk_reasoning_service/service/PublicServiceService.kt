@@ -24,6 +24,15 @@ class PublicServiceService(
     private val publicServiceMongoTemplate: MongoTemplate
 ) {
 
+    fun getAllPublicServices(lang: Lang): String =
+        publicServiceMongoTemplate.findById<TurtleDBO>(UNION_ID, "fdkPublicService")
+            ?.toRDF(lang)
+            ?: ModelFactory.createDefaultModel().createRDFResponse(lang)
+
+    fun getPublicServiceById(id: String, lang: Lang): String? =
+        publicServiceMongoTemplate.findById<TurtleDBO>(id, "fdkPublicService")
+            ?.toRDF(lang)
+
     fun reasonHarvestedPublicServices() {
         publicServiceMongoTemplate.findById<TurtleDBO>("services-union-graph", "turtle")
             ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "public-services") }

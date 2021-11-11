@@ -56,5 +56,9 @@ fun populateDB() {
     val eventCollection = eventDatabase.getCollection("turtle")
     eventCollection.insertOne(EVENT_UNION_DATA.mapDBO())
 
+    val publicServicesDatabase = client.getDatabase("publicServiceHarvester").withCodecRegistry(pojoCodecRegistry)
+    val publicServicesCollection = publicServicesDatabase.getCollection("turtle")
+    publicServicesCollection.insertOne(PUBLIC_SERVICE_UNION_DATA.mapDBO())
+
     client.close()
 }

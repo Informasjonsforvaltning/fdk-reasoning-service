@@ -69,6 +69,7 @@ val allPublicServiceIds = listOf(
     "c9a00b57-f1b1-3718-a9aa-0837dd297eec", "88dac895-0c38-30d0-97d3-404181dd17cc",
     "ccec51fe-a499-32b4-8c08-62c1676692d2", "536bfa22-0126-3032-b31a-af8d05b7b0ae",
     "0f0ef27a-9a7e-341e-8ee6-e5a6cf09e7a4", "487787c8-03c4-3b9d-9382-710f21219d91")
+const val PUBLIC_SERVICE_ID_0 = "62966d9d-a547-3a66-a588-3fdf0f97d885"
 
 const val INFOMODEL_CATALOG_ID = "f25c939d-0722-3aa3-82b1-eaa457086444"
 const val INFOMODEL_0_ID = "bcbe6738-85f6-388c-afcc-ef1fafd7cc45"
