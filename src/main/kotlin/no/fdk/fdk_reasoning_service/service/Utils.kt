@@ -279,3 +279,14 @@ data class FDKIdAndRecordURI(
     val fdkId: String,
     val recordURI: String
 )
+
+fun catalogTypeFromRabbitMessageKey(key: String): CatalogType? =
+    when {
+        key.contains("concepts") -> CatalogType.CONCEPTS
+        key.contains("dataservices") -> CatalogType.DATASERVICES
+        key.contains("datasets") -> CatalogType.DATASETS
+        key.contains("informationmodels") -> CatalogType.INFORMATIONMODELS
+        key.contains("events") -> CatalogType.EVENTS
+        key.contains("public_services") -> CatalogType.PUBLICSERVICES
+        else -> null
+    }
