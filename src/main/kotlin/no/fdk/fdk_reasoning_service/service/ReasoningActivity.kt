@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import no.fdk.fdk_reasoning_service.model.CatalogType
+import no.fdk.fdk_reasoning_service.rabbit.RabbitMQPublisher
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -19,7 +20,8 @@ class ReasoningActivity(
     private val datasetService: DatasetService,
     private val eventService: EventService,
     private val infoModelService: InfoModelService,
-    private val publicServiceService: PublicServiceService
+    private val publicServiceService: PublicServiceService,
+    private val rabbitMQPublisher: RabbitMQPublisher
 ) : CoroutineScope by CoroutineScope(Dispatchers.Default) {
 
     @Scheduled(fixedRate = 10000)
@@ -46,7 +48,7 @@ class ReasoningActivity(
 
     private fun launchReasoning(type: CatalogType) {
         lastCatalogLaunches[type] = LocalDateTime.now()
-        launch {
+        val catalogReasoning = launch {
             when (type) {
                 CatalogType.CONCEPTS -> conceptService.reasonHarvestedConcepts()
                 CatalogType.DATASERVICES -> dataServiceService.reasonHarvestedDataServices()
@@ -56,6 +58,8 @@ class ReasoningActivity(
                 CatalogType.PUBLICSERVICES -> publicServiceService.reasonHarvestedPublicServices()
             }
         }
+
+        catalogReasoning.invokeOnCompletion { rabbitMQPublisher.send(type) }
     }
 
 }
