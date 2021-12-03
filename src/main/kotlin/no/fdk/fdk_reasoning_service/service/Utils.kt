@@ -9,6 +9,7 @@ import org.apache.jena.query.QueryExecutionFactory
 import org.apache.jena.query.QueryFactory
 import org.apache.jena.rdf.model.*
 import org.apache.jena.riot.Lang
+import org.apache.jena.riot.RDFDataMgr
 import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.DCTerms
 import org.apache.jena.vocabulary.RDF
@@ -75,7 +76,18 @@ fun Model.createModelOfPublishersWithOrgData(publisherURIs: Set<String>, orgsURI
 
 fun Model.orgResourceForPublisher(publisherURI: String, orgsURI: String): Resource? =
     orgIdFromURI(publisherURI)
-        ?.let { getResource("$orgsURI/$it") }
+        ?.let { downloadOrgDataIfMissing("$orgsURI/${orgIdFromURI(publisherURI)}") }
+
+fun Model.downloadOrgDataIfMissing(uri: String): Resource? =
+    if (containsTriple("<$uri>", "a", "?o")) {
+        getResource(uri)
+    } else {
+        try {
+            RDFDataMgr.loadModel(uri, Lang.TURTLE).getResource(uri)
+        } catch (ex: Exception) {
+            null
+        }
+    }
 
 fun Resource.addPropertiesFromOrgResource(orgResource: Resource?) {
     if (orgResource != null) {

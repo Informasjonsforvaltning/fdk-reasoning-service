@@ -374,3 +374,10 @@
                               ] ;
         foaf:name             "Ramsund og Rognand revisjon"@nb ;
         br:orgPath            "/ANNET/910244132" .
+
+<https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/972417866>
+        a                     rov:RegisteredOrganization ;
+        dct:identifier        "972417866" ;
+        rov:legalName         "KULTURDEPARTEMENTET" ;
+        foaf:name             "KULTURDEPARTEMENTET"@nb ;
+        br:orgPath            "/STAT/972417866" .

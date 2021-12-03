@@ -1,0 +1,24 @@
+@prefix adms:      <http://www.w3.org/ns/adms#> .
+@prefix br:        <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#> .
+@prefix dct:       <http://purl.org/dc/terms/> .
+@prefix foaf:      <http://xmlns.com/foaf/0.1/> .
+@prefix org:       <http://www.w3.org/ns/org#> .
+@prefix rov:       <http://www.w3.org/ns/regorg#> .
+@prefix skos:      <http://www.w3.org/2004/02/skos/core#> .
+
+<http://localhost:5000/organizations/972417866>
+        a                     rov:RegisteredOrganization ;
+        dct:identifier        "972417866" ;
+        rov:legalName         "KULTURDEPARTEMENTET" ;
+        rov:registration      [ a                  adms:Identifier ;
+                                dct:issued         "1995-06-07" ;
+                                skos:notation      "972417866" ;
+                                adms:schemaAgency  "Brønnøysundregistrene"
+                              ] ;
+        foaf:homepage         <http://www.odin.dep.no/> ;
+        foaf:name             "KULTURDEPARTEMENTET"@nb ;
+        br:municipality       <https://data.geonorge.no/administrativeEnheter/kommune/id/173018> ;
+        br:nace               "84.120" ;
+        br:norwegianRegistry  <https://data.brreg.no/enhetsregisteret/api/enheter/972417866> ;
+        br:orgPath            "/STAT/972417866" ;
+        br:sectorCode         "6100" .
