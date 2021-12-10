@@ -54,7 +54,8 @@ pass:varselEpostadresse
 <https://data.brreg.no/enhetsregisteret/oppslag/enheter/974761076>
         a          foaf:Agent , owl:NamedIndividual ;
         dct:type   "Organisasjonsledd"@nb ;
-        foaf:name  "Skatteetaten"@nb .
+        foaf:name  "Skatteetaten"@nb ;
+        br:orgPath "/GENERATED/ORGPATH" .
 
 pass:oppgaveeierRolle
         a                           modelldcatno:Role , owl:NamedIndividual ;

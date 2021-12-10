@@ -17,6 +17,8 @@ fun startMockServer() {
             .willReturn(ok(File("src/test/resources/orgs.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/organizations/972417866"))
             .willReturn(ok(File("src/test/resources/org.ttl").readText())))
+        mockserver.stubFor(get(urlMatching("/organizations/orgpath/.*"))
+            .willReturn(ok("/GENERATED/ORGPATH")))
         mockserver.stubFor(get(urlEqualTo("/los"))
             .willReturn(ok(File("src/test/resources/los.rdf").readText())))
         mockserver.stubFor(get(urlEqualTo("/dataservices/catalogs?catalogrecords=true"))

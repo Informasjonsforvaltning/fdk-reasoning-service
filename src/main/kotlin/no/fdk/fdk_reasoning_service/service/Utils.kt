@@ -1,7 +1,6 @@
 package no.fdk.fdk_reasoning_service.service
 
 import no.fdk.fdk_reasoning_service.Application
-import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.model.TurtleDBO
 import no.fdk.fdk_reasoning_service.rdf.BR
@@ -121,7 +120,7 @@ private fun Resource.addOrgType(orgResource: Resource): Resource {
     return this
 }
 
-fun Model.extractInadequatePublishers(publisherPredicate: Property): Set<String> =
+fun Model.extractPublisherURIs(publisherPredicate: Property): List<Resource> =
     listResourcesWithProperty(publisherPredicate)
         .toList()
         .flatMap { it.listProperties(publisherPredicate).toList() }
@@ -129,9 +128,7 @@ fun Model.extractInadequatePublishers(publisherPredicate: Property): Set<String>
         .filter { it.isResourceProperty() }
         .map { it.resource }
         .filter {  it.isURIResource }
-        .filter { it.dctIdentifierIsInadequate() }
-        .mapNotNull { it.uri }
-        .toSet()
+        .toList()
 
 fun Statement.isResourceProperty(): Boolean =
     try {
