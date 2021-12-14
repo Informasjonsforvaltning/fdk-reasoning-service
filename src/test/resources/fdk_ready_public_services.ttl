@@ -855,3 +855,10 @@
         rov:legalName         "KULTURDEPARTEMENTET" ;
         foaf:name             "KULTURDEPARTEMENTET"@nb ;
         br:orgPath            "/STAT/972417866" .
+
+<https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/991825827>
+        a               rov:RegisteredOrganization ;
+        dct:identifier  "991825827" ;
+        rov:legalName   "DIGITALISERINGSDIREKTORATET" ;
+        foaf:name       "Digitaliseringsdirektoratet"@nb ;
+        br:orgPath      "/STAT/972417858/991825827" .

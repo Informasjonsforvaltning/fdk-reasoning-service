@@ -65,7 +65,9 @@ class ReasoningService(
             CatalogType.PUBLICSERVICES -> CV.hasCompetentAuthority
             else -> DCTerms.publisher
         }
-        val publisherResources = catalogData.extractPublisherURIs(publisherPredicate)
+        val publisherResources = if (this == CatalogType.DATASETS) {
+                catalogData.extractPublisherURIs(publisherPredicate).plus(catalogData.extreactQualifiedAttributionAgentURIs())
+            } else catalogData.extractPublisherURIs(publisherPredicate)
         return orgData.createModelOfPublishersWithOrgData(
             publisherURIs = publisherResources
                 .filter { it.dctIdentifierIsInadequate() }

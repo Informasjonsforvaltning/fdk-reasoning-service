@@ -4,6 +4,7 @@ import no.fdk.fdk_reasoning_service.Application
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.model.TurtleDBO
 import no.fdk.fdk_reasoning_service.rdf.BR
+import no.fdk.fdk_reasoning_service.rdf.PROV
 import org.apache.jena.query.QueryExecutionFactory
 import org.apache.jena.query.QueryFactory
 import org.apache.jena.rdf.model.*
@@ -119,6 +120,20 @@ private fun Resource.addOrgType(orgResource: Resource): Resource {
 
     return this
 }
+
+fun Model.extreactQualifiedAttributionAgentURIs(): List<Resource> =
+    listResourcesWithProperty(PROV.qualifiedAttribution)
+        .toList()
+        .flatMap { it.listProperties(PROV.qualifiedAttribution).toList() }
+        .asSequence()
+        .filter { it.isResourceProperty() }
+        .map { it.resource }
+        .flatMap { it.listProperties(PROV.agent).toList() }
+        .asSequence()
+        .filter { it.isResourceProperty() }
+        .map { it.resource }
+        .filter {  it.isURIResource }
+        .toList()
 
 fun Model.extractPublisherURIs(publisherPredicate: Property): List<Resource> =
     listResourcesWithProperty(publisherPredicate)
