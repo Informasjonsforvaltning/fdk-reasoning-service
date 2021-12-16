@@ -42,7 +42,7 @@ class InformationModels {
         }
 
         argumentCaptor<String, String>().apply {
-            verify(repository, times(1)).saveInformationModel(first.capture(), second.capture())
+            verify(repository, times(2)).saveInformationModel(first.capture(), second.capture())
             val expectedInfoModel = responseReader.parseTurtleFile("infomodel_0.ttl")
             val savedInfoModel = parseRDFResponse(first.firstValue, Lang.TURTLE, "")
             assertTrue(expectedInfoModel.isIsomorphicWith(savedInfoModel))

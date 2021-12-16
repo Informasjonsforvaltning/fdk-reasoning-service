@@ -66,6 +66,53 @@ val datasetRules = """
         (?theme skos:broadMatch ?exactMatch)
         -> (?dataset dcat:theme ?exactMatch)
     ]
+
+    [catalogPublisherWhenMissing:
+        (?dataset rdf:type dcat:Dataset),
+        (?catalog dcat:dataset ?dataset),
+        (?catalog dct:publisher ?catalogPublisher),
+        noValue(?dataset dct:publisher)
+        -> (?dataset dct:publisher ?catalogPublisher)
+    ]
+"""
+
+val dataServiceRules = """
+    @prefix dcat: <http://www.w3.org/ns/dcat#> .
+    @prefix dct: <http://purl.org/dc/terms/> .
+
+    [catalogPublisherWhenMissing:
+        (?service rdf:type dcat:DataService),
+        (?catalog dcat:service ?service),
+        (?catalog dct:publisher ?catalogPublisher),
+        noValue(?service dct:publisher)
+        -> (?service dct:publisher ?catalogPublisher)
+    ]
+"""
+
+val infoModelRules = """
+    @prefix modelldcatno: <https://data.norge.no/vocabulary/modelldcatno#> .
+    @prefix dct: <http://purl.org/dc/terms/> .
+
+    [catalogPublisherWhenMissing:
+        (?model rdf:type modelldcatno:InformationModel),
+        (?catalog modelldcatno:model ?model),
+        (?catalog dct:publisher ?catalogPublisher),
+        noValue(?model dct:publisher)
+        -> (?model dct:publisher ?catalogPublisher)
+    ]
+"""
+
+val conceptRules = """
+    @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+    @prefix dct: <http://purl.org/dc/terms/> .
+
+    [collectionPublisherWhenMissing:
+        (?concept rdf:type skos:Concept),
+        (?collection skos:member ?concept),
+        (?collection dct:publisher ?collectionPublisher),
+        noValue(?concept dct:publisher)
+        -> (?concept dct:publisher ?collectionPublisher)
+    ]
 """
 
 private fun openDataURIVariants(uriBase: String): List<String> =

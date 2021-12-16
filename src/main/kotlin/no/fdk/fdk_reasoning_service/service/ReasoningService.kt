@@ -141,9 +141,21 @@ class ReasoningService(
 
     private fun CatalogType.deductionsModel(catalogData: Model, losData: Model): Model =
         when (this) {
+            CatalogType.CONCEPTS -> ModelFactory.createInfModel(
+                GenericRuleReasoner(Rule.parseRules(conceptRules)),
+                catalogData
+            ).deductionsModel
             CatalogType.DATASETS -> ModelFactory.createInfModel(
                 GenericRuleReasoner(Rule.parseRules(datasetRules)).bindSchema(losData),
                 catalogData.fdkPrefix()
+            ).deductionsModel
+            CatalogType.DATASERVICES -> ModelFactory.createInfModel(
+                GenericRuleReasoner(Rule.parseRules(dataServiceRules)),
+                catalogData
+            ).deductionsModel
+            CatalogType.INFORMATIONMODELS -> ModelFactory.createInfModel(
+                GenericRuleReasoner(Rule.parseRules(infoModelRules)),
+                catalogData
             ).deductionsModel
             else -> ModelFactory.createDefaultModel()
         }

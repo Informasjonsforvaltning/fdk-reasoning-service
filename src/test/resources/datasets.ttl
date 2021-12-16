@@ -121,7 +121,6 @@
         dcatno:objective  "Test"@nb ;
         dct:accessRights  <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:description   "Dette er en test"@nb ;
-        dct:publisher     <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910298062> ;
         dct:references    <http://brreg.no/catalogs/910298062/datasets/12136d8b-024e-4d63-a8ed-5e1885d701cd> ;
         dct:relation      [ a  rdfs:Resource ] ;
         dct:title         "Mor"@nb ;

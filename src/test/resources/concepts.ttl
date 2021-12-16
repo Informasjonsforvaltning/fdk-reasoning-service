@@ -37,7 +37,6 @@
         skosno:datastrukturterm       "eiendomsrett"@nb ;
         dct:identifier                "46f4d710-4c6c-11e8-bb3e-005056821322" ;
         dct:modified                  "2018-04-10"^^xsd:date ;
-        dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/910244132> ;
         dct:subject                   "Formues- og inntektsskatt"@nb ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "eiendomsrett"@nb

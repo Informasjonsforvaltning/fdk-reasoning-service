@@ -383,7 +383,7 @@ pass:SkattKatalog  a        dcat:Catalog , owl:NamedIndividual ;
         dct:license         <https://creativecommons.org/licenses/by-nc-sa/4.0/> ;
         dct:publisher       <https://data.brreg.no/enhetsregisteret/oppslag/enheter/974761076> ;
         dct:title           "Skattemodellkatalogen™"@nb , "The tax catalog™"@en ;
-        modelldcatno:model  pass:OppgaveOverPassOgStellAvBarn .
+        modelldcatno:model  pass:OppgaveOverPassOgStellAvBarn , pass:ModellUtenUtgiver .
 
 pass:kildesystem  a                 modelldcatno:Attribute , owl:NamedIndividual ;
         dct:identifier              "urn:ske:oppgaveoverpassogstellavbarn-2.0/kildesystem"^^xsd:anyURI ;
@@ -412,6 +412,10 @@ pass:varselSmsMobilnummer
         dct:title                   "varselSmsMobilnummer"@nb ;
         modelldcatno:hasSimpleType  skebase:TelefonnummerType .
 
+pass:ModellUtenUtgiver
+        a                  owl:NamedIndividual , modelldcatno:InformationModel ;
+        dct:title          "Modell uten utgiver"@nb .
+
 <http://localhost:5000/catalogs/f25c939d-0722-3aa3-82b1-eaa457086444>
         a                  dcat:CatalogRecord ;
         dct:identifier     "f25c939d-0722-3aa3-82b1-eaa457086444" ;
@@ -426,3 +430,11 @@ pass:varselSmsMobilnummer
         dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
         dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
         foaf:primaryTopic  pass:OppgaveOverPassOgStellAvBarn .
+
+<http://localhost:5000/informationmodels/abad6738-85e6-388b-oebb-fe1eoec7bb45>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "abad6738-85e6-388b-oebb-fe1eoec7bb45" ;
+        dct:isPartOf       <http://localhost:5000/catalogs/f25c939d-0722-3aa3-82b1-eaa457086444> ;
+        dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        foaf:primaryTopic  pass:ModellUtenUtgiver .

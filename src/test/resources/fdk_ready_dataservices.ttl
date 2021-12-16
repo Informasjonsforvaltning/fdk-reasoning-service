@@ -16,6 +16,7 @@
 
 <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e>
         a                  dcat:DataService ;
+        dct:publisher      <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910298062> ;
         dct:description    "Beskrivelse av apiet"@nb ;
         dct:title          "API - Høgskolen for IT og arkitektur"@nb ;
         dcat:contactPoint  [ a         vcard:Organization ;
@@ -25,6 +26,7 @@
 
 <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f586b0cdbffd544ae76a5e5>
         a                         dcat:DataService ;
+        dct:publisher             <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910298062> ;
         dct:description           "Spesifisert summert XXXskattegrunnlag inneholder summert informasjon om en skatteyters inntekt, formue og fradrag og formuesfradrag, med spesifikasjoner."@nb ;
         dct:title                 "Spesifisert summert YYYskattegrunnlag API"@nb ;
         dcat:contactPoint         [ a                          vcard:Organization ;

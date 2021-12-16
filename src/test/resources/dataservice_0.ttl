@@ -1,4 +1,5 @@
 @prefix br:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#> .
+@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/org-type.ttl#> .
 @prefix rov:   <http://www.w3.org/ns/regorg#> .
 @prefix dct:   <http://purl.org/dc/terms/> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -9,6 +10,7 @@
 
 <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e>
         a                  dcat:DataService ;
+        dct:publisher      <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910298062> ;
         dct:description    "Beskrivelse av apiet"@nb ;
         dct:title          "API - Høgskolen for IT og arkitektur"@nb ;
         dcat:contactPoint  [ a         vcard:Organization ;
@@ -23,3 +25,11 @@
         dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
         dct:isPartOf       <http://localhost:5000/catalogs/e422e2a7-287f-349f-876a-dc3541676f21> ;
         foaf:primaryTopic  <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e> .
+
+<https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910298062>
+        a                     rov:RegisteredOrganization ;
+        dct:identifier        "910298062" ;
+        rov:legalName         "KARMSUND OG KYSNESSTRAND REVISJON" ;
+        foaf:name             "Karmsund og kysnesstrand revisjon"@nb ;
+        rov:orgType           orgtype:ORGL ;
+        br:orgPath            "/ANNET/910298062" .
