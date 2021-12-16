@@ -1,5 +1,6 @@
 @prefix br:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#> .
-@prefix fdk:   <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/master/src/main/resources/ontology/fdk.owl#>
+@prefix fdk:   <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/master/src/main/resources/ontology/fdk.owl#> .
+@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/org-type.ttl#> .
 @prefix rov:   <http://www.w3.org/ns/regorg#> .
 @prefix schema: <http://schema.org/> .
 @prefix dcatapi: <http://dcat.no/dcatapi/> .
@@ -178,15 +179,14 @@
         dct:identifier        "910298062" ;
         rov:legalName         "KARMSUND OG KYSNESSTRAND REVISJON" ;
         foaf:name             "Karmsund og kysnesstrand revisjon"@nb ;
+        rov:orgType           orgtype:ORGL ;
         br:orgPath            "/ANNET/910298062" .
 
 <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910244132>
         a                     rov:RegisteredOrganization ;
         dct:identifier        "910244132" ;
         rov:legalName         "RAMSUND OG ROGNAN REVISJON" ;
-        rov:orgType           [ a               skos:Concept ;
-                                skos:prefLabel  "ASA"
-                              ] ;
+        rov:orgType            orgtype:ASA ;
         foaf:name             "Ramsund og Rognand revisjon"@nb ;
         br:orgPath            "/ANNET/910244132" .
 
@@ -195,6 +195,7 @@
         dct:identifier  "984582021" ;
         rov:legalName   "ØSTFOLD KOLLEKTIVTRAFIKK" ;
         foaf:name       "Østfold kollektivtrafikk"@nb ;
+        rov:orgType     orgtype:BEDR ;
         br:orgPath      "/FYLKE/921693230/984582021" .
 
 <https://data.brreg.no/enhetsregisteret/api/enheter/991825827>
@@ -202,4 +203,5 @@
         dct:identifier  "991825827" ;
         rov:legalName   "DIGITALISERINGSDIREKTORATET" ;
         foaf:name       "Digitaliseringsdirektoratet"@nb ;
+        rov:orgType     orgtype:ORGL ;
         br:orgPath      "/STAT/972417858/991825827" .

@@ -1,4 +1,5 @@
 @prefix br:     <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#> .
+@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/org-type.ttl#> .
 @prefix cpsv:   <http://purl.org/vocab/cpsv#> .
 @prefix cv:     <http://data.europa.eu/m8g/> .
 @prefix dcat:   <http://www.w3.org/ns/dcat#> .
@@ -53,9 +54,7 @@
         a               rov:RegisteredOrganization ;
         dct:identifier  "910244132" ;
         rov:legalName   "RAMSUND OG ROGNAN REVISJON" ;
-        rov:orgType     [ a               skos:Concept ;
-                          skos:prefLabel  "ASA"
-                        ] ;
+        rov:orgType     orgtype:ASA ;
         foaf:name       "Ramsund og Rognand revisjon"@nb ;
         br:orgPath      "/ANNET/910244132" .
 

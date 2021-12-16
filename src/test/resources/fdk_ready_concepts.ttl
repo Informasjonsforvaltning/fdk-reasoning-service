@@ -1,4 +1,5 @@
 @prefix br:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#> .
+@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/org-type.ttl#> .
 @prefix dct:   <http://purl.org/dc/terms/> .
 @prefix rov:   <http://www.w3.org/ns/regorg#> .
 @prefix skosxl: <http://www.w3.org/2008/05/skos-xl#> .
@@ -60,6 +61,7 @@
         dct:identifier        "910298062" ;
         rov:legalName         "KARMSUND OG KYSNESSTRAND REVISJON" ;
         foaf:name             "Karmsund og kysnesstrand revisjon"@nb ;
+        rov:orgType           orgtype:ORGL ;
         br:orgPath            "/ANNET/910298062" .
 
 <https://www.example.com/begrepskatalog/0> a skos:Collection ;

@@ -20,7 +20,7 @@ class Concepts {
     private val responseReader = TestResponseReader()
 
     @Test
-    fun testDatasets() {
+    fun testConcepts() {
         val conceptsModel = responseReader.parseTurtleFile("fdk_ready_concepts.ttl")
         whenever(conceptMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
             .thenReturn(TurtleDBO("unionId", gzip("")))

@@ -1,4 +1,5 @@
 @prefix br:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#> .
+@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/org-type.ttl#> .
 @prefix rov:   <http://www.w3.org/ns/regorg#> .
 @prefix dct:   <http://purl.org/dc/terms/> .
 @prefix modelldcatno: <https://data.norge.no/vocabulary/modelldcatno#> .
@@ -419,9 +420,7 @@ pass:varselSmsMobilnummer
         a                     rov:RegisteredOrganization ;
         dct:identifier        "910244132" ;
         rov:legalName         "RAMSUND OG ROGNAN REVISJON" ;
-        rov:orgType           [ a               skos:Concept ;
-                                skos:prefLabel  "ASA"
-                              ] ;
+        rov:orgType           orgtype:ASA ;
         foaf:name             "Ramsund og Rognand revisjon"@nb ;
         br:orgPath            "/ANNET/910244132" .
 

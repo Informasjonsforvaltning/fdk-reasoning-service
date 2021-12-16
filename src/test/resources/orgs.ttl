@@ -4,14 +4,16 @@
 @prefix org:   <http://www.w3.org/ns/org#> .
 @prefix rov:   <http://www.w3.org/ns/regorg#> .
 @prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
-@prefix brskos: <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/org-status.ttl#> .
+@prefix orgstatus: <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/org-status.ttl#> .
+@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/org-type.ttl#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
 
 <http://localhost:5000/organizations/910298062>
         a                     rov:RegisteredOrganization ;
         dct:identifier        "910298062" ;
         rov:legalName         "KARMSUND OG KYSNESSTRAND REVISJON" ;
-        rov:orgStatus         brskos:NormalAktivitet ;
+        rov:orgStatus         orgstatus:NormalAktivitet ;
+        rov:orgType           orgtype:ORGL ;
         rov:registration      [ a                  adms:Identifier ;
                                 skos:notation      "910298062" ;
                                 adms:schemaAgency  "Brønnøysundregistrene"
@@ -24,10 +26,8 @@
         a                     rov:RegisteredOrganization ;
         dct:identifier        "910244132" ;
         rov:legalName         "RAMSUND OG ROGNAN REVISJON" ;
-        rov:orgStatus         brskos:NormalAktivitet ;
-        rov:orgType           [ a               skos:Concept ;
-                                skos:prefLabel  "ASA"
-                              ] ;
+        rov:orgStatus          orgstatus:NormalAktivitet ;
+        rov:orgType            orgtype:ASA ;
         rov:registration      [ a                  adms:Identifier ;
                                 skos:notation      "910244132" ;
                                 adms:schemaAgency  "Brønnøysundregistrene"
@@ -41,6 +41,8 @@
         dct:identifier         "991825827" ;
         org:subOrganizationOf  <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/972417858> ;
         rov:legalName          "DIGITALISERINGSDIREKTORATET" ;
+        rov:orgStatus          orgstatus:NormalAktivitet ;
+        rov:orgType            orgtype:ORGL ;
         rov:registration       [ a                  adms:Identifier ;
                                  dct:issued         "2007-10-15" ;
                                  skos:notation      "991825827" ;
@@ -58,6 +60,8 @@
         a                      rov:RegisteredOrganization ;
         dct:identifier         "984582021" ;
         org:subOrganizationOf  <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/921693230> ;
+        rov:orgStatus          orgstatus:NormalAktivitet ;
+        rov:orgType            orgtype:BEDR ;
         rov:legalName          "ØSTFOLD KOLLEKTIVTRAFIKK" ;
         rov:registration       [ a                  adms:Identifier ;
                                  dct:issued         "2002-06-03" ;

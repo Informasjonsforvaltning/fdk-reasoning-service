@@ -4,12 +4,16 @@
 @prefix foaf:      <http://xmlns.com/foaf/0.1/> .
 @prefix org:       <http://www.w3.org/ns/org#> .
 @prefix rov:       <http://www.w3.org/ns/regorg#> .
+@prefix orgstatus: <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/org-status.ttl#> .
+@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/org-type.ttl#> .
 @prefix skos:      <http://www.w3.org/2004/02/skos/core#> .
 
 <http://localhost:5000/organizations/972417866>
         a                     rov:RegisteredOrganization ;
         dct:identifier        "972417866" ;
         rov:legalName         "KULTURDEPARTEMENTET" ;
+        rov:orgStatus         orgstatus:NormalAktivitet ;
+        rov:orgType           orgtype:STAT ;
         rov:registration      [ a                  adms:Identifier ;
                                 dct:issued         "1995-06-07" ;
                                 skos:notation      "972417866" ;

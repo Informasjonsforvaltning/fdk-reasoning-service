@@ -96,30 +96,13 @@ fun Resource.addPropertiesFromOrgResource(orgResource: Resource?) {
         safeAddProperty(BR.orgPath, orgResource.getProperty(BR.orgPath)?.`object`)
         safeAddProperty(ROV.legalName, orgResource.getProperty(ROV.legalName)?.`object`)
         safeAddProperty(FOAF.name, orgResource.getProperty(FOAF.name)?.`object`)
-        addOrgType(orgResource)
+        safeAddProperty(ROV.orgType, orgResource.getProperty(ROV.orgType)?.`object`)
     }
 }
 
 fun Resource.safeAddProperty(property: Property, value: RDFNode?): Resource =
     if (value == null) this
     else addProperty(property, value)
-
-private fun Resource.addOrgType(orgResource: Resource): Resource {
-    val orgType = orgResource.getProperty(ROV.orgType)
-    if (orgType != null && orgType.isResourceProperty()) {
-        orgType.resource
-            .getProperty(SKOS.prefLabel)
-            ?.`object`
-            ?.let {
-                addProperty(
-                    ROV.orgType,
-                    model.createResource(SKOS.Concept)
-                        .addProperty(SKOS.prefLabel, it))
-            }
-    }
-
-    return this
-}
 
 fun Model.extreactQualifiedAttributionAgentURIs(): List<Resource> =
     listResourcesWithProperty(PROV.qualifiedAttribution)
