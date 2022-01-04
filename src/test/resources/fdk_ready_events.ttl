@@ -360,11 +360,9 @@
         skos:prefLabel  "Notifying and reporting to authorities"@en , "Varsling og rapportering til myndigheter"@nb .
 
 <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910298062>
-        a                     rov:RegisteredOrganization ;
+        a                     foaf:Agent ;
         dct:identifier        "910298062" ;
-        rov:legalName         "KARMSUND OG KYSNESSTRAND REVISJON" ;
         foaf:name             "Karmsund og kysnesstrand revisjon"@nb ;
-        rov:orgType           orgtype:ORGL ;
         br:orgPath            "/ANNET/910298062" .
 
 <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910244132>

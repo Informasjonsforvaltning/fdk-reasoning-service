@@ -7,6 +7,7 @@ import no.fdk.fdk_reasoning_service.rdf.BR
 import no.fdk.fdk_reasoning_service.rdf.CV
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
+import org.apache.jena.rdf.model.Resource
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner
 import org.apache.jena.reasoner.rulesys.Rule
 import org.apache.jena.riot.Lang
@@ -74,18 +75,33 @@ class ReasoningService(
                 .mapNotNull { it.uri }
                 .toSet(),
             orgsURI = uris.organizations
-        ).addOrgPathWhenMissing(publisherResources.mapNotNull { it.uri }.toSet(), catalogData)
+        ).addOrgPathAndNameWhenMissing(publisherResources.mapNotNull { it.uri }.toSet(), catalogData, orgData)
     }
 
-    private fun Model.addOrgPathWhenMissing(publisherURIs: Set<String>, catalogData: Model): Model {
-        publisherURIs
+    private fun Model.addOrgPathAndNameWhenMissing(publisherURIs: Set<String>, catalogData: Model, orgData: Model): Model {
+        publisherURIs.asSequence()
+            .filterNot { containsTriple("<$it>", "<${FOAF.name.uri}>", "?o") }
+            .filterNot { catalogData.containsTriple("<$it>", "<${FOAF.name.uri}>", "?o") }
+            .map { Pair(it, catalogData.dctIdentifierIfOrgId(it)?.let { orgId -> orgData.getResource(orgURI(orgId)) }) }
+            .filter { it.second != null }
+            .forEach { getResource(it.first).safeAddProperty(FOAF.name, it.second?.getProperty(FOAF.name)?.`object`) }
+
+        val publishersMissingOrgPath = publisherURIs.asSequence()
             .filterNot { containsTriple("<$it>", "<${BR.orgPath.uri}>", "?o") }
             .filterNot { catalogData.containsTriple("<$it>", "<${BR.orgPath.uri}>", "?o") }
+
+        publishersMissingOrgPath
+            .map { Pair(it, catalogData.dctIdentifierIfOrgId(it)?.let { orgId -> orgData.getResource(orgURI(orgId)) }) }
+            .filter { it.second != null }
+            .forEach { getResource(it.first).safeAddProperty(BR.orgPath, it.second?.getProperty(BR.orgPath)?.`object`) }
+
+        publishersMissingOrgPath
             .map { Triple(it, catalogData.dctIdentifierIfOrgId(it), catalogData.foafName(it)) }
             .forEach {
                 getOrgPath(it.second, it.third)
                     ?.let { orgPath -> getResource(it.first).addProperty(BR.orgPath, orgPath) }
             }
+
         return this
     }
 
@@ -121,6 +137,8 @@ class ReasoningService(
             else -> null
         }
 
+    private fun orgURI(orgId: String) = "${uris.organizations}/$orgId"
+
     private fun orgPathAdapter(value: String): String? {
         val uri = "${uris.organizations}/orgpath/$value"
         with(URL(uri).openConnection() as HttpURLConnection) {
@@ -138,6 +156,16 @@ class ReasoningService(
             return null
         }
     }
+
+    private fun orgModelAdapter(orgId: String?): Resource? =
+        if (orgId != null) {
+            val uri = "${uris.organizations}/$orgId"
+            try {
+                RDFDataMgr.loadModel(uri, Lang.TURTLE).getResource(uri)
+            } catch (ex: Exception) {
+                null
+            }
+        } else null
 
     private fun CatalogType.deductionsModel(catalogData: Model, losData: Model): Model =
         when (this) {

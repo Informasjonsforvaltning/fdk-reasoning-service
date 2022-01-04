@@ -54,7 +54,7 @@
     a                     foaf:Agent ;
     dct:identifier        "910244132" ;
     foaf:name             "Do not overwrite"@nb ;
-    br:orgPath            "/GENERATED/ORGPATH" .
+    br:orgPath            "/ANNET/910244132" .
 
 <https://data.brreg.no/enhetsregisteret/api/enheter/910298062>
         a                     rov:RegisteredOrganization ;

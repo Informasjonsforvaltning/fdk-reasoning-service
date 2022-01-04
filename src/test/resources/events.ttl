@@ -355,3 +355,7 @@
         a               skos:Concept ;
         skos:broader    <https://data.norge.no/concepts/304> ;
         skos:prefLabel  "Notifying and reporting to authorities"@en , "Varsling og rapportering til myndigheter"@nb .
+
+<https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910298062>
+        a               foaf:Agent ;
+        dct:identifier  "910298062" .
