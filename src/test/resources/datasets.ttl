@@ -87,7 +87,9 @@
         dct:accessRights  <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:description   "Dette er "@nb ;
         dct:isPartOf      <http://brreg.no/catalogs/910298062/datasets/738c2348-aeb4-4a92-9a10-c39ae6b9f3fe> ;
-        dct:publisher     <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910298062> ;
+        dct:publisher     [ rdf:type        foaf:Agent ;
+                            dct:identifier  "910298062" ;
+                            foaf:name       "Blank node publisher" ] ;
         dct:relation      [ a  rdfs:Resource ] ;
         dct:title         "Datter"@nb ;
         dcat:theme        <https://psi.norge.no/los/tema/energi> .

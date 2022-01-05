@@ -104,7 +104,7 @@ fun Resource.safeAddProperty(property: Property, value: RDFNode?): Resource =
     if (value == null) this
     else addProperty(property, value)
 
-fun Model.extreactQualifiedAttributionAgentURIs(): List<Resource> =
+fun Model.extreactQualifiedAttributionAgents(): List<Resource> =
     listResourcesWithProperty(PROV.qualifiedAttribution)
         .toList()
         .flatMap { it.listProperties(PROV.qualifiedAttribution).toList() }
@@ -115,17 +115,15 @@ fun Model.extreactQualifiedAttributionAgentURIs(): List<Resource> =
         .asSequence()
         .filter { it.isResourceProperty() }
         .map { it.resource }
-        .filter {  it.isURIResource }
         .toList()
 
-fun Model.extractPublisherURIs(publisherPredicate: Property): List<Resource> =
+fun Model.extractPublishers(publisherPredicate: Property): List<Resource> =
     listResourcesWithProperty(publisherPredicate)
         .toList()
         .flatMap { it.listProperties(publisherPredicate).toList() }
         .asSequence()
         .filter { it.isResourceProperty() }
         .map { it.resource }
-        .filter {  it.isURIResource }
         .toList()
 
 fun Statement.isResourceProperty(): Boolean =

@@ -67,46 +67,45 @@ class ReasoningService(
             else -> DCTerms.publisher
         }
         val publisherResources = if (this == CatalogType.DATASETS) {
-                catalogData.extractPublisherURIs(publisherPredicate).plus(catalogData.extreactQualifiedAttributionAgentURIs())
-            } else catalogData.extractPublisherURIs(publisherPredicate)
+                catalogData.extractPublishers(publisherPredicate).plus(catalogData.extreactQualifiedAttributionAgents())
+            } else catalogData.extractPublishers(publisherPredicate)
         return orgData.createModelOfPublishersWithOrgData(
             publisherURIs = publisherResources
                 .filter { it.dctIdentifierIsInadequate() }
+                .filter {  it.isURIResource }
                 .mapNotNull { it.uri }
                 .toSet(),
             orgsURI = uris.organizations
-        ).addOrgPathAndNameWhenMissing(publisherResources.mapNotNull { it.uri }.toSet(), catalogData, orgData)
+        ).addOrgPathAndNameWhenMissing(publisherResources.toSet(), catalogData, orgData)
     }
 
-    private fun Model.addOrgPathAndNameWhenMissing(publisherURIs: Set<String>, catalogData: Model, orgData: Model): Model {
-        publisherURIs.asSequence()
+    private fun Model.addOrgPathAndNameWhenMissing(publishers: Set<Resource>, catalogData: Model, orgData: Model): Model {
+        publishers.asSequence()
             .filterNot { containsTriple("<$it>", "<${FOAF.name.uri}>", "?o") }
-            .filterNot { catalogData.containsTriple("<$it>", "<${FOAF.name.uri}>", "?o") }
+            .filterNot { it.hasProperty(FOAF.name) }
             .map { Pair(it, catalogData.dctIdentifierIfOrgId(it)?.let { orgId -> orgData.getResource(orgURI(orgId)) }) }
             .filter { it.second != null }
-            .forEach { getResource(it.first).safeAddProperty(FOAF.name, it.second?.getProperty(FOAF.name)?.`object`) }
+            .forEach { it.first.safeAddProperty(FOAF.name, it.second?.getProperty(FOAF.name)?.`object`) }
 
-        val publishersMissingOrgPath = publisherURIs.asSequence()
+        val publishersMissingOrgPath = publishers.asSequence()
             .filterNot { containsTriple("<$it>", "<${BR.orgPath.uri}>", "?o") }
-            .filterNot { catalogData.containsTriple("<$it>", "<${BR.orgPath.uri}>", "?o") }
+            .filterNot { it.hasProperty(BR.orgPath) }
 
         publishersMissingOrgPath
             .map { Pair(it, catalogData.dctIdentifierIfOrgId(it)?.let { orgId -> orgData.getResource(orgURI(orgId)) }) }
             .filter { it.second != null }
-            .forEach { getResource(it.first).safeAddProperty(BR.orgPath, it.second?.getProperty(BR.orgPath)?.`object`) }
+            .forEach { it.first.safeAddProperty(BR.orgPath, it.second?.getProperty(BR.orgPath)?.`object`) }
 
         publishersMissingOrgPath
-            .map { Triple(it, catalogData.dctIdentifierIfOrgId(it), catalogData.foafName(it)) }
-            .forEach {
-                getOrgPath(it.second, it.third)
-                    ?.let { orgPath -> getResource(it.first).addProperty(BR.orgPath, orgPath) }
-            }
+            .filterNot { containsTriple("<$it>", "<${BR.orgPath.uri}>", "?o") }
+            .map { Triple(it, catalogData.dctIdentifierIfOrgId(it), it.foafName()) }
+            .forEach { getOrgPath(it.second, it.third)?.let { orgPath -> it.first.addProperty(BR.orgPath, orgPath) } }
 
         return this
     }
 
-    private fun Model.dctIdentifierIfOrgId(uri: String): String? {
-        val orgId: String? = getProperty(getResource(uri), DCTerms.identifier)?.string
+    private fun Model.dctIdentifierIfOrgId(publisher: Resource): String? {
+        val orgId: String? = getProperty(publisher, DCTerms.identifier)?.string
         val regex = Regex("""^[0-9]{9}$""")
         val matching = regex.findAll(orgId ?: "").toList()
 
@@ -114,8 +113,8 @@ class ReasoningService(
         else null
     }
 
-    private fun Model.foafName(uri: String): String? {
-        val names = getResource(uri)?.listProperties(FOAF.name)?.toList()
+    private fun Resource.foafName(): String? {
+        val names = listProperties(FOAF.name)?.toList()
         val nb = names?.find { it.language == "nb" }
         val nn = names?.find { it.language == "nn" }
         val en = names?.find { it.language == "en" }
