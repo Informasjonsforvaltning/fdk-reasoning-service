@@ -8,6 +8,7 @@ import no.fdk.fdk_reasoning_service.utils.allDataServiceIds
 import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.data.mongodb.core.MongoTemplate
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -43,6 +44,20 @@ class DataServices {
             val expectedDataService = responseReader.parseTurtleFile("dataservice_0.ttl")
             val savedDataService = parseRDFResponse(ungzip(first.thirdValue.turtle), Lang.TURTLE, "")
             assertTrue(expectedDataService.isIsomorphicWith(savedDataService))
+        }
+    }
+
+    @Test
+    fun testDataServicesError() {
+        whenever(dataServiceMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
+            .thenReturn(TurtleDBO("unionId", gzip("")))
+        whenever(reasoningService.catalogReasoning(any(), any()))
+            .thenThrow(RuntimeException())
+
+        assertThrows<Exception> { dataServiceService.reasonHarvestedDataServices() }
+
+        argumentCaptor<TurtleDBO, String>().apply {
+            verify(dataServiceMongoTemplate, times(0)).save(first.capture(), second.capture())
         }
     }
 

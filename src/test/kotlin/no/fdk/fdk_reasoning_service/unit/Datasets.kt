@@ -9,6 +9,7 @@ import no.fdk.fdk_reasoning_service.utils.savedDatasetCollections
 import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.data.mongodb.core.MongoTemplate
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -44,6 +45,20 @@ class Datasets {
             val expectedDataset = responseReader.parseTurtleFile("dataset_0.ttl")
             val savedDataset = parseRDFResponse(ungzip(first.thirdValue.turtle), Lang.TURTLE, "")
             assertTrue(expectedDataset.isIsomorphicWith(savedDataset))
+        }
+    }
+
+    @Test
+    fun testDatasetsError() {
+        whenever(datasetMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
+            .thenReturn(TurtleDBO("unionId", gzip("")))
+        whenever(reasoningService.catalogReasoning(any(), any()))
+            .thenThrow(RuntimeException())
+
+        assertThrows<Exception> { datasetService.reasonHarvestedDatasets() }
+
+        argumentCaptor<TurtleDBO, String>().apply {
+            verify(datasetMongoTemplate, times(0)).save(first.capture(), second.capture())
         }
     }
 

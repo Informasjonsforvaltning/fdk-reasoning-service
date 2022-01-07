@@ -5,10 +5,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.rabbit.RabbitMQPublisher
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 import java.util.*
+
+private val LOGGER: Logger = LoggerFactory.getLogger(ReasoningActivity::class.java)
 
 private val reasoningQueue: Queue<CatalogType> = LinkedList()
 private val lastCatalogLaunches: MutableMap<CatalogType, LocalDateTime> = mutableMapOf()
@@ -48,18 +52,22 @@ class ReasoningActivity(
 
     private fun launchReasoning(type: CatalogType) {
         lastCatalogLaunches[type] = LocalDateTime.now()
-        val catalogReasoning = launch {
-            when (type) {
-                CatalogType.CONCEPTS -> conceptService.reasonHarvestedConcepts()
-                CatalogType.DATASERVICES -> dataServiceService.reasonHarvestedDataServices()
-                CatalogType.DATASETS -> datasetService.reasonHarvestedDatasets()
-                CatalogType.EVENTS -> eventService.reasonHarvestedEvents()
-                CatalogType.INFORMATIONMODELS -> infoModelService.reasonHarvestedInformationModels()
-                CatalogType.PUBLICSERVICES -> publicServiceService.reasonHarvestedPublicServices()
+        try {
+            val catalogReasoning = launch {
+                when (type) {
+                    CatalogType.CONCEPTS -> conceptService.reasonHarvestedConcepts()
+                    CatalogType.DATASERVICES -> dataServiceService.reasonHarvestedDataServices()
+                    CatalogType.DATASETS -> datasetService.reasonHarvestedDatasets()
+                    CatalogType.EVENTS -> eventService.reasonHarvestedEvents()
+                    CatalogType.INFORMATIONMODELS -> infoModelService.reasonHarvestedInformationModels()
+                    CatalogType.PUBLICSERVICES -> publicServiceService.reasonHarvestedPublicServices()
+                }
             }
-        }
 
-        catalogReasoning.invokeOnCompletion { rabbitMQPublisher.send(type) }
+            catalogReasoning.invokeOnCompletion { rabbitMQPublisher.send(type) }
+        } catch (ex: Exception) {
+            LOGGER.warn("reasoning activity $type was aborted")
+        }
     }
 
 }

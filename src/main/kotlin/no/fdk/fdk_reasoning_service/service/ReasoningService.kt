@@ -39,7 +39,7 @@ class ReasoningService(
                     RDFDataMgr.loadModel(uris.organizations, Lang.TURTLE)
                 } catch (ex: Exception) {
                     LOGGER.error("Download failed for ${uris.organizations}", ex)
-                    ModelFactory.createDefaultModel()
+                    throw ex
                 }
             },
             async {
@@ -47,7 +47,7 @@ class ReasoningService(
                     RDFDataMgr.loadModel(uris.los, Lang.RDFXML)
                 } catch (ex: Exception) {
                     LOGGER.error("Download failed for ${uris.los}", ex)
-                    ModelFactory.createDefaultModel()
+                    throw ex
                 }
             }
         ).let { runBlocking { it.awaitAll() } }

@@ -9,6 +9,7 @@ import no.fdk.fdk_reasoning_service.utils.INFOMODEL_CATALOG_ID
 import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -47,6 +48,27 @@ class InformationModels {
             val savedInfoModel = parseRDFResponse(first.firstValue, Lang.TURTLE, "")
             assertTrue(expectedInfoModel.isIsomorphicWith(savedInfoModel))
             assertEquals(INFOMODEL_0_ID, second.firstValue)
+        }
+    }
+
+    @Test
+    fun testInformationModelsError() {
+        whenever(repository.findHarvestedUnion()).thenReturn("")
+        whenever(reasoningService.catalogReasoning(any(), any()))
+            .thenThrow(RuntimeException())
+
+        assertThrows<Exception> { infoModelService.reasonHarvestedInformationModels() }
+
+        argumentCaptor<String>().apply {
+            verify(repository, times(0)).saveReasonedUnion(capture())
+        }
+
+        argumentCaptor<String, String>().apply {
+            verify(repository, times(0)).saveCatalog(first.capture(), second.capture())
+        }
+
+        argumentCaptor<String, String>().apply {
+            verify(repository, times(0)).saveInformationModel(first.capture(), second.capture())
         }
     }
 

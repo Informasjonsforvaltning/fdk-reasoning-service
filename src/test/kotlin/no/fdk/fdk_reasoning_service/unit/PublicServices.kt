@@ -10,6 +10,7 @@ import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.data.mongodb.core.MongoTemplate
 import java.util.*
 import kotlin.test.assertTrue
@@ -42,6 +43,20 @@ class PublicServices {
             val expectedService = responseReader.parseTurtleFile("public_service_0.ttl")
             val savedService = parseRDFResponse(ungzip(first.allValues[10].turtle), Lang.TURTLE, "")
             assertTrue(expectedService.isIsomorphicWith(savedService))
+        }
+    }
+
+    @Test
+    fun testPublicServicesError() {
+        whenever(publicServiceMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
+            .thenReturn(TurtleDBO("unionId", gzip("")))
+        whenever(reasoningService.catalogReasoning(any(), any()))
+            .thenThrow(RuntimeException())
+
+        assertThrows<Exception> { publicServiceService.reasonHarvestedPublicServices() }
+
+        argumentCaptor<TurtleDBO, String>().apply {
+            verify(publicServiceMongoTemplate, times(0)).save(first.capture(), second.capture())
         }
     }
 

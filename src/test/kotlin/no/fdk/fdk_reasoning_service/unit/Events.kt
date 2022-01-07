@@ -9,6 +9,7 @@ import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.data.mongodb.core.MongoTemplate
 import java.util.*
 import kotlin.test.assertTrue
@@ -41,6 +42,20 @@ class Events {
             val expectedEvent = responseReader.parseTurtleFile("event_0.ttl")
             val savedEvent = parseRDFResponse(ungzip(first.allValues[8].turtle), Lang.TURTLE, "")
             assertTrue(expectedEvent.isIsomorphicWith(savedEvent))
+        }
+    }
+
+    @Test
+    fun testEventsError() {
+        whenever(eventMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
+            .thenReturn(TurtleDBO("unionId", gzip("")))
+        whenever(reasoningService.catalogReasoning(any(), any()))
+            .thenThrow(RuntimeException())
+
+        assertThrows<Exception> { eventService.reasonHarvestedEvents() }
+
+        argumentCaptor<TurtleDBO, String>().apply {
+            verify(eventMongoTemplate, times(0)).save(first.capture(), second.capture())
         }
     }
 

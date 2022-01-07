@@ -8,6 +8,7 @@ import no.fdk.fdk_reasoning_service.utils.allConceptIds
 import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.data.mongodb.core.MongoTemplate
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -43,6 +44,20 @@ class Concepts {
             val expectedConcept = responseReader.parseTurtleFile("concept_0.ttl")
             val savedConcept = parseRDFResponse(ungzip(first.allValues[3].turtle), Lang.TURTLE, "")
             assertTrue(expectedConcept.isIsomorphicWith(savedConcept))
+        }
+    }
+
+    @Test
+    fun testConceptsError() {
+        whenever(conceptMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
+            .thenReturn(TurtleDBO("unionId", gzip("")))
+        whenever(reasoningService.catalogReasoning(any(), any()))
+            .thenThrow(RuntimeException())
+
+        assertThrows<Exception> { conceptService.reasonHarvestedConcepts() }
+
+        argumentCaptor<TurtleDBO, String>().apply {
+            verify(conceptMongoTemplate, times(0)).save(first.capture(), second.capture())
         }
     }
 

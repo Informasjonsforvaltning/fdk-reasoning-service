@@ -15,6 +15,7 @@ import org.apache.jena.riot.Lang
 import org.apache.jena.vocabulary.RDF
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.io.ByteArrayOutputStream
 import kotlin.test.assertTrue
 
@@ -101,5 +102,25 @@ class Reasoning: ApiTestContext() {
         val expected = responseReader.parseTurtleFile("fdk_ready_public_services.ttl")
 
         assertTrue(result.isIsomorphicWith(expected))
+    }
+
+    @Test
+    fun testMissingLos() {
+        whenever(uris.organizations)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
+        whenever(uris.los)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los-error")
+
+        assertThrows<Exception> { reasoningService.catalogReasoning(responseReader.parseTurtleFile("datasets.ttl"), CatalogType.DATASETS) }
+    }
+
+    @Test
+    fun testMissingOrganizationData() {
+        whenever(uris.organizations)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations-error")
+        whenever(uris.los)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
+
+        assertThrows<Exception> { reasoningService.catalogReasoning(responseReader.parseTurtleFile("concepts.ttl"), CatalogType.CONCEPTS) }
     }
 }
