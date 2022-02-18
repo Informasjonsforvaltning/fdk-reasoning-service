@@ -141,6 +141,7 @@ class ReasoningService(
     private fun orgPathAdapter(value: String): String? {
         val uri = "${uris.organizations}/orgpath/$value"
         with(URL(uri).openConnection() as HttpURLConnection) {
+            setRequestProperty("Accept", "text/plain");
             try {
                 if (HttpStatus.valueOf(responseCode).is2xxSuccessful) {
                     return inputStream.bufferedReader().use(BufferedReader::readText)
