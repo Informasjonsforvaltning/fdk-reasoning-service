@@ -25,7 +25,7 @@
         dct:accessRights           <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:description            "Inngangsleverandører test"@nb ;
         dct:provenance             <http://data.brreg.no/datakatalog/provinens/nasjonal> ;
-        dct:publisher              <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;
+        dct:publisher              <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;
         dct:subject                <https://fellesdatakatalog.brreg.no/api/concepts/ac207ee9-972a-4ba9-a2d6-c368135caf0b> , <https://fellesdatakatalog.brreg.no/api/concepts/5869bbec-f894-47a7-a8de-39a6941a76d1> , <https://fellesdatakatalog.brreg.no/api/concepts/f1dacfe6-e0a9-4400-9b0c-08fb59b51d45> , <https://fellesdatakatalog.brreg.no/api/concepts/9aa8a3f4-9583-4278-a30e-1a3cf6151cfd> ;
         dct:title                  "Inngangsleverandører test"@nb ;
         dct:type                   "Data" ;
@@ -51,7 +51,7 @@
         dct:accessRights      <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:description       "bbbb\n\n---\nFormål: "@nb ;
         dct:provenance        <http://data.brreg.no/datakatalog/provinens/nasjonal> ;
-        dct:publisher         <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;
+        dct:publisher         <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;
         dct:title             "Fint datasett"@nb ;
         dcat:distribution         [ a                    dcat:Distribution ;
                                     dct:description  "Åpent"@nb ;
@@ -114,7 +114,7 @@
 
 <http://registration-api:8080/catalogs/910298062>
         a              dcat:Catalog ;
-        dct:publisher  <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910298062> ;
+        dct:publisher  <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910298062> ;
         dct:title      "Datakatalog for HIDRASUND OG BJONEROA"@nb ;
         dcat:dataset   <http://brreg.no/catalogs/910298062/datasets/12136d8b-024e-4d63-a8ed-5e1885d701cd> , <http://brreg.no/catalogs/910298062/datasets/738c2348-aeb4-4a92-9a10-c39ae6b9f3fe> , <http://brreg.no/catalogs/910298062/datasets/7e4fbd01-2684-45c3-8ac1-70ebfebe8513> , <http://brreg.no/catalogs/910244132/datasets/c32b7a4f-655f-45f6-88f6-d01f05d0f7c2> .
 

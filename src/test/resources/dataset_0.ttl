@@ -1,6 +1,6 @@
-@prefix br:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#> .
+@prefix br:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/master/src/main/resources/ontology/organization-catalog.owl#> .
 @prefix fdk:   <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/master/src/main/resources/ontology/fdk.owl#> .
-@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/org-type.ttl#> .
+@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/master/src/main/resources/ontology/org-type.ttl#> .
 @prefix rov:   <http://www.w3.org/ns/regorg#> .
 @prefix schema: <http://schema.org/> .
 @prefix dcatapi: <http://dcat.no/dcatapi/> .
@@ -24,7 +24,7 @@
         dct:accessRights          <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:description           "bbbb\n\n---\nFormål: "@nb ;
         dct:provenance            <http://data.brreg.no/datakatalog/provinens/nasjonal> ;
-        dct:publisher             <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;
+        dct:publisher             <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;
         dct:title                 "Fint datasett"@nb ;
         dcat:distribution         [ a                dcat:Distribution ;
                                     dct:description  "Åpent"@nb ;
@@ -59,7 +59,7 @@
         dct:isPartOf       <http://localhost:5000/catalogs/6e4237cc-98d6-3e7c-a892-8ac1f0ffb37f> ;
         foaf:primaryTopic  <http://brreg.no/catalogs/910244132/datasets/c32b7a4f-655f-45f6-88f6-d01f05d0f7c2> .
 
-<https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910244132>
+<https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132>
         a                     rov:RegisteredOrganization ;
         dct:identifier        "910244132" ;
         rov:legalName         "RAMSUND OG ROGNAN REVISJON" ;

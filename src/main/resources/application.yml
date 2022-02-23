@@ -15,7 +15,7 @@ spring:
   data.mongodb.uri: mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST:mongodb}:${MONGO_PORT:27017}/?authSource=admin&authMechanism=SCRAM-SHA-1
 application:
   uri:
-    organizations: ${ORGANIZATION_CATALOGUE_HOST}/organizations
+    organizations: ${ORGANIZATION_CATALOG_HOST}/organizations
     los: ${LOS_HOST:https://psi.norge.no/los/all.rdf}
   databases:
     datasets: datasetHarvester
@@ -36,7 +36,7 @@ spring:
   data.mongodb.uri: mongodb://admin:admin@localhost:27017/?authSource=admin&authMechanism=SCRAM-SHA-1
 application:
   uri:
-    organizations: https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations
+    organizations: https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations
 
 ---
 spring:

@@ -7,7 +7,7 @@ class BR {
 
     companion object {
         const val uri =
-            "https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#"
+            "https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/master/src/main/resources/ontology/organization-catalog.owl#"
 
         val orgPath: Property = ResourceFactory.createProperty("${uri}orgPath")
     }

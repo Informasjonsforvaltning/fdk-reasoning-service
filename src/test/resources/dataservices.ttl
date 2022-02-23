@@ -7,7 +7,7 @@
 
 <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/catalogs/910298062>
         a              dcat:Catalog ;
-        dct:publisher  <https://organization-catalogue.staging.fellesdatakatalog.digdir.no/organizations/910298062> ;
+        dct:publisher  <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910298062> ;
         dct:title      "Data service catalog (910298062)"@en ;
         dcat:service   <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f586b0cdbffd544ae76a5e5> , <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e> .
 

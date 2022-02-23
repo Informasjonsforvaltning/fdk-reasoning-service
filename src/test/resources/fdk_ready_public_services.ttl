@@ -1,5 +1,5 @@
-@prefix br:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#> .
-@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/org-type.ttl#> .
+@prefix br:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/master/src/main/resources/ontology/organization-catalog.owl#> .
+@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/master/src/main/resources/ontology/org-type.ttl#> .
 @prefix rov:   <http://www.w3.org/ns/regorg#> .
 @prefix cpsv:   <http://purl.org/vocab/cpsv#> .
 @prefix cv:     <http://data.europa.eu/m8g/> .
@@ -95,7 +95,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/12>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910244132> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
         dct:description           "Søknad om driftsstøtte til anlegg."@nb ;
         dct:identifier            "12" ;
@@ -109,7 +109,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/9>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910298062> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910298062> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
         dct:description           "Søknad om internasjonal grunnstøtte."@nb ;
         dct:identifier            "9" ;
@@ -141,7 +141,7 @@
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/3>
         a                         cpsv:PublicService ;
         cv:hasChannel             <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/964983291> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/964983291> ;
         cv:hasContactPoint        <http://public-service-publisher.fellesdatakatalog.digdir.no/contact/3> ;
         cv:hasCriterion           <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/5> , <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/6> ;
         cv:hasLegalResource       <http://public-service-publisher.fellesdatakatalog.digdir.no/legalresource/4> ;
@@ -205,7 +205,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/17>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/991825827> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/991825827> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/cc466e4c-1e08-4915-9475-4b4a4cee62ec> ;
         dct:description           "‘Oppgjør etter dødsfall’ (Altinn dødsbo) er et samarbeidsprosjekt mellom Digitaliseringsdirektoratet, Brønnøysundregistrene, domstolene, finansnæringen, Skatteetaten, Statens kartverk og Statens vegvesen. Prosjektet vil levere en MVP (minimum viable product) for tjenesten Altinn dødsbo. MVP vil dekke prosessene fra dødsfall er registrert til det er utstedt skifteattest for privat skifte og det er mulig å bruke en digital representasjon av skifteattest eller fullmakten til fullmektig i oppgjørsprosessen."@nb ;
         dct:identifier            "17" ;
@@ -259,7 +259,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/11>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/964983291> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/964983291> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
         dct:description           "Søknad om kulturmidler."@nb ;
         dct:identifier            "11" ;
@@ -267,7 +267,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/8>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/972417793> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/972417793> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> , <http://public-service-publisher.fellesdatakatalog.digdir.no/events/207ca059-5f03-48f5-a231-aa73322c36e2> ;
         dct:description           "Søknad om nasjonal grunnstøtte."@nb ;
         dct:identifier            "8" ;
@@ -306,7 +306,7 @@
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/2>
         a                         cpsv:PublicService ;
         cv:hasChannel             <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/964983291> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/964983291> ;
         cv:hasContactPoint        <http://public-service-publisher.fellesdatakatalog.digdir.no/contact/2> ;
         cv:hasCost                <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/15> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/17> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/13> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/16> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/14> ;
         cv:hasCriterion           <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/4> , <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/5> , <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/3> ;
@@ -349,7 +349,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/16>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/974760746> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/974760746> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/c46e44f7-0cbf-4651-b73a-483d9950147b> ;
         dct:description           "Permanent oppholdstillatelse gir deg rett til å oppholde deg og arbeide i Norge på ubestemt tid. Når du har bodd sammenhengende i Norge i tre år, kan du få en permanent oppholdstillatelse. Det er et krav at du da har gjennomført pliktig norskopplæring i henhold til introduksjonsloven, eller du dokumenterer at kommunen har fattet vedtak om fritak fra plikten til norskopplæring. Kravet om norskkunnskaper gjelder for alle mellom 16 og 55 år og som fikk innvilget sin første oppholdstillatelse som danner grunnlag for permanent oppholdstillatelse etter 1. september 2005."@nb ;
         dct:identifier            "16" ;
@@ -401,7 +401,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/10>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/972417793> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/972417793> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
         dct:description           "Nasjonal tilskuddsordning for å inkludere barn og unge."@nb ;
         dct:identifier            "10" ;
@@ -416,7 +416,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/7>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/972417866> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/972417866> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
         dct:description           "Anlegg for idrett og fysisk aktivitet."@nb ;
         dct:identifier            "7" ;
@@ -452,7 +452,7 @@
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/1>
         a                         cpsv:PublicService ;
         cv:hasChannel             <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/974760673> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/974760673> ;
         cv:hasContactPoint        <http://public-service-publisher.fellesdatakatalog.digdir.no/contact/1> ;
         cv:hasCost                <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/5> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/12> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/9> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/6> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/4> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/10> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/3> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/7> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/11> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/8> ;
         cv:hasCriterion           <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/1> ;
@@ -499,7 +499,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/15>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/889640782> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/889640782> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/e6b08964-05fe-44b4-bf7a-b6e8d4722547> ;
         dct:description           "Har du blitt arbeidsledig, kan du ha rett til dagpenger eller annen økonomisk støtte fra NAV."@nb ;
         dct:identifier            "15" ;
@@ -556,7 +556,7 @@
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/50>
         a                         cpsv:PublicService ;
         cv:hasChannel             <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/974760673> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/974760673> ;
         cv:hasContactPoint        <http://public-service-publisher.fellesdatakatalog.digdir.no/contact/1> ;
         cv:hasCost                <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/8> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/7> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/12> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/9> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/6> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/5> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/4> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/3> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/11> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/10> ;
         cv:hasCriterion           <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/1> ;
@@ -578,7 +578,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/6>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/964983291> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/964983291> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/ece8c4c0-2fa9-412a-a3fd-6eefe0681728> ;
         cv:processingTime         "P2D" ;
         cv:sector                 <https://data.norge.no/concepts/2> ;
@@ -646,7 +646,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/14>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/889640782> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/889640782> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/35c09856-6485-48dc-b590-ca14608bc2be> ;
         dct:description           "Pleiepenger er for deg som må være borte fra jobb fordi du skal være sammen med et barn som er blitt sykt, eller som er under utredning for sykdom, og som trenger din omsorg og pleie hele tiden. Hvor mye pleiepenger du får avhenger av hvor mye du kan jobbe og hvor mye barnet ditt er i et omsorgstilbud. Omsorgstilbud kan være barnehage, skole eller andre organiserte tilbud."@nb ;
         dct:identifier            "14" ;
@@ -698,7 +698,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/5>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/964983291> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/964983291> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/ece8c4c0-2fa9-412a-a3fd-6eefe0681728> ;
         cv:processingTime         "P2D" ;
         cv:sector                 <https://data.norge.no/concepts/2> ;
@@ -784,7 +784,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/13>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/889640782> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/889640782> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/09c9429e-af32-4387-b14b-f24ac0c37265> ;
         dct:description           "Foreldrepengene skal erstatte inntekten din når du skal være hjemme med barnet. Vanligvis er det 3 krav du må fylle for å få foreldrepenger."@nb ;
         dct:identifier            "13" ;
@@ -819,7 +819,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/4>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/985399077> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/985399077> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/ece8c4c0-2fa9-412a-a3fd-6eefe0681728> ;
         cv:processingTime         "P2D" ;
         cv:sector                 <https://data.norge.no/concepts/2> ;
@@ -833,7 +833,7 @@
         a               skos:Concept ;
         skos:prefLabel  "Bevilling for lukket"@nb .
 
-<https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910298062>
+<https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910298062>
         a                     rov:RegisteredOrganization ;
         dct:identifier        "910298062" ;
         rov:legalName         "KARMSUND OG KYSNESSTRAND REVISJON" ;
@@ -841,7 +841,7 @@
         rov:orgType           orgtype:ORGL ;
         br:orgPath            "/ANNET/910298062" .
 
-<https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910244132>
+<https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132>
         a                     rov:RegisteredOrganization ;
         dct:identifier        "910244132" ;
         rov:legalName         "RAMSUND OG ROGNAN REVISJON" ;
@@ -849,7 +849,7 @@
         rov:orgType            orgtype:ASA ;
         br:orgPath            "/ANNET/910244132" .
 
-<https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/972417866>
+<https://organization-catalog.fellesdatakatalog.digdir.no/organizations/972417866>
         a                     rov:RegisteredOrganization ;
         dct:identifier        "972417866" ;
         rov:legalName         "KULTURDEPARTEMENTET" ;
@@ -857,7 +857,7 @@
         rov:orgType           orgtype:STAT ;
         br:orgPath            "/STAT/972417866" .
 
-<https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/991825827>
+<https://organization-catalog.fellesdatakatalog.digdir.no/organizations/991825827>
         a               rov:RegisteredOrganization ;
         dct:identifier  "991825827" ;
         rov:legalName   "DIGITALISERINGSDIREKTORATET" ;

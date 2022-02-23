@@ -1,5 +1,5 @@
-@prefix br:     <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/organization-catalogue.owl#> .
-@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalogue/master/src/main/resources/ontology/org-type.ttl#> .
+@prefix br:     <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/master/src/main/resources/ontology/organization-catalog.owl#> .
+@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/master/src/main/resources/ontology/org-type.ttl#> .
 @prefix cpsv:   <http://purl.org/vocab/cpsv#> .
 @prefix cv:     <http://data.europa.eu/m8g/> .
 @prefix dcat:   <http://www.w3.org/ns/dcat#> .
@@ -43,14 +43,14 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/events/09c9429e-af32-4387-b14b-f24ac0c37265>
         a                         cv:LifeEvent ;
-        cv:hasCompetentAuthority  <https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910244132> ;
+        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132> ;
         dct:description           "ASD forvalter i dag flere ordninger i folketrygdloven med relevans for livshendelsen. Direktoratet forvalter også ordninger som tilhører BFD. I forbindelse med direktoratets langsiktige IKT-moderniseringsarbeid er det innført digitale tjenester for innsyn, dialog, samhandling og automatisert saksbehandling for foreldrepenger og pleiepenger. Dette digitaliseringsarbeidet understøtter målsettingene i digitaliseringsstrategien."@nb ;
         dct:identifier            "09c9429e-af32-4387-b14b-f24ac0c37265" ;
         dct:relation              <http://public-service-publisher.fellesdatakatalog.digdir.no/services/13> ;
         dct:title                 "Få barn"@nb ;
         dct:type                  <https://data.norge.no/concepts/311> .
 
-<https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/910244132>
+<https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132>
         a               rov:RegisteredOrganization ;
         dct:identifier  "910244132" ;
         rov:legalName   "RAMSUND OG ROGNAN REVISJON" ;
