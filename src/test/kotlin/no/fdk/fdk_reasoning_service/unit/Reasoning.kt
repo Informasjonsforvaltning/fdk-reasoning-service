@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.io.ByteArrayOutputStream
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @Tag("unit")
@@ -36,7 +37,7 @@ class Reasoning: ApiTestContext() {
 
         val expected = responseReader.parseTurtleFile("fdk_ready_datasets.ttl")
 
-        assertTrue(result.isIsomorphicWith(expected))
+        assertTrue(result!!.isIsomorphicWith(expected))
     }
 
     @Test
@@ -49,7 +50,7 @@ class Reasoning: ApiTestContext() {
 
         val expected = responseReader.parseTurtleFile("fdk_ready_dataservices.ttl")
 
-        assertTrue(result.isIsomorphicWith(expected))
+        assertTrue(result!!.isIsomorphicWith(expected))
     }
 
     @Test
@@ -62,7 +63,7 @@ class Reasoning: ApiTestContext() {
 
         val expected = responseReader.parseTurtleFile("fdk_ready_concepts.ttl")
 
-        assertTrue(result.isIsomorphicWith(expected))
+        assertTrue(result!!.isIsomorphicWith(expected))
     }
 
     @Test
@@ -75,7 +76,7 @@ class Reasoning: ApiTestContext() {
 
         val expected = responseReader.parseTurtleFile("fdk_ready_infomodels.ttl")
 
-        assertTrue(result.isIsomorphicWith(expected))
+        assertTrue(result!!.isIsomorphicWith(expected))
     }
 
     @Test
@@ -88,7 +89,7 @@ class Reasoning: ApiTestContext() {
 
         val expected = responseReader.parseTurtleFile("fdk_ready_events.ttl")
 
-        assertTrue(result.isIsomorphicWith(expected))
+        assertTrue(result!!.isIsomorphicWith(expected))
     }
 
     @Test
@@ -101,7 +102,7 @@ class Reasoning: ApiTestContext() {
 
         val expected = responseReader.parseTurtleFile("fdk_ready_public_services.ttl")
 
-        assertTrue(result.isIsomorphicWith(expected))
+        assertTrue(result!!.isIsomorphicWith(expected))
     }
 
     @Test
@@ -111,7 +112,7 @@ class Reasoning: ApiTestContext() {
         whenever(uris.los)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los-error")
 
-        assertThrows<Exception> { reasoningService.catalogReasoning(responseReader.parseTurtleFile("datasets.ttl"), CatalogType.DATASETS) }
+        assertNull(reasoningService.catalogReasoning(responseReader.parseTurtleFile("datasets.ttl"), CatalogType.DATASETS))
     }
 
     @Test
@@ -121,6 +122,6 @@ class Reasoning: ApiTestContext() {
         whenever(uris.los)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
 
-        assertThrows<Exception> { reasoningService.catalogReasoning(responseReader.parseTurtleFile("concepts.ttl"), CatalogType.CONCEPTS) }
+        assertNull(reasoningService.catalogReasoning(responseReader.parseTurtleFile("concepts.ttl"), CatalogType.CONCEPTS))
     }
 }

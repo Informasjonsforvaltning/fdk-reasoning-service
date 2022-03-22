@@ -35,11 +35,15 @@ class DatasetService(
             ?.toRDF(lang)
 
     fun reasonHarvestedDatasets() {
-        datasetMongoTemplate.findById<TurtleDBO>("catalog-union-graph", "turtle")
-            ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "datasets") }
-            ?.let { reasoningService.catalogReasoning(it, CatalogType.DATASETS) }
-            ?. run { separateAndSaveDatasets() }
-            ?: run { LOGGER.error("harvested datasets not found", Exception()) }
+        try {
+            datasetMongoTemplate.findById<TurtleDBO>("catalog-union-graph", "turtle")
+                ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "datasets") }
+                ?.let { reasoningService.catalogReasoning(it, CatalogType.DATASETS) }
+                ?. run { separateAndSaveDatasets() }
+                ?: run { LOGGER.error("missing some or all rdf-data, reasoning of datasets was stopped", Exception()) }
+        } catch (ex: Exception) {
+            LOGGER.error("reasoning of datasets failed", ex)
+        }
     }
 
     private fun Model.separateAndSaveDatasets() {

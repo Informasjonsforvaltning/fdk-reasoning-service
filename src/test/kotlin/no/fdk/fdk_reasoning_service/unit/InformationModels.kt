@@ -9,7 +9,7 @@ import no.fdk.fdk_reasoning_service.utils.INFOMODEL_CATALOG_ID
 import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.assertDoesNotThrow
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -57,7 +57,7 @@ class InformationModels {
         whenever(reasoningService.catalogReasoning(any(), any()))
             .thenThrow(RuntimeException())
 
-        assertThrows<Exception> { infoModelService.reasonHarvestedInformationModels() }
+        assertDoesNotThrow { infoModelService.reasonHarvestedInformationModels() }
 
         argumentCaptor<String>().apply {
             verify(repository, times(0)).saveReasonedUnion(capture())

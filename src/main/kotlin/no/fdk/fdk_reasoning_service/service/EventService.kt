@@ -32,11 +32,15 @@ class EventService(
             ?.toRDF(lang)
 
     fun reasonHarvestedEvents() {
-        eventMongoTemplate.findById<TurtleDBO>("event-union-graph", "turtle")
-            ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "events") }
-            ?.let { reasoningService.catalogReasoning(it, CatalogType.EVENTS) }
-            ?. run { separateAndSaveEvents() }
-            ?: run { LOGGER.error("harvested events not found", Exception()) }
+        try {
+            eventMongoTemplate.findById<TurtleDBO>("event-union-graph", "turtle")
+                ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "events") }
+                ?.let { reasoningService.catalogReasoning(it, CatalogType.EVENTS) }
+                ?. run { separateAndSaveEvents() }
+                ?: run { LOGGER.error("missing some or all rdf-data, reasoning of events was stopped", Exception()) }
+        } catch (ex: Exception) {
+            LOGGER.error("reasoning of events failed", ex)
+        }
     }
 
     private fun Model.separateAndSaveEvents() {

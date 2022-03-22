@@ -8,7 +8,7 @@ import no.fdk.fdk_reasoning_service.utils.allConceptIds
 import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.springframework.data.mongodb.core.MongoTemplate
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -54,7 +54,7 @@ class Concepts {
         whenever(reasoningService.catalogReasoning(any(), any()))
             .thenThrow(RuntimeException())
 
-        assertThrows<Exception> { conceptService.reasonHarvestedConcepts() }
+        assertDoesNotThrow { conceptService.reasonHarvestedConcepts() }
 
         argumentCaptor<TurtleDBO, String>().apply {
             verify(conceptMongoTemplate, times(0)).save(first.capture(), second.capture())

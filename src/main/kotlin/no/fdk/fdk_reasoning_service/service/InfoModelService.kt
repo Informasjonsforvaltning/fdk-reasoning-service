@@ -45,11 +45,15 @@ class InfoModelService(
             }
 
     fun reasonHarvestedInformationModels() {
-        repository.findHarvestedUnion()
-            ?.let { parseRDFResponse(it, Lang.TURTLE, "information-models") }
-            ?.let { reasoningService.catalogReasoning(it, CatalogType.INFORMATIONMODELS) }
-            ?.run { separateAndSaveInformationModels() }
-            ?: run { LOGGER.error("harvested information models not found", Exception()) }
+        try {
+            repository.findHarvestedUnion()
+                ?.let { parseRDFResponse(it, Lang.TURTLE, "information-models") }
+                ?.let { reasoningService.catalogReasoning(it, CatalogType.INFORMATIONMODELS) }
+                ?.run { separateAndSaveInformationModels() }
+                ?: run { LOGGER.error("missing some or all rdf-data, reasoning of information models was stopped", Exception()) }
+        } catch (ex: Exception) {
+            LOGGER.error("reasoning of information models failed", ex)
+        }
     }
 
     private fun Model.separateAndSaveInformationModels() {

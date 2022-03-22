@@ -35,11 +35,15 @@ class ConceptService(
             ?.toRDF(lang)
 
     fun reasonHarvestedConcepts() {
-        conceptMongoTemplate.findById<TurtleDBO>("collection-union-graph", "turtle")
-            ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "concepts") }
-            ?.let { reasoningService.catalogReasoning(it, CatalogType.CONCEPTS) }
-            ?. run { separateAndSaveConcepts() }
-            ?: run { LOGGER.error("harvested concepts not found", Exception()) }
+        try {
+            conceptMongoTemplate.findById<TurtleDBO>("collection-union-graph", "turtle")
+                ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "concepts") }
+                ?.let { reasoningService.catalogReasoning(it, CatalogType.CONCEPTS) }
+                ?. run { separateAndSaveConcepts() }
+                ?: run { LOGGER.error("missing some or all rdf-data, reasoning of concepts was stopped", Exception()) }
+        } catch (ex: Exception) {
+            LOGGER.error("reasoning of concepts failed", ex)
+        }
     }
 
     private fun Model.separateAndSaveConcepts() {

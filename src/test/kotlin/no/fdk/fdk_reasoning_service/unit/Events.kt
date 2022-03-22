@@ -6,10 +6,7 @@ import no.fdk.fdk_reasoning_service.service.*
 import no.fdk.fdk_reasoning_service.utils.TestResponseReader
 import no.fdk.fdk_reasoning_service.utils.allEventIds
 import org.apache.jena.riot.Lang
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Tag
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.*
 import org.springframework.data.mongodb.core.MongoTemplate
 import java.util.*
 import kotlin.test.assertTrue
@@ -52,7 +49,7 @@ class Events {
         whenever(reasoningService.catalogReasoning(any(), any()))
             .thenThrow(RuntimeException())
 
-        assertThrows<Exception> { eventService.reasonHarvestedEvents() }
+        assertDoesNotThrow { eventService.reasonHarvestedEvents() }
 
         argumentCaptor<TurtleDBO, String>().apply {
             verify(eventMongoTemplate, times(0)).save(first.capture(), second.capture())

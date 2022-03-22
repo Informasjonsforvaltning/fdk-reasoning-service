@@ -30,7 +30,7 @@ class ReasoningService(
     private val uris: ApplicationURI
 ) : CoroutineScope by CoroutineScope(Executors.newFixedThreadPool(10).asCoroutineDispatcher()) {
 
-    fun catalogReasoning(catalogModel: Model, catalogType: CatalogType): Model {
+    fun catalogReasoning(catalogModel: Model, catalogType: CatalogType): Model? {
         LOGGER.debug("Starting $catalogType reasoning")
 
         val rdfData = listOf(
@@ -39,7 +39,7 @@ class ReasoningService(
                     RDFDataMgr.loadModel(uris.organizations, Lang.TURTLE)
                 } catch (ex: Exception) {
                     LOGGER.error("Download failed for ${uris.organizations}", ex)
-                    throw ex
+                    null
                 }
             },
             async {
@@ -47,17 +47,23 @@ class ReasoningService(
                     RDFDataMgr.loadModel(uris.los, Lang.RDFXML)
                 } catch (ex: Exception) {
                     LOGGER.error("Download failed for ${uris.los}", ex)
-                    throw ex
+                    null
                 }
             }
         ).let { runBlocking { it.awaitAll() } }
 
-        val deductions = listOf(
-            async { catalogType.extendedPublishersModel(orgData = rdfData[0], catalogData = catalogModel) },
-            async { catalogType.deductionsModel(catalogData = catalogModel, losData = rdfData[1]) }
-        ).let { runBlocking { it.awaitAll() } }
+        return when {
+            rdfData[0] == null -> null
+            rdfData[1] == null -> null
+            else -> {
+                val deductions = listOf(
+                    async { catalogType.extendedPublishersModel(orgData = rdfData[0]!!, catalogData = catalogModel) },
+                    async { catalogType.deductionsModel(catalogData = catalogModel, losData = rdfData[1]!!) }
+                ).let { runBlocking { it.awaitAll() } }
 
-        return catalogModel.union(deductions[0]).union(deductions[1])
+                catalogModel.union(deductions[0]).union(deductions[1])
+            }
+        }
     }
 
     private fun CatalogType.extendedPublishersModel(orgData: Model, catalogData: Model): Model {

@@ -34,11 +34,15 @@ class PublicServiceService(
             ?.toRDF(lang)
 
     fun reasonHarvestedPublicServices() {
-        publicServiceMongoTemplate.findById<TurtleDBO>("services-union-graph", "turtle")
-            ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "public-services") }
-            ?.let { reasoningService.catalogReasoning(it, CatalogType.PUBLICSERVICES) }
-            ?. run { separateAndSavePublicServices() }
-            ?: run { LOGGER.error("harvested public services not found", Exception()) }
+        try {
+            publicServiceMongoTemplate.findById<TurtleDBO>("services-union-graph", "turtle")
+                ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "public-services") }
+                ?.let { reasoningService.catalogReasoning(it, CatalogType.PUBLICSERVICES) }
+                ?. run { separateAndSavePublicServices() }
+                ?: run { LOGGER.error("missing some or all rdf-data, reasoning of public services was stopped", Exception()) }
+        } catch (ex: Exception) {
+            LOGGER.error("reasoning of public services failed", ex)
+        }
     }
 
     private fun Model.separateAndSavePublicServices() {

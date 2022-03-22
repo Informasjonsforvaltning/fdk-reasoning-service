@@ -37,11 +37,15 @@ class DataServiceService(
             ?.toRDF(lang)
 
     fun reasonHarvestedDataServices() {
-        dataServiceMongoTemplate.findById<TurtleDBO>("catalog-union-graph", "turtle")
-            ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "dataServices") }
-            ?.let { reasoningService.catalogReasoning(it, CatalogType.DATASERVICES) }
-            ?. run { separateAndSaveDataServices() }
-            ?: run { LOGGER.error("harvested data services not found", Exception()) }
+        try {
+            dataServiceMongoTemplate.findById<TurtleDBO>("catalog-union-graph", "turtle")
+                ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "dataServices") }
+                ?.let { reasoningService.catalogReasoning(it, CatalogType.DATASERVICES) }
+                ?. run { separateAndSaveDataServices() }
+                ?: run { LOGGER.error("missing some or all rdf-data, reasoning of data services was stopped", Exception()) }
+        } catch (ex: Exception) {
+            LOGGER.error("reasoning of data services failed", ex)
+        }
     }
 
     private fun Model.separateAndSaveDataServices() {

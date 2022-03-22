@@ -8,7 +8,7 @@ import no.fdk.fdk_reasoning_service.utils.allDataServiceIds
 import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.assertDoesNotThrow
 import org.springframework.data.mongodb.core.MongoTemplate
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -54,7 +54,7 @@ class DataServices {
         whenever(reasoningService.catalogReasoning(any(), any()))
             .thenThrow(RuntimeException())
 
-        assertThrows<Exception> { dataServiceService.reasonHarvestedDataServices() }
+        assertDoesNotThrow { dataServiceService.reasonHarvestedDataServices() }
 
         argumentCaptor<TurtleDBO, String>().apply {
             verify(dataServiceMongoTemplate, times(0)).save(first.capture(), second.capture())
