@@ -4,11 +4,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import no.fdk.fdk_reasoning_service.model.CatalogType
+import no.fdk.fdk_reasoning_service.model.StartAndEnd
 import no.fdk.fdk_reasoning_service.rabbit.RabbitMQPublisher
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
 
@@ -16,6 +18,7 @@ private val LOGGER: Logger = LoggerFactory.getLogger(ReasoningActivity::class.ja
 
 private val reasoningQueue: Queue<CatalogType> = LinkedList()
 private val lastCatalogLaunches: MutableMap<CatalogType, LocalDateTime> = mutableMapOf()
+private val sdf: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z")
 
 @Component
 class ReasoningActivity(
@@ -52,6 +55,7 @@ class ReasoningActivity(
 
     private fun launchReasoning(type: CatalogType) {
         lastCatalogLaunches[type] = LocalDateTime.now()
+        val start = Date()
         try {
             val catalogReasoning = launch {
                 when (type) {
@@ -64,7 +68,9 @@ class ReasoningActivity(
                 }
             }
 
-            catalogReasoning.invokeOnCompletion { rabbitMQPublisher.send(type) }
+            catalogReasoning.invokeOnCompletion {
+                rabbitMQPublisher.send(type, StartAndEnd(start = sdf.format(start), end = sdf.format(Date())))
+            }
         } catch (ex: Exception) {
             LOGGER.warn("reasoning activity $type was aborted")
         }

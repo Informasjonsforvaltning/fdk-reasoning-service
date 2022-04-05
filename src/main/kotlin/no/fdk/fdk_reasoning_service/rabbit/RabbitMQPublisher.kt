@@ -1,18 +1,22 @@
 package no.fdk.fdk_reasoning_service.rabbit
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.fdk.fdk_reasoning_service.model.CatalogType
+import no.fdk.fdk_reasoning_service.model.StartAndEnd
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.AmqpException
 import org.springframework.amqp.rabbit.core.RabbitTemplate
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter
 import org.springframework.stereotype.Service
 
 private val LOGGER = LoggerFactory.getLogger(RabbitMQPublisher::class.java)
 
 @Service
 class RabbitMQPublisher(private val template: RabbitTemplate) {
-    fun send(catalogType: CatalogType) {
+    fun send(catalogType: CatalogType, startAndEnd: StartAndEnd) {
         try {
-            template.convertAndSend("harvests", catalogType.toReasonedKey(), "")
+            template.messageConverter = Jackson2JsonMessageConverter(jacksonObjectMapper())
+            template.convertAndSend("harvests", catalogType.toReasonedKey(), startAndEnd)
             LOGGER.debug("Successfully sent reasoned message for $catalogType")
         } catch (e: AmqpException) {
             LOGGER.error("Could not send reasoned message", e)
