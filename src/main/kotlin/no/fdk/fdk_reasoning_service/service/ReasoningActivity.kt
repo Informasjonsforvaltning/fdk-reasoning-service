@@ -4,7 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import no.fdk.fdk_reasoning_service.model.CatalogType
-import no.fdk.fdk_reasoning_service.model.StartAndEnd
+import no.fdk.fdk_reasoning_service.model.StartAndEndTime
 import no.fdk.fdk_reasoning_service.rabbit.RabbitMQPublisher
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -69,7 +69,7 @@ class ReasoningActivity(
             }
 
             catalogReasoning.invokeOnCompletion {
-                rabbitMQPublisher.send(type, StartAndEnd(start = sdf.format(start), end = sdf.format(Date())))
+                rabbitMQPublisher.send(type, StartAndEndTime(startTime = sdf.format(start), endTime = sdf.format(Date())))
             }
         } catch (ex: Exception) {
             LOGGER.warn("reasoning activity $type was aborted")
