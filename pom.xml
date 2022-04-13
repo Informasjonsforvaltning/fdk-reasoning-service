@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.1</version>
+        <version>2.6.6</version>
         <relativePath/>
     </parent>
 
@@ -24,9 +24,9 @@
         <maven.compiler.source>${java.release}</maven.compiler.source>
         <maven.compiler.target>${java.release}</maven.compiler.target>
 
-        <kotlin.version>1.6.10</kotlin.version>
-        <testcontainers.version>1.16.2</testcontainers.version>
-        <jena.version>4.3.1</jena.version>
+        <kotlin.version>1.6.20</kotlin.version>
+        <testcontainers.version>1.16.3</testcontainers.version>
+        <jena.version>4.4.0</jena.version>
     </properties>
 
     <dependencies>
@@ -79,12 +79,11 @@
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
-            <version>2.13.0</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>
             <artifactId>kotlinx-coroutines-core</artifactId>
-            <version>1.5.2</version>
+            <version>1.6.1</version>
         </dependency>
 
         <!-- RDF dependencies -->
@@ -214,7 +213,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.0.0-M6</version>
                 <configuration>
                     <useSystemClassLoader>false</useSystemClassLoader>
                     <groups>unit</groups>
@@ -227,7 +226,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.0.0-M6</version>
                 <configuration>
                     <groups>integration</groups>
                     <excludedGroups>unit</excludedGroups>
