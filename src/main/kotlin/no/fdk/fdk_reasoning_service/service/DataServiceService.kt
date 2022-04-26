@@ -73,6 +73,8 @@ class DataServiceService(
         else {
             val catalogServices: List<DataService> = listProperties(DCAT.service)
                 .toList()
+                .filter { it.isResourceProperty() }
+                .filter { it.hasRDFType(DCAT.DataService) }
                 .mapNotNull { concept -> concept.resource.extractDataService() }
 
             var catalogModelWithoutServices = listProperties().toModel()

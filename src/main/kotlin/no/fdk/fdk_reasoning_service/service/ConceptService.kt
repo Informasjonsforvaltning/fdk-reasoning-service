@@ -71,6 +71,8 @@ class ConceptService(
         else {
             val collectionConcepts: List<ConceptModel> = listProperties(SKOS.member)
                 .toList()
+                .filter { it.isResourceProperty() }
+                .filter { it.hasRDFType(SKOS.Concept) }
                 .mapNotNull { concept -> concept.resource.extractConcept() }
 
             var collectionModelWithoutConcepts = listProperties().toModel()

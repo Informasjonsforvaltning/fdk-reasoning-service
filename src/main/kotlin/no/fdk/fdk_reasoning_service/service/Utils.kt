@@ -142,6 +142,12 @@ fun Model.containsTriple(subj: String, pred: String, obj: String): Boolean {
     } catch (ex: Exception) { false }
 }
 
+fun Statement.hasRDFType(type: Resource): Boolean =
+    resource.listProperties(RDF.type)
+        .toList()
+        .map { it.`object` }
+        .contains(type)
+
 fun Resource.catalogRecordURI(): String? {
     val selectQuery = "SELECT ?record { ?record <http://xmlns.com/foaf/0.1/primaryTopic> <$uri> . } LIMIT 1"
 
