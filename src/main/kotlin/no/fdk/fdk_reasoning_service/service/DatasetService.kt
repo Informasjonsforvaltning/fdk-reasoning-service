@@ -72,7 +72,7 @@ class DatasetService(
             val catalogDatasets: List<DatasetModel> = listProperties(DCAT.dataset)
                 .toList()
                 .filter { it.isResourceProperty() }
-                .filter { it.hasRDFType(DCAT.Dataset) }
+                .filter { it.resource.hasProperty(RDF.type, DCAT.Dataset) }
                 .mapNotNull { dataset -> dataset.resource.extractDataset() }
 
             var catalogModelWithoutDatasets = listProperties().toModel()
