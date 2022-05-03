@@ -14,16 +14,20 @@ import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.DCTerms
 import org.apache.jena.vocabulary.RDF
 import org.apache.jena.vocabulary.ROV
-import org.apache.jena.vocabulary.SKOS
 import org.slf4j.LoggerFactory
 import java.io.ByteArrayOutputStream
 import java.io.StringReader
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.zip.GZIPInputStream
 import java.util.zip.GZIPOutputStream
 
 private val logger = LoggerFactory.getLogger(Application::class.java)
 const val UNION_ID = "union-graph"
+
+private const val dateFormat: String = "yyyy-MM-dd HH:mm:ss Z"
 
 fun Model.createRDFResponse(responseType: Lang): String =
     ByteArrayOutputStream().use { out ->
@@ -112,7 +116,6 @@ fun Model.extreactQualifiedAttributionAgents(): List<Resource> =
         .filter { it.isResourceProperty() }
         .map { it.resource }
         .flatMap { it.listProperties(PROV.agent).toList() }
-        .asSequence()
         .filter { it.isResourceProperty() }
         .map { it.resource }
         .toList()
@@ -295,3 +298,21 @@ fun catalogTypeFromRabbitMessageKey(key: String): CatalogType? =
         key.contains("public_services") -> CatalogType.PUBLICSERVICES
         else -> null
     }
+
+fun CatalogType.toReportType(): String =
+    when(this) {
+        CatalogType.CONCEPTS -> "concept"
+        CatalogType.DATASERVICES -> "dataservice"
+        CatalogType.DATASETS -> "dataset"
+        CatalogType.INFORMATIONMODELS -> "informationmodel"
+        CatalogType.EVENTS -> "event"
+        CatalogType.PUBLICSERVICES -> "publicService"
+    }
+
+fun formatNowWithOsloTimeZone(): String =
+    ZonedDateTime.now(ZoneId.of("Europe/Oslo"))
+        .format(DateTimeFormatter.ofPattern(dateFormat))
+
+fun Date.formatWithOsloTimeZone(): String =
+    ZonedDateTime.from(toInstant().atZone(ZoneId.of("Europe/Oslo")))
+        .format(DateTimeFormatter.ofPattern(dateFormat))

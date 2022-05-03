@@ -4,24 +4,14 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.model.CatalogType
-import no.fdk.fdk_reasoning_service.rdf.CV
 import no.fdk.fdk_reasoning_service.service.ReasoningService
-import no.fdk.fdk_reasoning_service.service.catalogRecordURI
-import no.fdk.fdk_reasoning_service.utils.ApiTestContext
-import no.fdk.fdk_reasoning_service.utils.LOCAL_SERVER_PORT
-import no.fdk.fdk_reasoning_service.utils.TestResponseReader
-import org.apache.jena.rdf.model.Model
-import org.apache.jena.riot.Lang
-import org.apache.jena.vocabulary.RDF
+import no.fdk.fdk_reasoning_service.utils.*
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import java.io.ByteArrayOutputStream
-import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 @Tag("unit")
-class Reasoning: ApiTestContext() {
+class Reasoning : ApiTestContext() {
     private val uris: ApplicationURI = mock()
     private val reasoningService = ReasoningService(uris)
 
@@ -31,97 +21,83 @@ class Reasoning: ApiTestContext() {
     fun testDatasets() {
         whenever(uris.organizations)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
-        whenever(uris.los)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
-        val result = reasoningService.catalogReasoning(responseReader.parseTurtleFile("datasets.ttl"), CatalogType.DATASETS)
-
+        val result = reasoningService.catalogReasoning(
+            responseReader.parseTurtleFile("datasets.ttl"),
+            CatalogType.DATASETS,
+            RDF_DATA
+        )
         val expected = responseReader.parseTurtleFile("fdk_ready_datasets.ttl")
 
-        assertTrue(result!!.isIsomorphicWith(expected))
+        assertTrue(result.isIsomorphicWith(expected))
     }
 
     @Test
     fun testDataServices() {
         whenever(uris.organizations)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
-        whenever(uris.los)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
-        val result = reasoningService.catalogReasoning(responseReader.parseTurtleFile("dataservices.ttl"), CatalogType.DATASERVICES)
-
+        val result = reasoningService.catalogReasoning(
+            responseReader.parseTurtleFile("dataservices.ttl"),
+            CatalogType.DATASERVICES,
+            RDF_DATA
+        )
         val expected = responseReader.parseTurtleFile("fdk_ready_dataservices.ttl")
 
-        assertTrue(result!!.isIsomorphicWith(expected))
+        assertTrue(result.isIsomorphicWith(expected))
     }
 
     @Test
     fun testConcepts() {
         whenever(uris.organizations)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
-        whenever(uris.los)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
-        val result = reasoningService.catalogReasoning(responseReader.parseTurtleFile("concepts.ttl"), CatalogType.CONCEPTS)
-
+        val result = reasoningService.catalogReasoning(
+            responseReader.parseTurtleFile("concepts.ttl"),
+            CatalogType.CONCEPTS,
+            RDF_DATA
+        )
         val expected = responseReader.parseTurtleFile("fdk_ready_concepts.ttl")
 
-        assertTrue(result!!.isIsomorphicWith(expected))
+        assertTrue(result.isIsomorphicWith(expected))
     }
 
     @Test
     fun testInformationModels() {
         whenever(uris.organizations)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
-        whenever(uris.los)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
-        val result = reasoningService.catalogReasoning(responseReader.parseTurtleFile("infomodels.ttl"), CatalogType.INFORMATIONMODELS)
-
+        val result = reasoningService.catalogReasoning(
+            responseReader.parseTurtleFile("infomodels.ttl"),
+            CatalogType.INFORMATIONMODELS,
+            RDF_DATA
+        )
         val expected = responseReader.parseTurtleFile("fdk_ready_infomodels.ttl")
 
-        assertTrue(result!!.isIsomorphicWith(expected))
+        assertTrue(result.isIsomorphicWith(expected))
     }
 
     @Test
     fun testEvents() {
         whenever(uris.organizations)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
-        whenever(uris.los)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
-        val result = reasoningService.catalogReasoning(responseReader.parseTurtleFile("events.ttl"), CatalogType.EVENTS)
+        val result = reasoningService.catalogReasoning(
+            responseReader.parseTurtleFile("event_0.ttl"),
+            CatalogType.EVENTS,
+            RDF_DATA
+        )
+        val expected = responseReader.parseTurtleFile("fdk_ready_event_0.ttl")
 
-        val expected = responseReader.parseTurtleFile("fdk_ready_events.ttl")
-
-        assertTrue(result!!.isIsomorphicWith(expected))
+        assertTrue(result.isIsomorphicWith(expected))
     }
 
     @Test
-    fun testPublicServices() {
+    fun testPublicService() {
         whenever(uris.organizations)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
-        whenever(uris.los)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
-        val result = reasoningService.catalogReasoning(responseReader.parseTurtleFile("public_services.ttl"), CatalogType.PUBLICSERVICES)
+        val result = reasoningService.catalogReasoning(
+            responseReader.parseTurtleFile("public_service_0.ttl"),
+            CatalogType.PUBLICSERVICES,
+            RDF_DATA
+        )
+        val expected = responseReader.parseTurtleFile("fdk_ready_public_service_0.ttl")
 
-        val expected = responseReader.parseTurtleFile("fdk_ready_public_services.ttl")
-
-        assertTrue(result!!.isIsomorphicWith(expected))
-    }
-
-    @Test
-    fun testMissingLos() {
-        whenever(uris.organizations)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
-        whenever(uris.los)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los-error")
-
-        assertNull(reasoningService.catalogReasoning(responseReader.parseTurtleFile("datasets.ttl"), CatalogType.DATASETS))
-    }
-
-    @Test
-    fun testMissingOrganizationData() {
-        whenever(uris.organizations)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations-error")
-        whenever(uris.los)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/los")
-
-        assertNull(reasoningService.catalogReasoning(responseReader.parseTurtleFile("concepts.ttl"), CatalogType.CONCEPTS))
+        assertTrue(result.isIsomorphicWith(expected))
     }
 }

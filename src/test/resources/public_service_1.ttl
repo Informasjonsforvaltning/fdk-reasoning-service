@@ -1,12 +1,9 @@
-@prefix br:     <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/master/src/main/resources/ontology/organization-catalog.owl#> .
-@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/master/src/main/resources/ontology/org-type.ttl#> .
 @prefix cpsv:   <http://purl.org/vocab/cpsv#> .
 @prefix cv:     <http://data.europa.eu/m8g/> .
 @prefix dcat:   <http://www.w3.org/ns/dcat#> .
 @prefix dct:    <http://purl.org/dc/terms/> .
 @prefix eli:    <http://data.europa.eu/eli/ontology#> .
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
-@prefix rov:    <http://www.w3.org/ns/regorg#> .
 @prefix schema: <http://schema.org/> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
@@ -263,35 +260,4 @@
         cv:value              0 ;
         dct:description       "Endring som skal kunngjøres - Aksjeselskap: - andre endringer: papir kr 0,-" , "Endring som skal kunngjøres - Aksjeselskap: - andre endringer" ;
         dct:identifier        "10" .
-
-<https://www.staging.fellesdatakatalog.digdir.no/public-services/62966d9d-a547-3a66-a588-3fdf0f97d885>
-        a                  dcat:CatalogRecord ;
-        dct:identifier     "62966d9d-a547-3a66-a588-3fdf0f97d885" ;
-        dct:issued         "2021-02-15T10:57:00.97Z"^^xsd:dateTime ;
-        dct:modified       "2021-04-12T11:00:03.341Z"^^xsd:dateTime ;
-        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/12> .
-
-<https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132>
-        a               rov:RegisteredOrganization ;
-        dct:identifier  "910244132" ;
-        rov:legalName   "RAMSUND OG ROGNAN REVISJON" ;
-        rov:orgType     orgtype:ASA ;
-        foaf:name       "Ramsund og Rognand revisjon"@nb ;
-        br:orgPath      "/ANNET/910244132" .
-
-<https://organization-catalog.fellesdatakatalog.digdir.no/organizations/972417866>
-        a               rov:RegisteredOrganization ;
-        dct:identifier  "972417866" ;
-        rov:legalName   "KULTURDEPARTEMENTET" ;
-        rov:orgType     orgtype:STAT ;
-        foaf:name       "KULTURDEPARTEMENTET"@nb ;
-        br:orgPath      "/STAT/972417866" .
-
-<http://public-service-publisher.fellesdatakatalog.digdir.no/services/12>
-        a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132> ;
-        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
-        dct:description           "Søknad om driftsstøtte til anlegg."@nb ;
-        dct:identifier            "12" ;
-        dct:title                 "Søknad om driftsstøtte til anlegg"@nb .
 

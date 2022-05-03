@@ -3,6 +3,9 @@ package no.fdk.fdk_reasoning_service.integration
 import no.fdk.fdk_reasoning_service.service.EventService
 import no.fdk.fdk_reasoning_service.utils.ApiTestContext
 import no.fdk.fdk_reasoning_service.utils.EVENT_ID_0
+import no.fdk.fdk_reasoning_service.utils.EVENT_REPORT
+import no.fdk.fdk_reasoning_service.utils.RDF_DATA
+import no.fdk.fdk_reasoning_service.utils.TEST_DATE
 import no.fdk.fdk_reasoning_service.utils.TestResponseReader
 import no.fdk.fdk_reasoning_service.utils.apiGet
 import org.apache.jena.riot.Lang
@@ -34,7 +37,8 @@ class EventsIntegration : ApiTestContext() {
 
     @BeforeAll
     fun runReasoning() {
-        eventService.reasonHarvestedEvents()
+        eventService.reasonReportedChanges(EVENT_REPORT, RDF_DATA, TEST_DATE)
+        eventService.updateUnion()
     }
 
     @Test
@@ -48,7 +52,7 @@ class EventsIntegration : ApiTestContext() {
         val response = apiGet(port, "/events/$EVENT_ID_0", "application/rdf+json")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("event_0.ttl")
+        val expected = responseReader.parseTurtleFile("fdk_ready_event_0.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, "RDF/JSON")
 
         assertTrue(expected.isIsomorphicWith(responseModel))
@@ -56,11 +60,11 @@ class EventsIntegration : ApiTestContext() {
 
     @Test
     fun findAll() {
-        val response = apiGet(port, "/events", "application/n-quads")
+        val response = apiGet(port, "/events", "text/turtle")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
         val expected = responseReader.parseTurtleFile("fdk_ready_events.ttl")
-        val responseModel = responseReader.parseResponse(response["body"] as String, Lang.NQUADS.name)
+        val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TURTLE.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))
     }

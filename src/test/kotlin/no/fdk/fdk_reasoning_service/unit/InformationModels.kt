@@ -1,11 +1,11 @@
 package no.fdk.fdk_reasoning_service.unit
 
 import com.nhaarman.mockitokotlin2.*
+import no.fdk.fdk_reasoning_service.model.FdkIdAndUri
+import no.fdk.fdk_reasoning_service.model.ReasoningReport
 import no.fdk.fdk_reasoning_service.repository.InformationModelRepository
 import no.fdk.fdk_reasoning_service.service.*
-import no.fdk.fdk_reasoning_service.utils.INFOMODEL_0_ID
-import no.fdk.fdk_reasoning_service.utils.TestResponseReader
-import no.fdk.fdk_reasoning_service.utils.INFOMODEL_CATALOG_ID
+import no.fdk.fdk_reasoning_service.utils.*
 import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
@@ -23,17 +23,11 @@ class InformationModels {
     @Test
     fun testInformationModels() {
         val infoModelsUnion = responseReader.parseTurtleFile("fdk_ready_infomodels.ttl")
-        whenever(repository.findHarvestedUnion()).thenReturn("")
-        whenever(reasoningService.catalogReasoning(any(), any()))
+        whenever(repository.findHarvestedCatalog(any())).thenReturn("")
+        whenever(reasoningService.catalogReasoning(any(), any(), any()))
             .thenReturn(infoModelsUnion)
 
-        infoModelService.reasonHarvestedInformationModels()
-
-        argumentCaptor<String>().apply {
-            verify(repository, times(1)).saveReasonedUnion(capture())
-            val savedUnion = parseRDFResponse(firstValue, Lang.TURTLE, "")
-            assertTrue(infoModelsUnion.isIsomorphicWith(savedUnion))
-        }
+        val report = infoModelService.reasonReportedChanges(INFOMODEL_REPORT, RDF_DATA, TEST_DATE)
 
         argumentCaptor<String, String>().apply {
             verify(repository, times(1)).saveCatalog(first.capture(), second.capture())
@@ -49,19 +43,37 @@ class InformationModels {
             assertTrue(expectedInfoModel.isIsomorphicWith(savedInfoModel))
             assertEquals(INFOMODEL_0_ID, second.firstValue)
         }
+
+        val expectedReport = ReasoningReport(
+            id = "id", url = "https://information-models.com", dataType = "informationmodel",
+            harvestError = false, startTime = "2022-05-05 07:39:41 +0200", endTime = report.endTime,
+            changedCatalogs = listOf(FdkIdAndUri(INFOMODEL_CATALOG_ID, "https://information-models.com/$INFOMODEL_CATALOG_ID")),
+            changedResources = emptyList())
+        assertEquals(expectedReport, report)
+    }
+
+    @Test
+    fun testInformationModelsUnion() {
+        whenever(repository.findCatalogs())
+            .thenReturn(listOf(responseReader.readFile("fdk_ready_infomodels.ttl")))
+
+        infoModelService.updateUnion()
+
+        argumentCaptor<String>().apply {
+            verify(repository, times(1)).saveReasonedUnion(capture())
+            val expected = responseReader.parseTurtleFile("fdk_ready_infomodels.ttl")
+            val savedUnion = parseRDFResponse(firstValue, Lang.TURTLE, "")
+            assertTrue(expected.isIsomorphicWith(savedUnion))
+        }
     }
 
     @Test
     fun testInformationModelsError() {
-        whenever(repository.findHarvestedUnion()).thenReturn("")
-        whenever(reasoningService.catalogReasoning(any(), any()))
-            .thenThrow(RuntimeException())
+        whenever(repository.findHarvestedCatalog(any())).thenReturn("")
+        whenever(reasoningService.catalogReasoning(any(), any(), any()))
+            .thenThrow(RuntimeException("Error message"))
 
-        assertDoesNotThrow { infoModelService.reasonHarvestedInformationModels() }
-
-        argumentCaptor<String>().apply {
-            verify(repository, times(0)).saveReasonedUnion(capture())
-        }
+        val report = assertDoesNotThrow { infoModelService.reasonReportedChanges(INFOMODEL_REPORT, RDF_DATA, TEST_DATE) }
 
         argumentCaptor<String, String>().apply {
             verify(repository, times(0)).saveCatalog(first.capture(), second.capture())
@@ -70,6 +82,13 @@ class InformationModels {
         argumentCaptor<String, String>().apply {
             verify(repository, times(0)).saveInformationModel(first.capture(), second.capture())
         }
+
+        val expectedReport = ReasoningReport(
+            id = "id", url = "https://information-models.com", dataType = "informationmodel",
+            harvestError = true, errorMessage = "Error message",
+            startTime = "2022-05-05 07:39:41 +0200", endTime = report.endTime,
+            changedCatalogs = emptyList(), changedResources = emptyList())
+        assertEquals(expectedReport, report)
     }
 
 }

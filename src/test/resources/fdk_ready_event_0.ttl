@@ -50,6 +50,14 @@
         dct:title                 "Få barn"@nb ;
         dct:type                  <https://data.norge.no/concepts/311> .
 
+<https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132>
+        a               rov:RegisteredOrganization ;
+        dct:identifier  "910244132" ;
+        rov:legalName   "RAMSUND OG ROGNAN REVISJON" ;
+        rov:orgType     orgtype:ASA ;
+        foaf:name       "Ramsund og Rognand revisjon"@nb ;
+        br:orgPath      "/ANNET/910244132" .
+
 <https://data.norge.no/concepts/314>
         a               skos:Concept ;
         skos:broader    <https://data.norge.no/concepts/324> ;

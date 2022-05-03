@@ -1,5 +1,8 @@
 package no.fdk.fdk_reasoning_service.rabbit
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import no.fdk.fdk_reasoning_service.model.HarvestReport
 import no.fdk.fdk_reasoning_service.service.ReasoningActivity
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.core.Message
@@ -15,9 +18,13 @@ class RabbitMQListener(
 
     @RabbitListener(queues = ["#{receiverQueue.name}"])
     fun receiveMessage(message: Message) {
-        logger.info("Received message with key ${message.messageProperties.receivedRoutingKey}")
-
-        reasoningActivity.initiateReasoning(message.messageProperties.receivedRoutingKey)
+        val reports: List<HarvestReport> = try {
+            jacksonObjectMapper().readValue(message.body)
+        } catch (ex: Exception) {
+            logger.error("Unable to parse harvest reports", ex)
+            emptyList()
+        }
+        reasoningActivity.initiateReasoning(message.messageProperties.receivedRoutingKey, reports)
     }
 
 }

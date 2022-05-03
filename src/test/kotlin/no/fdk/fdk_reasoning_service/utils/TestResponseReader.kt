@@ -17,9 +17,9 @@ class TestResponseReader {
     fun readFile(filename: String): String =
         resourceAsReader(filename).readText()
 
-    fun parseTurtleFile(filename: String): Model {
+    fun parseTurtleFile(filename: String, lang: String = "TURTLE"): Model {
         val expected = ModelFactory.createDefaultModel()
-        expected.read(resourceAsReader(filename), "", "TURTLE")
+        expected.read(resourceAsReader(filename), "", lang)
         return expected
     }
 

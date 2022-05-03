@@ -1,6 +1,9 @@
 package no.fdk.fdk_reasoning_service.service
 
 import no.fdk.fdk_reasoning_service.model.CatalogType
+import no.fdk.fdk_reasoning_service.model.ExternalRDFData
+import no.fdk.fdk_reasoning_service.model.HarvestReport
+import no.fdk.fdk_reasoning_service.model.ReasoningReport
 import no.fdk.fdk_reasoning_service.model.TurtleDBO
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
@@ -10,8 +13,10 @@ import org.apache.jena.vocabulary.RDF
 import org.apache.jena.vocabulary.SKOS
 import org.slf4j.LoggerFactory
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.findAll
 import org.springframework.data.mongodb.core.findById
 import org.springframework.stereotype.Service
+import java.util.Date
 
 private val LOGGER = LoggerFactory.getLogger(ConceptService::class.java)
 
@@ -34,24 +39,56 @@ class ConceptService(
         conceptMongoTemplate.findById<TurtleDBO>(id, "fdkConcepts")
             ?.toRDF(lang)
 
-    fun reasonHarvestedConcepts() {
+    fun reasonReportedChanges(harvestReport: HarvestReport, rdfData: ExternalRDFData, start: Date): ReasoningReport =
         try {
-            conceptMongoTemplate.findById<TurtleDBO>("collection-union-graph", "turtle")
-                ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "concepts") }
-                ?.let { reasoningService.catalogReasoning(it, CatalogType.CONCEPTS) }
-                ?. run { separateAndSaveConcepts() }
-                ?: run { LOGGER.error("missing some or all rdf-data, reasoning of concepts was stopped", Exception()) }
+            harvestReport.changedCatalogs
+                .forEach { reasonCollectionConcepts(it.fdkId, rdfData) }
+
+            ReasoningReport(
+                id = harvestReport.id,
+                url = harvestReport.url,
+                dataType = CatalogType.CONCEPTS.toReportType(),
+                harvestError = false,
+                startTime = start.formatWithOsloTimeZone(),
+                endTime = formatNowWithOsloTimeZone(),
+                changedCatalogs = harvestReport.changedCatalogs,
+                changedResources = harvestReport.changedResources
+            )
         } catch (ex: Exception) {
-            LOGGER.error("reasoning of concepts failed", ex)
+            LOGGER.error("concept reasoning failed for ${harvestReport.url}", ex)
+            ReasoningReport(
+                id = harvestReport.id,
+                url = harvestReport.url,
+                dataType = CatalogType.CONCEPTS.toReportType(),
+                harvestError = true,
+                errorMessage = ex.message,
+                startTime = start.formatWithOsloTimeZone(),
+                endTime = formatNowWithOsloTimeZone()
+            )
         }
+
+    fun updateUnion() {
+        var collectionUnion = ModelFactory.createDefaultModel()
+
+        conceptMongoTemplate.findAll<TurtleDBO>("fdkCollections")
+            .filter { it.id != UNION_ID }
+            .map { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, null) }
+            .forEach { collectionUnion = collectionUnion.union(it) }
+
+        conceptMongoTemplate.save(collectionUnion.createUnionDBO(), "fdkCollections")
+    }
+
+    private fun reasonCollectionConcepts(collectionId: String, rdfData: ExternalRDFData) {
+        conceptMongoTemplate.findById<TurtleDBO>(harvestedCollectionID(collectionId), "turtle")
+            ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "concepts") }
+            ?.let { reasoningService.catalogReasoning(it, CatalogType.CONCEPTS, rdfData) }
+            ?.also { it.separateAndSaveConcepts() }
+            ?: throw Exception("missing database data, harvest-reasoning was stopped")
     }
 
     private fun Model.separateAndSaveConcepts() {
-        conceptMongoTemplate.save(createUnionDBO(), "fdkCollections")
-
         splitConceptCollectionsFromRDF()
             .forEach { it.saveCollectionAndConceptModels() }
-        LOGGER.debug("reasoned concepts saved to db")
     }
 
     private fun CollectionAndConcepts.saveCollectionAndConceptModels() {
@@ -155,5 +192,8 @@ class ConceptService(
         val fdkId: String,
         val concept: Model
     )
+
+    private fun harvestedCollectionID(fdkId: String): String =
+        "collection-$fdkId"
 
 }

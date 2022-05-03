@@ -1,7 +1,6 @@
 package no.fdk.fdk_reasoning_service.integration
 
 import no.fdk.fdk_reasoning_service.service.DataServiceService
-import no.fdk.fdk_reasoning_service.service.DatasetService
 import no.fdk.fdk_reasoning_service.utils.*
 import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -32,7 +31,8 @@ class DataServicesIntegration : ApiTestContext() {
 
     @BeforeAll
     fun runReasoning() {
-        dataServiceService.reasonHarvestedDataServices()
+        dataServiceService.reasonReportedChanges(DATA_SERVICE_REPORT, RDF_DATA, TEST_DATE)
+        dataServiceService.updateUnion()
     }
 
     @Test

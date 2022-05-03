@@ -1,8 +1,8 @@
 package no.fdk.fdk_reasoning_service.service
 
-import kotlinx.coroutines.*
 import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.model.CatalogType
+import no.fdk.fdk_reasoning_service.model.ExternalRDFData
 import no.fdk.fdk_reasoning_service.rdf.BR
 import no.fdk.fdk_reasoning_service.rdf.CV
 import org.apache.jena.rdf.model.Model
@@ -21,50 +21,18 @@ import org.springframework.stereotype.Service
 import java.io.BufferedReader
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.concurrent.Executors
 
 private val LOGGER: Logger = LoggerFactory.getLogger(ReasoningService::class.java)
 
 @Service
 class ReasoningService(
     private val uris: ApplicationURI
-) : CoroutineScope by CoroutineScope(Executors.newFixedThreadPool(10).asCoroutineDispatcher()) {
+) {
 
-    fun catalogReasoning(catalogModel: Model, catalogType: CatalogType): Model? {
-        LOGGER.debug("Starting $catalogType reasoning")
-
-        val rdfData = listOf(
-            async {
-                try {
-                    RDFDataMgr.loadModel(uris.organizations, Lang.TURTLE)
-                } catch (ex: Exception) {
-                    LOGGER.error("Download failed for ${uris.organizations}", ex)
-                    null
-                }
-            },
-            async {
-                try {
-                    RDFDataMgr.loadModel(uris.los, Lang.RDFXML)
-                } catch (ex: Exception) {
-                    LOGGER.error("Download failed for ${uris.los}", ex)
-                    null
-                }
-            }
-        ).let { runBlocking { it.awaitAll() } }
-
-        return when {
-            rdfData[0] == null -> null
-            rdfData[1] == null -> null
-            else -> {
-                val deductions = listOf(
-                    async { catalogType.extendedPublishersModel(orgData = rdfData[0]!!, catalogData = catalogModel) },
-                    async { catalogType.deductionsModel(catalogData = catalogModel, losData = rdfData[1]!!) }
-                ).let { runBlocking { it.awaitAll() } }
-
-                catalogModel.union(deductions[0]).union(deductions[1])
-            }
-        }
-    }
+    fun catalogReasoning(catalogModel: Model, catalogType: CatalogType, rdfData: ExternalRDFData): Model =
+        catalogModel
+            .union(catalogType.extendedPublishersModel(orgData = rdfData.orgData, catalogData = catalogModel))
+            .union(catalogType.deductionsModel(catalogData = catalogModel, losData = rdfData.losData))
 
     private fun CatalogType.extendedPublishersModel(orgData: Model, catalogData: Model): Model {
         val publisherPredicate = when (this) {

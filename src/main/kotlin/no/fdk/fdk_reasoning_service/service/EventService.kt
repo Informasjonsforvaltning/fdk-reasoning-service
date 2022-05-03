@@ -1,18 +1,18 @@
 package no.fdk.fdk_reasoning_service.service
 
 import no.fdk.fdk_reasoning_service.model.CatalogType
+import no.fdk.fdk_reasoning_service.model.ExternalRDFData
+import no.fdk.fdk_reasoning_service.model.HarvestReport
+import no.fdk.fdk_reasoning_service.model.ReasoningReport
 import no.fdk.fdk_reasoning_service.model.TurtleDBO
-import no.fdk.fdk_reasoning_service.rdf.CPSV
-import no.fdk.fdk_reasoning_service.rdf.CV
-import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
-import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang
-import org.apache.jena.vocabulary.RDF
 import org.slf4j.LoggerFactory
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.findAll
 import org.springframework.data.mongodb.core.findById
 import org.springframework.stereotype.Service
+import java.util.Date
 
 private val LOGGER = LoggerFactory.getLogger(EventService::class.java)
 
@@ -31,86 +31,50 @@ class EventService(
         eventMongoTemplate.findById<TurtleDBO>(id, "fdkEvent")
             ?.toRDF(lang)
 
-    fun reasonHarvestedEvents() {
+    fun reasonReportedChanges(harvestReport: HarvestReport, rdfData: ExternalRDFData, start: Date): ReasoningReport =
         try {
-            eventMongoTemplate.findById<TurtleDBO>("event-union-graph", "turtle")
-                ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "events") }
-                ?.let { reasoningService.catalogReasoning(it, CatalogType.EVENTS) }
-                ?. run { separateAndSaveEvents() }
-                ?: run { LOGGER.error("missing some or all rdf-data, reasoning of events was stopped", Exception()) }
+            harvestReport.changedResources
+                .forEach { reasonEvent(it.fdkId, rdfData) }
+
+            ReasoningReport(
+                id = harvestReport.id,
+                url = harvestReport.url,
+                dataType = CatalogType.EVENTS.toReportType(),
+                harvestError = false,
+                startTime = start.formatWithOsloTimeZone(),
+                endTime = formatNowWithOsloTimeZone(),
+                changedResources = harvestReport.changedResources
+            )
         } catch (ex: Exception) {
-            LOGGER.error("reasoning of events failed", ex)
-        }
-    }
-
-    private fun Model.separateAndSaveEvents() {
-        eventMongoTemplate.save(createUnionDBO(), "fdkEvent")
-
-        splitEventsFromRDF()
-            .forEach { eventMongoTemplate.save(it.second.createDBO(it.first), "fdkEvent") }
-        LOGGER.debug("reasoned events saved to db")
-    }
-
-    private fun Model.splitEventsFromRDF(): List<Pair<String, Model>> {
-        val businessEvents = listResourcesWithProperty(RDF.type, CV.BusinessEvent)
-            .toList()
-            .mapNotNull { it.extractEventModel(nsPrefixMap) }
-
-        val lifeEvents = listResourcesWithProperty(RDF.type, CV.LifeEvent)
-            .toList()
-            .mapNotNull { it.extractEventModel(nsPrefixMap) }
-
-        return listOf(businessEvents, lifeEvents).flatten()
-    }
-
-    private fun Resource.extractEventModel(nsPrefixes: Map<String, String>): Pair<String, Model>? {
-        var eventModel = listProperties().toModel()
-        eventModel.setNsPrefixes(nsPrefixes)
-
-        listProperties().toList()
-            .filter { it.isResourceProperty() }
-            .forEach {
-                eventModel = eventModel.recursiveAddNonEventOrServiceResource(it.resource, 10)
-            }
-
-        val fdkIdAndRecordURI = extractFDKIdAndRecordURI()
-
-        return if (fdkIdAndRecordURI == null) null
-        else Pair(
-            fdkIdAndRecordURI.fdkId,
-            eventModel.union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
-        )
-    }
-
-    private fun Model.recursiveAddNonEventOrServiceResource(resource: Resource, maxDepth: Int): Model {
-        val newDepth = maxDepth - 1
-
-        if (resourceShouldBeAdded(resource)) {
-            add(resource.listProperties())
-
-            if (newDepth > 0) {
-                resource.listProperties().toList()
-                    .filter { it.isResourceProperty() }
-                    .forEach { recursiveAddNonEventOrServiceResource(it.resource, newDepth) }
-            }
+            LOGGER.error("event reasoning failed for ${harvestReport.url}", ex)
+            ReasoningReport(
+                id = harvestReport.id,
+                url = harvestReport.url,
+                dataType = CatalogType.EVENTS.toReportType(),
+                harvestError = true,
+                errorMessage = ex.message,
+                startTime = start.formatWithOsloTimeZone(),
+                endTime = formatNowWithOsloTimeZone()
+            )
         }
 
-        return this
+    private fun reasonEvent(eventId: String, rdfData: ExternalRDFData) {
+        eventMongoTemplate.findById<TurtleDBO>(eventId, "turtle")
+            ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "events") }
+            ?.let { reasoningService.catalogReasoning(it, CatalogType.EVENTS, rdfData) }
+            ?.also { eventMongoTemplate.save(it.createDBO(eventId), "fdkEvent") }
+            ?: throw Exception("missing database data, harvest-reasoning was stopped")
     }
 
-    private fun Model.resourceShouldBeAdded(resource: Resource): Boolean {
-        val types = resource.listProperties(RDF.type)
-            .toList()
-            .map { it.`object` }
+    fun updateUnion() {
+        var eventUnion = ModelFactory.createDefaultModel()
 
-        return when {
-            types.contains(CPSV.PublicService) -> false
-            types.contains(CV.BusinessEvent) -> false
-            types.contains(CV.LifeEvent) -> false
-            resource.uri == null -> true
-            containsTriple("<${resource.uri}>", "a", "?o") -> false
-            else -> true
-        }
+        eventMongoTemplate.findAll<TurtleDBO>("fdkEvent")
+            .filter { it.id != UNION_ID }
+            .map { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, null) }
+            .forEach { eventUnion = eventUnion.union(it) }
+
+        eventMongoTemplate.save(eventUnion.createUnionDBO(), "fdkEvent")
     }
 
 }

@@ -31,7 +31,8 @@ class DatasetsIntegration : ApiTestContext() {
 
     @BeforeAll
     fun runReasoning() {
-        datasetService.reasonHarvestedDatasets()
+        datasetService.reasonReportedChanges(DATASET_REPORT, RDF_DATA, TEST_DATE)
+        datasetService.updateUnion()
     }
 
     @Test

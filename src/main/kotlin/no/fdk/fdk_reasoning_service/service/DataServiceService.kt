@@ -1,6 +1,9 @@
 package no.fdk.fdk_reasoning_service.service
 
 import no.fdk.fdk_reasoning_service.model.CatalogType
+import no.fdk.fdk_reasoning_service.model.ExternalRDFData
+import no.fdk.fdk_reasoning_service.model.HarvestReport
+import no.fdk.fdk_reasoning_service.model.ReasoningReport
 import no.fdk.fdk_reasoning_service.model.TurtleDBO
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
@@ -10,8 +13,10 @@ import org.apache.jena.vocabulary.DCAT
 import org.apache.jena.vocabulary.RDF
 import org.slf4j.LoggerFactory
 import org.springframework.data.mongodb.core.MongoTemplate
+import org.springframework.data.mongodb.core.findAll
 import org.springframework.data.mongodb.core.findById
 import org.springframework.stereotype.Service
+import java.util.Date
 
 private val LOGGER = LoggerFactory.getLogger(DataServiceService::class.java)
 
@@ -34,24 +39,56 @@ class DataServiceService(
         dataServiceMongoTemplate.findById<TurtleDBO>(id, "fdkServices")
             ?.toRDF(lang)
 
-    fun reasonHarvestedDataServices() {
+    fun reasonReportedChanges(harvestReport: HarvestReport, rdfData: ExternalRDFData, start: Date): ReasoningReport =
         try {
-            dataServiceMongoTemplate.findById<TurtleDBO>("catalog-union-graph", "turtle")
-                ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "dataServices") }
-                ?.let { reasoningService.catalogReasoning(it, CatalogType.DATASERVICES) }
-                ?. run { separateAndSaveDataServices() }
-                ?: run { LOGGER.error("missing some or all rdf-data, reasoning of data services was stopped", Exception()) }
+            harvestReport.changedCatalogs
+                .forEach { reasonCatalogServices(it.fdkId, rdfData) }
+
+            ReasoningReport(
+                id = harvestReport.id,
+                url = harvestReport.url,
+                dataType = CatalogType.DATASERVICES.toReportType(),
+                harvestError = false,
+                startTime = start.formatWithOsloTimeZone(),
+                endTime = formatNowWithOsloTimeZone(),
+                changedCatalogs = harvestReport.changedCatalogs,
+                changedResources = harvestReport.changedResources
+            )
         } catch (ex: Exception) {
-            LOGGER.error("reasoning of data services failed", ex)
+            LOGGER.error("data service reasoning failed for ${harvestReport.url}", ex)
+            ReasoningReport(
+                id = harvestReport.id,
+                url = harvestReport.url,
+                dataType = CatalogType.DATASERVICES.toReportType(),
+                harvestError = true,
+                errorMessage = ex.message,
+                startTime = start.formatWithOsloTimeZone(),
+                endTime = formatNowWithOsloTimeZone()
+            )
         }
+
+    private fun reasonCatalogServices(catalogId: String, rdfData: ExternalRDFData) {
+        dataServiceMongoTemplate.findById<TurtleDBO>(harvestedCatalogID(catalogId), "turtle")
+            ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "dataServices") }
+            ?.let { reasoningService.catalogReasoning(it, CatalogType.DATASERVICES, rdfData) }
+            ?.also { it.separateAndSaveDataServices() }
+            ?: throw Exception("missing database data, harvest-reasoning was stopped")
+    }
+
+    fun updateUnion() {
+        var catalogUnion = ModelFactory.createDefaultModel()
+
+        dataServiceMongoTemplate.findAll<TurtleDBO>("fdkCatalogs")
+            .filter { it.id != UNION_ID }
+            .map { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, null) }
+            .forEach { catalogUnion = catalogUnion.union(it) }
+
+        dataServiceMongoTemplate.save(catalogUnion.createUnionDBO(), "fdkCatalogs")
     }
 
     private fun Model.separateAndSaveDataServices() {
-        dataServiceMongoTemplate.save(createUnionDBO(), "fdkCatalogs")
-
         splitDataServiceCatalogsFromRDF()
             .forEach { it.saveCatalogAndDataServiceModels() }
-        LOGGER.debug("reasoned data services saved to db")
     }
 
     private fun CatalogAndDataServices.saveCatalogAndDataServiceModels() {
@@ -144,6 +181,9 @@ class DataServiceService(
             else -> true
         }
     }
+
+    private fun harvestedCatalogID(fdkId: String): String =
+        "catalog-$fdkId"
 
     private data class CatalogAndDataServices(
         val fdkId: String,

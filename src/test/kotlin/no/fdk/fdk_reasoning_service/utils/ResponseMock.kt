@@ -21,18 +21,6 @@ fun startMockServer() {
             .willReturn(ok("/GENERATED/ORGPATH")))
         mockserver.stubFor(get(urlEqualTo("/los"))
             .willReturn(ok(File("src/test/resources/los.rdf").readText())))
-        mockserver.stubFor(get(urlEqualTo("/dataservices/catalogs?catalogrecords=true"))
-            .willReturn(ok(File("src/test/resources/dataservices.ttl").readText())))
-        mockserver.stubFor(get(urlEqualTo("/concepts?catalogrecords=true"))
-            .willReturn(ok(File("src/test/resources/concepts.ttl").readText())))
-        mockserver.stubFor(get(urlEqualTo("/informationmodels/catalogs?catalogrecords=true"))
-            .willReturn(ok(File("src/test/resources/infomodels.ttl").readText())))
-        mockserver.stubFor(get(urlEqualTo("/datasets/catalogs?catalogrecords=true"))
-            .willReturn(ok(File("src/test/resources/datasets.ttl").readText())))
-        mockserver.stubFor(get(urlEqualTo("/events?catalogrecords=true"))
-            .willReturn(ok(File("src/test/resources/events.ttl").readText())))
-        mockserver.stubFor(get(urlEqualTo("/public-services?catalogrecords=true"))
-            .willReturn(ok(File("src/test/resources/public_services.ttl").readText())))
 
         mockserver.start()
     }

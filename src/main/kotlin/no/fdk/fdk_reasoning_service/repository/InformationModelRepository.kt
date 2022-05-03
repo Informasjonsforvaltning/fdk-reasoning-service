@@ -15,8 +15,8 @@ private const val infoModelPrefix = "infoModel"
 @Service
 class InformationModelRepository(private val informationModelGridFsTemplate: GridFsTemplate) {
 
-    fun findHarvestedUnion(): String? =
-        readFileContent("information-model-catalogs-union-graph")
+    fun findHarvestedCatalog(catalogId: String): String? =
+        readFileContent("$catalogPrefix-$catalogId")
 
     fun saveContent(content: String, filename: String) {
         informationModelGridFsTemplate.delete(Query(Criteria.where("filename").`is`(filename)))
@@ -28,6 +28,14 @@ class InformationModelRepository(private val informationModelGridFsTemplate: Gri
 
     fun findCatalog(fdkId: String) =
         readFileContent(filename = "$reasonedPrefix-$catalogPrefix-$fdkId")
+
+    fun findCatalogs(): List<String> =
+        informationModelGridFsTemplate
+            .find(Query(Criteria.where("filename").regex("^$reasonedPrefix-$catalogPrefix-")))
+            .toList()
+            .map { informationModelGridFsTemplate.getResource(it) }
+            .map { it.content.bufferedReader(Charsets.UTF_8) }
+            .map { ungzip(it.readText()) }
 
     fun findInformationModel(fdkId: String) =
         readFileContent(filename = "$reasonedPrefix-$infoModelPrefix-$fdkId")

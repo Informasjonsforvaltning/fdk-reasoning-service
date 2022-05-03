@@ -54,23 +54,25 @@ fun populateDB() {
 
     val eventDatabase = client.getDatabase("eventHarvester").withCodecRegistry(pojoCodecRegistry)
     val eventCollection = eventDatabase.getCollection("turtle")
-    eventCollection.insertOne(EVENT_UNION_DATA.mapDBO())
+    eventCollection.insertOne(EVENT_0_DATA.mapDBO())
+    eventCollection.insertOne(EVENT_1_DATA.mapDBO())
 
     val publicServicesDatabase = client.getDatabase("publicServiceHarvester").withCodecRegistry(pojoCodecRegistry)
     val publicServicesCollection = publicServicesDatabase.getCollection("turtle")
-    publicServicesCollection.insertOne(PUBLIC_SERVICE_UNION_DATA.mapDBO())
+    publicServicesCollection.insertOne(PUBLIC_SERVICE_0_DATA.mapDBO())
+    publicServicesCollection.insertOne(PUBLIC_SERVICE_1_DATA.mapDBO())
 
     val datasetsDatabase = client.getDatabase("datasetHarvester").withCodecRegistry(pojoCodecRegistry)
     val datasetsCollection = datasetsDatabase.getCollection("turtle")
-    datasetsCollection.insertOne(DATASET_UNION_DATA.mapDBO())
+    datasetsCollection.insertOne(DATASET_CATALOG_DATA.mapDBO())
 
     val conceptsDatabase = client.getDatabase("conceptHarvester").withCodecRegistry(pojoCodecRegistry)
     val conceptsCollection = conceptsDatabase.getCollection("turtle")
-    conceptsCollection.insertOne(CONCEPT_UNION_DATA.mapDBO())
+    conceptsCollection.insertOne(CONCEPT_COLLECTION_DATA.mapDBO())
 
     val dataServicesDatabase = client.getDatabase("dataServiceHarvester").withCodecRegistry(pojoCodecRegistry)
     val dataServicesCollection = dataServicesDatabase.getCollection("turtle")
-    dataServicesCollection.insertOne(DATA_SERVICE_UNION_DATA.mapDBO())
+    dataServicesCollection.insertOne(DATA_SERVICE_CATALOG_DATA.mapDBO())
 
     client.close()
 }

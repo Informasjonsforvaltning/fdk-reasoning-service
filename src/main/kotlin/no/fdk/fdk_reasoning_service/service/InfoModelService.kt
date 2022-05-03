@@ -1,6 +1,9 @@
 package no.fdk.fdk_reasoning_service.service
 
 import no.fdk.fdk_reasoning_service.model.CatalogType
+import no.fdk.fdk_reasoning_service.model.ExternalRDFData
+import no.fdk.fdk_reasoning_service.model.HarvestReport
+import no.fdk.fdk_reasoning_service.model.ReasoningReport
 import no.fdk.fdk_reasoning_service.rdf.ModellDCATAPNO
 import no.fdk.fdk_reasoning_service.repository.InformationModelRepository
 import org.apache.jena.rdf.model.Model
@@ -13,6 +16,7 @@ import org.apache.jena.vocabulary.RDF
 import org.apache.jena.vocabulary.SKOS
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import java.util.Date
 
 private val LOGGER = LoggerFactory.getLogger(InfoModelService::class.java)
 
@@ -44,24 +48,55 @@ class InfoModelService(
                 else parseRDFResponse(it, Lang.TURTLE, null)?.createRDFResponse(lang)
             }
 
-    fun reasonHarvestedInformationModels() {
+    fun reasonReportedChanges(harvestReport: HarvestReport, rdfData: ExternalRDFData, start: Date): ReasoningReport =
         try {
-            repository.findHarvestedUnion()
-                ?.let { parseRDFResponse(it, Lang.TURTLE, "information-models") }
-                ?.let { reasoningService.catalogReasoning(it, CatalogType.INFORMATIONMODELS) }
-                ?.run { separateAndSaveInformationModels() }
-                ?: run { LOGGER.error("missing some or all rdf-data, reasoning of information models was stopped", Exception()) }
+            harvestReport.changedCatalogs
+                .forEach { reasonCatalogModels(it.fdkId, rdfData, start) }
+
+            ReasoningReport(
+                id = harvestReport.id,
+                url = harvestReport.url,
+                dataType = CatalogType.INFORMATIONMODELS.toReportType(),
+                harvestError = false,
+                startTime = start.formatWithOsloTimeZone(),
+                endTime = formatNowWithOsloTimeZone(),
+                changedCatalogs = harvestReport.changedCatalogs,
+                changedResources = harvestReport.changedResources
+            )
         } catch (ex: Exception) {
-            LOGGER.error("reasoning of information models failed", ex)
+            LOGGER.error("information model reasoning failed for ${harvestReport.url}", ex)
+            ReasoningReport(
+                id = harvestReport.id,
+                url = harvestReport.url,
+                dataType = CatalogType.INFORMATIONMODELS.toReportType(),
+                harvestError = true,
+                errorMessage = ex.message,
+                startTime = start.formatWithOsloTimeZone(),
+                endTime = formatNowWithOsloTimeZone()
+            )
         }
+
+    private fun reasonCatalogModels(catalogId: String, rdfData: ExternalRDFData, start: Date) {
+        repository.findHarvestedCatalog(catalogId)
+            ?.let { parseRDFResponse(it, Lang.TURTLE, "information-models") }
+            ?.let { reasoningService.catalogReasoning(it, CatalogType.INFORMATIONMODELS, rdfData) }
+            ?.also { it.separateAndSaveInformationModels() }
+            ?: throw Exception("missing database data, harvest-reasoning was stopped")
+    }
+
+    fun updateUnion() {
+        var catalogUnion = ModelFactory.createDefaultModel()
+
+        repository.findCatalogs()
+            .map { parseRDFResponse(it, Lang.TURTLE, null) }
+            .forEach { catalogUnion = catalogUnion.union(it) }
+
+        repository.saveReasonedUnion(catalogUnion.createRDFResponse(Lang.TURTLE))
     }
 
     private fun Model.separateAndSaveInformationModels() {
-        repository.saveReasonedUnion(createRDFResponse(Lang.TURTLE))
-
         splitCatalogsFromRDF()
             .forEach { it.saveCatalogAndInformationModels() }
-        LOGGER.debug("reasoned catalogs and information models saved to db")
     }
 
     private fun CatalogAndInfoModels.saveCatalogAndInformationModels() {

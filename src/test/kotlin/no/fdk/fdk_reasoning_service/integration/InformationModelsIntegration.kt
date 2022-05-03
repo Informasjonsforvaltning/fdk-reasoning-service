@@ -1,7 +1,6 @@
 package no.fdk.fdk_reasoning_service.integration
 
 import no.fdk.fdk_reasoning_service.repository.InformationModelRepository
-import no.fdk.fdk_reasoning_service.service.DatasetService
 import no.fdk.fdk_reasoning_service.service.InfoModelService
 import no.fdk.fdk_reasoning_service.utils.*
 import org.apache.jena.riot.Lang
@@ -36,8 +35,9 @@ class InformationModelsIntegration : ApiTestContext() {
 
     @BeforeAll
     fun runReasoning() {
-        repository.saveContent(responseReader.readFile("infomodels.ttl"), "information-model-catalogs-union-graph")
-        infoModelService.reasonHarvestedInformationModels()
+        repository.saveContent(responseReader.readFile("infomodels.ttl"), "catalog-$INFOMODEL_CATALOG_ID")
+        infoModelService.reasonReportedChanges(INFOMODEL_REPORT, RDF_DATA, TEST_DATE)
+        infoModelService.updateUnion()
     }
 
     @Test

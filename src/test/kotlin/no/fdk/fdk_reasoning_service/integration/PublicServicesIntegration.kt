@@ -3,6 +3,9 @@ package no.fdk.fdk_reasoning_service.integration
 import no.fdk.fdk_reasoning_service.service.PublicServiceService
 import no.fdk.fdk_reasoning_service.utils.ApiTestContext
 import no.fdk.fdk_reasoning_service.utils.PUBLIC_SERVICE_ID_0
+import no.fdk.fdk_reasoning_service.utils.PUBLIC_SERVICE_REPORT
+import no.fdk.fdk_reasoning_service.utils.RDF_DATA
+import no.fdk.fdk_reasoning_service.utils.TEST_DATE
 import no.fdk.fdk_reasoning_service.utils.TestResponseReader
 import no.fdk.fdk_reasoning_service.utils.apiGet
 import org.apache.jena.riot.Lang
@@ -34,7 +37,8 @@ class PublicServicesIntegration : ApiTestContext() {
 
     @BeforeAll
     fun runReasoning() {
-        publicServiceService.reasonHarvestedPublicServices()
+        publicServiceService.reasonReportedChanges(PUBLIC_SERVICE_REPORT, RDF_DATA, TEST_DATE)
+        publicServiceService.updateUnion()
     }
 
     @Test
@@ -45,11 +49,11 @@ class PublicServicesIntegration : ApiTestContext() {
 
     @Test
     fun findSpecific() {
-        val response = apiGet(port, "/public-services/$PUBLIC_SERVICE_ID_0", "application/rdf+xml")
+        val response = apiGet(port, "/public-services/$PUBLIC_SERVICE_ID_0", "text/turtle")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("public_service_0.ttl")
-        val responseModel = responseReader.parseResponse(response["body"] as String, Lang.RDFXML.name)
+        val expected = responseReader.parseTurtleFile("fdk_ready_public_service_0.ttl")
+        val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TURTLE.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))
     }

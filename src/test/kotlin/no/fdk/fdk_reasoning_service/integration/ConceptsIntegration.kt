@@ -31,7 +31,8 @@ class ConceptsIntegration : ApiTestContext() {
 
     @BeforeAll
     fun runReasoning() {
-        conceptService.reasonHarvestedConcepts()
+        conceptService.reasonReportedChanges(CONCEPT_REPORT, RDF_DATA, TEST_DATE)
+        conceptService.updateUnion()
     }
 
     @Test
