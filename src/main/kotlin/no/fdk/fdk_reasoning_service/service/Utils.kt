@@ -120,14 +120,16 @@ fun Model.extreactQualifiedAttributionAgents(): List<Resource> =
         .map { it.resource }
         .toList()
 
-fun Model.extractPublishers(publisherPredicate: Property): List<Resource> =
-    listResourcesWithProperty(publisherPredicate)
-        .toList()
-        .flatMap { it.listProperties(publisherPredicate).toList() }
-        .asSequence()
-        .filter { it.isResourceProperty() }
-        .map { it.resource }
-        .toList()
+fun Model.extractPublishers(publisherPredicates: List<Property>): List<Resource> =
+    publisherPredicates.flatMap { publisherPredicate ->
+        listResourcesWithProperty(publisherPredicate)
+            .toList()
+            .flatMap { it.listProperties(publisherPredicate).toList() }
+            .asSequence()
+            .filter { it.isResourceProperty() }
+            .map { it.resource }
+            .toList()
+    }
 
 fun Statement.isResourceProperty(): Boolean =
     try {

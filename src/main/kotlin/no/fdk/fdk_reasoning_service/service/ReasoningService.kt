@@ -35,14 +35,14 @@ class ReasoningService(
             .union(catalogType.deductionsModel(catalogData = catalogModel, losData = rdfData.losData))
 
     private fun CatalogType.extendedPublishersModel(orgData: Model, catalogData: Model): Model {
-        val publisherPredicate = when (this) {
-            CatalogType.EVENTS -> CV.hasCompetentAuthority
-            CatalogType.PUBLICSERVICES -> CV.hasCompetentAuthority
-            else -> DCTerms.publisher
+        val publisherPredicates = when (this) {
+            CatalogType.EVENTS -> listOf(CV.hasCompetentAuthority)
+            CatalogType.PUBLICSERVICES -> listOf(CV.hasCompetentAuthority, CV.ownedBy)
+            else -> listOf(DCTerms.publisher)
         }
         val publisherResources = if (this == CatalogType.DATASETS) {
-                catalogData.extractPublishers(publisherPredicate).plus(catalogData.extreactQualifiedAttributionAgents())
-            } else catalogData.extractPublishers(publisherPredicate)
+                catalogData.extractPublishers(publisherPredicates).plus(catalogData.extreactQualifiedAttributionAgents())
+            } else catalogData.extractPublishers(publisherPredicates)
         return orgData.createModelOfPublishersWithOrgData(
             publisherURIs = publisherResources
                 .filter { it.dctIdentifierIsInadequate() }

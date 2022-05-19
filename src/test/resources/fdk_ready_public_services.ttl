@@ -289,7 +289,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/12>
         a                         cpsv:PublicService ;
-        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132> ;
+        cv:ownedBy                <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
         dct:description           "Søknad om driftsstøtte til anlegg."@nb ;
         dct:identifier            "12" ;
