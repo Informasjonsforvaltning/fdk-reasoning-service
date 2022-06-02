@@ -32,6 +32,20 @@ class Reasoning : ApiTestContext() {
     }
 
     @Test
+    fun testDatasetSeries() {
+        whenever(uris.organizations)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
+        val result = reasoningService.catalogReasoning(
+            responseReader.parseTurtleFile("dataset_series.ttl"),
+            CatalogType.DATASETS,
+            RDF_DATA
+        )
+        val expected = responseReader.parseTurtleFile("fdk_ready_dataset_series.ttl")
+
+        assertTrue(result.isIsomorphicWith(expected))
+    }
+
+    @Test
     fun testDataServices() {
         whenever(uris.organizations)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")

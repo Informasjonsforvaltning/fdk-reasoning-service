@@ -7,6 +7,10 @@ val datasetRules = """
     @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
     @prefix fdk: <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/master/src/main/resources/ontology/fdk.owl#> .
 
+    [seriesIsDataset:
+        (?series rdf:type dcat:DatasetSeries),
+        -> (?series rdf:type dcat:Dataset) ]
+
     [isAuthoritative:
         (?dataset rdf:type dcat:Dataset),
         (?dataset dct:provenance ?provenance),
@@ -73,6 +77,14 @@ val datasetRules = """
         (?catalog dct:publisher ?catalogPublisher),
         noValue(?dataset dct:publisher)
         -> (?dataset dct:publisher ?catalogPublisher)
+    ]
+
+    [seriesPublisherWhenMissing:
+        (?dataset rdf:type dcat:Dataset),
+        (?dataset dcat:inSeries ?series),
+        (?series dct:publisher ?seriesPublisher),
+        noValue(?dataset dct:publisher)
+        -> (?dataset dct:publisher ?seriesPublisher)
     ]
 """
 
