@@ -5,6 +5,7 @@ import no.fdk.fdk_reasoning_service.model.ExternalRDFData
 import no.fdk.fdk_reasoning_service.model.HarvestReport
 import no.fdk.fdk_reasoning_service.model.ReasoningReport
 import no.fdk.fdk_reasoning_service.model.TurtleDBO
+import no.fdk.fdk_reasoning_service.rdf.DCAT3
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.rdf.model.Resource
@@ -109,8 +110,10 @@ class DatasetService(
             val catalogDatasets: List<DatasetModel> = listProperties(DCAT.dataset)
                 .toList()
                 .filter { it.isResourceProperty() }
-                .filter { it.resource.hasProperty(RDF.type, DCAT.Dataset) }
-                .mapNotNull { dataset -> dataset.resource.extractDataset() }
+                .map { it.resource }
+                .flatMap { it.listDatasetResourcesInSeries() }
+                .filter { it.isDataset() }
+                .mapNotNull { dataset -> dataset.extractDataset() }
 
             var catalogModelWithoutDatasets = listProperties().toModel()
             catalogModelWithoutDatasets.setNsPrefixes(model.nsPrefixMap)
@@ -173,15 +176,35 @@ class DatasetService(
     }
 
     private fun Model.resourceShouldBeAdded(resource: Resource): Boolean {
-        val types = resource.listProperties(RDF.type)
-            .toList()
-            .map { it.`object` }
 
         return when {
-            types.contains(DCAT.Dataset) -> false
+            resource.isDataset() -> false
             containsTriple("<${resource.uri}>", "a", "?o") -> false
             else -> true
         }
+    }
+
+    private fun Resource.listDatasetResourcesInSeries(): List<Resource> =
+        if (isDatasetSeries()) {
+            val datasetsInSeries = model.listResourcesWithProperty(DCAT3.inSeries, this).toList()
+            datasetsInSeries.add(this)
+            datasetsInSeries
+        } else listOf(this)
+
+    private fun Resource.isDataset(): Boolean {
+        val types = listProperties(RDF.type)
+            .toList()
+            .map { it.`object` }
+
+        return types.contains(DCAT.Dataset)
+    }
+
+    private fun Resource.isDatasetSeries(): Boolean {
+        val types = listProperties(RDF.type)
+            .toList()
+            .map { it.`object` }
+
+        return types.contains(DCAT3.DatasetSeries)
     }
 
     private fun harvestedCatalogID(fdkId: String): String =

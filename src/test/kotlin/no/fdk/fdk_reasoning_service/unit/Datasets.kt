@@ -94,4 +94,29 @@ class Datasets {
         assertEquals(expectedReport, report)
     }
 
+    @Test
+    fun testDatasetSeries() {
+        val datasetsModel = responseReader.parseTurtleFile("fdk_ready_dataset_series.ttl")
+        whenever(datasetMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
+            .thenReturn(TurtleDBO("catalogId", gzip("")))
+        whenever(reasoningService.catalogReasoning(any(), any(), any()))
+            .thenReturn(datasetsModel)
+
+        val report = datasetService.reasonReportedChanges(DATASET_REPORT, RDF_DATA, TEST_DATE)
+
+        argumentCaptor<TurtleDBO, String>().apply {
+            verify(datasetMongoTemplate, times(5)).save(first.capture(), second.capture())
+
+            val savedCatalog = parseRDFResponse(ungzip(first.firstValue.turtle), Lang.TURTLE, "")
+            assertTrue(datasetsModel.isIsomorphicWith(savedCatalog))
+        }
+
+        val expectedReport = ReasoningReport(
+            id = "id", url = "https://datasets.com", dataType = "dataset",
+            harvestError = false, startTime = "2022-05-05 07:39:41 +0200", endTime = report.endTime,
+            changedCatalogs = listOf(FdkIdAndUri(DATASET_CATALOG_ID, "https://datasets.com/$DATASET_CATALOG_ID")),
+            changedResources = emptyList())
+        assertEquals(expectedReport, report)
+    }
+
 }
