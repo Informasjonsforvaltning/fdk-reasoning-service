@@ -5,7 +5,7 @@ val datasetRules = """
     @prefix dct: <http://purl.org/dc/terms/> .
     @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
     @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-    @prefix fdk: <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/master/src/main/resources/ontology/fdk.owl#> .
+    @prefix fdk: <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#> .
 
     [seriesIsDataset:
         (?series rdf:type dcat:DatasetSeries),

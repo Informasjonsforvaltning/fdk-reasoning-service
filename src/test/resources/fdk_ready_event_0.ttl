@@ -1,5 +1,5 @@
-@prefix br:     <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/master/src/main/resources/ontology/organization-catalog.owl#> .
-@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/master/src/main/resources/ontology/org-type.ttl#> .
+@prefix br:     <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/organization-catalog.owl#> .
+@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/org-type.ttl#> .
 @prefix cpsv:   <http://purl.org/vocab/cpsv#> .
 @prefix cv:     <http://data.europa.eu/m8g/> .
 @prefix dcat:   <http://www.w3.org/ns/dcat#> .

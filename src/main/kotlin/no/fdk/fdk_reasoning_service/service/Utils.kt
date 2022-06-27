@@ -63,7 +63,7 @@ fun ungzip(base64Content: String): String {
 }
 
 fun Model.fdkPrefix(): Model =
-    setNsPrefix("fdk", "https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/master/src/main/resources/ontology/fdk.owl#")
+    setNsPrefix("fdk", "https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#")
 
 fun Model.createModelOfPublishersWithOrgData(publisherURIs: Set<String>, orgsURI: String): Model {
     val model = ModelFactory.createDefaultModel()
