@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.1</version>
+        <version>2.7.3</version>
         <relativePath/>
     </parent>
 
@@ -24,8 +24,8 @@
         <maven.compiler.source>${java.release}</maven.compiler.source>
         <maven.compiler.target>${java.release}</maven.compiler.target>
 
-        <kotlin.version>1.7.0</kotlin.version>
-        <testcontainers.version>1.17.2</testcontainers.version>
+        <kotlin.version>1.7.10</kotlin.version>
+        <testcontainers.version>1.17.3</testcontainers.version>
         <jena.version>4.5.0</jena.version>
     </properties>
 
@@ -83,7 +83,7 @@
         <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>
             <artifactId>kotlinx-coroutines-core</artifactId>
-            <version>1.6.2</version>
+            <version>1.6.4</version>
         </dependency>
 
         <!-- RDF dependencies -->
@@ -143,7 +143,7 @@
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite-api</artifactId>
-            <version>1.8.2</version>
+            <version>1.9.0</version>
             <scope>test</scope>
         </dependency>
 
