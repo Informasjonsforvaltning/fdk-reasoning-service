@@ -266,7 +266,10 @@ val openDataURIBases: Set<String> = setOf(
     "data.norge.no/nlod/no/2.0",
     "creativecommons.org/licenses/by/4.0",
     "data.norge.no/nlod/no",
-    "data.norge.no/nlod")
+    "data.norge.no/nlod",
+    "publications.europa.eu/resource/authority/licence/CC0",
+    "publications.europa.eu/resource/authority/licence/NLOD_2_0",
+    "publications.europa.eu/resource/authority/licence/CC_BY_4_0")
 
 fun Resource.extractFDKIdAndRecordURI(): FDKIdAndRecordURI? {
 

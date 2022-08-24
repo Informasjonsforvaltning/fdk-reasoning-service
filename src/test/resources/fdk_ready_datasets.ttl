@@ -63,7 +63,7 @@
                                     dct:description  "Åpent"@nb ;
                                     dct:format       "json" ;
                                     dct:license      [ a               dct:LicenseDocument , skos:Concept ;
-                                                       dct:source      "http://data.norge.no/nlod/" ;
+                                                       dct:source      "http://publications.europa.eu/resource/authority/licence/NLOD_2_0" ;
                                                        skos:prefLabel  "Norsk lisens for offentlige data"@no , "Norwegian Licence for Open Government Data"@en
                                                      ] ;
                                     dct:title        "TEST"@nb ;
