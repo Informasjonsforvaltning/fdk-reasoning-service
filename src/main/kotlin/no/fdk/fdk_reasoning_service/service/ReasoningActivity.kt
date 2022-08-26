@@ -10,14 +10,17 @@ import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.model.ExternalRDFData
 import no.fdk.fdk_reasoning_service.model.HarvestReport
+import no.fdk.fdk_reasoning_service.model.RetryReportsWrap
 import no.fdk.fdk_reasoning_service.rabbit.RabbitMQPublisher
 import org.apache.jena.riot.Lang
 import org.apache.jena.riot.RDFDataMgr
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import java.util.*
 
+val RETRY_QUEUE: Queue<RetryReportsWrap> = LinkedList()
 private val LOGGER: Logger = LoggerFactory.getLogger(ReasoningActivity::class.java)
 
 @Component
@@ -32,9 +35,12 @@ class ReasoningActivity(
     private val uris: ApplicationURI
 ) : CoroutineScope by CoroutineScope(Dispatchers.Default) {
 
-    fun initiateReasoning(key: String, reports: List<HarvestReport>) {
+    @Scheduled(fixedRate = 60000)
+    private fun pollQueue() =
+        RETRY_QUEUE.poll()?.run { initiateReasoning(type, reports, retryCount) }
+
+    fun initiateReasoning(type: CatalogType, reports: List<HarvestReport>, retryCount: Int = 0) {
         val start = Date()
-        val type = catalogTypeFromRabbitMessageKey(key)
         try {
             val rdfData = listOf(
                 async {
@@ -58,17 +64,24 @@ class ReasoningActivity(
             when {
                 rdfData[0] == null -> throw Exception("missing org data")
                 rdfData[1] == null -> throw Exception("missing los data")
-                type == null -> throw Exception("invalid message key")
                 else -> launchReasoning(
                     type, start, reports,
-                    ExternalRDFData(orgData = rdfData[0]!!, losData = rdfData[1]!!))
+                    ExternalRDFData(orgData = rdfData[0]!!, losData = rdfData[1]!!), retryCount
+                )
             }
         } catch (ex: Exception) {
             LOGGER.warn("reasoning activity $type was aborted: ${ex.message}")
+            queueRetry(type, reports, retryCount)
         }
     }
 
-    private fun launchReasoning(type: CatalogType, start: Date, reports: List<HarvestReport>, rdfData: ExternalRDFData) = launch {
+    private fun launchReasoning(
+        type: CatalogType,
+        start: Date,
+        reports: List<HarvestReport>,
+        rdfData: ExternalRDFData,
+        retryCount: Int
+    ) = launch {
         try {
             reports
                 .map {report ->
@@ -93,7 +106,13 @@ class ReasoningActivity(
                 .run { rabbitMQPublisher.send(type, this) }
         } catch (ex: Exception) {
             LOGGER.warn("reasoning activity $type was aborted: ${ex.message}")
+            queueRetry(type, reports, retryCount)
         }
+    }
+
+    private fun queueRetry(type: CatalogType, reports: List<HarvestReport>, retryCount: Int) {
+        if (retryCount < 10) RETRY_QUEUE.add(RetryReportsWrap(type, retryCount + 1, reports))
+        else LOGGER.warn("reasoning of $type failed too many times, aborting completely")
     }
 
 }

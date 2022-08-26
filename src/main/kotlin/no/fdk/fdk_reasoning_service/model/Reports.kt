@@ -27,3 +27,9 @@ data class FdkIdAndUri(
     val fdkId: String,
     val uri: String
 )
+
+data class RetryReportsWrap(
+    val type: CatalogType,
+    val retryCount: Int,
+    val reports: List<HarvestReport>
+)

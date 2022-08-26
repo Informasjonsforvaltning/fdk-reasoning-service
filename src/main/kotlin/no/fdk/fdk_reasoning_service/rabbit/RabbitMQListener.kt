@@ -4,6 +4,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.fdk.fdk_reasoning_service.model.HarvestReport
 import no.fdk.fdk_reasoning_service.service.ReasoningActivity
+import no.fdk.fdk_reasoning_service.service.catalogTypeFromRabbitMessageKey
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.core.Message
 import org.springframework.amqp.rabbit.annotation.RabbitListener
@@ -24,7 +25,9 @@ class RabbitMQListener(
             logger.error("Unable to parse harvest reports", ex)
             emptyList()
         }
-        reasoningActivity.initiateReasoning(message.messageProperties.receivedRoutingKey, reports)
+        val type = catalogTypeFromRabbitMessageKey(message.messageProperties.receivedRoutingKey)
+        if (type != null) reasoningActivity.initiateReasoning(type, reports)
+        else logger.error("Unable to parse catalog type from ${message.messageProperties.receivedRoutingKey}")
     }
 
 }
