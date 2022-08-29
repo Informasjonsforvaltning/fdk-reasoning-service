@@ -112,7 +112,10 @@ class ReasoningActivity(
 
     private fun queueRetry(type: CatalogType, reports: List<HarvestReport>, retryCount: Int) {
         if (retryCount < 10) RETRY_QUEUE.add(RetryReportsWrap(type, retryCount + 1, reports))
-        else LOGGER.warn("reasoning of $type failed too many times, aborting completely")
+        else {
+            val catalogs = reports.flatMap { report -> report.changedCatalogs.map { catalog -> catalog.fdkId } }
+            LOGGER.error("reasoning of $type failed too many times, aborting completely. Catalogs affected: $catalogs")
+        }
     }
 
 }
