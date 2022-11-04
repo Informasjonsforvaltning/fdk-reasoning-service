@@ -19,7 +19,9 @@ class Reasoning : ApiTestContext() {
 
     @Test
     fun testDatasets() {
-        whenever(uris.organizations)
+        whenever(uris.orgExternal)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
+        whenever(uris.orgInternal)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         val result = reasoningService.catalogReasoning(
             responseReader.parseTurtleFile("datasets.ttl"),
@@ -33,7 +35,9 @@ class Reasoning : ApiTestContext() {
 
     @Test
     fun testDatasetSeries() {
-        whenever(uris.organizations)
+        whenever(uris.orgExternal)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
+        whenever(uris.orgInternal)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         val result = reasoningService.catalogReasoning(
             responseReader.parseTurtleFile("dataset_series.ttl"),
@@ -47,7 +51,9 @@ class Reasoning : ApiTestContext() {
 
     @Test
     fun testDataServices() {
-        whenever(uris.organizations)
+        whenever(uris.orgExternal)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
+        whenever(uris.orgInternal)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         val result = reasoningService.catalogReasoning(
             responseReader.parseTurtleFile("dataservices.ttl"),
@@ -61,7 +67,9 @@ class Reasoning : ApiTestContext() {
 
     @Test
     fun testConcepts() {
-        whenever(uris.organizations)
+        whenever(uris.orgExternal)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
+        whenever(uris.orgInternal)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         val result = reasoningService.catalogReasoning(
             responseReader.parseTurtleFile("concepts.ttl"),
@@ -75,7 +83,9 @@ class Reasoning : ApiTestContext() {
 
     @Test
     fun testInformationModels() {
-        whenever(uris.organizations)
+        whenever(uris.orgExternal)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
+        whenever(uris.orgInternal)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         val result = reasoningService.catalogReasoning(
             responseReader.parseTurtleFile("infomodels.ttl"),
@@ -89,7 +99,9 @@ class Reasoning : ApiTestContext() {
 
     @Test
     fun testEvents() {
-        whenever(uris.organizations)
+        whenever(uris.orgExternal)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
+        whenever(uris.orgInternal)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         val result = reasoningService.catalogReasoning(
             responseReader.parseTurtleFile("event_0.ttl"),
@@ -103,7 +115,9 @@ class Reasoning : ApiTestContext() {
 
     @Test
     fun testPublicService() {
-        whenever(uris.organizations)
+        whenever(uris.orgExternal)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
+        whenever(uris.orgInternal)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         val result = reasoningService.catalogReasoning(
             responseReader.parseTurtleFile("public_service_0.ttl"),

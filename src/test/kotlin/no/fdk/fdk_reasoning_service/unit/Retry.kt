@@ -50,7 +50,9 @@ class Retry {
     fun testRetryQueue() {
         whenever(uris.los)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/wrong-los-url")
-        whenever(uris.organizations)
+        whenever(uris.orgExternal)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/wrong-org-url")
+        whenever(uris.orgInternal)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/wrong-org-url")
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 0)
@@ -61,7 +63,9 @@ class Retry {
     fun testTenthRetryNotAddedToQueue() {
         whenever(uris.los)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/wrong-los-url")
-        whenever(uris.organizations)
+        whenever(uris.orgInternal)
+            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/wrong-org-url")
+        whenever(uris.orgExternal)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/wrong-org-url")
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 10)

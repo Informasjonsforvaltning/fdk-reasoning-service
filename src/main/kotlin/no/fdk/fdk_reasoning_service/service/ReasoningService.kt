@@ -49,7 +49,7 @@ class ReasoningService(
                 .filter {  it.isURIResource }
                 .mapNotNull { it.uri }
                 .toSet(),
-            orgsURI = uris.organizations
+            orgsURI = uris.orgExternal
         ).addOrgPathAndNameWhenMissing(publisherResources.toSet(), catalogData, orgData)
     }
 
@@ -110,10 +110,10 @@ class ReasoningService(
             else -> null
         }
 
-    private fun orgURI(orgId: String) = "${uris.organizations}/$orgId"
+    private fun orgURI(orgId: String) = "${uris.orgExternal}/$orgId"
 
     private fun orgPathAdapter(value: String): String? {
-        val uri = "${uris.organizations}/orgpath/$value"
+        val uri = "${uris.orgExternal}/orgpath/$value"
         with(URL(uri).openConnection() as HttpURLConnection) {
             setRequestProperty("Accept", "text/plain");
             try {
@@ -133,7 +133,7 @@ class ReasoningService(
 
     private fun orgModelAdapter(orgId: String?): Resource? =
         if (orgId != null) {
-            val uri = "${uris.organizations}/$orgId"
+            val uri = "${uris.orgExternal}/$orgId"
             try {
                 RDFDataMgr.loadModel(uri, Lang.TURTLE).getResource(uri)
             } catch (ex: Exception) {

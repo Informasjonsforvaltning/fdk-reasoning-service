@@ -6,6 +6,7 @@ import org.springframework.boot.context.properties.ConstructorBinding
 @ConstructorBinding
 @ConfigurationProperties("application.uri")
 data class ApplicationURI(
-    val organizations: String,
+    val orgExternal: String,
+    val orgInternal: String,
     val los: String
 )

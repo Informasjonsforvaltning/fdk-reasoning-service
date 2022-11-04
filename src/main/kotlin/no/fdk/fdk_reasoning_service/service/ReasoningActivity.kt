@@ -45,9 +45,9 @@ class ReasoningActivity(
             val rdfData = listOf(
                 async {
                     try {
-                        RDFDataMgr.loadModel(uris.organizations, Lang.TURTLE)
+                        RDFDataMgr.loadModel(uris.orgInternal, Lang.TURTLE)
                     } catch (ex: Exception) {
-                        LOGGER.error("Download failed for ${uris.organizations}", ex)
+                        LOGGER.error("Download failed for ${uris.orgInternal}", ex)
                         null
                     }
                 },
