@@ -63,9 +63,18 @@ val CONCEPT_REPORT = HarvestReport(id = "id", "https://concepts.com",
 
 const val PUBLIC_SERVICE_ID_0 = "62966d9d-a547-3a66-a588-3fdf0f97d885"
 const val PUBLIC_SERVICE_ID_1 = "d5d0c07c-c14f-3741-9aa3-126960958cf0"
-val PUBLIC_SERVICE_REPORT = HarvestReport(id = "id", "https://public-services.com", changedResources = listOf(
-    FdkIdAndUri(PUBLIC_SERVICE_ID_0, "https://public-services.com/$PUBLIC_SERVICE_ID_0"),
-    FdkIdAndUri(PUBLIC_SERVICE_ID_1, "https://public-services.com/$PUBLIC_SERVICE_ID_1")))
+const val PUBLIC_SERVICE_CATALOG_0_ID = "4d2c9e29-2f9a-304f-9e48-34e30a36d068"
+const val PUBLIC_SERVICE_CATALOG_1_ID = "8d2c9e29-2f9a-304f-9e48-34e30a36d068"
+val PUBLIC_SERVICE_REPORT = HarvestReport(id = "id", "https://public-services.com",
+    changedCatalogs = listOf(
+        FdkIdAndUri(PUBLIC_SERVICE_CATALOG_0_ID, "http://localhost:5000/public-services/catalogs/$PUBLIC_SERVICE_CATALOG_0_ID"),
+        FdkIdAndUri(PUBLIC_SERVICE_CATALOG_1_ID, "http://localhost:5000/public-services/catalogs/$PUBLIC_SERVICE_CATALOG_1_ID")),
+    changedResources = listOf(
+        FdkIdAndUri(PUBLIC_SERVICE_ID_0, "https://public-services.com/$PUBLIC_SERVICE_ID_0"),
+        FdkIdAndUri(PUBLIC_SERVICE_ID_1, "https://public-services.com/$PUBLIC_SERVICE_ID_1")))
+val PUBLIC_SERVICE_REPORT_0 = HarvestReport(id = "id", "https://public-services.com",
+    changedCatalogs = listOf(FdkIdAndUri(PUBLIC_SERVICE_CATALOG_0_ID, "http://localhost:5000/public-services/catalogs/$PUBLIC_SERVICE_CATALOG_0_ID")),
+    changedResources = listOf(FdkIdAndUri(PUBLIC_SERVICE_ID_0, "https://public-services.com/$PUBLIC_SERVICE_ID_0")))
 
 const val INFOMODEL_CATALOG_ID = "f25c939d-0722-3aa3-82b1-eaa457086444"
 const val INFOMODEL_0_ID = "bcbe6738-85f6-388c-afcc-ef1fafd7cc45"

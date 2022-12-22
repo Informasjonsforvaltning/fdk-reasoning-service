@@ -58,9 +58,9 @@ fun populateDB() {
     eventCollection.insertOne(EVENT_1_DATA.mapDBO())
 
     val publicServicesDatabase = client.getDatabase("publicServiceHarvester").withCodecRegistry(pojoCodecRegistry)
-    val publicServicesCollection = publicServicesDatabase.getCollection("turtle")
-    publicServicesCollection.insertOne(PUBLIC_SERVICE_0_DATA.mapDBO())
-    publicServicesCollection.insertOne(PUBLIC_SERVICE_1_DATA.mapDBO())
+    val publicServiceCatalogsCollection = publicServicesDatabase.getCollection("fdkCatalogTurtle")
+    publicServiceCatalogsCollection.insertOne(PUBLIC_SERVICE_CATALOG_0_DATA.mapDBO())
+    publicServiceCatalogsCollection.insertOne(PUBLIC_SERVICE_CATALOG_1_DATA.mapDBO())
 
     val datasetsDatabase = client.getDatabase("datasetHarvester").withCodecRegistry(pojoCodecRegistry)
     val datasetsCollection = datasetsDatabase.getCollection("turtle")

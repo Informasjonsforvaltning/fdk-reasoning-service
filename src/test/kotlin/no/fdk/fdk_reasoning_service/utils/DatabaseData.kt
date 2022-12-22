@@ -17,13 +17,13 @@ val EVENT_1_DATA = TurtleDBO(
     turtle = gzip(responseReader.readFile("event_1.ttl"))
 )
 
-val PUBLIC_SERVICE_0_DATA = TurtleDBO(
-    id = PUBLIC_SERVICE_ID_0,
+val PUBLIC_SERVICE_CATALOG_0_DATA = TurtleDBO(
+    id = PUBLIC_SERVICE_CATALOG_0_ID,
     turtle = gzip(responseReader.readFile("public_service_0.ttl"))
 )
 
-val PUBLIC_SERVICE_1_DATA = TurtleDBO(
-    id = PUBLIC_SERVICE_ID_1,
+val PUBLIC_SERVICE_CATALOG_1_DATA = TurtleDBO(
+    id = PUBLIC_SERVICE_CATALOG_1_ID,
     turtle = gzip(responseReader.readFile("public_service_1.ttl"))
 )
 

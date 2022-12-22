@@ -59,7 +59,29 @@ class PublicServicesIntegration : ApiTestContext() {
     }
 
     @Test
-    fun findAll() {
+    fun findSpecificCatalog() {
+        val response = apiGet(port, "/public-services/$PUBLIC_SERVICE_ID_0", "text/turtle")
+        assumeTrue(HttpStatus.OK.value() == response["status"])
+
+        val expected = responseReader.parseTurtleFile("fdk_ready_public_service_0.ttl")
+        val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TURTLE.name)
+
+        assertTrue(expected.isIsomorphicWith(responseModel))
+    }
+
+    @Test
+    fun findAllServices() {
+        val response = apiGet(port, "/public-services", "text/n3")
+        assumeTrue(HttpStatus.OK.value() == response["status"])
+
+        val expected = responseReader.parseTurtleFile("fdk_ready_public_services.ttl")
+        val responseModel = responseReader.parseResponse(response["body"] as String, Lang.N3.name)
+
+        assertTrue(expected.isIsomorphicWith(responseModel))
+    }
+
+    @Test
+    fun findAllCatalogs() {
         val response = apiGet(port, "/public-services", "text/n3")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 

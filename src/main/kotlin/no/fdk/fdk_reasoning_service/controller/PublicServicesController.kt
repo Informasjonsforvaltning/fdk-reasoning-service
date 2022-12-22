@@ -24,7 +24,7 @@ class PublicServicesController(private val publicServiceService: PublicServiceSe
         @RequestHeader(HttpHeaders.ACCEPT) accept: String?,
         @PathVariable id: String
     ): ResponseEntity<String> {
-        LOGGER.debug("get public service with id $id")
+        LOGGER.trace("get public service with id $id")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
@@ -37,11 +37,36 @@ class PublicServicesController(private val publicServiceService: PublicServiceSe
 
     @GetMapping
     fun getAllPublicServices(@RequestHeader(HttpHeaders.ACCEPT) accept: String?): ResponseEntity<String> {
-        LOGGER.debug("get all public services")
+        LOGGER.trace("get all public services")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
         else ResponseEntity(publicServiceService.getAllPublicServices(returnType ?: Lang.TURTLE), HttpStatus.OK)
+    }
+
+    @GetMapping("/catalogs/{id}")
+    fun getCatalogById(
+        @RequestHeader(HttpHeaders.ACCEPT) accept: String?,
+        @PathVariable id: String
+    ): ResponseEntity<String> {
+        LOGGER.trace("get public service catalog with id $id")
+        val returnType = jenaLangFromAcceptHeader(accept)
+
+        return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
+        else {
+            publicServiceService.getCatalogById(id, returnType ?: Lang.TURTLE)
+                ?.let { ResponseEntity(it, HttpStatus.OK) }
+                ?: ResponseEntity(HttpStatus.NOT_FOUND)
+        }
+    }
+
+    @GetMapping("/catalogs")
+    fun getAllCatalogs(@RequestHeader(HttpHeaders.ACCEPT) accept: String?): ResponseEntity<String> {
+        LOGGER.trace("get all public service catalogs")
+        val returnType = jenaLangFromAcceptHeader(accept)
+
+        return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
+        else ResponseEntity(publicServiceService.getAllCatalogs(returnType ?: Lang.TURTLE), HttpStatus.OK)
     }
 
 }

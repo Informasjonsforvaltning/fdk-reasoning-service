@@ -124,7 +124,7 @@ class Reasoning : ApiTestContext() {
             CatalogType.PUBLICSERVICES,
             RDF_DATA
         )
-        val expected = responseReader.parseTurtleFile("fdk_ready_public_service_0.ttl")
+        val expected = responseReader.parseTurtleFile("fdk_ready_public_service_catalog_0.ttl")
 
         assertTrue(result.isIsomorphicWith(expected))
     }
