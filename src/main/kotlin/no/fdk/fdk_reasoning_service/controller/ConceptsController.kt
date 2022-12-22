@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-private val LOGGER = LoggerFactory.getLogger(ConceptsController::class.java)
-
 @RestController
 @CrossOrigin
 @RequestMapping(
@@ -24,7 +22,6 @@ class ConceptsController(private val conceptService: ConceptService) {
         @RequestHeader(HttpHeaders.ACCEPT) accept: String?,
         @PathVariable id: String
     ): ResponseEntity<String> {
-        LOGGER.debug("get concept with id $id")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
@@ -40,7 +37,6 @@ class ConceptsController(private val conceptService: ConceptService) {
         @RequestHeader(HttpHeaders.ACCEPT) accept: String?,
         @PathVariable id: String
     ): ResponseEntity<String> {
-        LOGGER.debug("get concept collection with id $id")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
@@ -53,7 +49,6 @@ class ConceptsController(private val conceptService: ConceptService) {
 
     @GetMapping
     fun getAllConceptCollections(@RequestHeader(HttpHeaders.ACCEPT) accept: String?): ResponseEntity<String> {
-        LOGGER.debug("get all concept collections")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)

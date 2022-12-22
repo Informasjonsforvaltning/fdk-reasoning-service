@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-private val LOGGER = LoggerFactory.getLogger(PublicServicesController::class.java)
-
 @RestController
 @CrossOrigin
 @RequestMapping(
@@ -24,7 +22,6 @@ class PublicServicesController(private val publicServiceService: PublicServiceSe
         @RequestHeader(HttpHeaders.ACCEPT) accept: String?,
         @PathVariable id: String
     ): ResponseEntity<String> {
-        LOGGER.trace("get public service with id $id")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
@@ -37,7 +34,6 @@ class PublicServicesController(private val publicServiceService: PublicServiceSe
 
     @GetMapping
     fun getAllPublicServices(@RequestHeader(HttpHeaders.ACCEPT) accept: String?): ResponseEntity<String> {
-        LOGGER.trace("get all public services")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
@@ -49,7 +45,6 @@ class PublicServicesController(private val publicServiceService: PublicServiceSe
         @RequestHeader(HttpHeaders.ACCEPT) accept: String?,
         @PathVariable id: String
     ): ResponseEntity<String> {
-        LOGGER.trace("get public service catalog with id $id")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
@@ -62,7 +57,6 @@ class PublicServicesController(private val publicServiceService: PublicServiceSe
 
     @GetMapping("/catalogs")
     fun getAllCatalogs(@RequestHeader(HttpHeaders.ACCEPT) accept: String?): ResponseEntity<String> {
-        LOGGER.trace("get all public service catalogs")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)

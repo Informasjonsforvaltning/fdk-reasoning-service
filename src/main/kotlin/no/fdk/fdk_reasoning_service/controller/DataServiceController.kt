@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-private val LOGGER = LoggerFactory.getLogger(DataServiceController::class.java)
-
 @RestController
 @CrossOrigin
 @RequestMapping(
@@ -24,7 +22,6 @@ class DataServiceController(private val dataServiceService: DataServiceService) 
         @RequestHeader(HttpHeaders.ACCEPT) accept: String?,
         @PathVariable id: String
     ): ResponseEntity<String> {
-        LOGGER.debug("get data service with id $id")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
@@ -40,7 +37,6 @@ class DataServiceController(private val dataServiceService: DataServiceService) 
         @RequestHeader(HttpHeaders.ACCEPT) accept: String?,
         @PathVariable id: String
     ): ResponseEntity<String> {
-        LOGGER.debug("get data service catalog with id $id")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
@@ -53,7 +49,6 @@ class DataServiceController(private val dataServiceService: DataServiceService) 
 
     @GetMapping
     fun getAllDataServiceCatalogs(@RequestHeader(HttpHeaders.ACCEPT) accept: String?): ResponseEntity<String> {
-        LOGGER.debug("get all data service catalogs")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)

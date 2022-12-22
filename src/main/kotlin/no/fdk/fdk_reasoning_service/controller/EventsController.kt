@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-private val LOGGER = LoggerFactory.getLogger(EventsController::class.java)
-
 @RestController
 @CrossOrigin
 @RequestMapping(
@@ -24,7 +22,6 @@ class EventsController(private val eventService: EventService) {
         @RequestHeader(HttpHeaders.ACCEPT) accept: String?,
         @PathVariable id: String
     ): ResponseEntity<String> {
-        LOGGER.debug("get event with id $id")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
@@ -37,7 +34,6 @@ class EventsController(private val eventService: EventService) {
 
     @GetMapping
     fun getAllEvents(@RequestHeader(HttpHeaders.ACCEPT) accept: String?): ResponseEntity<String> {
-        LOGGER.debug("get all events")
         val returnType = jenaLangFromAcceptHeader(accept)
 
         return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
