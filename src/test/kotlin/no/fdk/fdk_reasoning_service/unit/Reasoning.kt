@@ -104,11 +104,11 @@ class Reasoning : ApiTestContext() {
         whenever(uris.orgInternal)
             .thenReturn("http://localhost:$LOCAL_SERVER_PORT/organizations")
         val result = reasoningService.catalogReasoning(
-            responseReader.parseTurtleFile("event_0.ttl"),
+            responseReader.parseTurtleFile("events.ttl"),
             CatalogType.EVENTS,
             RDF_DATA
         )
-        val expected = responseReader.parseTurtleFile("fdk_ready_event_0.ttl")
+        val expected = responseReader.parseTurtleFile("fdk_ready_event_catalogs.ttl")
 
         assertTrue(result.isIsomorphicWith(expected))
     }

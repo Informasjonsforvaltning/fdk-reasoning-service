@@ -53,9 +53,8 @@ fun populateDB() {
     val client: MongoClient = MongoClients.create(connectionString)
 
     val eventDatabase = client.getDatabase("eventHarvester").withCodecRegistry(pojoCodecRegistry)
-    val eventCollection = eventDatabase.getCollection("turtle")
-    eventCollection.insertOne(EVENT_0_DATA.mapDBO())
-    eventCollection.insertOne(EVENT_1_DATA.mapDBO())
+    val eventCollection = eventDatabase.getCollection("fdkCatalogTurtle")
+    eventCollection.insertOne(EVENT_CATALOG_DATA.mapDBO())
 
     val publicServicesDatabase = client.getDatabase("publicServiceHarvester").withCodecRegistry(pojoCodecRegistry)
     val publicServiceCatalogsCollection = publicServicesDatabase.getCollection("fdkCatalogTurtle")

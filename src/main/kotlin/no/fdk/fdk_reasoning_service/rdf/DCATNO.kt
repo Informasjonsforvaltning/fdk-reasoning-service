@@ -8,5 +8,6 @@ class DCATNO {
     companion object {
         const val uri = "https://data.norge.no/vocabulary/dcatno#"
         val containsService: Property = ResourceFactory.createProperty( "${uri}containsService")
+        val containsEvent: Property = ResourceFactory.createProperty( "${uri}containsEvent")
     }
 }

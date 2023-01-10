@@ -2,6 +2,7 @@ package no.fdk.fdk_reasoning_service.integration
 
 import no.fdk.fdk_reasoning_service.service.EventService
 import no.fdk.fdk_reasoning_service.utils.ApiTestContext
+import no.fdk.fdk_reasoning_service.utils.EVENT_CATALOG_ID
 import no.fdk.fdk_reasoning_service.utils.EVENT_ID_0
 import no.fdk.fdk_reasoning_service.utils.EVENT_REPORT
 import no.fdk.fdk_reasoning_service.utils.RDF_DATA
@@ -48,7 +49,7 @@ class EventsIntegration : ApiTestContext() {
     }
 
     @Test
-    fun findSpecific() {
+    fun findSpecificEvent() {
         val response = apiGet(port, "/events/$EVENT_ID_0", "application/rdf+json")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
@@ -59,11 +60,33 @@ class EventsIntegration : ApiTestContext() {
     }
 
     @Test
-    fun findAll() {
+    fun findSpecificCatalog() {
+        val response = apiGet(port, "/events/catalogs/$EVENT_CATALOG_ID", "application/rdf+json")
+        assumeTrue(HttpStatus.OK.value() == response["status"])
+
+        val expected = responseReader.parseTurtleFile("fdk_ready_event_catalogs.ttl")
+        val responseModel = responseReader.parseResponse(response["body"] as String, "RDF/JSON")
+
+        assertTrue(expected.isIsomorphicWith(responseModel))
+    }
+
+    @Test
+    fun findAllEvents() {
         val response = apiGet(port, "/events", "text/turtle")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
         val expected = responseReader.parseTurtleFile("fdk_ready_events.ttl")
+        val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TURTLE.name)
+
+        assertTrue(expected.isIsomorphicWith(responseModel))
+    }
+
+    @Test
+    fun findAllCatalogs() {
+        val response = apiGet(port, "/events/catalogs", "text/turtle")
+        assumeTrue(HttpStatus.OK.value() == response["status"])
+
+        val expected = responseReader.parseTurtleFile("fdk_ready_event_catalogs.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TURTLE.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))

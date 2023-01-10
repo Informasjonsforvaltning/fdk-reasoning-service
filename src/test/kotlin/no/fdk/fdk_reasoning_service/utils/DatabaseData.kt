@@ -7,14 +7,9 @@ import org.bson.Document
 
 private val responseReader = TestResponseReader()
 
-val EVENT_0_DATA = TurtleDBO(
-    id = EVENT_ID_0,
-    turtle = gzip(responseReader.readFile("event_0.ttl"))
-)
-
-val EVENT_1_DATA = TurtleDBO(
-    id = EVENT_ID_1,
-    turtle = gzip(responseReader.readFile("event_1.ttl"))
+val EVENT_CATALOG_DATA = TurtleDBO(
+    id = EVENT_CATALOG_ID,
+    turtle = gzip(responseReader.readFile("events.ttl"))
 )
 
 val PUBLIC_SERVICE_CATALOG_0_DATA = TurtleDBO(

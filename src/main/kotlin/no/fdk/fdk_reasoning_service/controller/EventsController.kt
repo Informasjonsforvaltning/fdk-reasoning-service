@@ -40,4 +40,27 @@ class EventsController(private val eventService: EventService) {
         else ResponseEntity(eventService.getAllEvents(returnType ?: Lang.TURTLE), HttpStatus.OK)
     }
 
+    @GetMapping("/catalogs/{id}")
+    fun getCatalogById(
+        @RequestHeader(HttpHeaders.ACCEPT) accept: String?,
+        @PathVariable id: String
+    ): ResponseEntity<String> {
+        val returnType = jenaLangFromAcceptHeader(accept)
+
+        return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
+        else {
+            eventService.getCatalogById(id, returnType ?: Lang.TURTLE)
+                ?.let { ResponseEntity(it, HttpStatus.OK) }
+                ?: ResponseEntity(HttpStatus.NOT_FOUND)
+        }
+    }
+
+    @GetMapping("/catalogs")
+    fun getAllCatalogs(@RequestHeader(HttpHeaders.ACCEPT) accept: String?): ResponseEntity<String> {
+        val returnType = jenaLangFromAcceptHeader(accept)
+
+        return if (returnType == Lang.RDFNULL) ResponseEntity(HttpStatus.NOT_ACCEPTABLE)
+        else ResponseEntity(eventService.getAllCatalogs(returnType ?: Lang.TURTLE), HttpStatus.OK)
+    }
+
 }
