@@ -159,6 +159,10 @@ class ReasoningService(
                 GenericRuleReasoner(Rule.parseRules(infoModelRules)),
                 catalogData
             ).deductionsModel
+            CatalogType.PUBLICSERVICES -> ModelFactory.createInfModel(
+                GenericRuleReasoner(Rule.parseRules(serviceRules)),
+                catalogData
+            ).deductionsModel
             else -> ModelFactory.createDefaultModel()
         }
 }

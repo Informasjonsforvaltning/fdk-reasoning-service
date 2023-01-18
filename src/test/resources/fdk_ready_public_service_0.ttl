@@ -32,4 +32,13 @@
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
         dct:description           "Søknad om driftsstøtte til anlegg."@nb ;
         dct:identifier            "12" ;
-        dct:title                 "Søknad om driftsstøtte til anlegg"@nb .
+        dct:title                 "Søknad om driftsstøtte til anlegg"@nb ;
+        cv:hasParticipation       <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> .
+
+<https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl>
+       a cv:Participation ;
+       cv:hasParticipant <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exAktorDummy.ttl> .
+
+<https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exAktorDummy.ttl>
+       a foaf:Agent;
+       cv:participates <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> .

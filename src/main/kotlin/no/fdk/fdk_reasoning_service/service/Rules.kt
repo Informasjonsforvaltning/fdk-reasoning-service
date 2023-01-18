@@ -127,6 +127,17 @@ val conceptRules = """
     ]
 """
 
+val serviceRules = """
+    @prefix cv: <http://data.europa.eu/m8g/> .
+
+    [extendHasParticipantWhenMissing:
+        (?participation rdf:type cv:Participation),
+        (?agent cv:participates ?participation)
+        noValue(?participation cv:hasParticipant)
+        -> (?participation cv:hasParticipant ?agent)
+    ]
+"""
+
 private fun openDataURIVariants(uriBase: String): List<String> =
     listOf(
         "http://$uriBase",
