@@ -7,7 +7,8 @@ data class HarvestReport(
     val id: String,
     val url: String,
     val changedCatalogs: List<FdkIdAndUri> = emptyList(),
-    val changedResources: List<FdkIdAndUri> = emptyList()
+    val changedResources: List<FdkIdAndUri> = emptyList(),
+    val removedResources: List<FdkIdAndUri> = emptyList()
 )
 
 @JsonIgnoreProperties(ignoreUnknown=true)
@@ -20,7 +21,8 @@ data class ReasoningReport(
     val endTime: String,
     val errorMessage: String? = null,
     val changedCatalogs: List<FdkIdAndUri> = emptyList(),
-    val changedResources: List<FdkIdAndUri> = emptyList()
+    val changedResources: List<FdkIdAndUri> = emptyList(),
+    val removedResources: List<FdkIdAndUri> = emptyList()
 )
 
 data class FdkIdAndUri(
