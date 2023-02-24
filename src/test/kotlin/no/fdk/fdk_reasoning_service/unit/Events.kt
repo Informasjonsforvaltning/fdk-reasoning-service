@@ -1,6 +1,5 @@
 package no.fdk.fdk_reasoning_service.unit
 
-import com.nhaarman.mockitokotlin2.*
 import no.fdk.fdk_reasoning_service.model.FdkIdAndUri
 import no.fdk.fdk_reasoning_service.model.ReasoningReport
 import no.fdk.fdk_reasoning_service.model.TurtleDBO
@@ -8,6 +7,7 @@ import no.fdk.fdk_reasoning_service.service.*
 import no.fdk.fdk_reasoning_service.utils.*
 import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.*
+import org.mockito.kotlin.*
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.findAll
 import java.util.*

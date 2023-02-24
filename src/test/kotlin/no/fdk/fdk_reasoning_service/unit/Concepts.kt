@@ -1,6 +1,5 @@
 package no.fdk.fdk_reasoning_service.unit
 
-import com.nhaarman.mockitokotlin2.*
 import no.fdk.fdk_reasoning_service.model.FdkIdAndUri
 import no.fdk.fdk_reasoning_service.model.ReasoningReport
 import no.fdk.fdk_reasoning_service.model.TurtleDBO
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
+import org.mockito.kotlin.*
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.findAll
 import java.util.*
