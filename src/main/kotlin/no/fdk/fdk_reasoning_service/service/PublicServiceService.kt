@@ -69,7 +69,8 @@ class PublicServiceService(
                 startTime = start.formatWithOsloTimeZone(),
                 endTime = formatNowWithOsloTimeZone(),
                 changedCatalogs = harvestReport.changedCatalogs,
-                changedResources = harvestReport.changedResources
+                changedResources = harvestReport.changedResources,
+                removedResources = harvestReport.removedResources
             )
         } catch (ex: Exception) {
             LOGGER.error("event reasoning failed for ${harvestReport.url}", ex)

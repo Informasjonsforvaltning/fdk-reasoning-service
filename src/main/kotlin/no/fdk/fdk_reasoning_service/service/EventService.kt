@@ -11,12 +11,10 @@ import no.fdk.fdk_reasoning_service.rdf.CV
 import no.fdk.fdk_reasoning_service.rdf.DCATNO
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
-import org.apache.jena.rdf.model.RDFNode
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.rdf.model.Statement
 import org.apache.jena.riot.Lang
 import org.apache.jena.vocabulary.DCAT
-import org.apache.jena.vocabulary.DCTerms
 import org.apache.jena.vocabulary.RDF
 import org.slf4j.LoggerFactory
 import org.springframework.data.mongodb.core.MongoTemplate
@@ -70,7 +68,8 @@ class EventService(
                 startTime = start.formatWithOsloTimeZone(),
                 endTime = formatNowWithOsloTimeZone(),
                 changedCatalogs = harvestReport.changedCatalogs,
-                changedResources = harvestReport.changedResources
+                changedResources = harvestReport.changedResources,
+                removedResources = harvestReport.removedResources
             )
         } catch (ex: Exception) {
             LOGGER.error("event reasoning failed for ${harvestReport.url}", ex)

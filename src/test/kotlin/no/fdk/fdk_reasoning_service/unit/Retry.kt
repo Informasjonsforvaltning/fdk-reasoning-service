@@ -1,5 +1,6 @@
 package no.fdk.fdk_reasoning_service.unit
 
+import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
 import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.model.RetryReportsWrap
@@ -13,6 +14,8 @@ import no.fdk.fdk_reasoning_service.service.PublicServiceService
 import no.fdk.fdk_reasoning_service.service.RETRY_QUEUE
 import no.fdk.fdk_reasoning_service.service.ReasoningActivity
 import no.fdk.fdk_reasoning_service.utils.LOCAL_SERVER_PORT
+import no.fdk.fdk_reasoning_service.utils.RDF_DATA
+import org.apache.jena.rdf.model.ModelFactory
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
@@ -29,7 +32,7 @@ class Retry {
     private val infoModelService: InfoModelService = mock()
     private val publicServiceService: PublicServiceService = mock()
     private val rabbitMQPublisher: RabbitMQPublisher = mock()
-    private val uris: ApplicationURI = mock()
+    private val referenceDataCache: ReferenceDataCache = mock()
     private val reasoningActivity = ReasoningActivity(
         conceptService,
         dataServiceService,
@@ -38,7 +41,7 @@ class Retry {
         infoModelService,
         publicServiceService,
         rabbitMQPublisher,
-        uris
+        referenceDataCache
     )
 
     @BeforeEach
@@ -48,12 +51,10 @@ class Retry {
 
     @Test
     fun testRetryQueue() {
-        whenever(uris.los)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/wrong-los-url")
-        whenever(uris.orgExternal)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/wrong-org-url")
-        whenever(uris.orgInternal)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/wrong-org-url")
+        whenever(referenceDataCache.organizations())
+            .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.los())
+            .thenReturn(ModelFactory.createDefaultModel())
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 0)
         assertTrue { RETRY_QUEUE.contains(RetryReportsWrap(CatalogType.DATASETS, 1, emptyList())) }
@@ -61,12 +62,10 @@ class Retry {
 
     @Test
     fun testTenthRetryNotAddedToQueue() {
-        whenever(uris.los)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/wrong-los-url")
-        whenever(uris.orgInternal)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/wrong-org-url")
-        whenever(uris.orgExternal)
-            .thenReturn("http://localhost:$LOCAL_SERVER_PORT/wrong-org-url")
+        whenever(referenceDataCache.organizations())
+            .thenReturn(RDF_DATA.orgData)
+        whenever(referenceDataCache.los())
+            .thenReturn(RDF_DATA.losData)
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 10)
         assertTrue { RETRY_QUEUE.isEmpty() }

@@ -5,15 +5,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import no.fdk.fdk_reasoning_service.config.ApplicationURI
+import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.model.ExternalRDFData
 import no.fdk.fdk_reasoning_service.model.HarvestReport
 import no.fdk.fdk_reasoning_service.model.RetryReportsWrap
 import no.fdk.fdk_reasoning_service.rabbit.RabbitMQPublisher
-import org.apache.jena.riot.Lang
-import org.apache.jena.riot.RDFDataMgr
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.scheduling.annotation.Scheduled
@@ -32,7 +29,7 @@ class ReasoningActivity(
     private val infoModelService: InfoModelService,
     private val publicServiceService: PublicServiceService,
     private val rabbitMQPublisher: RabbitMQPublisher,
-    private val uris: ApplicationURI
+    private val referenceDataCache: ReferenceDataCache
 ) : CoroutineScope by CoroutineScope(Dispatchers.Default) {
 
     @Scheduled(fixedRate = 60000)
@@ -41,33 +38,15 @@ class ReasoningActivity(
 
     fun initiateReasoning(type: CatalogType, reports: List<HarvestReport>, retryCount: Int = 0) {
         val start = Date()
+        val rdfData = ExternalRDFData(
+            orgData = referenceDataCache.organizations(),
+            losData = referenceDataCache.los()
+        )
         try {
-            val rdfData = listOf(
-                async {
-                    try {
-                        RDFDataMgr.loadModel(uris.orgInternal, Lang.TURTLE)
-                    } catch (ex: Exception) {
-                        LOGGER.error("Download failed for ${uris.orgInternal}", ex)
-                        null
-                    }
-                },
-                async {
-                    try {
-                        RDFDataMgr.loadModel(uris.los, Lang.RDFXML)
-                    } catch (ex: Exception) {
-                        LOGGER.error("Download failed for ${uris.los}", ex)
-                        null
-                    }
-                }
-            ).let { runBlocking { it.awaitAll() } }
-
             when {
-                rdfData[0] == null -> throw Exception("missing org data")
-                rdfData[1] == null -> throw Exception("missing los data")
-                else -> launchReasoning(
-                    type, start, reports,
-                    ExternalRDFData(orgData = rdfData[0]!!, losData = rdfData[1]!!), retryCount
-                )
+                rdfData.orgData.isEmpty -> throw Exception("missing org data")
+                rdfData.losData.isEmpty -> throw Exception("missing los data")
+                else -> launchReasoning(type, start, reports, rdfData, retryCount)
             }
         } catch (ex: Exception) {
             LOGGER.warn("reasoning activity $type was aborted: ${ex.message}")
