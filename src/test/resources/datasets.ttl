@@ -166,3 +166,6 @@
         dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
         dct:isPartOf       <http://localhost:5000/catalogs/0801ece7-8e74-385f-9db4-44e5c6508c44> ;
         foaf:primaryTopic  <http://brreg.no/catalogs/910298062/datasets/738c2348-aeb4-4a92-9a10-c39ae6b9f3fe> .
+
+<https://psi.norge.no/los/tema/energi>
+        skos:prefLabel  "Beholder eksisterende tittel for Energi"@nb .

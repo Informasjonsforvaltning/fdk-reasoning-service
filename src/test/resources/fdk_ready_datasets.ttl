@@ -208,3 +208,15 @@
         foaf:name       "Digitaliseringsdirektoratet"@nb ;
         rov:orgType     orgtype:ORGL ;
         br:orgPath      "/STAT/972417858/991825827" .
+
+<https://psi.norge.no/los/tema/energi>
+        skos:prefLabel  "Beholder eksisterende tittel for Energi"@nb .
+
+<https://psi.norge.no/los/tema/helse-og-omsorg>
+        skos:prefLabel  "Health and care"@en , "Helse og omsorg"@nb , "Helse og omsorg"@nn .
+
+<https://psi.norge.no/los/tema/kultur-idrett-og-fritid>
+        skos:prefLabel  "Kultur, idrett og fritid"@nb , "Kultur, idrett og fritid"@nn , "Culture, sport and recreation"@en .
+
+<https://psi.norge.no/los/tema/lov-og-rett>
+        skos:prefLabel  "Legal matters"@en , "Lov og rett"@nn , "Lov og rett"@nb .

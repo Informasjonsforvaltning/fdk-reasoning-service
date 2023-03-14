@@ -88,7 +88,7 @@ val datasetRules = """
     ]
 """
 
-val dataServiceRules = """
+const val dataServiceRules = """
     @prefix dcat: <http://www.w3.org/ns/dcat#> .
     @prefix dct: <http://purl.org/dc/terms/> .
 
@@ -101,7 +101,7 @@ val dataServiceRules = """
     ]
 """
 
-val infoModelRules = """
+const val infoModelRules = """
     @prefix modelldcatno: <https://data.norge.no/vocabulary/modelldcatno#> .
     @prefix dct: <http://purl.org/dc/terms/> .
 
@@ -114,7 +114,7 @@ val infoModelRules = """
     ]
 """
 
-val conceptRules = """
+const val conceptRules = """
     @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
     @prefix dct: <http://purl.org/dc/terms/> .
 
@@ -127,7 +127,7 @@ val conceptRules = """
     ]
 """
 
-val serviceRules = """
+const val serviceRules = """
     @prefix cv: <http://data.europa.eu/m8g/> .
 
     [extendHasParticipantWhenMissing:
@@ -135,6 +135,44 @@ val serviceRules = """
         (?agent cv:participates ?participation)
         noValue(?participation cv:hasParticipant)
         -> (?participation cv:hasParticipant ?agent)
+    ]
+"""
+
+const val addThemeTitles = """
+    @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+    @prefix dct: <http://purl.org/dc/terms/> .
+    @prefix dcat:  <http://www.w3.org/ns/dcat#> .
+    @prefix fdk: <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#> .
+
+    [themeTitleToLabelWhenMissing:
+        (?subject dcat:theme ?theme),
+        (?theme dct:title ?themeTitle),
+        (?theme fdk:missingLabel ?missingLabel),
+        equal(?missingLabel 'true'^^xsd:boolean)
+        -> (?theme skos:prefLabel ?themeTitle)
+    ]
+"""
+
+const val tagThemesMissingLabel = """
+    @prefix dcat:  <http://www.w3.org/ns/dcat#> .
+    @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+    @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+    @prefix fdk: <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#> .
+
+    [themeTitleToLabelWhenMissing:
+        (?subject dcat:theme ?theme),
+        noValue(?theme skos:prefLabel)
+        -> (?theme fdk:missingLabel 'true'^^xsd:boolean)
+    ]
+"""
+
+const val labelToTitle = """
+    @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+    @prefix dct: <http://purl.org/dc/terms/> .
+
+    [prefLabelToTitle:
+        (?subject skos:prefLabel ?prefLabel),
+        -> (?subject dct:title ?prefLabel)
     ]
 """
 

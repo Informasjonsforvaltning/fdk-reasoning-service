@@ -147,10 +147,7 @@ class ReasoningService(
                 GenericRuleReasoner(Rule.parseRules(conceptRules)),
                 catalogData
             ).deductionsModel
-            CatalogType.DATASETS -> ModelFactory.createInfModel(
-                GenericRuleReasoner(Rule.parseRules(datasetRules)).bindSchema(losData),
-                catalogData.fdkPrefix()
-            ).deductionsModel
+            CatalogType.DATASETS -> catalogData.fdkPrefix().datasetDeductions(losData)
             CatalogType.DATASERVICES -> ModelFactory.createInfModel(
                 GenericRuleReasoner(Rule.parseRules(dataServiceRules)),
                 catalogData
@@ -165,4 +162,33 @@ class ReasoningService(
             ).deductionsModel
             else -> ModelFactory.createDefaultModel()
         }
+
+    private fun Model.datasetDeductions(losData: Model): Model {
+        val deductions = ModelFactory.createInfModel(
+            GenericRuleReasoner(Rule.parseRules(datasetRules)).bindSchema(losData),
+            this
+        ).deductionsModel
+
+        return deductions.union(themePrefLabelDeductions(losData))
+    }
+
+    private fun Model.themePrefLabelDeductions(losData: Model): Model {
+        // tag themes that's missing prefLabel in input model, to easier add all lang-options for relevant themes
+        val themesMissingLabels = ModelFactory.createInfModel(
+            GenericRuleReasoner(Rule.parseRules(tagThemesMissingLabel)),
+            this
+        ).deductionsModel
+
+        // get theme labels as dct:title, so as not to confuse reasoner when adding them as prefLabel to input model later
+        val themeTitles = ModelFactory.createInfModel(
+            GenericRuleReasoner(Rule.parseRules(labelToTitle)),
+            losData
+        ).deductionsModel
+
+        // add prefLabel from themeTitles for themes tagged as missing label
+        return ModelFactory.createInfModel(
+            GenericRuleReasoner(Rule.parseRules(addThemeTitles)).bindSchema(themeTitles.union(themesMissingLabels)),
+            this
+        ).deductionsModel
+    }
 }
