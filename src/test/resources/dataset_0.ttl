@@ -39,7 +39,7 @@
         dcat:distribution         [ a           dcat:Distribution ;
                                     dct:format  "xml"
                                   ] ;
-        dcat:theme                <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
+        dcat:theme                <http://publications.europa.eu/resource/authority/data-theme/EDUC> , <http://eurovoc.europa.eu/5490> ;
         dqv:hasQualityAnnotation  [ a                dqv:QualityAnnotation ;
                                     dqv:inDimension  iso:Currentness ;
                                     oa:hasBody       [ a             oa:TextualBody ;
@@ -66,3 +66,6 @@
         rov:orgType           orgtype:ASA ;
         foaf:name             "Ramsund og Rognand revisjon"@nb ;
         br:orgPath            "/ANNET/910244132" .
+
+<http://eurovoc.europa.eu/5490>
+        skos:prefLabel  "mitigating circumstances"@en .

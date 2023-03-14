@@ -1,0 +1,116 @@
+@prefix ns3:  <http://publications.europa.eu/ontology/euvoc#> .
+@prefix ns4:  <http://eurovoc.europa.eu/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+ns4:652  rdf:type       skos:Concept ;
+        skos:prefLabel  "industrial economy"@en .
+
+ns4:1338  rdf:type      skos:Concept ;
+        skos:prefLabel  "India"@en .
+
+ns4:5073  rdf:type      skos:Concept ;
+        skos:prefLabel  "butter oil"@en .
+
+ns4:462  rdf:type       skos:Concept ;
+        skos:prefLabel  "regional disparity"@en .
+
+ns4:1148  rdf:type      skos:Concept ;
+        skos:prefLabel  "geography"@en .
+
+ns4:272  rdf:type       skos:Concept ;
+        skos:prefLabel  "cost of pollution"@en .
+
+ns4:105  rdf:type       skos:Concept ;
+        skos:prefLabel  "parental leave"@en .
+
+ns4:5078  rdf:type      skos:Concept ;
+        skos:prefLabel  "cocoa"@en .
+
+ns4:6222  rdf:type      skos:Concept ;
+        skos:prefLabel  "area of freedom, security and justice"@en .
+
+ns4:467  rdf:type       skos:Concept ;
+        skos:prefLabel  "driving mechanism"@en .
+
+ns4:7126  rdf:type      skos:Concept ;
+        skos:prefLabel  "European Food Safety Authority"@en .
+
+ns4:6032  rdf:type      skos:Concept ;
+        skos:prefLabel  "collectivism"@en .
+
+ns4:277  rdf:type       skos:Concept ;
+        skos:prefLabel  "direct cost"@en .
+
+ns4:2107  rdf:type      skos:Concept ;
+        skos:prefLabel  "ocean"@en .
+
+ns4:c_ee45cd99  rdf:type  skos:Concept ;
+        skos:prefLabel  "sovereign wealth fund"@en .
+
+ns4:2849  rdf:type      skos:Concept ;
+        skos:prefLabel  "vegetable protein"@en .
+
+ns4:1755  rdf:type      skos:Concept ;
+        skos:prefLabel  "animal disease"@en .
+
+ns4:5490  rdf:type      skos:Concept ;
+        skos:prefLabel  "mitigating circumstances"@en .
+
+ns4:1565  rdf:type      skos:Concept ;
+        skos:prefLabel  "milk"@en .
+
+ns4:8442  rdf:type      skos:Concept ;
+        skos:prefLabel  "national identity"@en .
+
+ns4:4707  rdf:type      skos:Concept ;
+        skos:prefLabel  "Vietnam"@en .
+
+ns4:2469  rdf:type      skos:Concept ;
+        skos:prefLabel  "business policy"@en .
+
+ns4:3613  rdf:type      skos:Concept ;
+        skos:prefLabel  "professional sport"@en .
+
+ns4:2691  rdf:type      skos:Concept ;
+        skos:prefLabel  "urban problem"@en .
+
+ns4:5833  rdf:type      skos:Concept ;
+        skos:prefLabel  "renewal of an agreement"@en .
+
+ns4:3595  rdf:type      skos:Concept ;
+        skos:prefLabel  "veterinarian"@en .
+
+ns4:6737  rdf:type      skos:Concept ;
+        skos:prefLabel  "illegal building"@en .
+
+ns4:4499  rdf:type      skos:Concept ;
+        skos:prefLabel  "Union transit"@en .
+
+ns4:1908  rdf:type      skos:Concept ;
+        skos:prefLabel  "draught animal"@en .
+
+ns4:5643  rdf:type      skos:Concept ;
+        skos:prefLabel  "Cohesion Fund"@en .
+
+ns4:6547  rdf:type      skos:Concept ;
+        skos:prefLabel  "European association"@en .
+
+ns4:1718  rdf:type      skos:Concept ;
+        skos:prefLabel  "machinery"@en .
+
+ns4:5453  rdf:type      skos:Concept ;
+        skos:prefLabel  "fighter aircraft"@en .
+
+ns4:6357  rdf:type      skos:Concept ;
+        skos:prefLabel  "demotion"@en .
+
+ns4:842  rdf:type       skos:Concept ;
+        skos:prefLabel  "equidae"@en .
+
+ns4:1528  rdf:type      skos:Concept ;
+        skos:prefLabel  "young person"@en .
+
+ns4:5263  rdf:type      skos:Concept ;
+        skos:prefLabel  "carcase"@en .

@@ -32,7 +32,7 @@ class ReasoningService(
     fun catalogReasoning(catalogModel: Model, catalogType: CatalogType, rdfData: ExternalRDFData): Model =
         catalogModel
             .union(catalogType.extendedPublishersModel(orgData = rdfData.orgData, catalogData = catalogModel))
-            .union(catalogType.deductionsModel(catalogData = catalogModel, losData = rdfData.losData))
+            .union(catalogType.deductionsModel(catalogData = catalogModel, rdfData = rdfData))
 
     private fun CatalogType.extendedPublishersModel(orgData: Model, catalogData: Model): Model {
         val publisherPredicates = when (this) {
@@ -141,13 +141,13 @@ class ReasoningService(
             }
         } else null
 
-    private fun CatalogType.deductionsModel(catalogData: Model, losData: Model): Model =
+    private fun CatalogType.deductionsModel(catalogData: Model, rdfData: ExternalRDFData): Model =
         when (this) {
             CatalogType.CONCEPTS -> ModelFactory.createInfModel(
                 GenericRuleReasoner(Rule.parseRules(conceptRules)),
                 catalogData
             ).deductionsModel
-            CatalogType.DATASETS -> catalogData.fdkPrefix().datasetDeductions(losData)
+            CatalogType.DATASETS -> catalogData.fdkPrefix().datasetDeductions(rdfData)
             CatalogType.DATASERVICES -> ModelFactory.createInfModel(
                 GenericRuleReasoner(Rule.parseRules(dataServiceRules)),
                 catalogData
@@ -163,16 +163,16 @@ class ReasoningService(
             else -> ModelFactory.createDefaultModel()
         }
 
-    private fun Model.datasetDeductions(losData: Model): Model {
+    private fun Model.datasetDeductions(rdfData: ExternalRDFData): Model {
         val deductions = ModelFactory.createInfModel(
-            GenericRuleReasoner(Rule.parseRules(datasetRules)).bindSchema(losData),
+            GenericRuleReasoner(Rule.parseRules(datasetRules)).bindSchema(rdfData.losData),
             this
         ).deductionsModel
 
-        return deductions.union(themePrefLabelDeductions(losData))
+        return deductions.union(themePrefLabelDeductions(rdfData))
     }
 
-    private fun Model.themePrefLabelDeductions(losData: Model): Model {
+    private fun Model.themePrefLabelDeductions(rdfData: ExternalRDFData): Model {
         // tag themes that's missing prefLabel in input model, to easier add all lang-options for relevant themes
         val themesMissingLabels = ModelFactory.createInfModel(
             GenericRuleReasoner(Rule.parseRules(tagThemesMissingLabel)),
@@ -182,7 +182,7 @@ class ReasoningService(
         // get theme labels as dct:title, so as not to confuse reasoner when adding them as prefLabel to input model later
         val themeTitles = ModelFactory.createInfModel(
             GenericRuleReasoner(Rule.parseRules(labelToTitle)),
-            losData
+            rdfData.losData.union(rdfData.eurovocs)
         ).deductionsModel
 
         // add prefLabel from themeTitles for themes tagged as missing label

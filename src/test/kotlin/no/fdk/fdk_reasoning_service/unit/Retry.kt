@@ -55,6 +55,8 @@ class Retry {
             .thenReturn(ModelFactory.createDefaultModel())
         whenever(referenceDataCache.los())
             .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.eurovocs())
+            .thenReturn(ModelFactory.createDefaultModel())
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 0)
         assertTrue { RETRY_QUEUE.contains(RetryReportsWrap(CatalogType.DATASETS, 1, emptyList())) }
@@ -66,6 +68,8 @@ class Retry {
             .thenReturn(RDF_DATA.orgData)
         whenever(referenceDataCache.los())
             .thenReturn(RDF_DATA.losData)
+        whenever(referenceDataCache.eurovocs())
+            .thenReturn(RDF_DATA.eurovocs)
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 10)
         assertTrue { RETRY_QUEUE.isEmpty() }

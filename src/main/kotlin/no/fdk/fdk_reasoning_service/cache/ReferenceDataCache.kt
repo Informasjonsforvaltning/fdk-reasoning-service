@@ -23,6 +23,10 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         return ModelFactory.createDefaultModel().add(LOS)
     }
 
+    fun eurovocs(): Model {
+        return ModelFactory.createDefaultModel().add(EUROVOCS)
+    }
+
     @Scheduled(fixedDelayString = "PT3H")
     private fun invalidateAndUpdateOrganizations() {
         logger.info("updating organization cache")
@@ -35,7 +39,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
-    @Scheduled(fixedDelayString = "P3D")
+    @Scheduled(fixedDelayString = "PT5H")
     private fun invalidateAndUpdateLOS() {
         logger.info("updating LOS cache")
         try {
@@ -47,8 +51,21 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(fixedDelayString = "PT23H")
+    private fun invalidateAndUpdateEUROVOC() {
+        logger.info("updating EUROVOCS cache")
+        try {
+            with(RDFDataMgr.loadModel(uris.eurovocs, Lang.TURTLE)) {
+                EUROVOCS.removeAll().add(this)
+            }
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.eurovocs}", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
+        val EUROVOCS: Model = ModelFactory.createDefaultModel()
     }
 }

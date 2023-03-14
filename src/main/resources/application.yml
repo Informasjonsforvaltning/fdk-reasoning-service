@@ -17,7 +17,8 @@ application:
   uri:
     orgExternal: ${ORGANIZATION_CATALOG_EXTERNAL}/organizations
     orgInternal: ${ORGANIZATION_CATALOG_INTERNAL}/organizations
-    los: ${LOS_HOST:https://psi.norge.no/los/all.rdf}
+    los: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/los
+    eurovocs: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/eurovocs
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -47,4 +48,5 @@ application:
   uri:
     orgExternal: http://localhost:5000/organizations
     orgInternal: http://localhost:5000/organizations
-    los: http://localhost:5000/los
+    los: http://localhost:5000/reference-data/los
+    eurovocs: http://localhost:5000/reference-data/eu/eurovocs

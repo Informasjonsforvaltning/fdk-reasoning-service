@@ -6,5 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 data class ApplicationURI(
     val orgExternal: String,
     val orgInternal: String,
-    val los: String
+    val los: String,
+    val eurovocs: String
 )
