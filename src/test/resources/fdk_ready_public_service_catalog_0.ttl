@@ -33,6 +33,7 @@
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
         dct:description           "Søknad om driftsstøtte til anlegg."@nb ;
         dct:identifier            "12" ;
+        dcat:themeTaxonomy        <https://psi.norge.no/los/tema/skole-og-utdanning> ;
         dct:title                 "Søknad om driftsstøtte til anlegg"@nb ;
         cv:hasParticipation       <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> .
 
@@ -56,3 +57,6 @@
        a foaf:Agent;
        cv:participates <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> ;
        .
+
+<https://psi.norge.no/los/tema/skole-og-utdanning>
+        skos:prefLabel  "Schools and education"@en , "Skule og utdanning"@nn , "Skole og utdanning"@nb .

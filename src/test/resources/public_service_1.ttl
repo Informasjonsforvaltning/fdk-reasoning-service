@@ -124,6 +124,7 @@
         cv:isDescribedAt          <https://registrering.fellesdatakatalog.digdir.no/catalogs/974760673/datasets/63086dda-9b72-43f0-bbc2-3ced4bc2edd6> , <https://registrering.fellesdatakatalog.digdir.no/catalogs/974760673/datasets/ef600ed8-cba1-4bc4-863f-6d41c836f18c> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/ece8c4c0-2fa9-412a-a3fd-6eefe0681728> , <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> , <http://public-service-publisher.fellesdatakatalog.digdir.no/events/745d1372-2b71-4e20-bcc4-49023379e7cf> ;
         cv:processingTime         "P7D" ;
+        dcat:themeTaxonomy        <http://eurovoc.europa.eu/6222> ;
         cv:sector                 <https://data.norge.no/concepts/2> ;
         dct:description           "Elektronisk skjema for registrering av selskap"@nb ;
         dct:identifier            "1" ;

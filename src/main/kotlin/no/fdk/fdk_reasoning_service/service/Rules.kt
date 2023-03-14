@@ -151,6 +151,14 @@ const val addThemeTitles = """
         equal(?missingLabel 'true'^^xsd:boolean)
         -> (?theme skos:prefLabel ?themeTitle)
     ]
+
+    [themeTaxonomyTitleToLabelWhenMissing:
+        (?subject dcat:themeTaxonomy ?theme),
+        (?theme dct:title ?themeTitle),
+        (?theme fdk:missingLabel ?missingLabel),
+        equal(?missingLabel 'true'^^xsd:boolean)
+        -> (?theme skos:prefLabel ?themeTitle)
+    ]
 """
 
 const val tagThemesMissingLabel = """
@@ -161,6 +169,12 @@ const val tagThemesMissingLabel = """
 
     [themeTitleToLabelWhenMissing:
         (?subject dcat:theme ?theme),
+        noValue(?theme skos:prefLabel)
+        -> (?theme fdk:missingLabel 'true'^^xsd:boolean)
+    ]
+
+    [themeTaxonomyTitleToLabelWhenMissing:
+        (?subject dcat:themeTaxonomy ?theme),
         noValue(?theme skos:prefLabel)
         -> (?theme fdk:missingLabel 'true'^^xsd:boolean)
     ]
