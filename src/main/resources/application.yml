@@ -17,7 +17,7 @@ application:
   uri:
     orgExternal: ${ORGANIZATION_CATALOG_EXTERNAL}/organizations
     orgInternal: ${ORGANIZATION_CATALOG_INTERNAL}/organizations
-    los: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/los
+    los: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/los/themes-and-words
     eurovocs: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/eurovocs
   databases:
     datasets: datasetHarvester
