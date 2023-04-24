@@ -27,6 +27,10 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         return ModelFactory.createDefaultModel().add(EUROVOCS)
     }
 
+    fun dataThemes(): Model {
+        return ModelFactory.createDefaultModel().add(DATA_THEMES)
+    }
+
     @Scheduled(fixedDelayString = "PT3H")
     private fun invalidateAndUpdateOrganizations() {
         logger.info("updating organization cache")
@@ -63,9 +67,22 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(fixedDelayString = "PT22H")
+    private fun invalidateAndUpdateDataThemes() {
+        logger.info("updating data themes cache")
+        try {
+            with(RDFDataMgr.loadModel(uris.dataThemes, Lang.TURTLE)) {
+                DATA_THEMES.removeAll().add(this)
+            }
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.dataThemes}", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
         val EUROVOCS: Model = ModelFactory.createDefaultModel()
+        val DATA_THEMES: Model = ModelFactory.createDefaultModel()
     }
 }

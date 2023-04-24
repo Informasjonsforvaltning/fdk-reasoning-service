@@ -67,5 +67,8 @@
         foaf:name             "Ramsund og Rognand revisjon"@nb ;
         br:orgPath            "/ANNET/910244132" .
 
+<http://publications.europa.eu/resource/authority/data-theme/EDUC>
+        skos:prefLabel  "Education, culture and sport"@en , "Utdanning, kultur og sport"@no , "Utdanning, kultur og sport"@nb , "Utdanning, kultur og sport"@nn .
+
 <http://eurovoc.europa.eu/5490>
         skos:prefLabel  "mitigating circumstances"@en .

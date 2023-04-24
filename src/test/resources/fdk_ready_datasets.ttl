@@ -223,3 +223,14 @@
 
 <http://eurovoc.europa.eu/5490>
         skos:prefLabel  "mitigating circumstances"@en .
+
+<http://publications.europa.eu/resource/authority/data-theme/EDUC>
+        skos:prefLabel  "Education, culture and sport"@en , "Utdanning, kultur og sport"@no , "Utdanning, kultur og sport"@nb , "Utdanning, kultur og sport"@nn .
+
+<http://publications.europa.eu/resource/authority/data-theme/ENER>
+        skos:prefLabel  "Energi"@nb , "Energi"@nn , "Energi"@no , "Energy"@en .
+
+<http://publications.europa.eu/resource/authority/data-theme/HEAL>
+        skos:prefLabel  "Helse"@nn , "Helse"@no , "Helse"@nb , "Health"@en .
+<http://publications.europa.eu/resource/authority/data-theme/JUST>
+        skos:prefLabel  "Justice, legal system and public safety"@en , "Justis, rettssystem og allmenn tryggleik"@nn , "Justis, rettssystem og allmenn sikkerhet"@no , "Justis, rettssystem og allmenn sikkerhet"@nb .

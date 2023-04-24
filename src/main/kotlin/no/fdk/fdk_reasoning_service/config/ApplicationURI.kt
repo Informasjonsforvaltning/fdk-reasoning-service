@@ -7,5 +7,6 @@ data class ApplicationURI(
     val orgExternal: String,
     val orgInternal: String,
     val los: String,
-    val eurovocs: String
+    val eurovocs: String,
+    val dataThemes: String
 )

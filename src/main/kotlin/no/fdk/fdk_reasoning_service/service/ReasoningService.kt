@@ -131,16 +131,6 @@ class ReasoningService(
         }
     }
 
-    private fun orgModelAdapter(orgId: String?): Resource? =
-        if (orgId != null) {
-            val uri = "${uris.orgExternal}/$orgId"
-            try {
-                RDFDataMgr.loadModel(uri, Lang.TURTLE).getResource(uri)
-            } catch (ex: Exception) {
-                null
-            }
-        } else null
-
     private fun CatalogType.deductionsModel(catalogData: Model, rdfData: ExternalRDFData): Model =
         when (this) {
             CatalogType.CONCEPTS -> ModelFactory.createInfModel(
@@ -166,7 +156,9 @@ class ReasoningService(
             this
         ).deductionsModel
 
-        return deductions.union(themePrefLabelDeductions(rdfData))
+        val themeLabelDeductions = union(deductions).themePrefLabelDeductions(rdfData)
+
+        return deductions.union(themeLabelDeductions)
     }
 
     private fun Model.datasetDeductions(rdfData: ExternalRDFData): Model {
@@ -175,7 +167,9 @@ class ReasoningService(
             this
         ).deductionsModel
 
-        return deductions.union(themePrefLabelDeductions(rdfData))
+        val themeLabelDeductions = union(deductions).themePrefLabelDeductions(rdfData)
+
+        return deductions.union(themeLabelDeductions)
     }
 
     private fun Model.themePrefLabelDeductions(rdfData: ExternalRDFData): Model {
@@ -188,7 +182,7 @@ class ReasoningService(
         // get theme labels as dct:title, so as not to confuse reasoner when adding them as prefLabel to input model later
         val themeTitles = ModelFactory.createInfModel(
             GenericRuleReasoner(Rule.parseRules(labelToTitle)),
-            rdfData.losData.union(rdfData.eurovocs)
+            rdfData.losData.union(rdfData.eurovocs).union(rdfData.dataThemes)
         ).deductionsModel
 
         // add prefLabel from themeTitles for themes tagged as missing label

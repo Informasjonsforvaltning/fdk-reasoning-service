@@ -39,7 +39,8 @@ val DATA_SERVICE_CATALOG_DATA = TurtleDBO(
 val RDF_DATA = ExternalRDFData(
     orgData = responseReader.parseTurtleFile("orgs.ttl"),
     losData = responseReader.parseTurtleFile("los.rdf", "RDFXML"),
-    eurovocs = responseReader.parseTurtleFile("eurovocs.ttl", "TURTLE"))
+    eurovocs = responseReader.parseTurtleFile("eurovocs.ttl", "TURTLE"),
+    dataThemes = responseReader.parseTurtleFile("data_themes.ttl", "TURTLE"))
 
 fun TurtleDBO.mapDBO(): Document =
     Document()

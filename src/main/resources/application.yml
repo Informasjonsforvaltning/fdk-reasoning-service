@@ -19,6 +19,7 @@ application:
     orgInternal: ${ORGANIZATION_CATALOG_INTERNAL}/organizations
     los: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/los/themes-and-words
     eurovocs: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/eurovocs
+    dataThemes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/data-themes
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -50,3 +51,4 @@ application:
     orgInternal: http://localhost:5000/organizations
     los: http://localhost:5000/reference-data/los
     eurovocs: http://localhost:5000/reference-data/eu/eurovocs
+    dataThemes: http://localhost:5000/reference-data/eu/data-themes

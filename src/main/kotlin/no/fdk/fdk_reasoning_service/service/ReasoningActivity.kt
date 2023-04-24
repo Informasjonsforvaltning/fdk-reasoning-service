@@ -41,13 +41,15 @@ class ReasoningActivity(
         val rdfData = ExternalRDFData(
             orgData = referenceDataCache.organizations(),
             losData = referenceDataCache.los(),
-            eurovocs = referenceDataCache.eurovocs()
+            eurovocs = referenceDataCache.eurovocs(),
+            dataThemes = referenceDataCache.dataThemes()
         )
         try {
             when {
                 rdfData.orgData.isEmpty -> throw Exception("missing org data")
                 rdfData.losData.isEmpty -> throw Exception("missing los data")
                 rdfData.eurovocs.isEmpty -> throw Exception("missing eurovocs data")
+                rdfData.dataThemes.isEmpty -> throw Exception("missing data themes")
                 else -> launchReasoning(type, start, reports, rdfData, retryCount)
             }
         } catch (ex: Exception) {

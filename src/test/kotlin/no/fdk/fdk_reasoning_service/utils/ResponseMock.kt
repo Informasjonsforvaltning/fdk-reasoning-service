@@ -23,6 +23,8 @@ fun startMockServer() {
             .willReturn(ok(File("src/test/resources/los.rdf").readText())))
         mockserver.stubFor(get(urlEqualTo("/reference-data/eu/eurovocs"))
             .willReturn(ok(File("src/test/resources/eurovocs.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/eu/data-themes"))
+            .willReturn(ok(File("src/test/resources/data_themes.ttl").readText())))
 
         mockserver.start()
     }
