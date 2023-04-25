@@ -46,7 +46,7 @@ class DatasetsIntegration : ApiTestContext() {
         val response = apiGet(port, "/datasets/$DATASET_ID_0", "application/ld+json")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("dataset_0.ttl")
+        val expected = responseReader.parseTurtleFile("saved_dataset_0.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.JSONLD.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))
@@ -57,7 +57,7 @@ class DatasetsIntegration : ApiTestContext() {
         val response = apiGet(port, "/datasets/catalogs/$DATASET_CATALOG_ID", "application/trix")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("fdk_ready_datasets.ttl")
+        val expected = responseReader.parseTurtleFile("saved_datasets.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TRIX.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))
@@ -68,7 +68,7 @@ class DatasetsIntegration : ApiTestContext() {
         val response = apiGet(port, "/datasets", "text/turtle")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("fdk_ready_datasets.ttl")
+        val expected = responseReader.parseTurtleFile("saved_datasets.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TURTLE.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))

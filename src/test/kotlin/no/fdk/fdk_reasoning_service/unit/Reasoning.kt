@@ -28,7 +28,7 @@ class Reasoning : ApiTestContext() {
             CatalogType.DATASETS,
             RDF_DATA
         )
-        val expected = responseReader.parseTurtleFile("fdk_ready_datasets.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_datasets.ttl")
 
         assertTrue(result.isIsomorphicWith(expected))
     }
@@ -44,7 +44,7 @@ class Reasoning : ApiTestContext() {
             CatalogType.DATASETS,
             RDF_DATA
         )
-        val expected = responseReader.parseTurtleFile("fdk_ready_dataset_series.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_dataset_series.ttl")
 
         assertTrue(result.isIsomorphicWith(expected))
     }
@@ -60,7 +60,7 @@ class Reasoning : ApiTestContext() {
             CatalogType.DATASERVICES,
             RDF_DATA
         )
-        val expected = responseReader.parseTurtleFile("fdk_ready_dataservices.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_dataservices.ttl")
 
         assertTrue(result.isIsomorphicWith(expected))
     }
@@ -76,7 +76,7 @@ class Reasoning : ApiTestContext() {
             CatalogType.CONCEPTS,
             RDF_DATA
         )
-        val expected = responseReader.parseTurtleFile("fdk_ready_concepts.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_concepts.ttl")
 
         assertTrue(result.isIsomorphicWith(expected))
     }
@@ -92,7 +92,7 @@ class Reasoning : ApiTestContext() {
             CatalogType.INFORMATIONMODELS,
             RDF_DATA
         )
-        val expected = responseReader.parseTurtleFile("fdk_ready_infomodels.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_infomodels.ttl")
 
         assertTrue(result.isIsomorphicWith(expected))
     }
@@ -108,7 +108,7 @@ class Reasoning : ApiTestContext() {
             CatalogType.EVENTS,
             RDF_DATA
         )
-        val expected = responseReader.parseTurtleFile("fdk_ready_event_catalogs.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_event_catalogs.ttl")
 
         assertTrue(result.isIsomorphicWith(expected))
     }
@@ -124,7 +124,7 @@ class Reasoning : ApiTestContext() {
             CatalogType.PUBLICSERVICES,
             RDF_DATA
         )
-        val expected = responseReader.parseTurtleFile("fdk_ready_public_service_catalog_0.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_public_service_catalog_0.ttl")
 
         assertTrue(result.isIsomorphicWith(expected))
     }

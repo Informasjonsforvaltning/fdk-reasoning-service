@@ -26,7 +26,7 @@ class Concepts {
 
     @Test
     fun testConcepts() {
-        val conceptsModel = responseReader.parseTurtleFile("fdk_ready_concepts.ttl")
+        val conceptsModel = responseReader.parseTurtleFile("reasoned_concepts.ttl")
         whenever(conceptMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
             .thenReturn(TurtleDBO("collectionId", gzip("")))
         whenever(reasoningService.catalogReasoning(any(), any(), any()))
@@ -58,7 +58,7 @@ class Concepts {
     @Test
     fun testConceptsUnion() {
         whenever(conceptMongoTemplate.findAll<TurtleDBO>("fdkCollections"))
-            .thenReturn(listOf(TurtleDBO(CONCEPT_COLLECTION_ID, gzip(responseReader.readFile("fdk_ready_concepts.ttl")))))
+            .thenReturn(listOf(TurtleDBO(CONCEPT_COLLECTION_ID, gzip(responseReader.readFile("reasoned_concepts.ttl")))))
 
         conceptService.updateUnion()
 
@@ -67,7 +67,7 @@ class Concepts {
             Assertions.assertEquals(UNION_ID, first.firstValue.id)
             Assertions.assertEquals(Collections.nCopies(1, "fdkCollections"), second.allValues)
 
-            val expectedUnion = responseReader.parseTurtleFile("fdk_ready_concepts.ttl")
+            val expectedUnion = responseReader.parseTurtleFile("reasoned_concepts.ttl")
             val savedUnion = parseRDFResponse(ungzip(first.firstValue.turtle), Lang.TURTLE, "")
             assertTrue(expectedUnion.isIsomorphicWith(savedUnion))
         }

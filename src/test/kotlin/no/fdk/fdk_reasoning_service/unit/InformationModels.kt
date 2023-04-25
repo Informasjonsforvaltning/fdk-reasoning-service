@@ -22,7 +22,7 @@ class InformationModels {
 
     @Test
     fun testInformationModels() {
-        val infoModelsUnion = responseReader.parseTurtleFile("fdk_ready_infomodels.ttl")
+        val infoModelsUnion = responseReader.parseTurtleFile("reasoned_infomodels.ttl")
         whenever(repository.findHarvestedCatalog(any())).thenReturn("")
         whenever(reasoningService.catalogReasoning(any(), any(), any()))
             .thenReturn(infoModelsUnion)
@@ -55,13 +55,13 @@ class InformationModels {
     @Test
     fun testInformationModelsUnion() {
         whenever(repository.findCatalogs())
-            .thenReturn(listOf(responseReader.readFile("fdk_ready_infomodels.ttl")))
+            .thenReturn(listOf(responseReader.readFile("reasoned_infomodels.ttl")))
 
         infoModelService.updateUnion()
 
         argumentCaptor<String>().apply {
             verify(repository, times(1)).saveReasonedUnion(capture())
-            val expected = responseReader.parseTurtleFile("fdk_ready_infomodels.ttl")
+            val expected = responseReader.parseTurtleFile("reasoned_infomodels.ttl")
             val savedUnion = parseRDFResponse(firstValue, Lang.TURTLE, "")
             assertTrue(expected.isIsomorphicWith(savedUnion))
         }

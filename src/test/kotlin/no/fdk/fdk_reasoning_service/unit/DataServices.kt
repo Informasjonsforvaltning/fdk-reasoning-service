@@ -26,7 +26,7 @@ class DataServices {
 
     @Test
     fun testDataServices() {
-        val dataServicesModel = responseReader.parseTurtleFile("fdk_ready_dataservices.ttl")
+        val dataServicesModel = responseReader.parseTurtleFile("reasoned_dataservices.ttl")
         whenever(dataServiceMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
             .thenReturn(TurtleDBO("catalog-$DATA_SERVICE_CATALOG_ID", gzip("")))
         whenever(reasoningService.catalogReasoning(any(), any(), any()))
@@ -58,7 +58,7 @@ class DataServices {
     @Test
     fun testDataServicesUnion() {
         whenever(dataServiceMongoTemplate.findAll<TurtleDBO>("fdkCatalogs"))
-            .thenReturn(listOf(TurtleDBO(DATA_SERVICE_CATALOG_ID, gzip(responseReader.readFile("fdk_ready_dataservices.ttl")))))
+            .thenReturn(listOf(TurtleDBO(DATA_SERVICE_CATALOG_ID, gzip(responseReader.readFile("reasoned_dataservices.ttl")))))
 
         dataServiceService.updateUnion()
 
@@ -67,7 +67,7 @@ class DataServices {
             Assertions.assertEquals(UNION_ID, first.firstValue.id)
             Assertions.assertEquals(Collections.nCopies(1, "fdkCatalogs"), second.allValues)
 
-            val expectedUnion = responseReader.parseTurtleFile("fdk_ready_dataservices.ttl")
+            val expectedUnion = responseReader.parseTurtleFile("reasoned_dataservices.ttl")
             val savedUnion = parseRDFResponse(ungzip(first.firstValue.turtle), Lang.TURTLE, "")
             assertTrue(expectedUnion.isIsomorphicWith(savedUnion))
         }

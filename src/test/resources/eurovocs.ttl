@@ -5,112 +5,186 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 ns4:652  rdf:type       skos:Concept ;
-        skos:prefLabel  "industrial economy"@en .
+        skos:prefLabel  "industrial economy"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "637/652" .
 
 ns4:1338  rdf:type      skos:Concept ;
-        skos:prefLabel  "India"@en .
+        skos:prefLabel  "India"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "8367/1338" , "c_964c9649/1338" , "2848/1338" .
 
 ns4:5073  rdf:type      skos:Concept ;
-        skos:prefLabel  "butter oil"@en .
+        skos:prefLabel  "butter oil"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "2763/5073" .
 
 ns4:462  rdf:type       skos:Concept ;
-        skos:prefLabel  "regional disparity"@en .
+        skos:prefLabel  "regional disparity"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "2515/462" .
 
 ns4:1148  rdf:type      skos:Concept ;
-        skos:prefLabel  "geography"@en .
+        skos:prefLabel  "geography"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "3952/1148" .
 
 ns4:272  rdf:type       skos:Concept ;
-        skos:prefLabel  "cost of pollution"@en .
+        skos:prefLabel  "cost of pollution"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "2470/c_bb1a60eb/272" .
 
 ns4:105  rdf:type       skos:Concept ;
-        skos:prefLabel  "parental leave"@en .
+        skos:prefLabel  "parental leave"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+               "108/105" .
 
 ns4:5078  rdf:type      skos:Concept ;
-        skos:prefLabel  "cocoa"@en .
+        skos:prefLabel  "cocoa"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "2418/5078" .
 
 ns4:6222  rdf:type      skos:Concept ;
-        skos:prefLabel  "area of freedom, security and justice"@en .
+        skos:prefLabel  "area of freedom, security and justice"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "4060/6222" .
 
 ns4:467  rdf:type       skos:Concept ;
-        skos:prefLabel  "driving mechanism"@en .
+        skos:prefLabel  "driving mechanism"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "2015/4651/848/467" .
 
 ns4:7126  rdf:type      skos:Concept ;
-        skos:prefLabel  "European Food Safety Authority"@en .
+        skos:prefLabel  "European Food Safety Authority"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "5769/7126" .
 
 ns4:6032  rdf:type      skos:Concept ;
-        skos:prefLabel  "collectivism"@en .
+        skos:prefLabel  "collectivism"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "3013/6032" .
 
 ns4:277  rdf:type       skos:Concept ;
-        skos:prefLabel  "direct cost"@en .
+        skos:prefLabel  "direct cost"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "1155/5092/277" .
 
 ns4:2107  rdf:type      skos:Concept ;
-        skos:prefLabel  "ocean"@en .
+        skos:prefLabel  "ocean"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "3146/2107" .
 
 ns4:c_ee45cd99  rdf:type  skos:Concept ;
-        skos:prefLabel  "sovereign wealth fund"@en .
+        skos:prefLabel  "sovereign wealth fund"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "1452/4195/c_ee45cd99" .
 
 ns4:2849  rdf:type      skos:Concept ;
-        skos:prefLabel  "vegetable protein"@en .
+        skos:prefLabel  "vegetable protein"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "2775/2849" .
 
 ns4:1755  rdf:type      skos:Concept ;
-        skos:prefLabel  "animal disease"@en .
+        skos:prefLabel  "animal disease"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "5877/1755" .
 
 ns4:5490  rdf:type      skos:Concept ;
-        skos:prefLabel  "mitigating circumstances"@en .
+        skos:prefLabel  "mitigating circumstances"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+             "3513/5490" .
 
 ns4:1565  rdf:type      skos:Concept ;
-        skos:prefLabel  "milk"@en .
+        skos:prefLabel  "milk"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+             "2763/1565" .
 
 ns4:8442  rdf:type      skos:Concept ;
-        skos:prefLabel  "national identity"@en .
+        skos:prefLabel  "national identity"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+              "317/5667/8442" .
 
 ns4:4707  rdf:type      skos:Concept ;
-        skos:prefLabel  "Vietnam"@en .
+        skos:prefLabel  "Vietnam"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "2858/4707" , "1847/4707" , "6205/4707" , "5087/4707" .
 
 ns4:2469  rdf:type      skos:Concept ;
-        skos:prefLabel  "business policy"@en .
+        skos:prefLabel  "business policy"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "2469" .
 
 ns4:3613  rdf:type      skos:Concept ;
-        skos:prefLabel  "professional sport"@en .
+        skos:prefLabel  "professional sport"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+               "1700/4245/3613" .
 
 ns4:2691  rdf:type      skos:Concept ;
-        skos:prefLabel  "urban problem"@en .
+        skos:prefLabel  "urban problem"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "4619/2691" .
 
 ns4:5833  rdf:type      skos:Concept ;
-        skos:prefLabel  "renewal of an agreement"@en .
+        skos:prefLabel  "renewal of an agreement"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "3461/5833" .
 
 ns4:3595  rdf:type      skos:Concept ;
-        skos:prefLabel  "veterinarian"@en .
+        skos:prefLabel  "veterinarian"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "2789/3595" .
 
 ns4:6737  rdf:type      skos:Concept ;
-        skos:prefLabel  "illegal building"@en .
+        skos:prefLabel  "illegal building"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "4619/3376/6737" .
 
 ns4:4499  rdf:type      skos:Concept ;
-        skos:prefLabel  "Union transit"@en .
+        skos:prefLabel  "Union transit"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "2520/4499" .
 
 ns4:1908  rdf:type      skos:Concept ;
-        skos:prefLabel  "draught animal"@en .
+        skos:prefLabel  "draught animal"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "2711/1898/1908" .
 
 ns4:5643  rdf:type      skos:Concept ;
-        skos:prefLabel  "Cohesion Fund"@en .
+        skos:prefLabel  "Cohesion Fund"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "1005/1460/1052/5643" .
 
 ns4:6547  rdf:type      skos:Concept ;
-        skos:prefLabel  "European association"@en .
+        skos:prefLabel  "European association"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "4706/4702/2944/6547" .
 
 ns4:1718  rdf:type      skos:Concept ;
-        skos:prefLabel  "machinery"@en .
+        skos:prefLabel  "machinery"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "1718" .
 
 ns4:5453  rdf:type      skos:Concept ;
-        skos:prefLabel  "fighter aircraft"@en .
+        skos:prefLabel  "fighter aircraft"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "2647/4417/5453" .
 
 ns4:6357  rdf:type      skos:Concept ;
-        skos:prefLabel  "demotion"@en .
+        skos:prefLabel  "demotion"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "1163/5475/6357" .
 
 ns4:842  rdf:type       skos:Concept ;
-        skos:prefLabel  "equidae"@en .
+        skos:prefLabel  "equidae"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "5962/842" .
 
 ns4:1528  rdf:type      skos:Concept ;
-        skos:prefLabel  "young person"@en .
+        skos:prefLabel  "young person"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "52/3327/1528" .
 
 ns4:5263  rdf:type      skos:Concept ;
-        skos:prefLabel  "carcase"@en .
+        skos:prefLabel  "carcase"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "2737/5263" .

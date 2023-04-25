@@ -73,6 +73,7 @@ class DatasetService(
         datasetMongoTemplate.findById<TurtleDBO>(harvestedCatalogID(catalogId), "turtle")
             ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "datasets") }
             ?.let { reasoningService.catalogReasoning(it, CatalogType.DATASETS, rdfData) }
+            ?.union(rdfData.selectedThemeTriples())
             ?.also { it.separateAndSaveDatasets() }
             ?: throw Exception("missing database data, harvest-reasoning was stopped")
     }

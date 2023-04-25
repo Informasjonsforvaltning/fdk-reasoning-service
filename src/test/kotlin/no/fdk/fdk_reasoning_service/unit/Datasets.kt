@@ -26,7 +26,7 @@ class Datasets {
 
     @Test
     fun testDatasets() {
-        val datasetsModel = responseReader.parseTurtleFile("fdk_ready_datasets.ttl")
+        val datasetsModel = responseReader.parseTurtleFile("reasoned_datasets.ttl")
         whenever(datasetMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
             .thenReturn(TurtleDBO("catalogId", gzip("")))
         whenever(reasoningService.catalogReasoning(any(), any(), any()))
@@ -36,14 +36,15 @@ class Datasets {
 
         argumentCaptor<TurtleDBO, String>().apply {
             verify(datasetMongoTemplate, times(5)).save(first.capture(), second.capture())
-            assertEquals(allDatasetIds, first.allValues.map { it.id })
+            assertEquals(allDatasetIds.sorted(), first.allValues.map { it.id }.sorted())
             assertEquals(savedDatasetCollections, second.allValues)
 
+            val expectedCatalog = responseReader.parseTurtleFile("saved_datasets.ttl")
             val savedCatalog = parseRDFResponse(ungzip(first.firstValue.turtle), Lang.TURTLE, "")
-            assertTrue(datasetsModel.isIsomorphicWith(savedCatalog))
+            assertTrue(expectedCatalog.isIsomorphicWith(savedCatalog))
 
-            val expectedDataset = responseReader.parseTurtleFile("dataset_0.ttl")
-            val savedDataset = parseRDFResponse(ungzip(first.secondValue.turtle), Lang.TURTLE, "")
+            val expectedDataset = responseReader.parseTurtleFile("saved_dataset_0.ttl")
+            val savedDataset = parseRDFResponse(ungzip(first.allValues.first { it.id == "4667277a-9d27-32c1-aed5-612fa601f393" }.turtle), Lang.TURTLE, "")
             assertTrue(expectedDataset.isIsomorphicWith(savedDataset))
         }
 
@@ -58,7 +59,7 @@ class Datasets {
     @Test
     fun testDatasetsUnion() {
         whenever(datasetMongoTemplate.findAll<TurtleDBO>("fdkCatalogs"))
-            .thenReturn(listOf(TurtleDBO(DATA_SERVICE_CATALOG_ID, gzip(responseReader.readFile("fdk_ready_datasets.ttl")))))
+            .thenReturn(listOf(TurtleDBO(DATA_SERVICE_CATALOG_ID, gzip(responseReader.readFile("reasoned_datasets.ttl")))))
 
         datasetService.updateUnion()
 
@@ -67,7 +68,7 @@ class Datasets {
             Assertions.assertEquals(UNION_ID, first.firstValue.id)
             Assertions.assertEquals(Collections.nCopies(1, "fdkCatalogs"), second.allValues)
 
-            val expectedUnion = responseReader.parseTurtleFile("fdk_ready_datasets.ttl")
+            val expectedUnion = responseReader.parseTurtleFile("reasoned_datasets.ttl")
             val savedUnion = parseRDFResponse(ungzip(first.firstValue.turtle), Lang.TURTLE, "")
             assertTrue(expectedUnion.isIsomorphicWith(savedUnion))
         }
@@ -96,7 +97,7 @@ class Datasets {
 
     @Test
     fun testDatasetSeries() {
-        val datasetsModel = responseReader.parseTurtleFile("fdk_ready_dataset_series.ttl")
+        val datasetsModel = responseReader.parseTurtleFile("reasoned_dataset_series.ttl")
         whenever(datasetMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
             .thenReturn(TurtleDBO("catalogId", gzip("")))
         whenever(reasoningService.catalogReasoning(any(), any(), any()))

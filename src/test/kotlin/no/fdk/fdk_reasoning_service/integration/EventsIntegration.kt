@@ -53,7 +53,7 @@ class EventsIntegration : ApiTestContext() {
         val response = apiGet(port, "/events/$EVENT_ID_0", "application/rdf+json")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("fdk_ready_event_0.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_event_0.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, "RDF/JSON")
 
         assertTrue(expected.isIsomorphicWith(responseModel))
@@ -64,7 +64,7 @@ class EventsIntegration : ApiTestContext() {
         val response = apiGet(port, "/events/catalogs/$EVENT_CATALOG_ID", "application/rdf+json")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("fdk_ready_event_catalogs.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_event_catalogs.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, "RDF/JSON")
 
         assertTrue(expected.isIsomorphicWith(responseModel))
@@ -75,7 +75,7 @@ class EventsIntegration : ApiTestContext() {
         val response = apiGet(port, "/events", "text/turtle")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("fdk_ready_events.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_events.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TURTLE.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))
@@ -86,7 +86,7 @@ class EventsIntegration : ApiTestContext() {
         val response = apiGet(port, "/events/catalogs", "text/turtle")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("fdk_ready_event_catalogs.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_event_catalogs.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TURTLE.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))

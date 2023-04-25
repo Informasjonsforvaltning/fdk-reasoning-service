@@ -89,6 +89,7 @@ class PublicServiceService(
         publicServiceMongoTemplate.findById<TurtleDBO>(catalogId, MongoDB.HARVESTED_CATALOG.collection)
             ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "public-services") }
             ?.let { reasoningService.catalogReasoning(it, CatalogType.PUBLICSERVICES, rdfData) }
+            ?.union(rdfData.selectedThemeTriples())
             ?.also { it.separateAndSavePublicServices() }
             ?: throw Exception("missing database data, harvest-reasoning was stopped")
     }

@@ -22,7 +22,7 @@ class PublicServices {
 
     @Test
     fun testPublicServices() {
-        val catalog0 = responseReader.parseTurtleFile("fdk_ready_public_service_catalog_0.ttl")
+        val catalog0 = responseReader.parseTurtleFile("reasoned_public_service_catalog_0.ttl")
         whenever(publicServiceMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
             .thenReturn(PUBLIC_SERVICE_CATALOG_0_DATA)
         whenever(reasoningService.catalogReasoning(any(), any(), any()))
@@ -51,12 +51,12 @@ class PublicServices {
     fun testPublicServicesUnion() {
         whenever(publicServiceMongoTemplate.findAll<TurtleDBO>("reasonedCatalog"))
             .thenReturn(listOf(
-                TurtleDBO(PUBLIC_SERVICE_ID_0, gzip(responseReader.readFile("fdk_ready_public_service_catalog_0.ttl"))),
-                TurtleDBO(PUBLIC_SERVICE_ID_1, gzip(responseReader.readFile("fdk_ready_public_service_catalog_1.ttl")))))
+                TurtleDBO(PUBLIC_SERVICE_ID_0, gzip(responseReader.readFile("reasoned_public_service_catalog_0.ttl"))),
+                TurtleDBO(PUBLIC_SERVICE_ID_1, gzip(responseReader.readFile("reasoned_public_service_catalog_1.ttl")))))
         whenever(publicServiceMongoTemplate.findAll<TurtleDBO>("reasonedPublicService"))
             .thenReturn(listOf(
-                TurtleDBO(PUBLIC_SERVICE_ID_0, gzip(responseReader.readFile("fdk_ready_public_service_0.ttl"))),
-                TurtleDBO(PUBLIC_SERVICE_ID_1, gzip(responseReader.readFile("fdk_ready_public_service_1.ttl")))))
+                TurtleDBO(PUBLIC_SERVICE_ID_0, gzip(responseReader.readFile("reasoned_public_service_0.ttl"))),
+                TurtleDBO(PUBLIC_SERVICE_ID_1, gzip(responseReader.readFile("reasoned_public_service_1.ttl")))))
 
         publicServiceService.updateUnion()
 
@@ -65,12 +65,12 @@ class PublicServices {
             Assertions.assertEquals(listOf(UNION_ID, UNION_ID), first.allValues.map { it.id })
             Assertions.assertEquals(listOf("reasonedCatalog", "reasonedPublicService"), second.allValues)
 
-            val expectedCatalogUnion = responseReader.parseTurtleFile("fdk_ready_public_service_catalog_0.ttl")
-                .union(responseReader.parseTurtleFile("fdk_ready_public_service_catalog_1.ttl"))
+            val expectedCatalogUnion = responseReader.parseTurtleFile("reasoned_public_service_catalog_0.ttl")
+                .union(responseReader.parseTurtleFile("reasoned_public_service_catalog_1.ttl"))
             val savedCatalogUnion = parseRDFResponse(ungzip(first.firstValue.turtle), Lang.TURTLE, "")
             assertTrue(expectedCatalogUnion.isIsomorphicWith(savedCatalogUnion))
 
-            val expectedServiceUnion = responseReader.parseTurtleFile("fdk_ready_public_services.ttl")
+            val expectedServiceUnion = responseReader.parseTurtleFile("reasoned_public_services.ttl")
             val savedServiceUnion = parseRDFResponse(ungzip(first.secondValue.turtle), Lang.TURTLE, "")
             assertTrue(expectedServiceUnion.isIsomorphicWith(savedServiceUnion))
         }

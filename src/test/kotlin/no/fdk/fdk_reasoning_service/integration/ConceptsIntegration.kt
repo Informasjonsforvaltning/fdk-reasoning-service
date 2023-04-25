@@ -57,7 +57,7 @@ class ConceptsIntegration : ApiTestContext() {
         val response = apiGet(port, "/concepts/collections/$CONCEPT_COLLECTION_ID", "application/trig")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("fdk_ready_concepts.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_concepts.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TRIG.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))
@@ -68,7 +68,7 @@ class ConceptsIntegration : ApiTestContext() {
         val response = apiGet(port, "/concepts", "text/n3")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("fdk_ready_concepts.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_concepts.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.N3.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))

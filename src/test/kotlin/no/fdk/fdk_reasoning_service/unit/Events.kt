@@ -23,7 +23,7 @@ class Events {
 
     @Test
     fun testEvents() {
-        val catalogModel = responseReader.parseTurtleFile("fdk_ready_event_catalogs.ttl")
+        val catalogModel = responseReader.parseTurtleFile("reasoned_event_catalogs.ttl")
         whenever(eventMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
             .thenReturn(EVENT_CATALOG_DATA)
         whenever(reasoningService.catalogReasoning(any(), any(), any()))
@@ -53,11 +53,11 @@ class Events {
     @Test
     fun testEventsUnion() {
         whenever(eventMongoTemplate.findAll<TurtleDBO>("reasonedCatalog"))
-            .thenReturn(listOf(TurtleDBO(EVENT_CATALOG_ID, gzip(responseReader.readFile("fdk_ready_event_catalogs.ttl")))))
+            .thenReturn(listOf(TurtleDBO(EVENT_CATALOG_ID, gzip(responseReader.readFile("reasoned_event_catalogs.ttl")))))
         whenever(eventMongoTemplate.findAll<TurtleDBO>("reasonedEvent"))
             .thenReturn(listOf(
-                TurtleDBO(EVENT_ID_0, gzip(responseReader.readFile("fdk_ready_event_0.ttl"))),
-                TurtleDBO(EVENT_ID_1, gzip(responseReader.readFile("fdk_ready_event_1.ttl")))))
+                TurtleDBO(EVENT_ID_0, gzip(responseReader.readFile("reasoned_event_0.ttl"))),
+                TurtleDBO(EVENT_ID_1, gzip(responseReader.readFile("reasoned_event_1.ttl")))))
 
         eventService.updateUnion()
 
@@ -66,8 +66,8 @@ class Events {
             Assertions.assertEquals(UNION_ID, first.firstValue.id)
             Assertions.assertEquals(listOf("reasonedCatalog", "reasonedEvent"), second.allValues)
 
-            val expectedEventUnion = responseReader.parseTurtleFile("fdk_ready_events.ttl")
-            val expectedCatalogUnion = responseReader.parseTurtleFile("fdk_ready_event_catalogs.ttl")
+            val expectedEventUnion = responseReader.parseTurtleFile("reasoned_events.ttl")
+            val expectedCatalogUnion = responseReader.parseTurtleFile("reasoned_event_catalogs.ttl")
             val savedCatalogUnion = parseRDFResponse(ungzip(first.firstValue.turtle), Lang.TURTLE, "")
             val savedEventUnion = parseRDFResponse(ungzip(first.secondValue.turtle), Lang.TURTLE, "")
             assertTrue(expectedEventUnion.isIsomorphicWith(savedEventUnion))
