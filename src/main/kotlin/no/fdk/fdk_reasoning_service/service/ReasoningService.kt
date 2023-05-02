@@ -142,13 +142,21 @@ class ReasoningService(
                 GenericRuleReasoner(Rule.parseRules(dataServiceRules)),
                 catalogData
             ).deductionsModel
-            CatalogType.INFORMATIONMODELS -> ModelFactory.createInfModel(
-                GenericRuleReasoner(Rule.parseRules(infoModelRules)),
-                catalogData
-            ).deductionsModel
+            CatalogType.INFORMATIONMODELS -> catalogData.informationModelDeductions(rdfData)
             CatalogType.PUBLICSERVICES -> catalogData.servicesDeductions(rdfData)
             else -> ModelFactory.createDefaultModel()
         }
+
+    private fun Model.informationModelDeductions(rdfData: ExternalRDFData): Model {
+        val deductions = ModelFactory.createInfModel(
+            GenericRuleReasoner(Rule.parseRules(infoModelRules)),
+            this
+        ).deductionsModel
+
+        val themeLabelDeductions = union(deductions).themePrefLabelDeductions(rdfData)
+
+        return deductions.union(themeLabelDeductions)
+    }
 
     private fun Model.servicesDeductions(rdfData: ExternalRDFData): Model {
         val deductions = ModelFactory.createInfModel(

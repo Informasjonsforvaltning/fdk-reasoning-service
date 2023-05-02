@@ -416,3 +416,6 @@ pass:varselSmsMobilnummer
         dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
         dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
         foaf:primaryTopic  pass:OppgaveOverPassOgStellAvBarn .
+
+<http://publications.europa.eu/resource/authority/data-theme/ECON>
+        skos:prefLabel  "Economy and finance"@en , "Økonomi og finans"@nb , "Økonomi og finans"@nn , "Økonomi og finans"@no .
