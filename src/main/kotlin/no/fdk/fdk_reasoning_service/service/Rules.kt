@@ -140,6 +140,7 @@ const val serviceRules = """
 
 const val addThemeTitles = """
     @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+    @prefix cv: <http://data.europa.eu/m8g/> .
     @prefix dct: <http://purl.org/dc/terms/> .
     @prefix dcat:  <http://www.w3.org/ns/dcat#> .
     @prefix fdk: <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#> .
@@ -159,10 +160,19 @@ const val addThemeTitles = """
         equal(?missingLabel 'true'^^xsd:boolean)
         -> (?theme skos:prefLabel ?themeTitle)
     ]
+
+    [thematicAreaTitleToLabelWhenMissing:
+        (?subject cv:thematicArea ?theme),
+        (?theme dct:title ?themeTitle),
+        (?theme fdk:missingLabel ?missingLabel),
+        equal(?missingLabel 'true'^^xsd:boolean)
+        -> (?theme skos:prefLabel ?themeTitle)
+    ]
 """
 
 const val tagThemesMissingLabel = """
     @prefix dcat:  <http://www.w3.org/ns/dcat#> .
+    @prefix cv: <http://data.europa.eu/m8g/> .
     @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
     @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
     @prefix fdk: <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#> .
@@ -175,6 +185,12 @@ const val tagThemesMissingLabel = """
 
     [themeTaxonomyTitleToLabelWhenMissing:
         (?subject dcat:themeTaxonomy ?theme),
+        noValue(?theme skos:prefLabel)
+        -> (?theme fdk:missingLabel 'true'^^xsd:boolean)
+    ]
+
+    [thematicAreaTitleToLabelWhenMissing:
+        (?subject cv:thematicArea ?theme),
         noValue(?theme skos:prefLabel)
         -> (?theme fdk:missingLabel 'true'^^xsd:boolean)
     ]
