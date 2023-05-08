@@ -3,6 +3,7 @@
 @prefix cpsv:   <http://purl.org/vocab/cpsv#> .
 @prefix cv:     <http://data.europa.eu/m8g/> .
 @prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix dcatno: <https://data.norge.no/vocabulary/dcatno#> .
 @prefix dct:    <http://purl.org/dc/terms/> .
 @prefix eli:    <http://data.europa.eu/eli/ontology#> .
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
@@ -36,13 +37,26 @@
         dct:title                 "Søknad om driftsstøtte til anlegg"@nb ;
         cv:hasParticipation       <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> .
 
+<http://localhost:5000/public-services/catalogs/4d2c9e29-2f9a-304f-9e48-34e30a36d068>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "4d2c9e29-2f9a-304f-9e48-34e30a36d068" ;
+        dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://localhost:5000/fdk-public-service-publisher.ttl#GeneratedCatalog> .
+
+<http://localhost:5000/fdk-public-service-publisher.ttl#GeneratedCatalog>
+    a       dcat:Catalog ;
+    dcatno:containsService <http://public-service-publisher.fellesdatakatalog.digdir.no/services/12> .
+
 <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl>
-       a cv:Participation ;
-       cv:hasParticipant <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exAktorDummy.ttl> .
+       a cv:Participation;
+       cv:hasParticipant <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exAktorDummy.ttl> ;
+       .
 
 <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exAktorDummy.ttl>
        a foaf:Agent;
-       cv:participates <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> .
+       cv:participates <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> ;
+       .
 
 <https://psi.norge.no/los/tema/skole-og-utdanning>
         skos:prefLabel  "Schools and education"@en , "Skule og utdanning"@nn , "Skole og utdanning"@nb ;

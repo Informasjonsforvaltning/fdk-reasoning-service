@@ -47,7 +47,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     private fun invalidateAndUpdateLOS() {
         logger.info("updating LOS cache")
         try {
-            with(RDFDataMgr.loadModel(uris.los, Lang.RDFXML)) {
+            with(RDFDataMgr.loadModel(uris.los, Lang.TURTLE)) {
                 LOS.removeAll().add(this)
             }
         } catch (ex: Exception) {

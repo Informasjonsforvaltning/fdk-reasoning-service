@@ -210,16 +210,24 @@
         br:orgPath      "/STAT/972417858/991825827" .
 
 <https://psi.norge.no/los/tema/energi>
-        skos:prefLabel  "Beholder eksisterende tittel for Energi"@nb .
+        skos:prefLabel  "Beholder eksisterende tittel for Energi"@nb ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                        "natur-klima-og-miljo/energi" .
 
 <https://psi.norge.no/los/tema/helse-og-omsorg>
-        skos:prefLabel  "Health and care"@en , "Helse og omsorg"@nb , "Helse og omsorg"@nn .
+        skos:prefLabel  "Health and care"@en , "Helse og omsorg"@nb , "Helse og omsorg"@nn ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "helse-og-omsorg" .
 
 <https://psi.norge.no/los/tema/kultur-idrett-og-fritid>
-        skos:prefLabel  "Kultur, idrett og fritid"@nb , "Kultur, idrett og fritid"@nn , "Culture, sport and recreation"@en .
+        skos:prefLabel  "Kultur, idrett og fritid"@nb , "Kultur, idrett og fritid"@nn , "Culture, sport and recreation"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "kultur-idrett-og-fritid" .
 
 <https://psi.norge.no/los/tema/lov-og-rett>
-        skos:prefLabel  "Legal matters"@en , "Lov og rett"@nn , "Lov og rett"@nb .
+        skos:prefLabel  "Legal matters"@en , "Lov og rett"@nn , "Lov og rett"@nb ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "lov-og-rett" .
 
 <http://eurovoc.europa.eu/5490>
         skos:prefLabel  "mitigating circumstances"@en ;

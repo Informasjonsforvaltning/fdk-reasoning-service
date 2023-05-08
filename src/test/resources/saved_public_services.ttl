@@ -307,7 +307,9 @@
         cv:participates  <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> .
 
 <https://psi.norge.no/los/tema/skole-og-utdanning>
-        skos:prefLabel  "Schools and education"@en , "Skule og utdanning"@nn , "Skole og utdanning"@nb .
+        skos:prefLabel  "Schools and education"@en , "Skule og utdanning"@nn , "Skole og utdanning"@nb ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "skole-og-utdanning" .
 
 <http://eurovoc.europa.eu/6222>
         skos:prefLabel  "area of freedom, security and justice"@en ;

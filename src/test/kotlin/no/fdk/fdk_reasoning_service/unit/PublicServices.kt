@@ -35,8 +35,9 @@ class PublicServices {
             Assertions.assertEquals(listOf(PUBLIC_SERVICE_CATALOG_0_ID, PUBLIC_SERVICE_ID_0), first.allValues.map { it.id })
             Assertions.assertEquals(listOf("reasonedCatalog", "reasonedPublicService"), second.allValues)
 
+            val expected = responseReader.parseTurtleFile("saved_public_service_catalog_0.ttl")
             val savedCatalog0 = parseRDFResponse(ungzip(first.allValues[0].turtle), Lang.TURTLE, "")
-            assertTrue(catalog0.isIsomorphicWith(savedCatalog0))
+            assertTrue(expected.isIsomorphicWith(savedCatalog0))
         }
 
         val expectedReport = ReasoningReport(

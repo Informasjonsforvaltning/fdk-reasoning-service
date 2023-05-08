@@ -1,0 +1,112 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<https://psi.norge.no/los/tema/bygg-og-eiendom>
+        rdf:type           skos:Concept ;
+        skos:broadMatch    <http://http://publications.europa.eu/resource/authority/data-theme/REGI> ;
+        skos:inScheme      <https://psi.norge.no/los/ontologi/tema> ;
+        skos:narrower      <https://psi.norge.no/los/tema/priser-og-gebyr-for-bygg-og-eiendom> , <https://psi.norge.no/los/tema/bygging> , <https://psi.norge.no/los/tema/leie-og-utleie> , <https://psi.norge.no/los/tema/planer> , <https://psi.norge.no/los/tema/kjop-og-salg> , <https://psi.norge.no/los/tema/flytting> , <https://psi.norge.no/los/tema/eiendom> ;
+        skos:prefLabel     "Bygg og eiendom"@nb , "Bygg og eigedom"@nn , "Building and property"@en ;
+        skos:topConceptOf  <https://psi.norge.no/los/struktur> ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "bygg-og-eiendom" .
+
+<https://psi.norge.no/los/tema/energi>
+        rdf:type         skos:Concept ;
+        skos:broader     <https://psi.norge.no/los/tema/natur-klima-og-miljo> ;
+        skos:exactMatch  <http://publications.europa.eu/resource/authority/data-theme/ENER> ;
+        skos:inScheme    <https://psi.norge.no/los/ontologi/tema> ;
+        skos:narrower    <https://psi.norge.no/los/ord/fornybar-energi> , <https://psi.norge.no/los/ord/energibruk> , <https://psi.norge.no/los/ord/energimerking> ;
+        skos:prefLabel   "Energy"@en , "Energi"@nn , "Energi"@nb ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "natur-klima-og-miljo/energi" .
+
+<https://psi.norge.no/los/tema/familie-og-barn>
+        rdf:type           skos:Concept ;
+        skos:broadMatch    <http://publications.europa.eu/resource/authority/data-theme/SOCI> ;
+        skos:inScheme      <https://psi.norge.no/los/ontologi/tema> ;
+        skos:narrower      <https://psi.norge.no/los/tema/ekteskap> , <https://psi.norge.no/los/tema/familieytelser> , <https://psi.norge.no/los/tema/barnevern-og-foreldrestotte> , <https://psi.norge.no/los/tema/samliv> , <https://psi.norge.no/los/tema/foreldre-og-foresatte> , <https://psi.norge.no/los/tema/dodsfall-og-gravferd> , <https://psi.norge.no/los/tema/barnehage> ;
+        skos:prefLabel     "Family and children"@en , "Familie og barn"@nb , "Familie og barn"@nn ;
+        skos:topConceptOf  <https://psi.norge.no/los/struktur> ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "familie-og-barn" .
+
+<https://psi.norge.no/los/tema/helse-og-omsorg>
+        rdf:type           skos:Concept ;
+        skos:exactMatch    <http://publications.europa.eu/resource/authority/data-theme/HEAL> ;
+        skos:inScheme      <https://psi.norge.no/los/ontologi/tema> ;
+        skos:narrower      <https://psi.norge.no/los/tema/helsetjenester> , <https://psi.norge.no/los/tema/hjelpemidler> , <https://psi.norge.no/los/tema/omsorgstjenester> , <https://psi.norge.no/los/tema/folkehelse> , <https://psi.norge.no/los/tema/rus-og-avhengighet> , <https://psi.norge.no/los/tema/pasientrettigheter> , <https://psi.norge.no/los/tema/svangerskap> , <https://psi.norge.no/los/tema/avlastning-og-stotte> , <https://psi.norge.no/los/tema/akutt-hjelp> ;
+        skos:prefLabel     "Helse og omsorg"@nb , "Helse og omsorg"@nn , "Health and care"@en ;
+        skos:topConceptOf  <https://psi.norge.no/los/struktur> ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "helse-og-omsorg" .
+
+<https://psi.norge.no/los/tema/kultur-idrett-og-fritid>
+        rdf:type           skos:Concept ;
+        skos:broadMatch    <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
+        skos:inScheme      <https://psi.norge.no/los/ontologi/tema> ;
+        skos:narrower      <https://psi.norge.no/los/tema/tilskudd-til-kultur-idrett-og-fritid> , <https://psi.norge.no/los/tema/friluftsliv> , <https://psi.norge.no/los/tema/idrett> , <https://psi.norge.no/los/tema/kultur> , <https://psi.norge.no/los/tema/bibliotek> , <https://psi.norge.no/los/tema/fritid> , <https://psi.norge.no/los/tema/utlan-og-leie> , <https://psi.norge.no/los/tema/lotteri-og-pengespill> ;
+        skos:prefLabel     "Kultur, idrett og fritid"@nb , "Kultur, idrett og fritid"@nn , "Culture, sport and recreation"@en ;
+        skos:topConceptOf  <https://psi.norge.no/los/struktur> ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "kultur-idrett-og-fritid" .
+
+<https://psi.norge.no/los/tema/landbruk>
+        rdf:type         skos:Concept ;
+        skos:broadMatch  <http://publications.europa.eu/resource/authority/data-theme/AGRI> ;
+        skos:broader     <https://psi.norge.no/los/tema/naring> ;
+        skos:inScheme    <https://psi.norge.no/los/ontologi/tema> ;
+        skos:narrower    <https://psi.norge.no/los/ord/dyrehelse> , <https://psi.norge.no/los/ord/reindrift> , <https://psi.norge.no/los/ord/erstatningsordninger-i-landbruket> , <https://psi.norge.no/los/ord/vegbygging> , <https://psi.norge.no/los/ord/skogbruk> , <https://psi.norge.no/los/ord/plantedyrking> , <https://psi.norge.no/los/ord/plantevern> , <https://psi.norge.no/los/ord/landbrukseiendom> , <https://psi.norge.no/los/ord/veterinar> ;
+        skos:prefLabel   "Landbruk"@nb , "Landbruk"@nn , "Agriculture sector"@en ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "naring/landbruk" .
+
+<https://psi.norge.no/los/tema/lov-og-rett>
+        rdf:type           skos:Concept ;
+        skos:broadMatch    <http://publications.europa.eu/resource/authority/data-theme/JUST> ;
+        skos:inScheme      <https://psi.norge.no/los/ontologi/tema> ;
+        skos:narrower      <https://psi.norge.no/los/tema/lovbrudd-og-straff> , <https://psi.norge.no/los/tema/rettsvesen> , <https://psi.norge.no/los/tema/erstatningsordninger> ;
+        skos:prefLabel     "Lov og rett"@nb , "Lov og rett"@nn , "Legal matters"@en ;
+        skos:topConceptOf  <https://psi.norge.no/los/struktur> ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "lov-og-rett" .
+
+<https://psi.norge.no/los/tema/natur-klima-og-miljo>
+        rdf:type           skos:Concept ;
+        skos:closeMatch    <http://publications.europa.eu/resource/authority/data-theme/ENVI> ;
+        skos:inScheme      <https://psi.norge.no/los/ontologi/tema> ;
+        skos:narrower      <https://psi.norge.no/los/tema/miljotilskudd> , <https://psi.norge.no/los/tema/naturforvaltning> , <https://psi.norge.no/los/tema/var-og-klima> , <https://psi.norge.no/los/tema/forurensning-og-straling> , <https://psi.norge.no/los/tema/avfallshandtering> , <https://psi.norge.no/los/tema/energi> ;
+        skos:prefLabel     "Nature, climate and environment"@en , "Natur, klima og miljø"@nb , "Natur, klima og miljø"@nn ;
+        skos:topConceptOf  <https://psi.norge.no/los/struktur> ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "natur-klima-og-miljo" .
+
+<https://psi.norge.no/los/tema/samfunnssikkerhet-og-beredskap>
+        rdf:type           skos:Concept ;
+        skos:broadMatch    <http://publications.europa.eu/resource/authority/data-theme/JUST> ;
+        skos:inScheme      <https://psi.norge.no/los/ontologi/tema> ;
+        skos:narrower      <https://psi.norge.no/los/tema/brann> , <https://psi.norge.no/los/tema/forsvaret> , <https://psi.norge.no/los/tema/varslingstjenester> ;
+        skos:prefLabel     "Samfunnssikkerhet og beredskap"@nb , "Samfunnstryggleik og beredskap"@nn , "Civil protection and emergency planning"@en ;
+        skos:topConceptOf  <https://psi.norge.no/los/struktur> ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "samfunnssikkerhet-og-beredskap" .
+
+<https://psi.norge.no/los/tema/skole-og-utdanning>
+        rdf:type           skos:Concept ;
+        skos:broadMatch    <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
+        skos:inScheme      <https://psi.norge.no/los/ontologi/tema> ;
+        skos:narrower      <https://psi.norge.no/los/tema/hoyere-utdanning> , <https://psi.norge.no/los/tema/voksenopplaring> , <https://psi.norge.no/los/tema/grunnskole> , <https://psi.norge.no/los/tema/studiefinansiering> , <https://psi.norge.no/los/tema/skolemiljo> , <https://psi.norge.no/los/tema/skolehverdag> , <https://psi.norge.no/los/tema/videregaende-skole> ;
+        skos:prefLabel     "Skule og utdanning"@nn , "Skole og utdanning"@nb , "Schools and education"@en ;
+        skos:topConceptOf  <https://psi.norge.no/los/struktur> ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "skole-og-utdanning" .
+
+<https://psi.norge.no/los/tema/trafikk-og-transport>
+        rdf:type           skos:Concept ;
+        skos:broadMatch    <http://publications.europa.eu/resource/authority/data-theme/TRAN> ;
+        skos:inScheme      <https://psi.norge.no/los/ontologi/tema> ;
+        skos:narrower      <https://psi.norge.no/los/tema/luftfart> , <https://psi.norge.no/los/tema/trafikkinformasjon> , <https://psi.norge.no/los/tema/kjoretoy> , <https://psi.norge.no/los/tema/mobilitetstilbud> , <https://psi.norge.no/los/tema/yrkestransport> , <https://psi.norge.no/los/tema/bat-havn-og-kyst> , <https://psi.norge.no/los/tema/forerkort-og-sertifikat> , <https://psi.norge.no/los/tema/veg-og-vegregulering> ;
+        skos:prefLabel     "Traffic and transport"@en , "Trafikk og transport"@nb , "Trafikk og transport"@nn ;
+        skos:topConceptOf  <https://psi.norge.no/los/struktur> ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "trafikk-og-transport" .

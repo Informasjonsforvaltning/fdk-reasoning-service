@@ -20,7 +20,7 @@ fun startMockServer() {
         mockserver.stubFor(get(urlMatching("/organizations/orgpath/.*"))
             .willReturn(ok("/GENERATED/ORGPATH")))
         mockserver.stubFor(get(urlEqualTo("/reference-data/los"))
-            .willReturn(ok(File("src/test/resources/los.rdf").readText())))
+            .willReturn(ok(File("src/test/resources/los.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/reference-data/eu/eurovocs"))
             .willReturn(ok(File("src/test/resources/eurovocs.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/reference-data/eu/data-themes"))
