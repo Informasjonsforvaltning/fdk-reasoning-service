@@ -40,7 +40,8 @@ val RDF_DATA = ExternalRDFData(
     orgData = responseReader.parseTurtleFile("orgs.ttl"),
     losData = responseReader.parseTurtleFile("los.ttl", "TURTLE"),
     eurovocs = responseReader.parseTurtleFile("eurovocs.ttl", "TURTLE"),
-    dataThemes = responseReader.parseTurtleFile("data_themes.ttl", "TURTLE"))
+    dataThemes = responseReader.parseTurtleFile("data_themes.ttl", "TURTLE"),
+    conceptSubjects = responseReader.parseTurtleFile("concept_subjects.ttl", "TURTLE"))
 
 fun TurtleDBO.mapDBO(): Document =
     Document()

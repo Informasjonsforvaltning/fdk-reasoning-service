@@ -20,6 +20,7 @@ application:
     los: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/los/themes-and-words
     eurovocs: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/eurovocs
     dataThemes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/data-themes
+    conceptSubjects: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/concept-subjects
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester

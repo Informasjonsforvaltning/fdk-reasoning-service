@@ -10,6 +10,7 @@
 @prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
 @prefix dcat:  <http://www.w3.org/ns/dcat#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix uneskos: <http://purl.org/umu/uneskos#> .
 
 <http://begrepskatalogen/begrep/20b2e1a1-9fe1-11e5-a9f8-e4115b280940>
         a                             skos:Concept ;
@@ -97,3 +98,18 @@
         dct:issued      "2021-01-05T13:15:39.831Z"^^xsd:dateTime ;
         dct:modified    "2021-01-05T13:15:39.831Z"^^xsd:dateTime ;
         foaf:primaryTopic   <http://begrepskatalogen/begrep/46f4d710-4c6c-11e8-bb3e-005056821322> .
+
+<https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects>
+        a                 skos:ConceptScheme;
+        dct:description   "description of code list 1";
+        dct:identifier    "https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects"^^xsd:anyURI;
+        dct:publisher     <https://data.brreg.no/enhetsregisteret/api/enheter/123456789>;
+        dct:title         "code list 1";
+        uneskos:contains  <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#1> , <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#2> , <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#3> .
+
+<https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#3>
+        a               skos:Concept;
+        dct:identifier  "https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#3"^^xsd:anyURI;
+        skos:broader    <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#1>;
+        skos:inScheme   <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects>;
+        skos:prefLabel  "nb 3"@nb , "nn 3"@nn .

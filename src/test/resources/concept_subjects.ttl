@@ -1,0 +1,47 @@
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix uneskos: <http://purl.org/umu/uneskos#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+<https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#2>
+        a               skos:Concept;
+        dct:identifier  "https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#2"^^xsd:anyURI;
+        skos:broader    <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#1>;
+        skos:inScheme   <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects>;
+        skos:prefLabel  "nb 2"@nb , "nn 2"@nn , "en 2"@en .
+
+<https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/910244132/concepts/subjects#555>
+        a               skos:Concept;
+        dct:identifier  "https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/910244132/concepts/subjects#555"^^xsd:anyURI;
+        skos:inScheme   <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/910244132/concepts/subjects>;
+        skos:prefLabel  "codeName"@en .
+
+<https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects>
+        a                 skos:ConceptScheme;
+        dct:description   "description of code list 1";
+        dct:identifier    "https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects"^^xsd:anyURI;
+        dct:publisher     <https://data.brreg.no/enhetsregisteret/api/enheter/123456789>;
+        dct:title         "code list 1";
+        uneskos:contains  <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#1> , <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#2> , <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#3> .
+
+<https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/910244132/concepts/subjects>
+        a                 skos:ConceptScheme;
+        dct:description   "description";
+        dct:identifier    "https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/910244132/concepts/subjects"^^xsd:anyURI;
+        dct:publisher     <https://data.brreg.no/enhetsregisteret/api/enheter/910244132>;
+        dct:title         "name";
+        uneskos:contains  <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/910244132/concepts/subjects#555> .
+
+<https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#1>
+        a               skos:Concept;
+        dct:identifier  "https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#1"^^xsd:anyURI;
+        skos:inScheme   <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects>;
+        skos:narrower   <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#2> , <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#3>;
+        skos:prefLabel  "nb 1"@nb , "nn 1"@nn , "en 1"@en .
+
+<https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#3>
+        a               skos:Concept;
+        dct:identifier  "https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#3"^^xsd:anyURI;
+        skos:broader    <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#1>;
+        skos:inScheme   <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects>;
+        skos:prefLabel  "nb 3"@nb , "nn 3"@nn .

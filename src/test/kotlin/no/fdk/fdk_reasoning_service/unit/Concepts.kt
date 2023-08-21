@@ -26,24 +26,25 @@ class Concepts {
 
     @Test
     fun testConcepts() {
-        val conceptsModel = responseReader.parseTurtleFile("reasoned_concepts.ttl")
+        val reasonedConcepts = responseReader.parseTurtleFile("reasoned_concepts.ttl")
+        val expectedSaved = responseReader.parseTurtleFile("saved_concepts.ttl")
         whenever(conceptMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
             .thenReturn(TurtleDBO("collectionId", gzip("")))
         whenever(reasoningService.catalogReasoning(any(), any(), any()))
-            .thenReturn(conceptsModel)
+            .thenReturn(reasonedConcepts)
 
         val report = conceptService.reasonReportedChanges(CONCEPT_REPORT, RDF_DATA, TEST_DATE)
 
         argumentCaptor<TurtleDBO, String>().apply {
             verify(conceptMongoTemplate, times(3)).save(first.capture(), second.capture())
-            assertEquals(allConceptIds, first.allValues.map { it.id })
+            assertEquals(allConceptIds.sorted(), first.allValues.map { it.id }.sorted())
             assertEquals(listOf("fdkCollections", "fdkConcepts", "fdkConcepts"), second.allValues)
 
             val savedCollection = parseRDFResponse(ungzip(first.firstValue.turtle), Lang.TURTLE, "")
-            assertTrue(conceptsModel.isIsomorphicWith(savedCollection))
+            assertTrue(expectedSaved.isIsomorphicWith(savedCollection))
 
             val expectedConcept = responseReader.parseTurtleFile("concept_0.ttl")
-            val savedConcept = parseRDFResponse(ungzip(first.thirdValue.turtle), Lang.TURTLE, "")
+            val savedConcept = parseRDFResponse(ungzip(first.allValues.sortedBy { it.id }.last().turtle), Lang.TURTLE, "")
             assertTrue(expectedConcept.isIsomorphicWith(savedConcept))
 
             val expectedReport = ReasoningReport(

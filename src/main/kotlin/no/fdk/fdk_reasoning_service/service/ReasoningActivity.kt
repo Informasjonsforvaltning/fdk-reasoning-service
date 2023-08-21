@@ -42,7 +42,8 @@ class ReasoningActivity(
             orgData = referenceDataCache.organizations(),
             losData = referenceDataCache.los(),
             eurovocs = referenceDataCache.eurovocs(),
-            dataThemes = referenceDataCache.dataThemes()
+            dataThemes = referenceDataCache.dataThemes(),
+            conceptSubjects = referenceDataCache.conceptSubjects()
         )
         try {
             when {

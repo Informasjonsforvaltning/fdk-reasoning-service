@@ -6,5 +6,6 @@ data class ExternalRDFData(
     val orgData: Model,
     val losData: Model,
     val eurovocs: Model,
-    val dataThemes: Model
+    val dataThemes: Model,
+    val conceptSubjects: Model
 )

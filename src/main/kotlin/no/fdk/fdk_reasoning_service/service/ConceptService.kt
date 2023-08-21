@@ -7,8 +7,11 @@ import no.fdk.fdk_reasoning_service.model.ReasoningReport
 import no.fdk.fdk_reasoning_service.model.TurtleDBO
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
+import org.apache.jena.rdf.model.RDFNode
 import org.apache.jena.rdf.model.Resource
+import org.apache.jena.rdf.model.Statement
 import org.apache.jena.riot.Lang
+import org.apache.jena.vocabulary.DCTerms
 import org.apache.jena.vocabulary.RDF
 import org.apache.jena.vocabulary.SKOS
 import org.slf4j.LoggerFactory
@@ -83,6 +86,7 @@ class ConceptService(
         conceptMongoTemplate.findById<TurtleDBO>(harvestedCollectionID(collectionId), "turtle")
             ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "concepts") }
             ?.let { reasoningService.catalogReasoning(it, CatalogType.CONCEPTS, rdfData) }
+            ?.union(rdfData.conceptSubjects)
             ?.also { it.separateAndSaveConcepts() }
             ?: throw Exception("missing database data, harvest-reasoning was stopped")
     }
@@ -121,7 +125,7 @@ class ConceptService(
                 .forEach {
                     if (it.predicate != SKOS.member) {
                         collectionModelWithoutConcepts =
-                            collectionModelWithoutConcepts.recursiveAddNonConceptResource(it.resource, 5)
+                            collectionModelWithoutConcepts.recursiveAddNonConceptResource(it.resource, this)
                     }
                 }
 
@@ -144,7 +148,7 @@ class ConceptService(
 
         listProperties().toList()
             .filter { it.isResourceProperty() }
-            .forEach { conceptModel = conceptModel.recursiveAddNonConceptResource(it.resource, 10) }
+            .forEach { conceptModel = conceptModel.recursiveAddNonConceptResource(it.resource, this ) }
 
         val fdkIdAndRecordURI = extractFDKIdAndRecordURI()
 
@@ -155,29 +159,25 @@ class ConceptService(
         )
     }
 
-    private fun Model.recursiveAddNonConceptResource(resource: Resource, maxDepth: Int): Model {
-        val newDepth = maxDepth - 1
-
-        if (resourceShouldBeAdded(resource)) {
+    private fun Model.recursiveAddNonConceptResource(resource: Resource, current: Resource): Model {
+        if (resourceShouldBeAdded(resource, current)) {
             add(resource.listProperties())
 
-            if (newDepth > 0) {
-                resource.listProperties().toList()
-                    .filter { it.isResourceProperty() }
-                    .forEach { recursiveAddNonConceptResource(it.resource, newDepth) }
-            }
+            resource.listProperties().toList()
+                .filter { it.isResourceProperty() }
+                .forEach { recursiveAddNonConceptResource(it.resource, current) }
         }
 
         return this
     }
 
-    private fun Model.resourceShouldBeAdded(resource: Resource): Boolean {
+    private fun Model.resourceShouldBeAdded(resource: Resource, current: Resource): Boolean {
         val types = resource.listProperties(RDF.type)
             .toList()
             .map { it.`object` }
 
         return when {
-            types.contains(SKOS.Concept) -> false
+            types.contains(SKOS.Concept) && !current.hasProperty(DCTerms.subject, resource) -> false
             containsTriple("<${resource.uri}>", "a", "?o") -> false
             else -> true
         }
