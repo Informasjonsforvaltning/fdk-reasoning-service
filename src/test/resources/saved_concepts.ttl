@@ -11,6 +11,9 @@
 @prefix dcat:  <http://www.w3.org/ns/dcat#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
 @prefix uneskos: <http://purl.org/umu/uneskos#> .
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix euvoc:  <http://publications.europa.eu/ontology/euvoc#> .
 
 <http://begrepskatalogen/begrep/20b2e1a1-9fe1-11e5-a9f8-e4115b280940>
         a                             skos:Concept ;
@@ -43,6 +46,7 @@
         dct:modified                  "2018-04-10"^^xsd:date ;
         dct:publisher                 <https://data.brreg.no/enhetsregisteret/api/enheter/910244132> ;
         dct:subject                   "Formues- og inntektsskatt"@nb , <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#3> ;
+        euvoc:status                  <http://publications.europa.eu/resource/authority/concept-status/CURRENT> ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "eiendomsrett"@nb
                                       ] ;
@@ -113,3 +117,10 @@
         skos:broader    <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#1>;
         skos:inScheme   <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects>;
         skos:prefLabel  "nb 3"@nb , "nn 3"@nn .
+
+<http://publications.europa.eu/resource/authority/concept-status>  owl:versionInfo  "20220715-0" .
+
+<http://publications.europa.eu/resource/authority/concept-status/CURRENT>
+        dc:identifier  "CURRENT" ;
+        skos:inScheme   <http://publications.europa.eu/resource/authority/concept-status> ;
+        skos:prefLabel  "current"@en , "gjeldende"@no , "gjeldande"@nn , "gjeldende"@nb .

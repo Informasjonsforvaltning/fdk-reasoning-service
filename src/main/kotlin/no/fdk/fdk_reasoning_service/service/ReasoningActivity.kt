@@ -43,6 +43,7 @@ class ReasoningActivity(
             losData = referenceDataCache.los(),
             eurovocs = referenceDataCache.eurovocs(),
             dataThemes = referenceDataCache.dataThemes(),
+            conceptStatuses = referenceDataCache.conceptStatuses(),
             conceptSubjects = referenceDataCache.conceptSubjects()
         )
         try {

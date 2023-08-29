@@ -1,0 +1,62 @@
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+@prefix ns1:  <http://publications.europa.eu/resource/authority/> .
+@prefix ns3:  <http://publications.europa.eu/resource/authority/concept-status/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+ns1:concept-status  owl:versionInfo  "20220715-0" .
+
+ns3:PLANNED  dc:identifier  "PLANNED" ;
+        skos:inScheme   ns1:concept-status ;
+        skos:prefLabel  "planned"@en .
+
+ns3:WAITING  dc:identifier  "WAITING" ;
+        skos:inScheme   ns1:concept-status ;
+        skos:prefLabel  "på vent"@nn , "på vent"@no , "på vent"@nb , "waiting"@en .
+
+ns3:OP_DATPRO  dc:identifier  "OP_DATPRO" ;
+        skos:inScheme   ns1:concept-status ;
+        skos:prefLabel  "Provisional data"@en .
+
+ns3:REVISED  dc:identifier  "REVISED" ;
+        skos:inScheme   ns1:concept-status ;
+        skos:prefLabel  "revised"@en , "revidert"@nb , "revidert"@nn , "revidert"@no .
+
+ns3:DRAFT  dc:identifier  "DRAFT" ;
+        skos:inScheme   ns1:concept-status ;
+        skos:prefLabel  "utkast"@no , "utkast"@nb , "draft"@en , "utkast"@nn .
+
+ns3:DEPRECATED  dc:identifier  "DEPRECATED" ;
+        skos:inScheme   ns1:concept-status ;
+        skos:prefLabel  "frarådet"@no , "deprecated"@en , "frarådd"@nn , "frarådet"@nb .
+
+ns3:CANDIDATE_DEPRECATED
+        dc:identifier   "CANDIDATE_DEPRECATED" ;
+        skos:inScheme   ns1:concept-status ;
+        skos:prefLabel  "candidate.deprecated"@en , "kandidat frarådet"@no , "kandidat frarådd"@nn , "kandidat frarådet"@nb .
+
+ns3:CURRENT  dc:identifier  "CURRENT" ;
+        skos:inScheme   ns1:concept-status ;
+        skos:prefLabel  "current"@en , "gjeldende"@no , "gjeldande"@nn , "gjeldende"@nb .
+
+ns3:DRAFT_DEPRECATED  dc:identifier  "DRAFT_DEPRECATED" ;
+        skos:inScheme   ns1:concept-status ;
+        skos:prefLabel  "draft.deprecated"@en , "utkast frarådet"@no , "utkast frarådd"@nn , "utkast frarådet"@nb .
+
+ns3:RETIRED  dc:identifier  "RETIRED" ;
+        skos:inScheme   ns1:concept-status ;
+        skos:prefLabel  "foreldet"@no , "foreldet"@nb , "retired"@en , "forelda"@nn .
+
+ns3:WAITING_DEPRECATED
+        dc:identifier   "WAITING_DEPRECATED" ;
+        skos:inScheme   ns1:concept-status ;
+        skos:prefLabel  "waiting.deprecated"@en , "på vent frarådd"@nn , "på vent frarådet"@nb , "på vent frarådet"@no .
+
+ns3:CANDIDATE  dc:identifier  "CANDIDATE" ;
+        skos:inScheme   ns1:concept-status ;
+        skos:prefLabel  "kandidat"@nb , "kandidat"@no , "kandidat"@nn , "candidate"@en .
+
+ns3:REVISED_DEPRECATED
+        dc:identifier   "REVISED_DEPRECATED" ;
+        skos:inScheme   ns1:concept-status ;
+        skos:prefLabel  "revised.deprecated"@en , "revidert frarådd"@nn , "revidert frarådet"@nb , "revidert frarådet"@no .

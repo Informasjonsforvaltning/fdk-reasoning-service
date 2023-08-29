@@ -9,5 +9,6 @@ data class ApplicationURI(
     val los: String,
     val eurovocs: String,
     val dataThemes: String,
+    val conceptStatuses: String,
     val conceptSubjects: String
 )

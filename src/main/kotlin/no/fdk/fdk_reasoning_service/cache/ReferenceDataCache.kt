@@ -31,6 +31,10 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         return ModelFactory.createDefaultModel().add(DATA_THEMES)
     }
 
+    fun conceptStatuses(): Model {
+        return ModelFactory.createDefaultModel().add(CONCEPT_STATUSES)
+    }
+
     fun conceptSubjects(): Model {
         return ModelFactory.createDefaultModel().add(CONCEPT_SUBJECTS)
     }
@@ -83,6 +87,18 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(fixedDelayString = "PT21H")
+    private fun invalidateAndUpdateConceptStatuses() {
+        logger.info("updating concept status cache")
+        try {
+            with(RDFDataMgr.loadModel(uris.conceptStatuses, Lang.TURTLE)) {
+                CONCEPT_STATUSES.removeAll().add(this)
+            }
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.conceptStatuses}", ex)
+        }
+    }
+
     @Scheduled(cron = "0 50 * * * ?")
     private fun invalidateAndUpdateConceptSubjects() {
         logger.info("updating concept subjects cache")
@@ -100,6 +116,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val LOS: Model = ModelFactory.createDefaultModel()
         val EUROVOCS: Model = ModelFactory.createDefaultModel()
         val DATA_THEMES: Model = ModelFactory.createDefaultModel()
+        val CONCEPT_STATUSES: Model = ModelFactory.createDefaultModel()
         val CONCEPT_SUBJECTS: Model = ModelFactory.createDefaultModel()
     }
 }

@@ -59,6 +59,8 @@ class Retry {
             .thenReturn(ModelFactory.createDefaultModel())
         whenever(referenceDataCache.dataThemes())
             .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.conceptStatuses())
+            .thenReturn(ModelFactory.createDefaultModel())
         whenever(referenceDataCache.conceptSubjects())
             .thenReturn(ModelFactory.createDefaultModel())
 
@@ -76,6 +78,8 @@ class Retry {
             .thenReturn(RDF_DATA.eurovocs)
         whenever(referenceDataCache.dataThemes())
             .thenReturn(RDF_DATA.dataThemes)
+        whenever(referenceDataCache.conceptStatuses())
+            .thenReturn(RDF_DATA.conceptStatuses)
         whenever(referenceDataCache.conceptSubjects())
             .thenReturn(RDF_DATA.conceptSubjects)
 

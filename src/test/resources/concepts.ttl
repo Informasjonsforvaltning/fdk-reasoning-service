@@ -7,6 +7,7 @@
 @prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
 @prefix dcat:  <http://www.w3.org/ns/dcat#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix euvoc:  <http://publications.europa.eu/ontology/euvoc#> .
 
 <http://begrepskatalogen/begrep/20b2e1a1-9fe1-11e5-a9f8-e4115b280940>
         a                             skos:Concept ;
@@ -38,6 +39,7 @@
         dct:identifier                "46f4d710-4c6c-11e8-bb3e-005056821322" ;
         dct:modified                  "2018-04-10"^^xsd:date ;
         dct:subject                   "Formues- og inntektsskatt"@nb , <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#3> ;
+        euvoc:status                  <http://publications.europa.eu/resource/authority/concept-status/CURRENT> ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "eiendomsrett"@nb
                                       ] ;
