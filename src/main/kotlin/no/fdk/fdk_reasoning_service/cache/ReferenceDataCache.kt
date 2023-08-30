@@ -40,7 +40,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     }
 
     @Scheduled(fixedDelayString = "PT3H")
-    private fun invalidateAndUpdateOrganizations() {
+    fun invalidateAndUpdateOrganizations() {
         logger.info("updating organization cache")
         try {
             with(RDFDataMgr.loadModel(uris.orgInternal, Lang.TURTLE)) {
@@ -52,7 +52,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     }
 
     @Scheduled(fixedDelayString = "PT5H")
-    private fun invalidateAndUpdateLOS() {
+    fun invalidateAndUpdateLOS() {
         logger.info("updating LOS cache")
         try {
             with(RDFDataMgr.loadModel(uris.los, Lang.TURTLE)) {
@@ -64,7 +64,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     }
 
     @Scheduled(fixedDelayString = "PT23H")
-    private fun invalidateAndUpdateEUROVOC() {
+    fun invalidateAndUpdateEUROVOC() {
         logger.info("updating EUROVOCS cache")
         try {
             with(RDFDataMgr.loadModel(uris.eurovocs, Lang.TURTLE)) {
@@ -76,7 +76,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     }
 
     @Scheduled(fixedDelayString = "PT22H")
-    private fun invalidateAndUpdateDataThemes() {
+    fun invalidateAndUpdateDataThemes() {
         logger.info("updating data themes cache")
         try {
             with(RDFDataMgr.loadModel(uris.dataThemes, Lang.TURTLE)) {
@@ -88,7 +88,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     }
 
     @Scheduled(fixedDelayString = "PT21H")
-    private fun invalidateAndUpdateConceptStatuses() {
+    fun invalidateAndUpdateConceptStatuses() {
         logger.info("updating concept status cache")
         try {
             with(RDFDataMgr.loadModel(uris.conceptStatuses, Lang.TURTLE)) {
@@ -100,7 +100,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     }
 
     @Scheduled(cron = "0 50 * * * ?")
-    private fun invalidateAndUpdateConceptSubjects() {
+    fun invalidateAndUpdateConceptSubjects() {
         logger.info("updating concept subjects cache")
         try {
             with(RDFDataMgr.loadModel(uris.conceptSubjects, Lang.TURTLE)) {
