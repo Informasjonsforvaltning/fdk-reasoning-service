@@ -100,7 +100,8 @@ class ConceptService(
     private fun CollectionAndConcepts.saveCollectionAndConceptModels() {
         conceptMongoTemplate.save(collection.createDBO(fdkId), "fdkCollections")
 
-        concepts.forEach { conceptMongoTemplate.save(it.concept.createDBO(it.fdkId), "fdkConcepts") }
+        concepts.map { it.copy(concept = collectionWithoutConcepts.union(it.concept)) }
+            .forEach { conceptMongoTemplate.save(it.concept.createDBO(it.fdkId), "fdkConcepts") }
     }
 
     private fun Model.splitConceptCollectionsFromRDF(): List<CollectionAndConcepts> =
@@ -130,15 +131,17 @@ class ConceptService(
                     }
                 }
 
+            collectionModelWithoutConcepts = collectionModelWithoutConcepts
+                .union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+
             var conceptsUnion = ModelFactory.createDefaultModel()
             collectionConcepts.forEach { conceptsUnion = conceptsUnion.union(it.concept) }
 
             CollectionAndConcepts(
                 fdkId = fdkIdAndRecordURI.fdkId,
                 concepts = collectionConcepts,
-                collection = collectionModelWithoutConcepts
-                    .union(conceptsUnion)
-                    .union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+                collectionWithoutConcepts = collectionModelWithoutConcepts,
+                collection = collectionModelWithoutConcepts.union(conceptsUnion)
             )
         }
     }
@@ -187,6 +190,7 @@ class ConceptService(
     private data class CollectionAndConcepts(
         val fdkId: String,
         val collection: Model,
+        val collectionWithoutConcepts: Model,
         val concepts: List<ConceptModel>
     )
 
