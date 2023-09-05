@@ -95,7 +95,8 @@ class DataServiceService(
     private fun CatalogAndDataServices.saveCatalogAndDataServiceModels() {
         dataServiceMongoTemplate.save(catalog.createDBO(fdkId), "fdkCatalogs")
 
-        services.forEach { dataServiceMongoTemplate.save(it.service.createDBO(it.fdkId), "fdkServices") }
+        services.map { it.copy(service = catalogWithoutServices.union(it.service)) }
+            .forEach { dataServiceMongoTemplate.save(it.service.createDBO(it.fdkId), "fdkServices") }
     }
 
     private fun Model.splitDataServiceCatalogsFromRDF(): List<CatalogAndDataServices> =
@@ -128,12 +129,14 @@ class DataServiceService(
             var servicesUnion = ModelFactory.createDefaultModel()
             catalogServices.forEach { servicesUnion = servicesUnion.union(it.service) }
 
+            catalogModelWithoutServices = catalogModelWithoutServices
+                .union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+
             CatalogAndDataServices(
                 fdkId = fdkIdAndRecordURI.fdkId,
                 services = catalogServices,
-                catalog = catalogModelWithoutServices
-                    .union(servicesUnion)
-                    .union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+                catalogWithoutServices = catalogModelWithoutServices,
+                catalog = catalogModelWithoutServices.union(servicesUnion)
             )
         }
     }
@@ -189,6 +192,7 @@ class DataServiceService(
     private data class CatalogAndDataServices(
         val fdkId: String,
         val catalog: Model,
+        val catalogWithoutServices: Model,
         val services: List<DataService>
     )
 
