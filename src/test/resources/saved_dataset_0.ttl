@@ -74,3 +74,24 @@
         skos:prefLabel  "mitigating circumstances"@en ;
         <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
              "3513/5490" .
+
+<http://registration-api:8080/catalogs/910298062>
+        a              dcat:Catalog ;
+        dct:publisher  <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910298062> ;
+        dct:title      "Datakatalog for HIDRASUND OG BJONEROA"@nb ;
+        dcat:dataset   <http://brreg.no/catalogs/910298062/datasets/12136d8b-024e-4d63-a8ed-5e1885d701cd> , <http://brreg.no/catalogs/910298062/datasets/738c2348-aeb4-4a92-9a10-c39ae6b9f3fe> , <http://brreg.no/catalogs/910298062/datasets/7e4fbd01-2684-45c3-8ac1-70ebfebe8513> , <http://brreg.no/catalogs/910244132/datasets/c32b7a4f-655f-45f6-88f6-d01f05d0f7c2> .
+
+<https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910298062>
+        a                     rov:RegisteredOrganization ;
+        dct:identifier        "910298062" ;
+        rov:legalName         "KARMSUND OG KYSNESSTRAND REVISJON" ;
+        foaf:name             "Karmsund og kysnesstrand revisjon"@nb ;
+        rov:orgType           orgtype:ORGL ;
+        br:orgPath            "/ANNET/910298062" .
+
+<http://localhost:5000/catalogs/6e4237cc-98d6-3e7c-a892-8ac1f0ffb37f>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "6e4237cc-98d6-3e7c-a892-8ac1f0ffb37f" ;
+        dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
+        dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://registration-api:8080/catalogs/910298062> .

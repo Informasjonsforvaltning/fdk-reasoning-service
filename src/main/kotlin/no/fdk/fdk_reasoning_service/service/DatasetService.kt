@@ -97,7 +97,8 @@ class DatasetService(
     private fun CatalogAndDatasets.saveCatalogAndDatasetModels() {
         datasetMongoTemplate.save(catalog.createDBO(fdkId), "fdkCatalogs")
 
-        datasets.forEach { datasetMongoTemplate.save(it.dataset.createDBO(it.fdkId), "fdkDatasets") }
+        datasets.map { it.copy(dataset = catalogWithoutDatasets.union(it.dataset)) }
+            .forEach { datasetMongoTemplate.save(it.dataset.createDBO(it.fdkId), "fdkDatasets") }
     }
 
     private fun Model.splitDatasetCatalogsFromRDF(): List<CatalogAndDatasets> =
@@ -132,12 +133,14 @@ class DatasetService(
             var datasetsUnion = ModelFactory.createDefaultModel()
             catalogDatasets.forEach { datasetsUnion = datasetsUnion.union(it.dataset) }
 
+            catalogModelWithoutDatasets = catalogModelWithoutDatasets.union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+
             CatalogAndDatasets(
                 fdkId = fdkIdAndRecordURI.fdkId,
                 datasets = catalogDatasets,
-                catalog = catalogModelWithoutDatasets
-                    .union(datasetsUnion)
-                    .union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+                catalogWithoutDatasets = catalogModelWithoutDatasets,
+                catalog = catalogModelWithoutDatasets.union(datasetsUnion)
+
             )
         }
     }
@@ -215,6 +218,7 @@ class DatasetService(
     private data class CatalogAndDatasets(
         val fdkId: String,
         val catalog: Model,
+        val catalogWithoutDatasets: Model,
         val datasets: List<DatasetModel>
     )
 
