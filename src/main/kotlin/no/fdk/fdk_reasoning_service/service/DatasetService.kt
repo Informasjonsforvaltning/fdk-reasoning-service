@@ -79,12 +79,12 @@ class DatasetService(
     }
 
     fun updateUnion() {
-        var catalogUnion = ModelFactory.createDefaultModel()
+        val catalogUnion = ModelFactory.createDefaultModel()
 
         datasetMongoTemplate.findAll<TurtleDBO>("fdkCatalogs")
             .filter { it.id != UNION_ID }
             .map { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, null) }
-            .forEach { catalogUnion = catalogUnion.union(it) }
+            .forEach { catalogUnion.add(it) }
 
         datasetMongoTemplate.save(catalogUnion.createUnionDBO(), "fdkCatalogs")
     }
@@ -118,22 +118,21 @@ class DatasetService(
                 .filter { it.isDataset() }
                 .mapNotNull { dataset -> dataset.extractDataset() }
 
-            var catalogModelWithoutDatasets = listProperties().toModel()
+            val catalogModelWithoutDatasets = listProperties().toModel()
             catalogModelWithoutDatasets.setNsPrefixes(model.nsPrefixMap)
 
             listProperties().toList()
                 .filter { it.isResourceProperty() }
                 .forEach {
                     if (it.predicate != DCAT.dataset) {
-                        catalogModelWithoutDatasets =
-                            catalogModelWithoutDatasets.recursiveAddNonDatasetResource(it.resource, 5)
+                        catalogModelWithoutDatasets.recursiveAddNonDatasetResource(it.resource, 5)
                     }
                 }
 
-            var datasetsUnion = ModelFactory.createDefaultModel()
-            catalogDatasets.forEach { datasetsUnion = datasetsUnion.union(it.dataset) }
+            val datasetsUnion = ModelFactory.createDefaultModel()
+            catalogDatasets.forEach { datasetsUnion.add(it.dataset) }
 
-            catalogModelWithoutDatasets = catalogModelWithoutDatasets.union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+            catalogModelWithoutDatasets.add(catalogRecordModel(fdkIdAndRecordURI.recordURI))
 
             CatalogAndDatasets(
                 fdkId = fdkIdAndRecordURI.fdkId,
@@ -146,13 +145,13 @@ class DatasetService(
     }
 
     private fun Resource.extractDataset(): DatasetModel? {
-        var datasetModel = listProperties().toModel()
-        datasetModel = datasetModel.setNsPrefixes(model.nsPrefixMap)
+        val datasetModel = listProperties().toModel()
+        datasetModel.setNsPrefixes(model.nsPrefixMap)
 
         listProperties().toList()
             .filter { it.isResourceProperty() }
             .forEach {
-                datasetModel = datasetModel.recursiveAddNonDatasetResource(it.resource, 10)
+                datasetModel.recursiveAddNonDatasetResource(it.resource, 10)
             }
 
         val fdkIdAndRecordURI = extractFDKIdAndRecordURI()

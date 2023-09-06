@@ -72,12 +72,12 @@ class ConceptService(
         }
 
     fun updateUnion() {
-        var collectionUnion = ModelFactory.createDefaultModel()
+        val collectionUnion = ModelFactory.createDefaultModel()
 
         conceptMongoTemplate.findAll<TurtleDBO>("fdkCollections")
             .filter { it.id != UNION_ID }
             .map { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, null) }
-            .forEach { collectionUnion = collectionUnion.union(it) }
+            .forEach { collectionUnion.add(it) }
 
         conceptMongoTemplate.save(collectionUnion.createUnionDBO(), "fdkCollections")
     }
@@ -119,23 +119,21 @@ class ConceptService(
                 .filter { it.resource.hasProperty(RDF.type, SKOS.Concept) }
                 .mapNotNull { concept -> concept.resource.extractConcept() }
 
-            var collectionModelWithoutConcepts = listProperties().toModel()
+            val collectionModelWithoutConcepts = listProperties().toModel()
             collectionModelWithoutConcepts.setNsPrefixes(model.nsPrefixMap)
 
             listProperties().toList()
                 .filter { it.isResourceProperty() }
                 .forEach {
                     if (it.predicate != SKOS.member) {
-                        collectionModelWithoutConcepts =
-                            collectionModelWithoutConcepts.recursiveAddNonConceptResource(it.resource, this)
+                        collectionModelWithoutConcepts.recursiveAddNonConceptResource(it.resource, this)
                     }
                 }
 
-            collectionModelWithoutConcepts = collectionModelWithoutConcepts
-                .union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+            collectionModelWithoutConcepts.add(catalogRecordModel(fdkIdAndRecordURI.recordURI))
 
-            var conceptsUnion = ModelFactory.createDefaultModel()
-            collectionConcepts.forEach { conceptsUnion = conceptsUnion.union(it.concept) }
+            val conceptsUnion = ModelFactory.createDefaultModel()
+            collectionConcepts.forEach { conceptsUnion.add(it.concept) }
 
             CollectionAndConcepts(
                 fdkId = fdkIdAndRecordURI.fdkId,
@@ -147,12 +145,12 @@ class ConceptService(
     }
 
     private fun Resource.extractConcept(): ConceptModel? {
-        var conceptModel = listProperties().toModel()
-        conceptModel = conceptModel.setNsPrefixes(model.nsPrefixMap)
+        val conceptModel = listProperties().toModel()
+        conceptModel.setNsPrefixes(model.nsPrefixMap)
 
         listProperties().toList()
             .filter { it.isResourceProperty() }
-            .forEach { conceptModel = conceptModel.recursiveAddNonConceptResource(it.resource, this ) }
+            .forEach { conceptModel.recursiveAddNonConceptResource(it.resource, this ) }
 
         val fdkIdAndRecordURI = extractFDKIdAndRecordURI()
 

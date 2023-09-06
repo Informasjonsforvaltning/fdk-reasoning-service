@@ -87,11 +87,11 @@ class InfoModelService(
     }
 
     fun updateUnion() {
-        var catalogUnion = ModelFactory.createDefaultModel()
+        val catalogUnion = ModelFactory.createDefaultModel()
 
         repository.findCatalogs()
             .map { parseRDFResponse(it, Lang.TURTLE, null) }
-            .forEach { catalogUnion = catalogUnion.union(it) }
+            .forEach { catalogUnion.add(it) }
 
         repository.saveReasonedUnion(catalogUnion.createRDFResponse(Lang.TURTLE))
     }
@@ -125,42 +125,39 @@ class InfoModelService(
                 .filter { model.catalogContainsInfoModel(uri, it.resource.uri) }
                 .mapNotNull { infoModel -> infoModel.resource.extractInformationModel() }
 
-            var catalogModelWithoutInfoModels = listProperties().toModel()
+            val catalogModelWithoutInfoModels = listProperties().toModel()
             catalogModelWithoutInfoModels.setNsPrefixes(model.nsPrefixMap)
 
             listProperties().toList()
                 .filter { it.isResourceProperty() }
                 .forEach {
                     if (it.predicate != ModellDCATAPNO.model) {
-                        catalogModelWithoutInfoModels =
-                            catalogModelWithoutInfoModels.recursiveAddNonInformationModelResource(
-                                it.resource,
-                                5
-                            )
+                        catalogModelWithoutInfoModels
+                            .recursiveAddNonInformationModelResource(it.resource, 5)
                     }
                 }
 
-            catalogModelWithoutInfoModels = catalogModelWithoutInfoModels.union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+            catalogModelWithoutInfoModels.add(catalogRecordModel(fdkIdAndRecordURI.recordURI))
 
-            var catalogModel = catalogModelWithoutInfoModels
-            catalogInfoModels.forEach { catalogModel = catalogModel.union(it.infoModel) }
+            val catalogModel = ModelFactory.createDefaultModel()
+            catalogInfoModels.forEach { catalogModel.add(it.infoModel) }
 
             CatalogAndInfoModels(
                 fdkId = fdkIdAndRecordURI.fdkId,
                 catalogWithoutModels = catalogModelWithoutInfoModels,
-                catalog = catalogModel,
+                catalog = catalogModel.union(catalogModelWithoutInfoModels),
                 models = catalogInfoModels
             )
         }
     }
 
     private fun Resource.extractInformationModel(): InformationModel? {
-        var infoModel = listProperties().toModel()
-        infoModel = infoModel.setNsPrefixes(model.nsPrefixMap)
+        val infoModel = listProperties().toModel()
+        infoModel.setNsPrefixes(model.nsPrefixMap)
 
         listProperties().toList()
             .filter { it.isResourceProperty() }
-            .forEach { infoModel = infoModel.recursiveAddNonInformationModelResource(it.resource, 10) }
+            .forEach { infoModel.recursiveAddNonInformationModelResource(it.resource, 10) }
 
         val fdkIdAndRecordURI = extractFDKIdAndRecordURI()
 

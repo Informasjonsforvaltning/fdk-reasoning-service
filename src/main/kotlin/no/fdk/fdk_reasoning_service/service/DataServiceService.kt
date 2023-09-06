@@ -77,12 +77,12 @@ class DataServiceService(
     }
 
     fun updateUnion() {
-        var catalogUnion = ModelFactory.createDefaultModel()
+        val catalogUnion = ModelFactory.createDefaultModel()
 
         dataServiceMongoTemplate.findAll<TurtleDBO>("fdkCatalogs")
             .filter { it.id != UNION_ID }
             .map { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, null) }
-            .forEach { catalogUnion = catalogUnion.union(it) }
+            .forEach { catalogUnion.add(it) }
 
         dataServiceMongoTemplate.save(catalogUnion.createUnionDBO(), "fdkCatalogs")
     }
@@ -114,23 +114,21 @@ class DataServiceService(
                 .filter { it.resource.hasProperty(RDF.type, DCAT.DataService) }
                 .mapNotNull { concept -> concept.resource.extractDataService() }
 
-            var catalogModelWithoutServices = listProperties().toModel()
+            val catalogModelWithoutServices = listProperties().toModel()
             catalogModelWithoutServices.setNsPrefixes(model.nsPrefixMap)
 
             listProperties().toList()
                 .filter { it.isResourceProperty() }
                 .forEach {
                     if (it.predicate != DCAT.service) {
-                        catalogModelWithoutServices =
-                            catalogModelWithoutServices.recursiveAddNonDataServiceResource(it.resource, 5)
+                        catalogModelWithoutServices.recursiveAddNonDataServiceResource(it.resource, 5)
                     }
                 }
 
-            var servicesUnion = ModelFactory.createDefaultModel()
-            catalogServices.forEach { servicesUnion = servicesUnion.union(it.service) }
+            val servicesUnion = ModelFactory.createDefaultModel()
+            catalogServices.forEach { servicesUnion.add(it.service) }
 
-            catalogModelWithoutServices = catalogModelWithoutServices
-                .union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+            catalogModelWithoutServices.add(catalogRecordModel(fdkIdAndRecordURI.recordURI))
 
             CatalogAndDataServices(
                 fdkId = fdkIdAndRecordURI.fdkId,
@@ -142,12 +140,12 @@ class DataServiceService(
     }
 
     private fun Resource.extractDataService(): DataService? {
-        var serviceModel = listProperties().toModel()
-        serviceModel = serviceModel.setNsPrefixes(model.nsPrefixMap)
+        val serviceModel = listProperties().toModel()
+        serviceModel.setNsPrefixes(model.nsPrefixMap)
 
         listProperties().toList()
             .filter { it.isResourceProperty() }
-            .forEach { serviceModel = serviceModel.recursiveAddNonDataServiceResource(it.resource, 10) }
+            .forEach { serviceModel.recursiveAddNonDataServiceResource(it.resource, 10) }
 
         val fdkIdAndRecordURI = extractFDKIdAndRecordURI()
 

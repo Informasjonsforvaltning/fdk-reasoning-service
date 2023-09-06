@@ -93,18 +93,18 @@ class EventService(
     }
 
     fun updateUnion() {
-        var catalogUnion = ModelFactory.createDefaultModel()
-        var eventUnion = ModelFactory.createDefaultModel()
+        val catalogUnion = ModelFactory.createDefaultModel()
+        val eventUnion = ModelFactory.createDefaultModel()
 
         eventMongoTemplate.findAll<TurtleDBO>(MongoDB.REASONED_CATALOG.collection)
             .filter { it.id != UNION_ID }
             .map { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, null) }
-            .forEach { catalogUnion = catalogUnion.union(it) }
+            .forEach { catalogUnion.add(it) }
 
         eventMongoTemplate.findAll<TurtleDBO>(MongoDB.REASONED_EVENT.collection)
             .filter { it.id != UNION_ID }
             .map { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, null) }
-            .forEach { eventUnion = eventUnion.union(it) }
+            .forEach { eventUnion.add(it) }
 
         eventMongoTemplate.save(catalogUnion.createUnionDBO(), MongoDB.REASONED_CATALOG.collection)
         eventMongoTemplate.save(eventUnion.createUnionDBO(), MongoDB.REASONED_EVENT.collection)
@@ -136,17 +136,17 @@ class EventService(
                 .filter { it.isResourceProperty() }
                 .filter { it.resource.hasEventType() }
                 .mapNotNull { it.resource.extractEvent() }
-            var catalogModelWithoutEvents = ModelFactory.createDefaultModel()
+            val catalogModelWithoutEvents = ModelFactory.createDefaultModel()
             catalogModelWithoutEvents.setNsPrefixes(model.nsPrefixMap)
 
             listProperties()
                 .toList()
                 .forEach { catalogModelWithoutEvents.addCatalogProperties(it) }
 
-            var eventsUnion = ModelFactory.createDefaultModel()
-            catalogEvents.forEach { eventsUnion = eventsUnion.union(it.event) }
+            val eventsUnion = ModelFactory.createDefaultModel()
+            catalogEvents.forEach { eventsUnion.add(it.event) }
 
-            catalogModelWithoutEvents = catalogModelWithoutEvents.union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+            catalogModelWithoutEvents.add(catalogRecordModel(fdkIdAndRecordURI.recordURI))
 
             CatalogAndEvents(
                 fdkId = fdkIdAndRecordURI.fdkId,
@@ -168,12 +168,12 @@ class EventService(
         }
 
     private fun Resource.extractEvent(): Event? {
-        var eventModel = listProperties().toModel()
-        eventModel = eventModel.setNsPrefixes(model.nsPrefixMap)
+        val eventModel = listProperties().toModel()
+        eventModel.setNsPrefixes(model.nsPrefixMap)
 
         listProperties().toList()
             .filter { it.isResourceProperty() }
-            .forEach { eventModel = eventModel.recursiveAddNonEventResource(it.resource) }
+            .forEach { eventModel.recursiveAddNonEventResource(it.resource) }
 
         val fdkIdAndRecordURI = extractFDKIdAndRecordURI()
 

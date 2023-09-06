@@ -95,18 +95,18 @@ class PublicServiceService(
     }
 
     fun updateUnion() {
-        var catalogUnion = ModelFactory.createDefaultModel()
-        var serviceUnion = ModelFactory.createDefaultModel()
+        val catalogUnion = ModelFactory.createDefaultModel()
+        val serviceUnion = ModelFactory.createDefaultModel()
 
         publicServiceMongoTemplate.findAll<TurtleDBO>(MongoDB.REASONED_CATALOG.collection)
             .filter { it.id != UNION_ID }
             .map { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, null) }
-            .forEach { catalogUnion = catalogUnion.union(it) }
+            .forEach { catalogUnion.add(it) }
 
         publicServiceMongoTemplate.findAll<TurtleDBO>(MongoDB.REASONED_SERVICE.collection)
             .filter { it.id != UNION_ID }
             .map { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, null) }
-            .forEach { serviceUnion = serviceUnion.union(it) }
+            .forEach { serviceUnion.add(it) }
 
         publicServiceMongoTemplate.save(catalogUnion.createUnionDBO(), MongoDB.REASONED_CATALOG.collection)
         publicServiceMongoTemplate.save(serviceUnion.createUnionDBO(), MongoDB.REASONED_SERVICE.collection)
@@ -139,22 +139,21 @@ class PublicServiceService(
                 .filter { it.resource.hasPublicServiceType() }
                 .mapNotNull { it.resource.extractPublicService() }
 
-            var catalogModelWithoutServices = listProperties().toModel()
+            val catalogModelWithoutServices = listProperties().toModel()
             catalogModelWithoutServices.setNsPrefixes(model.nsPrefixMap)
 
             listProperties().toList()
                 .filter { it.isResourceProperty() }
                 .forEach {
                     if (it.predicate != DCAT.service) {
-                        catalogModelWithoutServices =
-                            catalogModelWithoutServices.recursiveAddNonPublicServiceResource(it.resource)
+                        catalogModelWithoutServices.recursiveAddNonPublicServiceResource(it.resource)
                     }
                 }
 
-            var servicesUnion = ModelFactory.createDefaultModel()
-            catalogServices.forEach { servicesUnion = servicesUnion.union(it.service) }
+            val servicesUnion = ModelFactory.createDefaultModel()
+            catalogServices.forEach { servicesUnion.add(it.service) }
 
-            catalogModelWithoutServices = catalogModelWithoutServices.union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+            catalogModelWithoutServices.add(catalogRecordModel(fdkIdAndRecordURI.recordURI))
 
             CatalogAndPublicServices(
                 fdkId = fdkIdAndRecordURI.fdkId,
@@ -166,12 +165,12 @@ class PublicServiceService(
     }
 
     private fun Resource.extractPublicService(): PublicService? {
-        var serviceModel = listProperties().toModel()
-        serviceModel = serviceModel.setNsPrefixes(model.nsPrefixMap)
+        val serviceModel = listProperties().toModel()
+        serviceModel.setNsPrefixes(model.nsPrefixMap)
 
         listProperties().toList()
             .filter { it.isResourceProperty() }
-            .forEach { serviceModel = serviceModel.recursiveAddNonPublicServiceResource(it.resource) }
+            .forEach { serviceModel.recursiveAddNonPublicServiceResource(it.resource) }
 
         val fdkIdAndRecordURI = extractFDKIdAndRecordURI()
 
