@@ -133,7 +133,7 @@ class InfoModelService(
                 .forEach {
                     if (it.predicate != ModellDCATAPNO.model) {
                         catalogModelWithoutInfoModels
-                            .recursiveAddNonInformationModelResource(it.resource, 5)
+                            .recursiveAddNonInformationModelResource(it.resource)
                     }
                 }
 
@@ -157,7 +157,7 @@ class InfoModelService(
 
         listProperties().toList()
             .filter { it.isResourceProperty() }
-            .forEach { infoModel.recursiveAddNonInformationModelResource(it.resource, 10) }
+            .forEach { infoModel.recursiveAddNonInformationModelResource(it.resource) }
 
         val fdkIdAndRecordURI = extractFDKIdAndRecordURI()
 
@@ -184,8 +184,7 @@ class InfoModelService(
         return this
     }
 
-    private fun Model.recursiveAddNonInformationModelResource(resource: Resource, maxDepth: Int): Model {
-        val newDepth = maxDepth - 1
+    private fun Model.recursiveAddNonInformationModelResource(resource: Resource): Model {
         val types = resource.listProperties(RDF.type)
             .toList()
             .map { it.`object` }
@@ -193,11 +192,9 @@ class InfoModelService(
         if (resourceShouldBeAdded(resource, types)) {
             add(resource.listProperties())
 
-            if (newDepth > 0) {
-                resource.listProperties().toList()
-                    .filter { it.isResourceProperty() }
-                    .forEach { recursiveAddNonInformationModelResource(it.resource, newDepth) }
-            }
+            resource.listProperties().toList()
+                .filter { it.isResourceProperty() }
+                .forEach { recursiveAddNonInformationModelResource(it.resource) }
 
             if (types.contains(ModellDCATAPNO.CodeList)) addCodeElementsAssociatedWithCodeList(resource)
         }

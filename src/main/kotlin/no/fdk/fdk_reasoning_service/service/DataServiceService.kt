@@ -121,7 +121,7 @@ class DataServiceService(
                 .filter { it.isResourceProperty() }
                 .forEach {
                     if (it.predicate != DCAT.service) {
-                        catalogModelWithoutServices.recursiveAddNonDataServiceResource(it.resource, 5)
+                        catalogModelWithoutServices.recursiveAddNonDataServiceResource(it.resource)
                     }
                 }
 
@@ -145,7 +145,7 @@ class DataServiceService(
 
         listProperties().toList()
             .filter { it.isResourceProperty() }
-            .forEach { serviceModel.recursiveAddNonDataServiceResource(it.resource, 10) }
+            .forEach { serviceModel.recursiveAddNonDataServiceResource(it.resource) }
 
         val fdkIdAndRecordURI = extractFDKIdAndRecordURI()
 
@@ -156,17 +156,13 @@ class DataServiceService(
         )
     }
 
-    private fun Model.recursiveAddNonDataServiceResource(resource: Resource, maxDepth: Int): Model {
-        val newDepth = maxDepth - 1
-
+    private fun Model.recursiveAddNonDataServiceResource(resource: Resource): Model {
         if (resourceShouldBeAdded(resource)) {
             add(resource.listProperties())
 
-            if (newDepth > 0) {
-                resource.listProperties().toList()
-                    .filter { it.isResourceProperty() }
-                    .forEach { recursiveAddNonDataServiceResource(it.resource, newDepth) }
-            }
+            resource.listProperties().toList()
+                .filter { it.isResourceProperty() }
+                .forEach { recursiveAddNonDataServiceResource(it.resource) }
         }
 
         return this
