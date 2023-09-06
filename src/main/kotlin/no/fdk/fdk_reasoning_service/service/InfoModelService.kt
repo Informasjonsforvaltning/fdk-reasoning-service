@@ -104,7 +104,8 @@ class InfoModelService(
     private fun CatalogAndInfoModels.saveCatalogAndInformationModels() {
         repository.saveCatalog(catalog.createRDFResponse(Lang.TURTLE), fdkId)
 
-        models.forEach { repository.saveInformationModel(it.infoModel.createRDFResponse(Lang.TURTLE), it.fdkId) }
+        models.map { it.copy(infoModel = catalogWithoutModels.union(it.infoModel)) }
+            .forEach { repository.saveInformationModel(it.infoModel.createRDFResponse(Lang.TURTLE), it.fdkId) }
     }
 
     private fun Model.splitCatalogsFromRDF(): List<CatalogAndInfoModels> =
@@ -139,12 +140,15 @@ class InfoModelService(
                     }
                 }
 
+            catalogModelWithoutInfoModels = catalogModelWithoutInfoModels.union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+
             var catalogModel = catalogModelWithoutInfoModels
             catalogInfoModels.forEach { catalogModel = catalogModel.union(it.infoModel) }
 
             CatalogAndInfoModels(
                 fdkId = fdkIdAndRecordURI.fdkId,
-                catalog = catalogModel.union(catalogRecordModel(fdkIdAndRecordURI.recordURI)),
+                catalogWithoutModels = catalogModelWithoutInfoModels,
+                catalog = catalogModel,
                 models = catalogInfoModels
             )
         }
@@ -223,6 +227,7 @@ class InfoModelService(
 private data class CatalogAndInfoModels(
     val fdkId: String,
     val catalog: Model,
+    val catalogWithoutModels: Model,
     val models: List<InformationModel>
 )
 

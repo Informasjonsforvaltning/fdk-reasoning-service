@@ -419,3 +419,25 @@ pass:varselSmsMobilnummer
 
 <http://publications.europa.eu/resource/authority/data-theme/ECON>
         skos:prefLabel  "Economy and finance"@en , "Økonomi og finans"@nb , "Økonomi og finans"@nn , "Økonomi og finans"@no .
+
+pass:SkattKatalog  a        dcat:Catalog , owl:NamedIndividual ;
+        dct:description     "En modell fra Skatteetaten"@nb , "One information models from The Tax Administration"@en ;
+        dct:identifier      "http://data.skatteetaten.no/ns/katalog/SkattKatalog"^^xsd:anyURI ;
+        dct:issued          "2020-03-30T16:00:00+02:00"^^xsd:dateTime ;
+        dct:license         <https://creativecommons.org/licenses/by-nc-sa/4.0/> ;
+        dct:publisher       <https://data.brreg.no/enhetsregisteret/oppslag/enheter/974761076> ;
+        dct:title           "Skattemodellkatalogen™"@nb , "The tax catalog™"@en ;
+        modelldcatno:model  pass:OppgaveOverPassOgStellAvBarn , pass:ModellUtenUtgiver .
+
+<https://data.brreg.no/enhetsregisteret/oppslag/enheter/974761076>
+        a          foaf:Agent , owl:NamedIndividual ;
+        dct:type   "Organisasjonsledd"@nb ;
+        foaf:name  "Skatteetaten"@nb ;
+        br:orgPath "/GENERATED/ORGPATH" .
+
+<http://localhost:5000/catalogs/f25c939d-0722-3aa3-82b1-eaa457086444>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "f25c939d-0722-3aa3-82b1-eaa457086444" ;
+        dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        foaf:primaryTopic  pass:SkattKatalog .
