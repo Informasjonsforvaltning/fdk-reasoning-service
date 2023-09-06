@@ -75,7 +75,7 @@ class EventsIntegration : ApiTestContext() {
         val response = apiGet(port, "/events", "text/turtle")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("reasoned_events.ttl")
+        val expected = responseReader.parseTurtleFile("reasoned_event_catalogs.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TURTLE.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))

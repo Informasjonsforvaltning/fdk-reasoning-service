@@ -118,7 +118,8 @@ class EventService(
     private fun CatalogAndEvents.saveCatalogAndEventModels() {
         eventMongoTemplate.save(catalog.createDBO(fdkId), MongoDB.REASONED_CATALOG.collection)
 
-        events.forEach { eventMongoTemplate.save(it.event.createDBO(it.fdkId), MongoDB.REASONED_EVENT.collection) }
+        events.map { it.copy(event = catalogWithoutEvents.union(it.event)) }
+            .forEach { eventMongoTemplate.save(it.event.createDBO(it.fdkId), MongoDB.REASONED_EVENT.collection) }
     }
 
     private fun Model.splitEventCatalogsFromRDF(): List<CatalogAndEvents> =
@@ -135,7 +136,7 @@ class EventService(
                 .filter { it.isResourceProperty() }
                 .filter { it.resource.hasEventType() }
                 .mapNotNull { it.resource.extractEvent() }
-            val catalogModelWithoutEvents = ModelFactory.createDefaultModel()
+            var catalogModelWithoutEvents = ModelFactory.createDefaultModel()
             catalogModelWithoutEvents.setNsPrefixes(model.nsPrefixMap)
 
             listProperties()
@@ -145,12 +146,13 @@ class EventService(
             var eventsUnion = ModelFactory.createDefaultModel()
             catalogEvents.forEach { eventsUnion = eventsUnion.union(it.event) }
 
+            catalogModelWithoutEvents = catalogModelWithoutEvents.union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+
             CatalogAndEvents(
                 fdkId = fdkIdAndRecordURI.fdkId,
                 events = catalogEvents,
-                catalog = catalogModelWithoutEvents
-                    .union(eventsUnion)
-                    .union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+                catalogWithoutEvents = catalogModelWithoutEvents,
+                catalog = catalogModelWithoutEvents.union(eventsUnion)
             )
         }
     }
@@ -219,6 +221,7 @@ class EventService(
     private data class CatalogAndEvents(
         val fdkId: String,
         val catalog: Model,
+        val catalogWithoutEvents: Model,
         val events: List<Event>
     )
 

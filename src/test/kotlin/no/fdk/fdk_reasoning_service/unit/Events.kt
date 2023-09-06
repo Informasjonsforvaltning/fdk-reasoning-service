@@ -66,11 +66,10 @@ class Events {
             Assertions.assertEquals(UNION_ID, first.firstValue.id)
             Assertions.assertEquals(listOf("reasonedCatalog", "reasonedEvent"), second.allValues)
 
-            val expectedEventUnion = responseReader.parseTurtleFile("reasoned_events.ttl")
             val expectedCatalogUnion = responseReader.parseTurtleFile("reasoned_event_catalogs.ttl")
             val savedCatalogUnion = parseRDFResponse(ungzip(first.firstValue.turtle), Lang.TURTLE, "")
             val savedEventUnion = parseRDFResponse(ungzip(first.secondValue.turtle), Lang.TURTLE, "")
-            assertTrue(expectedEventUnion.isIsomorphicWith(savedEventUnion))
+            assertTrue(expectedCatalogUnion.isIsomorphicWith(savedEventUnion))
             assertTrue(expectedCatalogUnion.isIsomorphicWith(savedCatalogUnion))
         }
     }
