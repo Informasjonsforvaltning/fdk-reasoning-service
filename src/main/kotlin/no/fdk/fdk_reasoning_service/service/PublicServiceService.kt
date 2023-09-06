@@ -120,7 +120,8 @@ class PublicServiceService(
     private fun CatalogAndPublicServices.saveCatalogAndPublicServiceModels() {
         publicServiceMongoTemplate.save(catalog.createDBO(fdkId), MongoDB.REASONED_CATALOG.collection)
 
-        services.forEach { publicServiceMongoTemplate.save(it.service.createDBO(it.fdkId), MongoDB.REASONED_SERVICE.collection) }
+        services.map { it.copy(service = catalogWithoutServices.union(it.service)) }
+            .forEach { publicServiceMongoTemplate.save(it.service.createDBO(it.fdkId), MongoDB.REASONED_SERVICE.collection) }
     }
 
     private fun Model.splitPublicServiceCatalogsFromRDF(): List<CatalogAndPublicServices> =
@@ -153,12 +154,13 @@ class PublicServiceService(
             var servicesUnion = ModelFactory.createDefaultModel()
             catalogServices.forEach { servicesUnion = servicesUnion.union(it.service) }
 
+            catalogModelWithoutServices = catalogModelWithoutServices.union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+
             CatalogAndPublicServices(
                 fdkId = fdkIdAndRecordURI.fdkId,
                 services = catalogServices,
-                catalog = catalogModelWithoutServices
-                    .union(servicesUnion)
-                    .union(catalogRecordModel(fdkIdAndRecordURI.recordURI))
+                catalogWithoutServices = catalogModelWithoutServices,
+                catalog = catalogModelWithoutServices.union(servicesUnion)
             )
         }
     }
@@ -232,6 +234,7 @@ class PublicServiceService(
     private data class CatalogAndPublicServices(
         val fdkId: String,
         val catalog: Model,
+        val catalogWithoutServices: Model,
         val services: List<PublicService>
     )
 
