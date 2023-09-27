@@ -1,5 +1,8 @@
 package no.fdk.fdk_reasoning_service.service
 
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.model.ExternalRDFData
 import no.fdk.fdk_reasoning_service.model.HarvestReport
@@ -7,9 +10,7 @@ import no.fdk.fdk_reasoning_service.model.ReasoningReport
 import no.fdk.fdk_reasoning_service.model.TurtleDBO
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
-import org.apache.jena.rdf.model.RDFNode
 import org.apache.jena.rdf.model.Resource
-import org.apache.jena.rdf.model.Statement
 import org.apache.jena.riot.Lang
 import org.apache.jena.vocabulary.DCTerms
 import org.apache.jena.vocabulary.RDF
@@ -99,9 +100,7 @@ class ConceptService(
 
     private fun CollectionAndConcepts.saveCollectionAndConceptModels() {
         conceptMongoTemplate.save(collection.createDBO(fdkId), "fdkCollections")
-
-        concepts.map { it.copy(concept = collectionWithoutConcepts.union(it.concept)) }
-            .forEach { conceptMongoTemplate.save(it.concept.createDBO(it.fdkId), "fdkConcepts") }
+        saveConceptModels()
     }
 
     private fun Model.splitConceptCollectionsFromRDF(): List<CollectionAndConcepts> =
@@ -199,5 +198,16 @@ class ConceptService(
 
     private fun harvestedCollectionID(fdkId: String): String =
         "collection-$fdkId"
+
+    private fun CollectionAndConcepts.saveConceptModels() = runBlocking {
+        val activitySemaphore = Semaphore(1)
+        concepts.forEach {
+            activitySemaphore.withPermit {
+                it.concept.union(collectionWithoutConcepts)
+                    .createDBO(it.fdkId)
+                    .let { dbo -> conceptMongoTemplate.save(dbo, "fdkConcepts") }
+            }
+        }
+    }
 
 }

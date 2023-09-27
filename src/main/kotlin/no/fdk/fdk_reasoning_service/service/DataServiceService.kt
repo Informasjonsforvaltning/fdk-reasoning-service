@@ -1,5 +1,8 @@
 package no.fdk.fdk_reasoning_service.service
 
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.model.ExternalRDFData
 import no.fdk.fdk_reasoning_service.model.HarvestReport
@@ -94,9 +97,7 @@ class DataServiceService(
 
     private fun CatalogAndDataServices.saveCatalogAndDataServiceModels() {
         dataServiceMongoTemplate.save(catalog.createDBO(fdkId), "fdkCatalogs")
-
-        services.map { it.copy(service = catalogWithoutServices.union(it.service)) }
-            .forEach { dataServiceMongoTemplate.save(it.service.createDBO(it.fdkId), "fdkServices") }
+        saveDataServiceModels()
     }
 
     private fun Model.splitDataServiceCatalogsFromRDF(): List<CatalogAndDataServices> =
@@ -194,5 +195,16 @@ class DataServiceService(
         val fdkId: String,
         val service: Model
     )
+
+    private fun CatalogAndDataServices.saveDataServiceModels() = runBlocking {
+        val activitySemaphore = Semaphore(1)
+        services.forEach {
+            activitySemaphore.withPermit {
+                it.service.union(catalogWithoutServices)
+                    .createDBO(it.fdkId)
+                    .let { dbo -> dataServiceMongoTemplate.save(dbo, "fdkServices") }
+            }
+        }
+    }
 
 }

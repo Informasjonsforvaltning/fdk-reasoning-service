@@ -1,5 +1,8 @@
 package no.fdk.fdk_reasoning_service.service
 
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.model.ExternalRDFData
 import no.fdk.fdk_reasoning_service.model.HarvestReport
@@ -103,9 +106,7 @@ class InfoModelService(
 
     private fun CatalogAndInfoModels.saveCatalogAndInformationModels() {
         repository.saveCatalog(catalog.createRDFResponse(Lang.TURTLE), fdkId)
-
-        models.map { it.copy(infoModel = catalogWithoutModels.union(it.infoModel)) }
-            .forEach { repository.saveInformationModel(it.infoModel.createRDFResponse(Lang.TURTLE), it.fdkId) }
+        saveInfoModels()
     }
 
     private fun Model.splitCatalogsFromRDF(): List<CatalogAndInfoModels> =
@@ -216,6 +217,17 @@ class InfoModelService(
     private fun Model.catalogContainsInfoModel(catalogURI: String, infoModelURI: String): Boolean =
         containsTriple("<$catalogURI>", "<${ModellDCATAPNO.model.uri}>", "<$infoModelURI>")
                 && containsTriple("<$infoModelURI>", "a", "<${ModellDCATAPNO.InformationModel.uri}>")
+
+    private fun CatalogAndInfoModels.saveInfoModels() = runBlocking {
+        val activitySemaphore = Semaphore(1)
+        models.forEach {
+            activitySemaphore.withPermit {
+                it.infoModel.union(catalogWithoutModels)
+                    .createRDFResponse(Lang.TURTLE)
+                    .let { serializedModel -> repository.saveInformationModel(serializedModel, it.fdkId) }
+            }
+        }
+    }
 }
 
 private data class CatalogAndInfoModels(

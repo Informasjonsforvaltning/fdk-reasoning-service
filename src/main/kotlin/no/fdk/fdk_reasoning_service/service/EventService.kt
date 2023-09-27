@@ -1,5 +1,8 @@
 package no.fdk.fdk_reasoning_service.service
 
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.model.ExternalRDFData
 import no.fdk.fdk_reasoning_service.model.HarvestReport
@@ -117,9 +120,7 @@ class EventService(
 
     private fun CatalogAndEvents.saveCatalogAndEventModels() {
         eventMongoTemplate.save(catalog.createDBO(fdkId), MongoDB.REASONED_CATALOG.collection)
-
-        events.map { it.copy(event = catalogWithoutEvents.union(it.event)) }
-            .forEach { eventMongoTemplate.save(it.event.createDBO(it.fdkId), MongoDB.REASONED_EVENT.collection) }
+        saveEventModels()
     }
 
     private fun Model.splitEventCatalogsFromRDF(): List<CatalogAndEvents> =
@@ -229,5 +230,16 @@ class EventService(
         val fdkId: String,
         val event: Model
     )
+
+    private fun CatalogAndEvents.saveEventModels() = runBlocking {
+        val activitySemaphore = Semaphore(1)
+        events.forEach {
+            activitySemaphore.withPermit {
+                it.event.union(catalogWithoutEvents)
+                    .createDBO(it.fdkId)
+                    .let { dbo -> eventMongoTemplate.save(dbo, MongoDB.REASONED_EVENT.collection) }
+            }
+        }
+    }
 
 }
