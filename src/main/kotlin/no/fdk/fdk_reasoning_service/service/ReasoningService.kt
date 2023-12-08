@@ -10,8 +10,6 @@ import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner
 import org.apache.jena.reasoner.rulesys.Rule
-import org.apache.jena.riot.Lang
-import org.apache.jena.riot.RDFDataMgr
 import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.DCTerms
 import org.slf4j.Logger
@@ -21,6 +19,7 @@ import org.springframework.stereotype.Service
 import java.io.BufferedReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.net.URLEncoder
 
 private val LOGGER: Logger = LoggerFactory.getLogger(ReasoningService::class.java)
 
@@ -113,7 +112,7 @@ class ReasoningService(
     private fun orgURI(orgId: String) = "${uris.orgExternal}/$orgId"
 
     private fun orgPathAdapter(value: String): String? {
-        val uri = "${uris.orgExternal}/orgpath/$value"
+        val uri = "${uris.orgExternal}/orgpath/${URLEncoder.encode(value, "UTF-8")}"
         with(URL(uri).openConnection() as HttpURLConnection) {
             setRequestProperty("Accept", "text/plain");
             try {
