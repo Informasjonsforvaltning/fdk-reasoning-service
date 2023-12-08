@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fdk-reasoning-service
+  labels:
+    app: fdk-reasoning-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fdk-reasoning-service
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: fdk-reasoning-service
+      annotations:
+        prometheus.io/scrape: "false"
+    spec:
+      containers:
+        - name: fdk-reasoning-service
+          image: fdk-reasoning-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+            initialDelaySeconds: 120
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 150
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 5
+          resources:
+            requests:
+              memory: 3000Mi
+              cpu: 750m
+            limits:
+              memory: 3000Mi
