@@ -35,7 +35,6 @@ class ReasoningService(
 
     private fun CatalogType.extendedPublishersModel(orgData: Model, catalogData: Model): Model {
         val publisherPredicates = when (this) {
-            CatalogType.EVENTS -> listOf(CV.hasCompetentAuthority)
             CatalogType.PUBLICSERVICES -> listOf(CV.hasCompetentAuthority, CV.ownedBy)
             else -> listOf(DCTerms.publisher)
         }

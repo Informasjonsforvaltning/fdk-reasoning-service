@@ -44,7 +44,6 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/events/09c9429e-af32-4387-b14b-f24ac0c37265>
         a                         cv:LifeEvent ;
-        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132> ;
         dct:description           "ASD forvalter i dag flere ordninger i folketrygdloven med relevans for livshendelsen. Direktoratet forvalter også ordninger som tilhører BFD. I forbindelse med direktoratets langsiktige IKT-moderniseringsarbeid er det innført digitale tjenester for innsyn, dialog, samhandling og automatisert saksbehandling for foreldrepenger og pleiepenger. Dette digitaliseringsarbeidet understøtter målsettingene i digitaliseringsstrategien."@nb ;
         dct:identifier            "09c9429e-af32-4387-b14b-f24ac0c37265" ;
         dct:relation              <http://public-service-publisher.fellesdatakatalog.digdir.no/services/13> ;
@@ -106,7 +105,7 @@
         a                     dcat:Catalog;
         <http://www.w3.org/2000/01/rdf-schema#label>
                 "Testdirektoratet - Hendelsekatalog"@nb , "TESTDIREKTORATET - Hendingskatalog"@nn , "TESTDIREKTORATET - Event catalog"@en;
-        dct:publisher         <http://localhost:5000/organizations/123456789>;
+        dct:publisher         <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132>;
         dcatno:containsEvent  <http://public-service-publisher.fellesdatakatalog.digdir.no/events/745d1372-2b71-4e20-bcc4-49023379e7cf> , <http://public-service-publisher.fellesdatakatalog.digdir.no/events/09c9429e-af32-4387-b14b-f24ac0c37265> .
 
 <http://localhost:5000/events/catalogs/4d2c9e29-2f9a-304f-9e48-34e30a36d068>
