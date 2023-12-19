@@ -7,6 +7,8 @@ import org.apache.jena.riot.Lang
 import org.apache.jena.riot.RDFDataMgr
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.boot.context.event.ApplicationReadyEvent
+import org.springframework.context.event.EventListener
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 
@@ -39,7 +41,17 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         return ModelFactory.createDefaultModel().add(CONCEPT_SUBJECTS)
     }
 
-    @Scheduled(fixedDelayString = "PT3H")
+    @EventListener
+    fun loadCacheOnStartup(event: ApplicationReadyEvent) {
+        invalidateAndUpdateOrganizations()
+        invalidateAndUpdateLOS()
+        invalidateAndUpdateEUROVOC()
+        invalidateAndUpdateDataThemes()
+        invalidateAndUpdateConceptStatuses()
+        invalidateAndUpdateConceptSubjects()
+    }
+
+    @Scheduled(cron = "10 */3 * * * ?")
     fun invalidateAndUpdateOrganizations() {
         logger.info("updating organization cache")
         try {
@@ -51,7 +63,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
-    @Scheduled(fixedDelayString = "PT5H")
+    @Scheduled(cron = "0 30 23 * * ?")
     fun invalidateAndUpdateLOS() {
         logger.info("updating LOS cache")
         try {
@@ -63,7 +75,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
-    @Scheduled(fixedDelayString = "PT23H")
+    @Scheduled(cron = "0 15 23 * * ?")
     fun invalidateAndUpdateEUROVOC() {
         logger.info("updating EUROVOCS cache")
         try {
@@ -75,7 +87,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
-    @Scheduled(fixedDelayString = "PT22H")
+    @Scheduled(cron = "0 40 23 * * ?")
     fun invalidateAndUpdateDataThemes() {
         logger.info("updating data themes cache")
         try {
@@ -87,7 +99,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
-    @Scheduled(fixedDelayString = "PT21H")
+    @Scheduled(cron = "0 45 23 * * ?")
     fun invalidateAndUpdateConceptStatuses() {
         logger.info("updating concept status cache")
         try {
