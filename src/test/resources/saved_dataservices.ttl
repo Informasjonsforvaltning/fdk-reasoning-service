@@ -69,3 +69,8 @@
         foaf:name             "Karmsund og kysnesstrand revisjon"@nb ;
         rov:orgType           orgtype:ORGL ;
         br:orgPath            "/ANNET/910298062" .
+
+<https://www.iana.org/assignments/media-types/application/json>
+        a               dct:MediaType;
+        dct:identifier  "application/json";
+        dct:title       "json" .

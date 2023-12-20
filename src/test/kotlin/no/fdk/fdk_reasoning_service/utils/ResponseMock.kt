@@ -29,6 +29,8 @@ fun startMockServer() {
             .willReturn(ok(File("src/test/resources/concept_statuses.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/reference-data/digdir/concept-subjects"))
             .willReturn(ok(File("src/test/resources/concept_subjects.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/iana/media-types"))
+            .willReturn(ok(File("src/test/resources/media_types.ttl").readText())))
 
         mockserver.start()
     }

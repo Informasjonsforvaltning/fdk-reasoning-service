@@ -57,7 +57,7 @@ class DataServicesIntegration : ApiTestContext() {
         val response = apiGet(port, "/data-services/catalogs/$DATA_SERVICE_CATALOG_ID", "application/n-quads")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("reasoned_dataservices.ttl")
+        val expected = responseReader.parseTurtleFile("saved_dataservices.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.NQUADS.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))
@@ -68,7 +68,7 @@ class DataServicesIntegration : ApiTestContext() {
         val response = apiGet(port, "/data-services", "application/n-triples")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("reasoned_dataservices.ttl")
+        val expected = responseReader.parseTurtleFile("saved_dataservices.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.NTRIPLES.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))

@@ -10,5 +10,6 @@ data class ApplicationURI(
     val eurovocs: String,
     val dataThemes: String,
     val conceptStatuses: String,
-    val conceptSubjects: String
+    val conceptSubjects: String,
+    val ianaMediaTypes: String
 )

@@ -61,7 +61,7 @@
         dct:title                 "Fint datasett"@nb ;
         dcat:distribution         [ a                dcat:Distribution ;
                                     dct:description  "Åpent"@nb ;
-                                    dct:format       "json" ;
+                                    dct:format       <https://www.iana.org/assignments/media-types/application/json> ;
                                     dct:license      [ a               dct:LicenseDocument , skos:Concept ;
                                                        dct:source      "http://publications.europa.eu/resource/authority/licence/NLOD_2_0" ;
                                                        skos:prefLabel  "Norsk lisens for offentlige data"@no , "Norwegian Licence for Open Government Data"@en
@@ -69,8 +69,9 @@
                                     dct:title        "TEST"@nb ;
                                     dcat:accessURL   <https://vg.no>
                                   ] ;
-        dcat:distribution         [ a           dcat:Distribution ;
-                                    dct:format  "xml"
+        dcat:distribution         [ a              dcat:Distribution ;
+                                    dct:format     "xml" ;
+                                    dcat:mediaType <https://www.iana.org/assignments/media-types/application/xml>
                                   ] ;
         dcat:theme                <http://publications.europa.eu/resource/authority/data-theme/EDUC> , <http://eurovoc.europa.eu/5490> ;
         dqv:hasQualityAnnotation  [ a                dqv:QualityAnnotation ;

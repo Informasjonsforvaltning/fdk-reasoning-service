@@ -31,7 +31,8 @@
                                   ] ;
         dcat:endpointDescription  <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-testdata/master/testdata/Spesifisert%20Summert%20Skattegrunnlag%20v1.0.0.json> ;
         dcat:endpointURL          <https://api-at.sits.no> , <https://api.skatteetaten.no> ;
-        dcat:servesDataset        <http://brreg.no/catalogs/910244132/datasets/09b578b5-4d30-4d63-ad13-9871a2e708ce> , <http://brreg.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858> .
+        dcat:servesDataset        <http://brreg.no/catalogs/910244132/datasets/09b578b5-4d30-4d63-ad13-9871a2e708ce> , <http://brreg.no/catalogs/910244132/datasets/c6b9e443-12a4-4d29-854a-0f6eda682858> ;
+        dcat:mediaType            <https://www.iana.org/assignments/media-types/application/json> .
 
 <http://localhost:5000/catalogs/e422e2a7-287f-349f-876a-dc3541676f21>
         a                  dcat:CatalogRecord ;

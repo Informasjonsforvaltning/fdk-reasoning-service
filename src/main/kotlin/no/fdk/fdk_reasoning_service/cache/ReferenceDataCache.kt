@@ -41,6 +41,10 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         return ModelFactory.createDefaultModel().add(CONCEPT_SUBJECTS)
     }
 
+    fun ianaMediaTypes(): Model {
+        return ModelFactory.createDefaultModel().add(MEDIA_TYPES)
+    }
+
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
         invalidateAndUpdateOrganizations()
@@ -49,6 +53,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         invalidateAndUpdateDataThemes()
         invalidateAndUpdateConceptStatuses()
         invalidateAndUpdateConceptSubjects()
+        invalidateAndUpdateMediaTypes()
     }
 
     @Scheduled(cron = "10 */3 * * * ?")
@@ -123,6 +128,18 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(cron = "0 45 22 * * ?")
+    fun invalidateAndUpdateMediaTypes() {
+        logger.info("updating iana media types")
+        try {
+            with(RDFDataMgr.loadModel(uris.ianaMediaTypes, Lang.TURTLE)) {
+                MEDIA_TYPES.removeAll().add(this)
+            }
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.ianaMediaTypes}", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -130,5 +147,6 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val DATA_THEMES: Model = ModelFactory.createDefaultModel()
         val CONCEPT_STATUSES: Model = ModelFactory.createDefaultModel()
         val CONCEPT_SUBJECTS: Model = ModelFactory.createDefaultModel()
+        val MEDIA_TYPES: Model = ModelFactory.createDefaultModel()
     }
 }

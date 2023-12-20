@@ -8,5 +8,6 @@ data class ExternalRDFData(
     val eurovocs: Model,
     val dataThemes: Model,
     val conceptStatuses: Model,
-    val conceptSubjects: Model
+    val conceptSubjects: Model,
+    val ianaMediaTypes: Model
 )

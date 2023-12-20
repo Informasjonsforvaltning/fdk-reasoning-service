@@ -22,6 +22,7 @@ application:
     dataThemes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/data-themes
     conceptStatuses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/concept-statuses
     conceptSubjects: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/concept-subjects
+    ianaMediaTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/iana/media-types
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -56,3 +57,4 @@ application:
     dataThemes: http://localhost:5000/reference-data/eu/data-themes
     conceptStatuses: http://localhost:5000/reference-data/eu/concept-statuses
     conceptSubjects: http://localhost:5000/reference-data/digdir/concept-subjects
+    ianaMediaTypes: http://localhost:5000/reference-data/iana/media-types

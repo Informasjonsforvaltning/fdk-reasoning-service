@@ -75,6 +75,7 @@ class DataServiceService(
         dataServiceMongoTemplate.findById<TurtleDBO>(harvestedCatalogID(catalogId), "turtle")
             ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "dataServices") }
             ?.let { reasoningService.catalogReasoning(it, CatalogType.DATASERVICES, rdfData) }
+            ?.union(rdfData.ianaMediaTypes)
             ?.also { it.separateAndSaveDataServices() }
             ?: throw Exception("missing database data, harvest-reasoning was stopped")
     }

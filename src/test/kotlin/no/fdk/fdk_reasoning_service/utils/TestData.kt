@@ -46,8 +46,8 @@ val EVENT_REPORT = HarvestReport(id = "id", "https://events.com",
 
 val allDataServiceIds = listOf(
     "e422e2a7-287f-349f-876a-dc3541676f21",
-    "ea51178e-f843-3025-98c5-7d02ce887f90",
-    "4667277a-9d27-32c1-aed5-612fa601f393"
+    "4667277a-9d27-32c1-aed5-612fa601f393",
+    "ea51178e-f843-3025-98c5-7d02ce887f90"
 )
 const val DATA_SERVICE_CATALOG_ID = "e422e2a7-287f-349f-876a-dc3541676f21"
 const val DATA_SERVICE_ID_0 = "ea51178e-f843-3025-98c5-7d02ce887f90"

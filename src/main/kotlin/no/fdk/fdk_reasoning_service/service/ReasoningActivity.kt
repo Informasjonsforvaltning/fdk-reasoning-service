@@ -44,7 +44,8 @@ class ReasoningActivity(
             eurovocs = referenceDataCache.eurovocs(),
             dataThemes = referenceDataCache.dataThemes(),
             conceptStatuses = referenceDataCache.conceptStatuses(),
-            conceptSubjects = referenceDataCache.conceptSubjects()
+            conceptSubjects = referenceDataCache.conceptSubjects(),
+            ianaMediaTypes = referenceDataCache.ianaMediaTypes()
         )
         try {
             when {
