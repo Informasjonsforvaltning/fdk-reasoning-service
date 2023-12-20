@@ -22,7 +22,7 @@ jobs:
 
   deploy:
     name: Deploy to staging environment
-    if: github.event.pull_request.draft == false
+    if: ${{ github.actor != 'dependabot[bot]' && github.event.pull_request.draft == false }}
     needs: [ build-fdk-reasoning-service ]
     uses: Informasjonsforvaltning/workflows/.github/workflows/kustomize-deploy.yaml@main
     with:
