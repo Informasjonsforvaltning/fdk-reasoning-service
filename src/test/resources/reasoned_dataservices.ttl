@@ -22,6 +22,7 @@
         dcat:contactPoint  [ a         vcard:Organization ;
                              vcard:fn  "Contact information | (910298062)"
                            ] ;
+        dct:format     <http://publications.europa.eu/resource/authority/file-type/ZIP> ;
         dcat:endpointURL   <https://aho.no/> .
 
 <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f586b0cdbffd544ae76a5e5>

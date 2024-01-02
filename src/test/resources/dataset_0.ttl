@@ -37,7 +37,7 @@
                                     dcat:accessURL   <https://vg.no>
                                   ] ;
         dcat:distribution         [ a              dcat:Distribution ;
-                                    dct:format     "xml" ;
+                                    dct:format     <http://publications.europa.eu/resource/authority/file-type/XML> ;
                                     dcat:mediaType <https://www.iana.org/assignments/media-types/application/xml>
                                   ] ;
         dcat:theme                <http://publications.europa.eu/resource/authority/data-theme/EDUC> , <http://eurovoc.europa.eu/5490> ;

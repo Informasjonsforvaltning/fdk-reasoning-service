@@ -44,7 +44,8 @@ val RDF_DATA = ExternalRDFData(
     dataThemes = responseReader.parseTurtleFile("data_themes.ttl", "TURTLE"),
     conceptStatuses = responseReader.parseTurtleFile("concept_statuses.ttl", "TURTLE"),
     conceptSubjects = responseReader.parseTurtleFile("concept_subjects.ttl", "TURTLE"),
-    ianaMediaTypes = responseReader.parseTurtleFile("media_types.ttl", "TURTLE"))
+    ianaMediaTypes = responseReader.parseTurtleFile("media_types.ttl", "TURTLE"),
+    fileTypes = responseReader.parseTurtleFile("file_types.ttl", "TURTLE"))
 
 fun TurtleDBO.mapDBO(): Document =
     Document()

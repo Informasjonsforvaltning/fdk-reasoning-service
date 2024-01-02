@@ -11,5 +11,6 @@ data class ApplicationURI(
     val dataThemes: String,
     val conceptStatuses: String,
     val conceptSubjects: String,
-    val ianaMediaTypes: String
+    val ianaMediaTypes: String,
+    val fileTypes: String
 )

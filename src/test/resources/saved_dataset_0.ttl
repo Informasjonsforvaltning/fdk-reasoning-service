@@ -18,6 +18,8 @@
 @prefix dcat:  <http://www.w3.org/ns/dcat#> .
 @prefix prov:  <http://www.w3.org/ns/prov#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix euvoc:	<http://publications.europa.eu/ontology/euvoc#> .
+@prefix dc:	    <http://purl.org/dc/elements/1.1/> .
 
 <http://brreg.no/catalogs/910244132/datasets/c32b7a4f-655f-45f6-88f6-d01f05d0f7c2>
         a                         dcat:Dataset ;
@@ -37,7 +39,7 @@
                                     dcat:accessURL   <https://vg.no>
                                   ] ;
         dcat:distribution         [ a              dcat:Distribution ;
-                                    dct:format     "xml" ;
+                                    dct:format     <http://publications.europa.eu/resource/authority/file-type/XML> ;
                                     dcat:mediaType <https://www.iana.org/assignments/media-types/application/xml>
                                   ] ;
         dcat:theme                <http://publications.europa.eu/resource/authority/data-theme/EDUC> , <http://eurovoc.europa.eu/5490> ;
@@ -106,3 +108,8 @@
         a               dct:MediaType;
         dct:identifier  "application/xml";
         dct:title       "xml" .
+
+<http://publications.europa.eu/resource/authority/file-type/XML>
+    rdf:type	euvoc:FileType ;
+	euvoc:xlNotation	[ euvoc:xlCodification	"application/xml" ] ;
+	dc:identifier	"XML" .

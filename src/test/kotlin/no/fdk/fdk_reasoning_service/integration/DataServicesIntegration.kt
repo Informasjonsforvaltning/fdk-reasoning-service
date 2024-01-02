@@ -42,11 +42,11 @@ class DataServicesIntegration : ApiTestContext() {
     }
 
     @Test
-    fun findSpecificDataset() {
+    fun findSpecificDataservice() {
         val response = apiGet(port, "/data-services/$DATA_SERVICE_ID_0", "text/turtle")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("dataservice_0.ttl")
+        val expected = responseReader.parseTurtleFile("saved_dataservice_0.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TURTLE.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))

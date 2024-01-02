@@ -23,6 +23,7 @@ application:
     conceptStatuses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/concept-statuses
     conceptSubjects: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/concept-subjects
     ianaMediaTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/iana/media-types
+    fileTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/file-types
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -58,3 +59,4 @@ application:
     conceptStatuses: http://localhost:5000/reference-data/eu/concept-statuses
     conceptSubjects: http://localhost:5000/reference-data/digdir/concept-subjects
     ianaMediaTypes: http://localhost:5000/reference-data/iana/media-types
+    fileTypes: http://localhost:5000/reference-data/eu/file-types

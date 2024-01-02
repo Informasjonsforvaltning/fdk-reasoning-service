@@ -26,7 +26,7 @@ class DataServices {
 
     @Test
     fun testDataServices() {
-        val dataServicesModel = responseReader.parseTurtleFile("saved_dataservices.ttl")
+        val dataServicesModel = responseReader.parseTurtleFile("reasoned_dataservices.ttl")
         whenever(dataServiceMongoTemplate.findById<TurtleDBO>(any(), any(), any()))
             .thenReturn(TurtleDBO("catalog-$DATA_SERVICE_CATALOG_ID", gzip("")))
         whenever(reasoningService.catalogReasoning(any(), any(), any()))
@@ -39,11 +39,12 @@ class DataServices {
             assertEquals(allDataServiceIds, first.allValues.map { it.id })
             assertEquals(listOf("fdkCatalogs", "fdkServices", "fdkServices"), second.allValues)
 
+            val expectedDataServices = responseReader.parseTurtleFile("saved_dataservices.ttl")
             val savedCatalog = parseRDFResponse(ungzip(first.firstValue.turtle), Lang.TURTLE, "")
-            assertTrue(dataServicesModel.isIsomorphicWith(savedCatalog))
+            assertTrue(expectedDataServices.isIsomorphicWith(savedCatalog))
 
-            val expectedDataService = responseReader.parseTurtleFile("dataservice_0.ttl")
-            val savedDataService = parseRDFResponse(ungzip(first.thirdValue.turtle), Lang.TURTLE, "")
+            val expectedDataService = responseReader.parseTurtleFile("saved_dataservice_0.ttl")
+            val savedDataService = parseRDFResponse(ungzip(first.secondValue.turtle), Lang.TURTLE, "")
             assertTrue(expectedDataService.isIsomorphicWith(savedDataService))
 
             val expectedReport = ReasoningReport(

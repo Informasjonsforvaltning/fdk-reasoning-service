@@ -78,6 +78,7 @@ class DatasetService(
             ?.let { reasoningService.catalogReasoning(it, CatalogType.DATASETS, rdfData) }
             ?.union(rdfData.selectedThemeTriples())
             ?.union(rdfData.ianaMediaTypes)
+            ?.union(rdfData.fileTypes)
             ?.also { it.separateAndSaveDatasets() }
             ?: throw Exception("missing database data, harvest-reasoning was stopped")
     }

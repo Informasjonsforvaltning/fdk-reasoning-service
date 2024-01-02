@@ -7,6 +7,8 @@
 @prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
 @prefix dcat:  <http://www.w3.org/ns/dcat#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix euvoc:	<http://publications.europa.eu/ontology/euvoc#> .
+@prefix dc:	    <http://purl.org/dc/elements/1.1/> .
 
 <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e>
         a                  dcat:DataService ;
@@ -47,3 +49,8 @@
         dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
         dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
         foaf:primaryTopic  <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/catalogs/910298062> .
+
+<http://publications.europa.eu/resource/authority/file-type/ZIP>
+    rdf:type	euvoc:FileType ;
+	euvoc:xlNotation	[ euvoc:xlCodification	"application/zip" ] ;
+ 	dc:identifier	"ZIP" .

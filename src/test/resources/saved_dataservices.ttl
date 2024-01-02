@@ -7,6 +7,8 @@
 @prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
 @prefix dcat:  <http://www.w3.org/ns/dcat#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix euvoc:	<http://publications.europa.eu/ontology/euvoc#> .
+@prefix dc:	    <http://purl.org/dc/elements/1.1/> .
 
 <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/catalogs/910298062>
         a              dcat:Catalog ;
@@ -22,6 +24,7 @@
         dcat:contactPoint  [ a         vcard:Organization ;
                              vcard:fn  "Contact information | (910298062)"
                            ] ;
+        dct:format     <http://publications.europa.eu/resource/authority/file-type/ZIP> ;
         dcat:endpointURL   <https://aho.no/> .
 
 <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f586b0cdbffd544ae76a5e5>
@@ -74,3 +77,8 @@
         a               dct:MediaType;
         dct:identifier  "application/json";
         dct:title       "json" .
+
+<http://publications.europa.eu/resource/authority/file-type/ZIP>
+    rdf:type	euvoc:FileType ;
+	euvoc:xlNotation	[ euvoc:xlCodification	"application/zip" ] ;
+ 	dc:identifier	"ZIP" .

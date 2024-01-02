@@ -45,7 +45,8 @@ class ReasoningActivity(
             dataThemes = referenceDataCache.dataThemes(),
             conceptStatuses = referenceDataCache.conceptStatuses(),
             conceptSubjects = referenceDataCache.conceptSubjects(),
-            ianaMediaTypes = referenceDataCache.ianaMediaTypes()
+            ianaMediaTypes = referenceDataCache.ianaMediaTypes(),
+            fileTypes = referenceDataCache.fileTypes()
         )
         try {
             when {

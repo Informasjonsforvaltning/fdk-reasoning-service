@@ -45,6 +45,10 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         return ModelFactory.createDefaultModel().add(MEDIA_TYPES)
     }
 
+    fun fileTypes(): Model {
+        return ModelFactory.createDefaultModel().add(FILE_TYPES)
+    }
+
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
         invalidateAndUpdateOrganizations()
@@ -54,6 +58,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         invalidateAndUpdateConceptStatuses()
         invalidateAndUpdateConceptSubjects()
         invalidateAndUpdateMediaTypes()
+        invalidateAndUpdateFileTypes()
     }
 
     @Scheduled(cron = "10 */3 * * * ?")
@@ -140,6 +145,18 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(cron = "0 40 22 * * ?")
+    fun invalidateAndUpdateFileTypes() {
+        logger.info("updating EU file types")
+        try {
+            with(RDFDataMgr.loadModel(uris.fileTypes, Lang.TURTLE)) {
+                FILE_TYPES.removeAll().add(this)
+            }
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.fileTypes}", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -148,5 +165,6 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val CONCEPT_STATUSES: Model = ModelFactory.createDefaultModel()
         val CONCEPT_SUBJECTS: Model = ModelFactory.createDefaultModel()
         val MEDIA_TYPES: Model = ModelFactory.createDefaultModel()
+        val FILE_TYPES: Model = ModelFactory.createDefaultModel()
     }
 }

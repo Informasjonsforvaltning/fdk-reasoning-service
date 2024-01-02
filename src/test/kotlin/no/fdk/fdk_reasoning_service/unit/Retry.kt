@@ -65,6 +65,8 @@ class Retry {
             .thenReturn(ModelFactory.createDefaultModel())
         whenever(referenceDataCache.ianaMediaTypes())
             .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.fileTypes())
+            .thenReturn(ModelFactory.createDefaultModel())
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 0)
         assertTrue { RETRY_QUEUE.contains(RetryReportsWrap(CatalogType.DATASETS, 1, emptyList())) }
@@ -86,6 +88,8 @@ class Retry {
             .thenReturn(RDF_DATA.conceptSubjects)
         whenever(referenceDataCache.ianaMediaTypes())
             .thenReturn(RDF_DATA.ianaMediaTypes)
+        whenever(referenceDataCache.fileTypes())
+            .thenReturn(RDF_DATA.fileTypes)
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 10)
         assertTrue { RETRY_QUEUE.isEmpty() }
