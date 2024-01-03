@@ -61,7 +61,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         invalidateAndUpdateFileTypes()
     }
 
-    @Scheduled(cron = "10 */3 * * * ?")
+    @Scheduled(cron = "0 10 */3 * * ?")
     fun invalidateAndUpdateOrganizations() {
         logger.info("updating organization cache")
         try {
