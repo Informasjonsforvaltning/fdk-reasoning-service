@@ -17,37 +17,14 @@ private val logger: Logger = LoggerFactory.getLogger(ReferenceDataCache::class.j
 @Service
 class ReferenceDataCache(private val uris: ApplicationURI) {
 
-    fun organizations(): Model {
-        return ModelFactory.createDefaultModel().add(ORGANIZATIONS)
-    }
-
-    fun los(): Model {
-        return ModelFactory.createDefaultModel().add(LOS)
-    }
-
-    fun eurovocs(): Model {
-        return ModelFactory.createDefaultModel().add(EUROVOCS)
-    }
-
-    fun dataThemes(): Model {
-        return ModelFactory.createDefaultModel().add(DATA_THEMES)
-    }
-
-    fun conceptStatuses(): Model {
-        return ModelFactory.createDefaultModel().add(CONCEPT_STATUSES)
-    }
-
-    fun conceptSubjects(): Model {
-        return ModelFactory.createDefaultModel().add(CONCEPT_SUBJECTS)
-    }
-
-    fun ianaMediaTypes(): Model {
-        return ModelFactory.createDefaultModel().add(MEDIA_TYPES)
-    }
-
-    fun fileTypes(): Model {
-        return ModelFactory.createDefaultModel().add(FILE_TYPES)
-    }
+    fun organizations(): Model = ORGANIZATIONS
+    fun los(): Model = LOS
+    fun eurovocs(): Model = EUROVOCS
+    fun dataThemes(): Model = DATA_THEMES
+    fun conceptStatuses(): Model = CONCEPT_STATUSES
+    fun conceptSubjects(): Model = CONCEPT_SUBJECTS
+    fun ianaMediaTypes(): Model = MEDIA_TYPES
+    fun fileTypes(): Model = FILE_TYPES
 
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {

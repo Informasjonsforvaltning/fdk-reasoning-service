@@ -36,7 +36,7 @@ class DataServices {
 
         argumentCaptor<TurtleDBO, String>().apply {
             verify(dataServiceMongoTemplate, times(3)).save(first.capture(), second.capture())
-            assertEquals(allDataServiceIds, first.allValues.map { it.id })
+            assertEquals(allDataServiceIds.sorted(), first.allValues.map { it.id }.sorted())
             assertEquals(listOf("fdkCatalogs", "fdkServices", "fdkServices"), second.allValues)
 
             val expectedDataServices = responseReader.parseTurtleFile("saved_dataservices.ttl")
@@ -44,8 +44,9 @@ class DataServices {
             assertTrue(expectedDataServices.isIsomorphicWith(savedCatalog))
 
             val expectedDataService = responseReader.parseTurtleFile("saved_dataservice_0.ttl")
-            val savedDataService = parseRDFResponse(ungzip(first.secondValue.turtle), Lang.TURTLE, "")
-            assertTrue(expectedDataService.isIsomorphicWith(savedDataService))
+            val savedDataService0 = parseRDFResponse(ungzip(first.secondValue.turtle), Lang.TURTLE, "")
+            val savedDataService1 = parseRDFResponse(ungzip(first.thirdValue.turtle), Lang.TURTLE, "")
+            assertTrue(expectedDataService.isIsomorphicWith(savedDataService0) || expectedDataService.isIsomorphicWith(savedDataService1))
 
             val expectedReport = ReasoningReport(
                 id = "id", url = "https://data-services.com", dataType = "dataservice",

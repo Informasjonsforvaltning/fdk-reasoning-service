@@ -87,8 +87,7 @@ class ConceptService(
         conceptMongoTemplate.findById<TurtleDBO>(harvestedCollectionID(collectionId), "turtle")
             ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "concepts") }
             ?.let { reasoningService.catalogReasoning(it, CatalogType.CONCEPTS, rdfData) }
-            ?.union(rdfData.conceptStatuses)
-            ?.union(rdfData.conceptSubjects)
+            ?.union(rdfData.toModel())
             ?.also { it.separateAndSaveConcepts() }
             ?: throw Exception("missing database data, harvest-reasoning was stopped")
     }
@@ -96,6 +95,13 @@ class ConceptService(
     private fun Model.separateAndSaveConcepts() {
         splitConceptCollectionsFromRDF()
             .forEach { it.saveCollectionAndConceptModels() }
+    }
+
+    private fun ExternalRDFData.toModel(): Model {
+        val m = ModelFactory.createDefaultModel()
+        m.add(conceptStatuses)
+        m.add(conceptSubjects)
+        return m
     }
 
     private fun CollectionAndConcepts.saveCollectionAndConceptModels() {

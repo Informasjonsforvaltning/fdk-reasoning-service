@@ -92,9 +92,15 @@ class PublicServiceService(
         publicServiceMongoTemplate.findById<TurtleDBO>(catalogId, MongoDB.HARVESTED_CATALOG.collection)
             ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "public-services") }
             ?.let { reasoningService.catalogReasoning(it, CatalogType.PUBLICSERVICES, rdfData) }
-            ?.union(rdfData.selectedThemeTriples())
+            ?.union(rdfData.toModel())
             ?.also { it.separateAndSavePublicServices() }
             ?: throw Exception("missing database data, harvest-reasoning was stopped")
+    }
+
+    private fun ExternalRDFData.toModel(): Model {
+        val m = ModelFactory.createDefaultModel()
+        m.add(selectedThemeTriples())
+        return m
     }
 
     fun updateUnion() {

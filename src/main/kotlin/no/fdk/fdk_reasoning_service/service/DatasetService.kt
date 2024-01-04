@@ -76,11 +76,17 @@ class DatasetService(
         datasetMongoTemplate.findById<TurtleDBO>(harvestedCatalogID(catalogId), "turtle")
             ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "datasets") }
             ?.let { reasoningService.catalogReasoning(it, CatalogType.DATASETS, rdfData) }
-            ?.union(rdfData.selectedThemeTriples())
-            ?.union(rdfData.ianaMediaTypes)
-            ?.union(rdfData.fileTypes)
+            ?.union(rdfData.toModel())
             ?.also { it.separateAndSaveDatasets() }
             ?: throw Exception("missing database data, harvest-reasoning was stopped")
+    }
+
+    private fun ExternalRDFData.toModel(): Model {
+        val m = ModelFactory.createDefaultModel()
+        m.add(selectedThemeTriples())
+        m.add(ianaMediaTypes)
+        m.add(fileTypes)
+        return m
     }
 
     fun updateUnion() {

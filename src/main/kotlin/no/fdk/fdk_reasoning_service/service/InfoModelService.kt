@@ -84,9 +84,15 @@ class InfoModelService(
         repository.findHarvestedCatalog(catalogId)
             ?.let { parseRDFResponse(it, Lang.TURTLE, "information-models") }
             ?.let { reasoningService.catalogReasoning(it, CatalogType.INFORMATIONMODELS, rdfData) }
-            ?.union(rdfData.selectedThemeTriples())
+            ?.union(rdfData.toModel())
             ?.also { it.separateAndSaveInformationModels() }
             ?: throw Exception("missing database data, harvest-reasoning was stopped")
+    }
+
+    private fun ExternalRDFData.toModel(): Model {
+        val m = ModelFactory.createDefaultModel()
+        m.add(selectedThemeTriples())
+        return m
     }
 
     fun updateUnion() {
