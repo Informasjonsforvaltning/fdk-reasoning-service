@@ -86,6 +86,8 @@ class DatasetService(
         m.add(selectedThemeTriples())
         m.add(ianaMediaTypes)
         m.add(fileTypes)
+        m.add(openLicenses)
+        m.add(linguisticSystems)
         return m
     }
 

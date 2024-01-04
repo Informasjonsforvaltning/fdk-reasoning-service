@@ -24,6 +24,8 @@ application:
     conceptSubjects: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/concept-subjects
     ianaMediaTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/iana/media-types
     fileTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/file-types
+    openLicenses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/open-licenses
+    linguisticSystems: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/linguistic-systems
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester

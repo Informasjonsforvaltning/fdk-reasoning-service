@@ -11,6 +11,10 @@
 @prefix schema: <http://schema.org/> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix at:    <http://publications.europa.eu/ontology/authority/> .
+@prefix atold: <http://publications.europa.eu/resource/authority/> .
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/8>
         a                     cv:Cost ;
@@ -338,3 +342,27 @@
 <http://test-publisher.ttl#GeneratedCatalog>
     a       dcat:Catalog ;
     dcatno:containsService <http://public-service-publisher.fellesdatakatalog.digdir.no/services/1> .
+
+<http://publications.europa.eu/resource/authority/language/NOB>
+        a                  skos:Concept;
+        at:authority-code  "NOB";
+        at:deprecated      "false";
+        at:op-code         "NOB";
+        at:start.use       "1950-05-09";
+        atold:op-code      "NOB";
+        dc:identifier      "NOB";
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Norsk Bokmål"@nb , "Norsk Bokmål"@nn , "Norsk Bokmål"@no , "Norwegian Bokmål"@en .
+
+<http://publications.europa.eu/resource/authority/language/NNO>
+        a                  skos:Concept;
+        at:authority-code  "NNO";
+        at:deprecated      "false";
+        at:op-code         "NNO";
+        at:start.use       "1950-05-09";
+        atold:op-code      "NNO";
+        dc:identifier      "NNO";
+        owl:versionInfo    "20190918-0";
+        skos:exactMatch    <http://id.loc.gov/vocabulary/iso639-1/nn>;
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Norsk Nynorsk"@nb , "Norwegian Nynorsk"@en , "Norsk Nynorsk"@nn , "Norsk Nynorsk"@no .

@@ -100,6 +100,7 @@ class PublicServiceService(
     private fun ExternalRDFData.toModel(): Model {
         val m = ModelFactory.createDefaultModel()
         m.add(selectedThemeTriples())
+        m.add(linguisticSystems)
         return m
     }
 

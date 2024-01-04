@@ -31,14 +31,15 @@ class InformationModels {
 
         argumentCaptor<String, String>().apply {
             verify(repository, times(1)).saveCatalog(first.capture(), second.capture())
+            val expectedCatalog = responseReader.parseTurtleFile("saved_infomodels.ttl")
             val savedCatalog = parseRDFResponse(first.firstValue, Lang.TURTLE, "")
-            assertTrue(infoModelsUnion.isIsomorphicWith(savedCatalog))
+            assertTrue(expectedCatalog.isIsomorphicWith(savedCatalog))
             assertEquals(INFOMODEL_CATALOG_ID, second.firstValue)
         }
 
         argumentCaptor<String, String>().apply {
             verify(repository, times(2)).saveInformationModel(first.capture(), second.capture())
-            val expectedInfoModel = responseReader.parseTurtleFile("infomodel_0.ttl")
+            val expectedInfoModel = responseReader.parseTurtleFile("saved_infomodel_0.ttl")
             val savedInfoModel = parseRDFResponse(first.secondValue, Lang.TURTLE, "")
             assertTrue(expectedInfoModel.isIsomorphicWith(savedInfoModel))
             assertEquals(INFOMODEL_0_ID, second.secondValue)

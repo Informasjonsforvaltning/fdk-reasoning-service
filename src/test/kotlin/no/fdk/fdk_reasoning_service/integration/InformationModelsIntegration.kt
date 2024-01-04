@@ -51,7 +51,7 @@ class InformationModelsIntegration : ApiTestContext() {
         val response = apiGet(port, "/information-models/$INFOMODEL_0_ID", "application/ld+json")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("infomodel_0.ttl")
+        val expected = responseReader.parseTurtleFile("saved_infomodel_0.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.JSONLD.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))
@@ -62,7 +62,7 @@ class InformationModelsIntegration : ApiTestContext() {
         val response = apiGet(port, "/information-models/catalogs/$INFOMODEL_CATALOG_ID", "application/trix")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("reasoned_infomodels.ttl")
+        val expected = responseReader.parseTurtleFile("saved_infomodels.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TRIX.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))
@@ -73,7 +73,7 @@ class InformationModelsIntegration : ApiTestContext() {
         val response = apiGet(port, "/information-models", "text/turtle")
         assumeTrue(HttpStatus.OK.value() == response["status"])
 
-        val expected = responseReader.parseTurtleFile("reasoned_infomodels.ttl")
+        val expected = responseReader.parseTurtleFile("saved_infomodels.ttl")
         val responseModel = responseReader.parseResponse(response["body"] as String, Lang.TURTLE.name)
 
         assertTrue(expected.isIsomorphicWith(responseModel))

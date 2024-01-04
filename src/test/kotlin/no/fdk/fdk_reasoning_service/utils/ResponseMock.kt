@@ -31,6 +31,10 @@ fun startMockServer() {
             .willReturn(ok(File("src/test/resources/concept_subjects.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/reference-data/iana/media-types"))
             .willReturn(ok(File("src/test/resources/media_types.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/open-licenses"))
+            .willReturn(ok(File("src/test/resources/open_licenses.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/iana/linguistic-systems"))
+            .willReturn(ok(File("src/test/resources/linguistic_systems.ttl").readText())))
 
         mockserver.start()
     }

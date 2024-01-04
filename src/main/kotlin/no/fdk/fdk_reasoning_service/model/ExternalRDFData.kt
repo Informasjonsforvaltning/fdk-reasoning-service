@@ -10,5 +10,7 @@ data class ExternalRDFData(
     val conceptStatuses: Model,
     val conceptSubjects: Model,
     val ianaMediaTypes: Model,
-    val fileTypes: Model
+    val fileTypes: Model,
+    val openLicenses: Model,
+    val linguisticSystems: Model
 )

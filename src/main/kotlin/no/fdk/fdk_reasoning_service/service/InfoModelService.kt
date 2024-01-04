@@ -92,6 +92,8 @@ class InfoModelService(
     private fun ExternalRDFData.toModel(): Model {
         val m = ModelFactory.createDefaultModel()
         m.add(selectedThemeTriples())
+        m.add(openLicenses)
+        m.add(linguisticSystems)
         return m
     }
 

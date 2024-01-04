@@ -25,6 +25,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun conceptSubjects(): Model = CONCEPT_SUBJECTS
     fun ianaMediaTypes(): Model = MEDIA_TYPES
     fun fileTypes(): Model = FILE_TYPES
+    fun openLicenses(): Model = OPEN_LICENSES
+    fun linguisticSystems(): Model = LINGUISTIC_SYSTEMS
 
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
@@ -36,6 +38,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         invalidateAndUpdateConceptSubjects()
         invalidateAndUpdateMediaTypes()
         invalidateAndUpdateFileTypes()
+        invalidateAndUpdateOpenLicenses()
+        invalidateAndUpdateLinguisticSystems()
     }
 
     @Scheduled(cron = "0 10 */3 * * ?")
@@ -134,6 +138,30 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(cron = "0 35 22 * * ?")
+    fun invalidateAndUpdateOpenLicenses() {
+        logger.info("updating open licenses")
+        try {
+            with(RDFDataMgr.loadModel(uris.openLicenses, Lang.TURTLE)) {
+                OPEN_LICENSES.removeAll().add(this)
+            }
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.openLicenses}", ex)
+        }
+    }
+
+    @Scheduled(cron = "0 30 22 * * ?")
+    fun invalidateAndUpdateLinguisticSystems() {
+        logger.info("updating linguistic systems")
+        try {
+            with(RDFDataMgr.loadModel(uris.linguisticSystems, Lang.TURTLE)) {
+                LINGUISTIC_SYSTEMS.removeAll().add(this)
+            }
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.linguisticSystems}", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -143,5 +171,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val CONCEPT_SUBJECTS: Model = ModelFactory.createDefaultModel()
         val MEDIA_TYPES: Model = ModelFactory.createDefaultModel()
         val FILE_TYPES: Model = ModelFactory.createDefaultModel()
+        val OPEN_LICENSES: Model = ModelFactory.createDefaultModel()
+        val LINGUISTIC_SYSTEMS: Model = ModelFactory.createDefaultModel()
     }
 }

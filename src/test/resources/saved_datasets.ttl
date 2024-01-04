@@ -20,6 +20,8 @@
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
 @prefix euvoc:	<http://publications.europa.eu/ontology/euvoc#> .
 @prefix dc:	    <http://purl.org/dc/elements/1.1/> .
+@prefix at:    <http://publications.europa.eu/ontology/authority/> .
+@prefix atold: <http://publications.europa.eu/resource/authority/> .
 
 <http://brreg.no/catalogs/910298062/datasets/7e4fbd01-2684-45c3-8ac1-70ebfebe8513>
         a                          dcat:Dataset ;
@@ -29,6 +31,7 @@
                                    ] ;
         dcatno:objective           "Inngangsleverandører test"@nb ;
         dct:accessRights           <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:license                <http://publications.europa.eu/resource/authority/licence/NLOD_2_0> ;
         dct:description            "Inngangsleverandører test"@nb ;
         dct:provenance             <http://data.brreg.no/datakatalog/provinens/nasjonal> ;
         dct:publisher              <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;
@@ -262,3 +265,21 @@
     rdf:type	euvoc:FileType ;
 	euvoc:xlNotation	[ euvoc:xlCodification	"application/xml" ] ;
 	dc:identifier	"XML" .
+
+<http://publications.europa.eu/resource/authority/language/NOB>
+        a                  skos:Concept;
+        at:authority-code  "NOB";
+        at:deprecated      "false";
+        at:op-code         "NOB";
+        at:start.use       "1950-05-09";
+        atold:op-code      "NOB";
+        dc:identifier      "NOB";
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Norsk Bokmål"@nb , "Norsk Bokmål"@nn , "Norsk Bokmål"@no , "Norwegian Bokmål"@en .
+
+<http://publications.europa.eu/resource/authority/licence/NLOD_2_0>
+        a                  skos:Concept;
+        at:authority-code  "NLOD20";
+        dc:identifier      "NLOD20";
+        skos:inScheme      <http://publications.europa.eu/resource/authority/licence>;
+        skos:prefLabel     "Norsk lisens for offentlige data"@no , "Norwegian Licence for Open Government Data"@en .

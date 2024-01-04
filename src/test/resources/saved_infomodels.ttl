@@ -13,6 +13,9 @@
 @prefix locn:  <http://www.w3.org/ns/locn#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
 @prefix skebase: <http://data.skatteetaten.no/ns/modell/basetyper/> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix at:    <http://publications.europa.eu/ontology/authority/> .
+@prefix atold: <http://publications.europa.eu/resource/authority/> .
 
 pass:Oppgavegiver  a              modelldcatno:ObjectType , owl:NamedIndividual ;
         dct:description           "tredjepart som har opplysningsplikt om å sende inn oppgaver til Skatteetaten"@nb ;
@@ -455,3 +458,21 @@ pass:ModellUtenUtgiver
 
 <http://publications.europa.eu/resource/authority/data-theme/ECON>
         skos:prefLabel  "Economy and finance"@en , "Økonomi og finans"@nb , "Økonomi og finans"@nn , "Økonomi og finans"@no .
+
+<http://publications.europa.eu/resource/authority/language/NOB>
+        a                  skos:Concept;
+        at:authority-code  "NOB";
+        at:deprecated      "false";
+        at:op-code         "NOB";
+        at:start.use       "1950-05-09";
+        atold:op-code      "NOB";
+        dc:identifier      "NOB";
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Norsk Bokmål"@nb , "Norsk Bokmål"@nn , "Norsk Bokmål"@no , "Norwegian Bokmål"@en .
+
+<http://publications.europa.eu/resource/authority/licence/NLOD_2_0>
+        a                  skos:Concept;
+        at:authority-code  "NLOD20";
+        dc:identifier      "NLOD20";
+        skos:inScheme      <http://publications.europa.eu/resource/authority/licence>;
+        skos:prefLabel     "Norsk lisens for offentlige data"@no , "Norwegian Licence for Open Government Data"@en .

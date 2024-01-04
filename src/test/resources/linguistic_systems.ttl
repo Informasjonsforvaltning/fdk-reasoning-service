@@ -1,0 +1,76 @@
+@prefix at:    <http://publications.europa.eu/ontology/authority/> .
+@prefix atold: <http://publications.europa.eu/resource/authority/> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://publications.europa.eu/resource/authority/language/NNO>
+        rdf:type           skos:Concept;
+        at:authority-code  "NNO";
+        at:deprecated      "false";
+        at:op-code         "NNO";
+        at:start.use       "1950-05-09";
+        atold:op-code      "NNO";
+        dc:identifier      "NNO";
+        owl:versionInfo    "20190918-0";
+        skos:exactMatch    <http://id.loc.gov/vocabulary/iso639-1/nn>;
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Norsk Nynorsk"@nb , "Norwegian Nynorsk"@en , "Norsk Nynorsk"@nn , "Norsk Nynorsk"@no .
+
+<http://publications.europa.eu/resource/authority/language/SMI>
+        rdf:type           skos:Concept;
+        at:authority-code  "SMI";
+        at:deprecated      "false";
+        at:op-code         "SMI";
+        at:op-mapped-code  [ rdf:type        at:MappedCode;
+                             at:legacy-code  "smi";
+                             dc:source       "iso-639-2b"
+                           ];
+        at:op-mapped-code  [ rdf:type        at:MappedCode;
+                             at:legacy-code  "smi";
+                             dc:source       "iso-639-2t"
+                           ];
+        at:start.use       "1950-05-09";
+        atold:op-code      "SMI";
+        dc:identifier      "SMI";
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Sami languages"@en .
+
+<http://publications.europa.eu/resource/authority/language/NOR>
+        rdf:type           skos:Concept;
+        at:authority-code  "NOR";
+        at:deprecated      "false";
+        at:op-code         "NOR";
+        at:protocol-order  "EU-08";
+        at:protocol.order  "EU-08";
+        at:start.use       "1950-05-09";
+        atold:op-code      "NOR";
+        dc:identifier      "NOR";
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Norwegian"@en , "Norsk"@nb , "Norsk"@nn , "Norsk"@no .
+
+<http://publications.europa.eu/resource/authority/language/ENG>
+        rdf:type           skos:Concept;
+        at:authority-code  "ENG";
+        at:deprecated      "false";
+        at:op-code         "ENG";
+        at:protocol-order  "EU-08";
+        at:protocol.order  "EU-08";
+        at:start.use       "1950-05-09";
+        atold:op-code      "ENG";
+        dc:identifier      "ENG";
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Engelsk"@nb , "Engelsk"@nn , "Engelsk"@no , "English"@en .
+
+<http://publications.europa.eu/resource/authority/language/NOB>
+        rdf:type           skos:Concept;
+        at:authority-code  "NOB";
+        at:deprecated      "false";
+        at:op-code         "NOB";
+        at:start.use       "1950-05-09";
+        atold:op-code      "NOB";
+        dc:identifier      "NOB";
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Norsk Bokmål"@nb , "Norsk Bokmål"@nn , "Norsk Bokmål"@no , "Norwegian Bokmål"@en .

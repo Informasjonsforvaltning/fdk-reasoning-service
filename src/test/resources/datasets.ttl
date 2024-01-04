@@ -23,6 +23,7 @@
                                    ] ;
         dcatno:objective           "Inngangsleverandører test"@nb ;
         dct:accessRights           <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
+        dct:license                <http://publications.europa.eu/resource/authority/licence/NLOD_2_0> ;
         dct:description            "Inngangsleverandører test"@nb ;
         dct:provenance             <http://data.brreg.no/datakatalog/provinens/nasjonal> ;
         dct:publisher              <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;

@@ -12,5 +12,7 @@ data class ApplicationURI(
     val conceptStatuses: String,
     val conceptSubjects: String,
     val ianaMediaTypes: String,
-    val fileTypes: String
+    val fileTypes: String,
+    val openLicenses: String,
+    val linguisticSystems: String
 )

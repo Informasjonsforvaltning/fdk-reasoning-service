@@ -67,6 +67,10 @@ class Retry {
             .thenReturn(ModelFactory.createDefaultModel())
         whenever(referenceDataCache.fileTypes())
             .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.openLicenses())
+            .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.linguisticSystems())
+            .thenReturn(ModelFactory.createDefaultModel())
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 0)
         assertTrue { RETRY_QUEUE.contains(RetryReportsWrap(CatalogType.DATASETS, 1, emptyList())) }
@@ -90,6 +94,10 @@ class Retry {
             .thenReturn(RDF_DATA.ianaMediaTypes)
         whenever(referenceDataCache.fileTypes())
             .thenReturn(RDF_DATA.fileTypes)
+        whenever(referenceDataCache.openLicenses())
+            .thenReturn(RDF_DATA.openLicenses)
+        whenever(referenceDataCache.linguisticSystems())
+            .thenReturn(RDF_DATA.linguisticSystems)
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 10)
         assertTrue { RETRY_QUEUE.isEmpty() }
