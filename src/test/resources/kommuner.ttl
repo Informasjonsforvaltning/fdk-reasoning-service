@@ -1,0 +1,6 @@
+@prefix dct: <http://purl.org/dc/terms/> .
+
+<https://data.geonorge.no/administrativeEnheter/kommune/id/1119>
+        a               dct:Location;
+        dct:identifier  "1119";
+        dct:title       "Hå"@nb , "Hå" .

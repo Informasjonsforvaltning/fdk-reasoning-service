@@ -71,6 +71,8 @@ class Retry {
             .thenReturn(ModelFactory.createDefaultModel())
         whenever(referenceDataCache.linguisticSystems())
             .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.locations())
+            .thenReturn(ModelFactory.createDefaultModel())
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 0)
         assertTrue { RETRY_QUEUE.contains(RetryReportsWrap(CatalogType.DATASETS, 1, emptyList())) }
@@ -98,6 +100,8 @@ class Retry {
             .thenReturn(RDF_DATA.openLicenses)
         whenever(referenceDataCache.linguisticSystems())
             .thenReturn(RDF_DATA.linguisticSystems)
+        whenever(referenceDataCache.locations())
+            .thenReturn(RDF_DATA.locations)
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 10)
         assertTrue { RETRY_QUEUE.isEmpty() }

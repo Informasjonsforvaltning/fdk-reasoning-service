@@ -415,6 +415,7 @@ pass:varselSmsMobilnummer
 pass:ModellUtenUtgiver
         a                  owl:NamedIndividual , modelldcatno:InformationModel ;
         dct:license        <http://publications.europa.eu/resource/authority/licence/NLOD_2_0> ;
+        dct:spatial        <https://data.geonorge.no/administrativeEnheter/nasjon/id/173163> ;
         dct:title          "Modell uten utgiver"@nb .
 
 <http://localhost:5000/catalogs/f25c939d-0722-3aa3-82b1-eaa457086444>

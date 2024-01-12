@@ -94,6 +94,7 @@ class InfoModelService(
         m.add(selectedThemeTriples())
         m.add(openLicenses)
         m.add(linguisticSystems)
+        m.add(locations)
         return m
     }
 

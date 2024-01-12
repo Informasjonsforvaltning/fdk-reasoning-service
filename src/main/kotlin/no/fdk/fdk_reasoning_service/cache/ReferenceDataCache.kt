@@ -27,6 +27,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun fileTypes(): Model = FILE_TYPES
     fun openLicenses(): Model = OPEN_LICENSES
     fun linguisticSystems(): Model = LINGUISTIC_SYSTEMS
+    fun locations(): Model = LOCATIONS
 
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
@@ -162,6 +163,20 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(cron = "0 15 22 * * ?")
+    fun invalidateAndUpdateLocations() {
+        logger.info("updating locations")
+        try {
+            val m = ModelFactory.createDefaultModel()
+            with(RDFDataMgr.loadModel(uris.geonorgeNasjoner, Lang.TURTLE)) { m.add(this) }
+            with(RDFDataMgr.loadModel(uris.geonorgeFylker, Lang.TURTLE)) { m.add(this) }
+            with(RDFDataMgr.loadModel(uris.geonorgeKommuner, Lang.TURTLE)) { m.add(this) }
+            LOCATIONS.removeAll().add(m)
+        } catch (ex: Exception) {
+            logger.error("Update of locations failed", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -173,5 +188,6 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val FILE_TYPES: Model = ModelFactory.createDefaultModel()
         val OPEN_LICENSES: Model = ModelFactory.createDefaultModel()
         val LINGUISTIC_SYSTEMS: Model = ModelFactory.createDefaultModel()
+        val LOCATIONS: Model = ModelFactory.createDefaultModel()
     }
 }

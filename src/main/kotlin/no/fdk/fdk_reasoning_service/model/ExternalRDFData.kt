@@ -12,5 +12,6 @@ data class ExternalRDFData(
     val ianaMediaTypes: Model,
     val fileTypes: Model,
     val openLicenses: Model,
-    val linguisticSystems: Model
+    val linguisticSystems: Model,
+    val locations: Model
 )

@@ -35,6 +35,12 @@ fun startMockServer() {
             .willReturn(ok(File("src/test/resources/open_licenses.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/reference-data/iana/linguistic-systems"))
             .willReturn(ok(File("src/test/resources/linguistic_systems.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/geonorge/administrative-enheter/nasjoner"))
+            .willReturn(ok(File("src/test/resources/nasjoner.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/geonorge/administrative-enheter/fylker"))
+            .willReturn(ok(File("src/test/resources/fylker.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/geonorge/administrative-enheter/kommuner"))
+            .willReturn(ok(File("src/test/resources/kommuner.ttl").readText())))
 
         mockserver.start()
     }

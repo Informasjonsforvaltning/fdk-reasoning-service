@@ -32,6 +32,7 @@
         dcatno:objective           "Inngangsleverandører test"@nb ;
         dct:accessRights           <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:license                <http://publications.europa.eu/resource/authority/licence/NLOD_2_0> ;
+        dct:spatial                <https://data.geonorge.no/administrativeEnheter/fylke/id/11> ;
         dct:description            "Inngangsleverandører test"@nb ;
         dct:provenance             <http://data.brreg.no/datakatalog/provinens/nasjonal> ;
         dct:publisher              <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;
@@ -283,3 +284,8 @@
         dc:identifier      "NLOD20";
         skos:inScheme      <http://publications.europa.eu/resource/authority/licence>;
         skos:prefLabel     "Norsk lisens for offentlige data"@no , "Norwegian Licence for Open Government Data"@en .
+
+<https://data.geonorge.no/administrativeEnheter/fylke/id/11>
+        a               dct:Location;
+        dct:identifier  "11";
+        dct:title       "Rogaland" .

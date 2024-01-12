@@ -26,6 +26,9 @@ application:
     fileTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/file-types
     openLicenses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/open-licenses
     linguisticSystems: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/linguistic-systems
+    geonorgeNasjoner: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/geonorge/administrative-enheter/nasjoner
+    geonorgeFylker: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/geonorge/administrative-enheter/fylker
+    geonorgeKommuner: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/geonorge/administrative-enheter/kommuner
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -62,3 +65,8 @@ application:
     conceptSubjects: http://localhost:5000/reference-data/digdir/concept-subjects
     ianaMediaTypes: http://localhost:5000/reference-data/iana/media-types
     fileTypes: http://localhost:5000/reference-data/eu/file-types
+    openLicenses: http://localhost:5000/reference-data/open-licenses
+    linguisticSystems: http://localhost:5000/reference-data/linguistic-systems
+    geonorgeNasjoner: http://localhost:5000/geonorge/administrative-enheter/nasjoner
+    geonorgeFylker: http://localhost:5000/geonorge/administrative-enheter/fylker
+    geonorgeKommuner: http://localhost:5000/geonorge/administrative-enheter/kommuner

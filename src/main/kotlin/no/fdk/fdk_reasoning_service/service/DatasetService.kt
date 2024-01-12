@@ -88,6 +88,7 @@ class DatasetService(
         m.add(fileTypes)
         m.add(openLicenses)
         m.add(linguisticSystems)
+        m.add(locations)
         return m
     }
 

@@ -48,7 +48,8 @@ class ReasoningActivity(
             ianaMediaTypes = referenceDataCache.ianaMediaTypes(),
             fileTypes = referenceDataCache.fileTypes(),
             openLicenses = referenceDataCache.openLicenses(),
-            linguisticSystems = referenceDataCache.linguisticSystems()
+            linguisticSystems = referenceDataCache.linguisticSystems(),
+            locations = referenceDataCache.locations()
         )
         try {
             when {
