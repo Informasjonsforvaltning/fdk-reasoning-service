@@ -30,6 +30,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun locations(): Model = LOCATIONS
     fun accessRights(): Model = ACCESS_RIGHTS
     fun frequencies(): Model = FREQUENCIES
+    fun provenance(): Model = PROVENANCE
 
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
@@ -46,6 +47,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         updateLocations()
         updateAccessRights()
         updateFrequencies()
+        updateProvenance()
     }
 
     @Scheduled(cron = "0 10 */3 * * ?")
@@ -206,6 +208,18 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(cron = "0 50 21 * * ?")
+    fun updateProvenance() {
+        try {
+            with(RDFDataMgr.loadModel(uris.provenance, Lang.TURTLE)) {
+                PROVENANCE.removeAll().add(this)
+            }
+            logger.info("successfully updated provenance cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.provenance}", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -220,5 +234,6 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val LOCATIONS: Model = ModelFactory.createDefaultModel()
         val ACCESS_RIGHTS: Model = ModelFactory.createDefaultModel()
         val FREQUENCIES: Model = ModelFactory.createDefaultModel()
+        val PROVENANCE: Model = ModelFactory.createDefaultModel()
     }
 }

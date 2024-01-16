@@ -31,6 +31,7 @@ application:
     geonorgeKommuner: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/geonorge/administrative-enheter/kommuner
     accessRights: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/access-rights
     frequencies: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/frequencies
+    provenance: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/provenance-statements
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -74,3 +75,4 @@ application:
     geonorgeKommuner: http://localhost:5000/geonorge/administrative-enheter/kommuner
     accessRights: http://localhost:5000/reference-data/eu/access-rights
     frequencies: http://localhost:5000/reference-data/eu/frequencies
+    provenance: http://localhost:5000/reference-data/provenance-statements

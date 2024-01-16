@@ -131,3 +131,13 @@
         dc:identifier   "PUBLIC";
         skos:inScheme   atold:access-right;
         skos:prefLabel  "public"@en .
+
+<http://data.brreg.no/datakatalog/provinens/nasjonal>
+        rdf:type           skos:Concept;
+        at:authority-code  "NASJONAL";
+        at:deprecated      "false";
+        at:op-code         "NASJONAL";
+        atold:op-code      "NASJONAL";
+        dc:identifier      "NASJONAL";
+        skos:inScheme      <http://data.brreg.no/datakatalog/provinens>;
+        skos:prefLabel     "Autoritativ kilde"@nn , "Autoritativ kilde"@nb , "Authoritativ source"@en .

@@ -50,6 +50,7 @@ val RDF_DATA = ExternalRDFData(
     linguisticSystems = responseReader.parseTurtleFile("linguistic_systems.ttl", "TURTLE"),
     accessRights = responseReader.parseTurtleFile("access_rights.ttl", "TURTLE"),
     frequencies = responseReader.parseTurtleFile("frequencies.ttl", "TURTLE"),
+    provenance = responseReader.parseTurtleFile("provenance_statements.ttl", "TURTLE"),
     locations = responseReader.parseTurtleFile("nasjoner.ttl", "TURTLE")
         .union(responseReader.parseTurtleFile("fylker.ttl", "TURTLE"))
         .union(responseReader.parseTurtleFile("kommuner.ttl", "TURTLE")))

@@ -91,6 +91,7 @@ class DatasetService(
         m.add(locations)
         m.add(accessRights)
         m.add(frequencies)
+        m.add(provenance)
         return m
     }
 

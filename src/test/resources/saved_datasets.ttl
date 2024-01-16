@@ -300,3 +300,13 @@
     dc:identifier  "ANNUAL";
     skos:inScheme   <http://publications.europa.eu/resource/authority/frequency> ;
     skos:prefLabel  "annual"@en , "årleg"@nn , "årlig"@nb , "årlig"@no .
+
+<http://data.brreg.no/datakatalog/provinens/nasjonal>
+        rdf:type           skos:Concept;
+        at:authority-code  "NASJONAL";
+        at:deprecated      "false";
+        at:op-code         "NASJONAL";
+        atold:op-code      "NASJONAL";
+        dc:identifier      "NASJONAL";
+        skos:inScheme      <http://data.brreg.no/datakatalog/provinens>;
+        skos:prefLabel     "Autoritativ kilde"@nn , "Autoritativ kilde"@nb , "Authoritativ source"@en .

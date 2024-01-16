@@ -45,6 +45,8 @@ fun startMockServer() {
             .willReturn(ok(File("src/test/resources/access_rights.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/reference-data/eu/frequencies"))
             .willReturn(ok(File("src/test/resources/frequencies.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/provenance-statements"))
+            .willReturn(ok(File("src/test/resources/provenance_statements.ttl").readText())))
 
         mockserver.start()
     }

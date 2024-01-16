@@ -19,5 +19,6 @@ data class ApplicationURI(
     val geonorgeFylker: String,
     val geonorgeKommuner: String,
     val accessRights: String,
-    val frequencies: String
+    val frequencies: String,
+    val provenance: String
 )

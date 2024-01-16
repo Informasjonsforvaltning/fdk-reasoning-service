@@ -51,7 +51,8 @@ class ReasoningActivity(
             linguisticSystems = referenceDataCache.linguisticSystems(),
             locations = referenceDataCache.locations(),
             accessRights = referenceDataCache.accessRights(),
-            frequencies = referenceDataCache.frequencies()
+            frequencies = referenceDataCache.frequencies(),
+            provenance = referenceDataCache.provenance()
         )
         try {
             when {

@@ -108,8 +108,9 @@ class Datasets {
         argumentCaptor<TurtleDBO, String>().apply {
             verify(datasetMongoTemplate, times(5)).save(first.capture(), second.capture())
 
+            val expected = responseReader.parseTurtleFile("saved_dataset_series.ttl")
             val savedCatalog = parseRDFResponse(ungzip(first.firstValue.turtle), Lang.TURTLE, "")
-            assertTrue(datasetsModel.isIsomorphicWith(savedCatalog))
+            assertTrue(expected.isIsomorphicWith(savedCatalog))
         }
 
         val expectedReport = ReasoningReport(

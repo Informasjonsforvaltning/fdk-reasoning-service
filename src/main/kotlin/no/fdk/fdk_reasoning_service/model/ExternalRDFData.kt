@@ -15,5 +15,6 @@ data class ExternalRDFData(
     val linguisticSystems: Model,
     val locations: Model,
     val accessRights: Model,
-    val frequencies: Model
+    val frequencies: Model,
+    val provenance: Model
 )
