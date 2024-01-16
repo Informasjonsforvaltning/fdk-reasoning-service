@@ -17,5 +17,7 @@ data class ApplicationURI(
     val linguisticSystems: String,
     val geonorgeNasjoner: String,
     val geonorgeFylker: String,
-    val geonorgeKommuner: String
+    val geonorgeKommuner: String,
+    val accessRights: String,
+    val frequencies: String
 )

@@ -41,6 +41,10 @@ fun startMockServer() {
             .willReturn(ok(File("src/test/resources/fylker.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/reference-data/geonorge/administrative-enheter/kommuner"))
             .willReturn(ok(File("src/test/resources/kommuner.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/eu/access-rights"))
+            .willReturn(ok(File("src/test/resources/access_rights.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/eu/frequencies"))
+            .willReturn(ok(File("src/test/resources/frequencies.ttl").readText())))
 
         mockserver.start()
     }

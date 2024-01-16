@@ -29,6 +29,8 @@ application:
     geonorgeNasjoner: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/geonorge/administrative-enheter/nasjoner
     geonorgeFylker: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/geonorge/administrative-enheter/fylker
     geonorgeKommuner: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/geonorge/administrative-enheter/kommuner
+    accessRights: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/access-rights
+    frequencies: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/frequencies
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -70,3 +72,5 @@ application:
     geonorgeNasjoner: http://localhost:5000/geonorge/administrative-enheter/nasjoner
     geonorgeFylker: http://localhost:5000/geonorge/administrative-enheter/fylker
     geonorgeKommuner: http://localhost:5000/geonorge/administrative-enheter/kommuner
+    accessRights: http://localhost:5000/reference-data/eu/access-rights
+    frequencies: http://localhost:5000/reference-data/eu/frequencies

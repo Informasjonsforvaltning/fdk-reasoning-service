@@ -33,6 +33,7 @@
         dct:accessRights           <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
         dct:license                <http://publications.europa.eu/resource/authority/licence/NLOD_2_0> ;
         dct:spatial                <https://data.geonorge.no/administrativeEnheter/fylke/id/11> ;
+        dct:accrualPeriodicity     <http://publications.europa.eu/resource/authority/frequency/ANNUAL> ;
         dct:description            "Inngangsleverandører test"@nb ;
         dct:provenance             <http://data.brreg.no/datakatalog/provinens/nasjonal> ;
         dct:publisher              <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;
@@ -289,3 +290,13 @@
         a               dct:Location;
         dct:identifier  "11";
         dct:title       "Rogaland" .
+
+<http://publications.europa.eu/resource/authority/access-right/PUBLIC>
+        dc:identifier   "PUBLIC";
+        skos:inScheme   atold:access-right;
+        skos:prefLabel  "public"@en .
+
+<http://publications.europa.eu/resource/authority/frequency/ANNUAL>
+    dc:identifier  "ANNUAL";
+    skos:inScheme   <http://publications.europa.eu/resource/authority/frequency> ;
+    skos:prefLabel  "annual"@en , "årleg"@nn , "årlig"@nb , "årlig"@no .

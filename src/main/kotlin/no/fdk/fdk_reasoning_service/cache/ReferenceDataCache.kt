@@ -28,6 +28,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun openLicenses(): Model = OPEN_LICENSES
     fun linguisticSystems(): Model = LINGUISTIC_SYSTEMS
     fun locations(): Model = LOCATIONS
+    fun accessRights(): Model = ACCESS_RIGHTS
+    fun frequencies(): Model = FREQUENCIES
 
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
@@ -41,6 +43,9 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         updateFileTypes()
         updateOpenLicenses()
         updateLinguisticSystems()
+        updateLocations()
+        updateAccessRights()
+        updateFrequencies()
     }
 
     @Scheduled(cron = "0 10 */3 * * ?")
@@ -177,6 +182,30 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(cron = "0 10 22 * * ?")
+    fun updateAccessRights() {
+        try {
+            with(RDFDataMgr.loadModel(uris.accessRights, Lang.TURTLE)) {
+                ACCESS_RIGHTS.removeAll().add(this)
+            }
+            logger.info("successfully updated access rights cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.accessRights}", ex)
+        }
+    }
+
+    @Scheduled(cron = "0 5 22 * * ?")
+    fun updateFrequencies() {
+        try {
+            with(RDFDataMgr.loadModel(uris.frequencies, Lang.TURTLE)) {
+                FREQUENCIES.removeAll().add(this)
+            }
+            logger.info("successfully updated frequencies cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.frequencies}", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -189,5 +218,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val OPEN_LICENSES: Model = ModelFactory.createDefaultModel()
         val LINGUISTIC_SYSTEMS: Model = ModelFactory.createDefaultModel()
         val LOCATIONS: Model = ModelFactory.createDefaultModel()
+        val ACCESS_RIGHTS: Model = ModelFactory.createDefaultModel()
+        val FREQUENCIES: Model = ModelFactory.createDefaultModel()
     }
 }

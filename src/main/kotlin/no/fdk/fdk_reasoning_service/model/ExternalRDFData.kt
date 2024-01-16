@@ -13,5 +13,7 @@ data class ExternalRDFData(
     val fileTypes: Model,
     val openLicenses: Model,
     val linguisticSystems: Model,
-    val locations: Model
+    val locations: Model,
+    val accessRights: Model,
+    val frequencies: Model
 )

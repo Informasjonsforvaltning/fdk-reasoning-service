@@ -89,6 +89,8 @@ class DatasetService(
         m.add(openLicenses)
         m.add(linguisticSystems)
         m.add(locations)
+        m.add(accessRights)
+        m.add(frequencies)
         return m
     }
 

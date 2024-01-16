@@ -49,7 +49,9 @@ class ReasoningActivity(
             fileTypes = referenceDataCache.fileTypes(),
             openLicenses = referenceDataCache.openLicenses(),
             linguisticSystems = referenceDataCache.linguisticSystems(),
-            locations = referenceDataCache.locations()
+            locations = referenceDataCache.locations(),
+            accessRights = referenceDataCache.accessRights(),
+            frequencies = referenceDataCache.frequencies()
         )
         try {
             when {
