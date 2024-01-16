@@ -31,147 +31,147 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
 
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
-        invalidateAndUpdateOrganizations()
-        invalidateAndUpdateLOS()
-        invalidateAndUpdateEUROVOC()
-        invalidateAndUpdateDataThemes()
-        invalidateAndUpdateConceptStatuses()
-        invalidateAndUpdateConceptSubjects()
-        invalidateAndUpdateMediaTypes()
-        invalidateAndUpdateFileTypes()
-        invalidateAndUpdateOpenLicenses()
-        invalidateAndUpdateLinguisticSystems()
+        updateOrganizations()
+        updateLOS()
+        updateEUROVOC()
+        updateDataThemes()
+        updateConceptStatuses()
+        updateConceptSubjects()
+        updateMediaTypes()
+        updateFileTypes()
+        updateOpenLicenses()
+        updateLinguisticSystems()
     }
 
     @Scheduled(cron = "0 10 */3 * * ?")
-    fun invalidateAndUpdateOrganizations() {
-        logger.info("updating organization cache")
+    fun updateOrganizations() {
         try {
             with(RDFDataMgr.loadModel(uris.orgInternal, Lang.TURTLE)) {
                 ORGANIZATIONS.removeAll().add(this)
             }
+            logger.info("successfully updated organization cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.orgInternal}", ex)
         }
     }
 
     @Scheduled(cron = "0 30 23 * * ?")
-    fun invalidateAndUpdateLOS() {
-        logger.info("updating LOS cache")
+    fun updateLOS() {
         try {
             with(RDFDataMgr.loadModel(uris.los, Lang.TURTLE)) {
                 LOS.removeAll().add(this)
             }
+            logger.info("successfully updated LOS cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.los}", ex)
         }
     }
 
     @Scheduled(cron = "0 15 23 * * ?")
-    fun invalidateAndUpdateEUROVOC() {
-        logger.info("updating EUROVOCS cache")
+    fun updateEUROVOC() {
         try {
             with(RDFDataMgr.loadModel(uris.eurovocs, Lang.TURTLE)) {
                 EUROVOCS.removeAll().add(this)
             }
+            logger.info("successfully updated EUROVOCS cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.eurovocs}", ex)
         }
     }
 
     @Scheduled(cron = "0 40 23 * * ?")
-    fun invalidateAndUpdateDataThemes() {
-        logger.info("updating data themes cache")
+    fun updateDataThemes() {
         try {
             with(RDFDataMgr.loadModel(uris.dataThemes, Lang.TURTLE)) {
                 DATA_THEMES.removeAll().add(this)
             }
+            logger.info("successfully updated data themes cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.dataThemes}", ex)
         }
     }
 
     @Scheduled(cron = "0 45 23 * * ?")
-    fun invalidateAndUpdateConceptStatuses() {
-        logger.info("updating concept status cache")
+    fun updateConceptStatuses() {
         try {
             with(RDFDataMgr.loadModel(uris.conceptStatuses, Lang.TURTLE)) {
                 CONCEPT_STATUSES.removeAll().add(this)
             }
+            logger.info("successfully updated concept status cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.conceptStatuses}", ex)
         }
     }
 
     @Scheduled(cron = "0 50 * * * ?")
-    fun invalidateAndUpdateConceptSubjects() {
-        logger.info("updating concept subjects cache")
+    fun updateConceptSubjects() {
         try {
             with(RDFDataMgr.loadModel(uris.conceptSubjects, Lang.TURTLE)) {
                 CONCEPT_SUBJECTS.removeAll().add(this)
             }
+            logger.info("successfully updated concept subjects cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.conceptSubjects}", ex)
         }
     }
 
     @Scheduled(cron = "0 45 22 * * ?")
-    fun invalidateAndUpdateMediaTypes() {
-        logger.info("updating iana media types")
+    fun updateMediaTypes() {
         try {
             with(RDFDataMgr.loadModel(uris.ianaMediaTypes, Lang.TURTLE)) {
                 MEDIA_TYPES.removeAll().add(this)
             }
+            logger.info("successfully updated IANA media types cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.ianaMediaTypes}", ex)
         }
     }
 
     @Scheduled(cron = "0 40 22 * * ?")
-    fun invalidateAndUpdateFileTypes() {
-        logger.info("updating EU file types")
+    fun updateFileTypes() {
         try {
             with(RDFDataMgr.loadModel(uris.fileTypes, Lang.TURTLE)) {
                 FILE_TYPES.removeAll().add(this)
             }
+            logger.info("successfully updated EU file types cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.fileTypes}", ex)
         }
     }
 
     @Scheduled(cron = "0 35 22 * * ?")
-    fun invalidateAndUpdateOpenLicenses() {
-        logger.info("updating open licenses")
+    fun updateOpenLicenses() {
         try {
             with(RDFDataMgr.loadModel(uris.openLicenses, Lang.TURTLE)) {
                 OPEN_LICENSES.removeAll().add(this)
             }
+            logger.info("successfully updated open licenses cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.openLicenses}", ex)
         }
     }
 
     @Scheduled(cron = "0 30 22 * * ?")
-    fun invalidateAndUpdateLinguisticSystems() {
-        logger.info("updating linguistic systems")
+    fun updateLinguisticSystems() {
         try {
             with(RDFDataMgr.loadModel(uris.linguisticSystems, Lang.TURTLE)) {
                 LINGUISTIC_SYSTEMS.removeAll().add(this)
             }
+            logger.info("successfully updated linguistic systems cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.linguisticSystems}", ex)
         }
     }
 
     @Scheduled(cron = "0 15 22 * * ?")
-    fun invalidateAndUpdateLocations() {
-        logger.info("updating locations")
+    fun updateLocations() {
         try {
             val m = ModelFactory.createDefaultModel()
             with(RDFDataMgr.loadModel(uris.geonorgeNasjoner, Lang.TURTLE)) { m.add(this) }
             with(RDFDataMgr.loadModel(uris.geonorgeFylker, Lang.TURTLE)) { m.add(this) }
             with(RDFDataMgr.loadModel(uris.geonorgeKommuner, Lang.TURTLE)) { m.add(this) }
             LOCATIONS.removeAll().add(m)
+            logger.info("successfully updated locations cache")
         } catch (ex: Exception) {
             logger.error("Update of locations failed", ex)
         }

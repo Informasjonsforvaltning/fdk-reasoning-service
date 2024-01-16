@@ -28,9 +28,9 @@ class Cache : ApiTestContext() {
 
         val expected = responseReader.parseTurtleFile("orgs.ttl")
 
-        cache.invalidateAndUpdateOrganizations()
+        cache.updateOrganizations()
         assertTrue(expected.isIsomorphicWith(cache.organizations()), "able to update model")
-        cache.invalidateAndUpdateOrganizations()
+        cache.updateOrganizations()
         assertTrue(expected.isIsomorphicWith(cache.organizations()), "keeps old data when update fails")
     }
 
@@ -42,9 +42,9 @@ class Cache : ApiTestContext() {
 
         val expected = responseReader.parseTurtleFile("los.ttl")
 
-        cache.invalidateAndUpdateLOS()
+        cache.updateLOS()
         assertTrue(expected.isIsomorphicWith(cache.los()), "able to update model")
-        cache.invalidateAndUpdateLOS()
+        cache.updateLOS()
         assertTrue(expected.isIsomorphicWith(cache.los()), "keeps old data when update fails")
     }
 
@@ -56,9 +56,9 @@ class Cache : ApiTestContext() {
 
         val expected = responseReader.parseTurtleFile("eurovocs.ttl")
 
-        cache.invalidateAndUpdateEUROVOC()
+        cache.updateEUROVOC()
         assertTrue(expected.isIsomorphicWith(cache.eurovocs()), "able to update model")
-        cache.invalidateAndUpdateEUROVOC()
+        cache.updateEUROVOC()
         assertTrue(expected.isIsomorphicWith(cache.eurovocs()), "keeps old data when update fails")
     }
 
@@ -70,9 +70,9 @@ class Cache : ApiTestContext() {
 
         val expected = responseReader.parseTurtleFile("data_themes.ttl")
 
-        cache.invalidateAndUpdateDataThemes()
+        cache.updateDataThemes()
         assertTrue(expected.isIsomorphicWith(cache.dataThemes()), "able to update model")
-        cache.invalidateAndUpdateDataThemes()
+        cache.updateDataThemes()
         assertTrue(expected.isIsomorphicWith(cache.dataThemes()), "keeps old data when update fails")
     }
 
@@ -84,9 +84,9 @@ class Cache : ApiTestContext() {
 
         val expected = responseReader.parseTurtleFile("concept_subjects.ttl")
 
-        cache.invalidateAndUpdateConceptSubjects()
+        cache.updateConceptSubjects()
         assertTrue(expected.isIsomorphicWith(cache.conceptSubjects()), "able to update model")
-        cache.invalidateAndUpdateConceptSubjects()
+        cache.updateConceptSubjects()
         assertTrue(expected.isIsomorphicWith(cache.conceptSubjects()), "keeps old data when update fails")
     }
 
@@ -98,9 +98,9 @@ class Cache : ApiTestContext() {
 
         val expected = responseReader.parseTurtleFile("concept_statuses.ttl")
 
-        cache.invalidateAndUpdateConceptStatuses()
+        cache.updateConceptStatuses()
         assertTrue(expected.isIsomorphicWith(cache.conceptStatuses()), "able to update model")
-        cache.invalidateAndUpdateConceptStatuses()
+        cache.updateConceptStatuses()
         assertTrue(expected.isIsomorphicWith(cache.conceptStatuses()), "keeps old data when update fails")
     }
 
