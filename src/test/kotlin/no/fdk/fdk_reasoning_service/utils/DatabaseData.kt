@@ -55,6 +55,8 @@ val RDF_DATA = ExternalRDFData(
     roleTypes = responseReader.parseTurtleFile("role_types.ttl", "TURTLE"),
     evidenceTypes = responseReader.parseTurtleFile("evidence_types.ttl", "TURTLE"),
     channelTypes = responseReader.parseTurtleFile("channel_types.ttl", "TURTLE"),
+    mainActivities = responseReader.parseTurtleFile("main_activities.ttl", "TURTLE"),
+    weekDays = responseReader.parseTurtleFile("week_days.ttl", "TURTLE"),
     locations = responseReader.parseTurtleFile("nasjoner.ttl", "TURTLE")
         .union(responseReader.parseTurtleFile("fylker.ttl", "TURTLE"))
         .union(responseReader.parseTurtleFile("kommuner.ttl", "TURTLE")))

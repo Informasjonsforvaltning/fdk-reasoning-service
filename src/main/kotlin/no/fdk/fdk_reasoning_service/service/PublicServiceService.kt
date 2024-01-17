@@ -106,6 +106,8 @@ class PublicServiceService(
         m.add(roleTypes)
         m.add(evidenceTypes)
         m.add(channelTypes)
+        m.add(mainActivities)
+        m.add(weekDays)
         return m
     }
 

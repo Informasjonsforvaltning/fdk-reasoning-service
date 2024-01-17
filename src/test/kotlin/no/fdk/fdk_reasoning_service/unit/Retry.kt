@@ -89,6 +89,10 @@ class Retry {
             .thenReturn(ModelFactory.createDefaultModel())
         whenever(referenceDataCache.channelTypes())
             .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.mainActivities())
+            .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.weekDays())
+            .thenReturn(ModelFactory.createDefaultModel())
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 0)
         assertTrue { RETRY_QUEUE.contains(RetryReportsWrap(CatalogType.DATASETS, 1, emptyList())) }
@@ -134,6 +138,10 @@ class Retry {
             .thenReturn(RDF_DATA.evidenceTypes)
         whenever(referenceDataCache.channelTypes())
             .thenReturn(RDF_DATA.channelTypes)
+        whenever(referenceDataCache.mainActivities())
+            .thenReturn(RDF_DATA.mainActivities)
+        whenever(referenceDataCache.weekDays())
+            .thenReturn(RDF_DATA.weekDays)
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 10)
         assertTrue { RETRY_QUEUE.isEmpty() }

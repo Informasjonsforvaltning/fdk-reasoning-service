@@ -21,5 +21,7 @@ data class ExternalRDFData(
     val admsStatuses: Model,
     val roleTypes: Model,
     val evidenceTypes: Model,
-    val channelTypes: Model
+    val channelTypes: Model,
+    val mainActivities: Model,
+    val weekDays: Model
 )

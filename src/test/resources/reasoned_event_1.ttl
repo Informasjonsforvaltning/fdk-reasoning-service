@@ -11,7 +11,7 @@
 @prefix orgstatus: <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/org-status.ttl#> .
 @prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/org-type.ttl#> .
 @prefix rov:       <http://www.w3.org/ns/regorg#> .
-@prefix schema:    <http://schema.org/> .
+@prefix schema:    <https://schema.org/> .
 @prefix skos:      <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd:       <http://www.w3.org/2001/XMLSchema#> .
 

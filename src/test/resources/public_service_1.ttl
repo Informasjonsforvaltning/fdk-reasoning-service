@@ -5,7 +5,8 @@
 @prefix dct:    <http://purl.org/dc/terms/> .
 @prefix eli:    <http://data.europa.eu/eli/ontology#> .
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
-@prefix schema: <http://schema.org/> .
+@prefix schema: <https://schema.org/> .
+@prefix time:   <http://www.w3.org/2006/time#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 
@@ -115,6 +116,7 @@
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/1>
         a                         cpsv:PublicService ;
+        dct:type                  <http://publications.europa.eu/resource/authority/main-activity/education> ;
         cv:hasChannel             <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
         cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/972417866> ;
         cv:hasContactPoint        <http://public-service-publisher.fellesdatakatalog.digdir.no/contact/1> ;
@@ -172,6 +174,10 @@
         a               cv:Channel ;
         cv:ownedBy      <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
         dct:identifier  "2" ;
+        cv:openingHours [
+            a               time:TemporalEntity ;
+            time:dayOfWeek  schema:PublicHolidays ;
+        ] ;
         dct:type        <https://data.norge.no/concepts/257> .
 
 <https://data.norge.no/concepts/150>

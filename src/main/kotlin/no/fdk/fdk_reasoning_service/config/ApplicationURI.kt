@@ -25,5 +25,7 @@ data class ApplicationURI(
     val admsStatuses: String,
     val roleTypes: String,
     val evidenceTypes: String,
-    val channelTypes: String
+    val channelTypes: String,
+    val mainActivities: String,
+    val weekDays: String
 )

@@ -57,7 +57,9 @@ class ReasoningActivity(
             admsStatuses = referenceDataCache.admsStatuses(),
             roleTypes = referenceDataCache.roleTypes(),
             evidenceTypes = referenceDataCache.evidenceTypes(),
-            channelTypes = referenceDataCache.channelTypes()
+            channelTypes = referenceDataCache.channelTypes(),
+            mainActivities = referenceDataCache.mainActivities(),
+            weekDays = referenceDataCache.weekDays()
         )
         try {
             when {

@@ -1,4 +1,4 @@
-@prefix schema: <http://schema.org/> .
+@prefix schema: <https://schema.org/> .
 @prefix dcatapi: <http://dcat.no/dcatapi/> .
 @prefix adms:  <http://www.w3.org/ns/adms#> .
 @prefix iso:   <http://iso.org/25012/2008/dataquality/> .

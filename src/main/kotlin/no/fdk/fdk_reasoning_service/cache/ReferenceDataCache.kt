@@ -36,6 +36,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun roleTypes(): Model = ROLE_TYPES
     fun evidenceTypes(): Model = EVIDENCE_TYPES
     fun channelTypes(): Model = CHANNEL_TYPES
+    fun mainActivities(): Model = MAIN_ACTIVITIES
+    fun weekDays(): Model = WEEK_DAYS
 
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
@@ -58,6 +60,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         updateRoleTypes()
         updateEvidenceTypes()
         updateChannelTypes()
+        updateMainActivities()
+        updateWeekDays()
     }
 
     @Scheduled(cron = "0 10 */3 * * ?")
@@ -290,6 +294,30 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(cron = "0 20 21 * * ?")
+    fun updateMainActivities() {
+        try {
+            with(RDFDataMgr.loadModel(uris.mainActivities, Lang.TURTLE)) {
+                MAIN_ACTIVITIES.removeAll().add(this)
+            }
+            logger.info("successfully updated main activities cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.mainActivities}", ex)
+        }
+    }
+
+    @Scheduled(cron = "0 15 21 * * ?")
+    fun updateWeekDays() {
+        try {
+            with(RDFDataMgr.loadModel(uris.weekDays, Lang.TURTLE)) {
+                WEEK_DAYS.removeAll().add(this)
+            }
+            logger.info("successfully updated week days cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.weekDays}", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -310,5 +338,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val ROLE_TYPES: Model = ModelFactory.createDefaultModel()
         val EVIDENCE_TYPES: Model = ModelFactory.createDefaultModel()
         val CHANNEL_TYPES: Model = ModelFactory.createDefaultModel()
+        val MAIN_ACTIVITIES: Model = ModelFactory.createDefaultModel()
+        val WEEK_DAYS: Model = ModelFactory.createDefaultModel()
     }
 }
