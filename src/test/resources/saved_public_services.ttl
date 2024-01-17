@@ -15,6 +15,7 @@
 @prefix dc:    <http://purl.org/dc/elements/1.1/> .
 @prefix at:    <http://publications.europa.eu/ontology/authority/> .
 @prefix atold: <http://publications.europa.eu/resource/authority/> .
+@prefix adms:   <http://www.w3.org/ns/adms#> .
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/8>
         a                     cv:Cost ;
@@ -54,6 +55,7 @@
 <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1>
         a               cv:PublicOrganisation ;
         dct:identifier  "1" ;
+        dct:type        <http://purl.org/adms/publishertype/Company> ;
         dct:spatial     <http://publications.europa.eu/resource/authority/country/NOR> ;
         dct:title       "Brønnøysundregistrene"@nb ;
         skos:prefLabel  "Brønnøysundregistrene"@nb .
@@ -299,6 +301,7 @@
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
         dct:description           "Søknad om driftsstøtte til anlegg."@nb ;
         dct:identifier            "12" ;
+        adms:status               <http://purl.org/adms/status/Completed> ;
         dcat:themeTaxonomy        <https://psi.norge.no/los/tema/skole-og-utdanning> ;
         dct:title                 "Søknad om driftsstøtte til anlegg"@nb ;
         cv:hasParticipation       <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> .
@@ -366,3 +369,15 @@
         skos:exactMatch    <http://id.loc.gov/vocabulary/iso639-1/nn>;
         skos:inScheme      atold:language;
         skos:prefLabel     "Norsk Nynorsk"@nb , "Norwegian Nynorsk"@en , "Norsk Nynorsk"@nn , "Norsk Nynorsk"@no .
+
+<http://purl.org/adms/status/Completed>
+        a               skos:Concept;
+        skos:inScheme   <http://purl.org/adms/status/1.0>;
+        skos:notation   "Completed";
+        skos:prefLabel  "Ferdigstilt"@nn , "Ferdigstilt"@nb , "Completed"@en .
+
+<http://purl.org/adms/publishertype/Company>
+        a               skos:Concept;
+        skos:inScheme   <http://purl.org/adms/publishertype/1.0>;
+        skos:notation   "Company";
+        skos:prefLabel  "Verksemd"@nn , "Virksomhet"@nb , "Company"@en .

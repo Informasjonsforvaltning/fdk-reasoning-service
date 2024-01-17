@@ -32,6 +32,8 @@ application:
     accessRights: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/access-rights
     frequencies: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/frequencies
     provenance: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/provenance-statements
+    publisherTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/adms/publisher-types
+    admsStatuses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/adms/statuses
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -76,3 +78,5 @@ application:
     accessRights: http://localhost:5000/reference-data/eu/access-rights
     frequencies: http://localhost:5000/reference-data/eu/frequencies
     provenance: http://localhost:5000/reference-data/provenance-statements
+    publisherTypes: http://localhost:5000/reference-data/adms/publisher-types
+    admsStatuses: http://localhost:5000/reference-data/adms/statuses

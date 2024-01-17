@@ -101,6 +101,8 @@ class PublicServiceService(
         val m = ModelFactory.createDefaultModel()
         m.add(selectedThemeTriples())
         m.add(linguisticSystems)
+        m.add(publisherTypes)
+        m.add(admsStatuses)
         return m
     }
 

@@ -79,6 +79,10 @@ class Retry {
             .thenReturn(ModelFactory.createDefaultModel())
         whenever(referenceDataCache.provenance())
             .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.publisherTypes())
+            .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.admsStatuses())
+            .thenReturn(ModelFactory.createDefaultModel())
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 0)
         assertTrue { RETRY_QUEUE.contains(RetryReportsWrap(CatalogType.DATASETS, 1, emptyList())) }
@@ -114,6 +118,10 @@ class Retry {
             .thenReturn(RDF_DATA.frequencies)
         whenever(referenceDataCache.provenance())
             .thenReturn(RDF_DATA.provenance)
+        whenever(referenceDataCache.publisherTypes())
+            .thenReturn(RDF_DATA.publisherTypes)
+        whenever(referenceDataCache.admsStatuses())
+            .thenReturn(RDF_DATA.admsStatuses)
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 10)
         assertTrue { RETRY_QUEUE.isEmpty() }

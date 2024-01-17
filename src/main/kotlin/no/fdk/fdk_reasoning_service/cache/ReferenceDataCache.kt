@@ -31,6 +31,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun accessRights(): Model = ACCESS_RIGHTS
     fun frequencies(): Model = FREQUENCIES
     fun provenance(): Model = PROVENANCE
+    fun publisherTypes(): Model = PUBLISHER_TYPES
+    fun admsStatuses(): Model = ADMS_STATUSES
 
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
@@ -48,6 +50,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         updateAccessRights()
         updateFrequencies()
         updateProvenance()
+        updatePublisherTypes()
+        updateAdmsStatuses()
     }
 
     @Scheduled(cron = "0 10 */3 * * ?")
@@ -220,6 +224,30 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(cron = "0 45 21 * * ?")
+    fun updatePublisherTypes() {
+        try {
+            with(RDFDataMgr.loadModel(uris.publisherTypes, Lang.TURTLE)) {
+                PUBLISHER_TYPES.removeAll().add(this)
+            }
+            logger.info("successfully updated publisher types cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.publisherTypes}", ex)
+        }
+    }
+
+    @Scheduled(cron = "0 40 21 * * ?")
+    fun updateAdmsStatuses() {
+        try {
+            with(RDFDataMgr.loadModel(uris.admsStatuses, Lang.TURTLE)) {
+                ADMS_STATUSES.removeAll().add(this)
+            }
+            logger.info("successfully updated adms statuses cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.admsStatuses}", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -235,5 +263,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val ACCESS_RIGHTS: Model = ModelFactory.createDefaultModel()
         val FREQUENCIES: Model = ModelFactory.createDefaultModel()
         val PROVENANCE: Model = ModelFactory.createDefaultModel()
+        val PUBLISHER_TYPES: Model = ModelFactory.createDefaultModel()
+        val ADMS_STATUSES: Model = ModelFactory.createDefaultModel()
     }
 }

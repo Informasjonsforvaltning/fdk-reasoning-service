@@ -52,7 +52,9 @@ class ReasoningActivity(
             locations = referenceDataCache.locations(),
             accessRights = referenceDataCache.accessRights(),
             frequencies = referenceDataCache.frequencies(),
-            provenance = referenceDataCache.provenance()
+            provenance = referenceDataCache.provenance(),
+            publisherTypes = referenceDataCache.publisherTypes(),
+            admsStatuses = referenceDataCache.admsStatuses()
         )
         try {
             when {

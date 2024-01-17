@@ -47,6 +47,7 @@
 <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1>
         a               cv:PublicOrganisation ;
         dct:identifier  "1" ;
+        dct:type        <http://purl.org/adms/publishertype/Company> ;
         dct:spatial     <http://publications.europa.eu/resource/authority/country/NOR> ;
         dct:title       "Brønnøysundregistrene"@nb ;
         skos:prefLabel  "Brønnøysundregistrene"@nb .

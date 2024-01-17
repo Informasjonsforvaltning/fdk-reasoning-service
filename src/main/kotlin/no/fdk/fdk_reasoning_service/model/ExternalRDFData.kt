@@ -16,5 +16,7 @@ data class ExternalRDFData(
     val locations: Model,
     val accessRights: Model,
     val frequencies: Model,
-    val provenance: Model
+    val provenance: Model,
+    val publisherTypes: Model,
+    val admsStatuses: Model
 )

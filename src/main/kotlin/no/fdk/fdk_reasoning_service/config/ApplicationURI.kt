@@ -20,5 +20,7 @@ data class ApplicationURI(
     val geonorgeKommuner: String,
     val accessRights: String,
     val frequencies: String,
-    val provenance: String
+    val provenance: String,
+    val publisherTypes: String,
+    val admsStatuses: String
 )
