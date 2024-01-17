@@ -34,6 +34,9 @@ application:
     provenance: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/provenance-statements
     publisherTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/adms/publisher-types
     admsStatuses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/adms/statuses
+    roleTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/role-types
+    evidenceTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/evidence-types
+    channelTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/service-channel-types
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -80,3 +83,6 @@ application:
     provenance: http://localhost:5000/reference-data/provenance-statements
     publisherTypes: http://localhost:5000/reference-data/adms/publisher-types
     admsStatuses: http://localhost:5000/reference-data/adms/statuses
+    roleTypes: http://localhost:5000/reference-data/digdir/role-types
+    evidenceTypes: http://localhost:5000/reference-data/digdir/evidence-types
+    channelTypes: http://localhost:5000/reference-data/digdir/service-channel-types

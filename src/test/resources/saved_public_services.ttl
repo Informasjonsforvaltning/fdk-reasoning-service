@@ -116,15 +116,17 @@
         dct:modified       "2021-08-25T08:00:03.178Z"^^xsd:dateTime ;
         foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/1> .
 
-<https://data.norge.no/concepts/251>
-        a               skos:Concept ;
-        skos:prefLabel  "Hjemmeside"@nb , "Homepage"@en .
+<http://digdir.no/evidence>
+    a       cv:Evidence ;
+    dct:title "Krav om vandel"@nb ;
+    dct:type <https://data.norge.no/vocabulary/evidence-type#attestation> .
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/1>
         a                         cpsv:PublicService ;
         cv:hasChannel             <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
         cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/972417866> ;
         cv:hasContactPoint        <http://public-service-publisher.fellesdatakatalog.digdir.no/contact/1> ;
+        cv:hasSupportingEvidence  <http://digdir.no/evidence> ;
         cv:hasCost                <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/5> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/12> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/9> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/6> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/4> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/10> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/3> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/7> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/11> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/8> ;
         cv:hasCriterion           <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/1> ;
         cv:hasLegalResource       <http://public-service-publisher.fellesdatakatalog.digdir.no/legalresource/1> ;
@@ -238,7 +240,7 @@
         a               cv:Channel ;
         cv:ownedBy      <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
         dct:identifier  "1" ;
-        dct:type        <https://data.norge.no/concepts/251> .
+        dct:type <https://data.norge.no/vocabulary/service-channel-type#homepage> .
 
 <https://data.norge.no/concepts/206>
         a               skos:Concept ;
@@ -307,6 +309,7 @@
         cv:hasParticipation       <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> .
 
 <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl>
+       cv:role <https://data.norge.no/vocabulary/role-type#data-provider> ;
         a                  cv:Participation ;
         cv:hasParticipant  <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exAktorDummy.ttl> .
 
@@ -381,3 +384,23 @@
         skos:inScheme   <http://purl.org/adms/publishertype/1.0>;
         skos:notation   "Company";
         skos:prefLabel  "Verksemd"@nn , "Virksomhet"@nb , "Company"@en .
+
+<https://data.norge.no/vocabulary/service-channel-type#homepage>
+        a               skos:Concept;
+        dct:identifier  "https://data.norge.no/vocabulary/service-channel-type#homepage"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/service-channel-type>;
+        skos:prefLabel  "homepage"@en , "hjemmeside"@nb .
+
+<https://data.norge.no/vocabulary/role-type#data-provider>
+        a               skos:Concept , foaf:Agent;
+        dct:identifier  "https://data.norge.no/vocabulary/role-type#data-provider"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/role-type>;
+        skos:prefLabel  "data provider"@en , "dataleverandør"@nb .
+
+<https://data.norge.no/vocabulary/evidence-type#attestation>
+        a                  skos:Concept;
+        dct:identifier     "https://data.norge.no/vocabulary/evidence-type#attestation"^^xsd:anyURI;
+        dct:publisher      <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/991825827>;
+        skos:inScheme      <https://data.norge.no/vocabulary/evidence-type>;
+        skos:prefLabel     "attestation"@en , "attest"@nb;
+        dcat:contactPoint  <https://data.norge.no/vocabulary/evidence-type#Digdir> .

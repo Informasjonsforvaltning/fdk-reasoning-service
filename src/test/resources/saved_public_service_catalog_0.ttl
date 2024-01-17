@@ -51,6 +51,7 @@
     dcatno:containsService <http://public-service-publisher.fellesdatakatalog.digdir.no/services/12> .
 
 <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl>
+       cv:role <https://data.norge.no/vocabulary/role-type#data-provider> ;
        a cv:Participation;
        cv:hasParticipant <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exAktorDummy.ttl> ;
        .
@@ -70,3 +71,9 @@
         skos:inScheme   <http://purl.org/adms/status/1.0>;
         skos:notation   "Completed";
         skos:prefLabel  "Ferdigstilt"@nn , "Ferdigstilt"@nb , "Completed"@en .
+
+<https://data.norge.no/vocabulary/role-type#data-provider>
+        a               skos:Concept , foaf:Agent;
+        dct:identifier  "https://data.norge.no/vocabulary/role-type#data-provider"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/role-type>;
+        skos:prefLabel  "data provider"@en , "dataleverandør"@nb .

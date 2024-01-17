@@ -51,6 +51,7 @@
     dcatno:containsService <http://public-service-publisher.fellesdatakatalog.digdir.no/services/12> .
 
 <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl>
+       cv:role <https://data.norge.no/vocabulary/role-type#data-provider> ;
        a cv:Participation;
        cv:hasParticipant <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exAktorDummy.ttl> ;
        .

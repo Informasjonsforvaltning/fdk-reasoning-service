@@ -1,0 +1,10 @@
+@prefix dct:     <http://purl.org/dc/terms/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+<https://data.norge.no/vocabulary/role-type#data-provider>
+        a               skos:Concept , foaf:Agent;
+        dct:identifier  "https://data.norge.no/vocabulary/role-type#data-provider"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/role-type>;
+        skos:prefLabel  "data provider"@en , "dataleverandør"@nb .

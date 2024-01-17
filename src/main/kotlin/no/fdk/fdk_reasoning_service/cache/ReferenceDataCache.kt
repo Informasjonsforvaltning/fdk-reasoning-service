@@ -33,6 +33,9 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun provenance(): Model = PROVENANCE
     fun publisherTypes(): Model = PUBLISHER_TYPES
     fun admsStatuses(): Model = ADMS_STATUSES
+    fun roleTypes(): Model = ROLE_TYPES
+    fun evidenceTypes(): Model = EVIDENCE_TYPES
+    fun channelTypes(): Model = CHANNEL_TYPES
 
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
@@ -52,6 +55,9 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         updateProvenance()
         updatePublisherTypes()
         updateAdmsStatuses()
+        updateRoleTypes()
+        updateEvidenceTypes()
+        updateChannelTypes()
     }
 
     @Scheduled(cron = "0 10 */3 * * ?")
@@ -248,6 +254,42 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(cron = "0 35 21 * * ?")
+    fun updateRoleTypes() {
+        try {
+            with(RDFDataMgr.loadModel(uris.roleTypes, Lang.TURTLE)) {
+                ROLE_TYPES.removeAll().add(this)
+            }
+            logger.info("successfully updated role types cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.roleTypes}", ex)
+        }
+    }
+
+    @Scheduled(cron = "0 30 21 * * ?")
+    fun updateEvidenceTypes() {
+        try {
+            with(RDFDataMgr.loadModel(uris.evidenceTypes, Lang.TURTLE)) {
+                EVIDENCE_TYPES.removeAll().add(this)
+            }
+            logger.info("successfully updated evidence types cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.evidenceTypes}", ex)
+        }
+    }
+
+    @Scheduled(cron = "0 25 21 * * ?")
+    fun updateChannelTypes() {
+        try {
+            with(RDFDataMgr.loadModel(uris.channelTypes, Lang.TURTLE)) {
+                CHANNEL_TYPES.removeAll().add(this)
+            }
+            logger.info("successfully updated channel types cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.channelTypes}", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -265,5 +307,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val PROVENANCE: Model = ModelFactory.createDefaultModel()
         val PUBLISHER_TYPES: Model = ModelFactory.createDefaultModel()
         val ADMS_STATUSES: Model = ModelFactory.createDefaultModel()
+        val ROLE_TYPES: Model = ModelFactory.createDefaultModel()
+        val EVIDENCE_TYPES: Model = ModelFactory.createDefaultModel()
+        val CHANNEL_TYPES: Model = ModelFactory.createDefaultModel()
     }
 }

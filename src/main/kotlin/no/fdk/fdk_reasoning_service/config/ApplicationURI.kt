@@ -22,5 +22,8 @@ data class ApplicationURI(
     val frequencies: String,
     val provenance: String,
     val publisherTypes: String,
-    val admsStatuses: String
+    val admsStatuses: String,
+    val roleTypes: String,
+    val evidenceTypes: String,
+    val channelTypes: String
 )

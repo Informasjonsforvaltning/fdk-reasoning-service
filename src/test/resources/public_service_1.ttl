@@ -108,15 +108,17 @@
         dct:modified       "2021-08-25T08:00:03.178Z"^^xsd:dateTime ;
         foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/services/1> .
 
-<https://data.norge.no/concepts/251>
-        a               skos:Concept ;
-        skos:prefLabel  "Hjemmeside"@nb , "Homepage"@en .
+<http://digdir.no/evidence>
+    a       cv:Evidence ;
+    dct:title "Krav om vandel"@nb ;
+    dct:type <https://data.norge.no/vocabulary/evidence-type#attestation> .
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/1>
         a                         cpsv:PublicService ;
         cv:hasChannel             <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/2> ;
         cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/972417866> ;
         cv:hasContactPoint        <http://public-service-publisher.fellesdatakatalog.digdir.no/contact/1> ;
+        cv:hasSupportingEvidence  <http://digdir.no/evidence> ;
         cv:hasCost                <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/1> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/5> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/12> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/9> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/2> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/6> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/4> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/10> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/3> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/7> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/11> , <http://public-service-publisher.fellesdatakatalog.digdir.no/cost/8> ;
         cv:hasCriterion           <http://public-service-publisher.fellesdatakatalog.digdir.no/criterion-requirement/1> ;
         cv:hasLegalResource       <http://public-service-publisher.fellesdatakatalog.digdir.no/legalresource/1> ;
@@ -230,7 +232,7 @@
         a               cv:Channel ;
         cv:ownedBy      <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
         dct:identifier  "1" ;
-        dct:type        <https://data.norge.no/concepts/251> .
+        dct:type <https://data.norge.no/vocabulary/service-channel-type#homepage> .
 
 <https://data.norge.no/concepts/206>
         a               skos:Concept ;

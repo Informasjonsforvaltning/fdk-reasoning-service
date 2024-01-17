@@ -3,7 +3,6 @@ package no.fdk.fdk_reasoning_service.utils
 import no.fdk.fdk_reasoning_service.model.ExternalRDFData
 import no.fdk.fdk_reasoning_service.model.TurtleDBO
 import no.fdk.fdk_reasoning_service.service.gzip
-import org.apache.jena.rdf.model.ModelFactory
 import org.bson.Document
 
 private val responseReader = TestResponseReader()
@@ -53,6 +52,9 @@ val RDF_DATA = ExternalRDFData(
     provenance = responseReader.parseTurtleFile("provenance_statements.ttl", "TURTLE"),
     publisherTypes = responseReader.parseTurtleFile("publisher_types.ttl", "TURTLE"),
     admsStatuses = responseReader.parseTurtleFile("adms_statuses.ttl", "TURTLE"),
+    roleTypes = responseReader.parseTurtleFile("role_types.ttl", "TURTLE"),
+    evidenceTypes = responseReader.parseTurtleFile("evidence_types.ttl", "TURTLE"),
+    channelTypes = responseReader.parseTurtleFile("channel_types.ttl", "TURTLE"),
     locations = responseReader.parseTurtleFile("nasjoner.ttl", "TURTLE")
         .union(responseReader.parseTurtleFile("fylker.ttl", "TURTLE"))
         .union(responseReader.parseTurtleFile("kommuner.ttl", "TURTLE")))

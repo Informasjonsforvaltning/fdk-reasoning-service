@@ -83,6 +83,12 @@ class Retry {
             .thenReturn(ModelFactory.createDefaultModel())
         whenever(referenceDataCache.admsStatuses())
             .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.roleTypes())
+            .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.evidenceTypes())
+            .thenReturn(ModelFactory.createDefaultModel())
+        whenever(referenceDataCache.channelTypes())
+            .thenReturn(ModelFactory.createDefaultModel())
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 0)
         assertTrue { RETRY_QUEUE.contains(RetryReportsWrap(CatalogType.DATASETS, 1, emptyList())) }
@@ -122,6 +128,12 @@ class Retry {
             .thenReturn(RDF_DATA.publisherTypes)
         whenever(referenceDataCache.admsStatuses())
             .thenReturn(RDF_DATA.admsStatuses)
+        whenever(referenceDataCache.roleTypes())
+            .thenReturn(RDF_DATA.roleTypes)
+        whenever(referenceDataCache.evidenceTypes())
+            .thenReturn(RDF_DATA.evidenceTypes)
+        whenever(referenceDataCache.channelTypes())
+            .thenReturn(RDF_DATA.channelTypes)
 
         reasoningActivity.initiateReasoning(CatalogType.DATASETS, emptyList(), 10)
         assertTrue { RETRY_QUEUE.isEmpty() }

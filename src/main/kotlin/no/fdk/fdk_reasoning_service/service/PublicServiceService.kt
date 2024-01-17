@@ -103,6 +103,9 @@ class PublicServiceService(
         m.add(linguisticSystems)
         m.add(publisherTypes)
         m.add(admsStatuses)
+        m.add(roleTypes)
+        m.add(evidenceTypes)
+        m.add(channelTypes)
         return m
     }
 
