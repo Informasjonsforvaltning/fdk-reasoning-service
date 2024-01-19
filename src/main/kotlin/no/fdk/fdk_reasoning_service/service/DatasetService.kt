@@ -48,6 +48,9 @@ class DatasetService(
             harvestReport.changedCatalogs
                 .forEach { reasonCatalogDatasets(it.fdkId, rdfData) }
 
+            LOGGER.info("size of changed dataset catalogs {}", harvestReport.changedCatalogs.size)
+            LOGGER.info("size of changed datasets {}", harvestReport.changedResources.size)
+
             ReasoningReport(
                 id = harvestReport.id,
                 url = harvestReport.url,

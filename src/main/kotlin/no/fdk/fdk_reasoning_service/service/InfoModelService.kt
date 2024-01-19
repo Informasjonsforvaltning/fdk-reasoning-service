@@ -56,6 +56,9 @@ class InfoModelService(
             harvestReport.changedCatalogs
                 .forEach { reasonCatalogModels(it.fdkId, rdfData, start) }
 
+            LOGGER.info("size of changed model catalogs {}", harvestReport.changedCatalogs.size)
+            LOGGER.info("size of changed models {}", harvestReport.changedResources.size)
+
             ReasoningReport(
                 id = harvestReport.id,
                 url = harvestReport.url,
