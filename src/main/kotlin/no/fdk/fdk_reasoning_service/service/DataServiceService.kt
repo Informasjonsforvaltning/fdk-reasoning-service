@@ -47,9 +47,6 @@ class DataServiceService(
             harvestReport.changedCatalogs
                 .forEach { reasonCatalogServices(it.fdkId, rdfData) }
 
-            LOGGER.info("size of changed api catalogs {}", harvestReport.changedCatalogs.size)
-            LOGGER.info("size of changed apis {}", harvestReport.changedResources.size)
-
             ReasoningReport(
                 id = harvestReport.id,
                 url = harvestReport.url,

@@ -64,9 +64,6 @@ class PublicServiceService(
             harvestReport.changedCatalogs
                 .forEach { reasonServiceCatalog(it.fdkId, rdfData) }
 
-            LOGGER.info("size of changed service catalogs {}", harvestReport.changedCatalogs.size)
-            LOGGER.info("size of changed services {}", harvestReport.changedResources.size)
-
             ReasoningReport(
                 id = harvestReport.id,
                 url = harvestReport.url,

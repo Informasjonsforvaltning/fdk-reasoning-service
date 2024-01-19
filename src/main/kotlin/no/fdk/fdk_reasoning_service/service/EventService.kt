@@ -63,9 +63,6 @@ class EventService(
             harvestReport.changedCatalogs
                 .forEach { reasonEventCatalog(it.fdkId, rdfData) }
 
-            LOGGER.info("size of changed event catalogs {}", harvestReport.changedCatalogs.size)
-            LOGGER.info("size of changed events {}", harvestReport.changedResources.size)
-
             ReasoningReport(
                 id = harvestReport.id,
                 url = harvestReport.url,

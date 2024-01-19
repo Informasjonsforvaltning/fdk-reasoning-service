@@ -48,9 +48,6 @@ class ConceptService(
             harvestReport.changedCatalogs
                 .forEach { reasonCollectionConcepts(it.fdkId, rdfData) }
 
-            LOGGER.info("size of changed concept collections {}", harvestReport.changedCatalogs.size)
-            LOGGER.info("size of changed concepts {}", harvestReport.changedResources.size)
-
             ReasoningReport(
                 id = harvestReport.id,
                 url = harvestReport.url,
