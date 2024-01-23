@@ -45,6 +45,8 @@ class DatasetService(
 
     fun reasonReportedChanges(harvestReport: HarvestReport, rdfData: ExternalRDFData, start: Date): ReasoningReport =
         try {
+            LOGGER.info("changed catalogs: ${harvestReport.changedCatalogs.size}")
+            LOGGER.info("changed datasets: ${harvestReport.changedResources.size}")
             harvestReport.changedCatalogs
                 .forEach { reasonCatalogDatasets(it.fdkId, rdfData) }
 
@@ -73,6 +75,7 @@ class DatasetService(
         }
 
     private fun reasonCatalogDatasets(catalogId: String, rdfData: ExternalRDFData) {
+        LOGGER.info("starting reasoning for catalog $catalogId")
         datasetMongoTemplate.findById<TurtleDBO>(harvestedCatalogID(catalogId), "turtle")
             ?.let { parseRDFResponse(ungzip(it.turtle), Lang.TURTLE, "datasets") }
             ?.let { reasoningService.catalogReasoning(it, CatalogType.DATASETS, rdfData) }
@@ -107,11 +110,13 @@ class DatasetService(
     }
 
     private fun Model.separateAndSaveDatasets() {
+        LOGGER.info("splitting reasoned catalog")
         splitDatasetCatalogsFromRDF()
             .forEach { it.saveCatalogAndDatasetModels() }
     }
 
     private fun CatalogAndDatasets.saveCatalogAndDatasetModels() {
+        LOGGER.info("saving catalog $fdkId")
         datasetMongoTemplate.save(catalog.createDBO(fdkId), "fdkCatalogs")
         saveDatasetModels()
     }
