@@ -8,7 +8,7 @@
 @prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/org-type.ttl#> .
 @prefix skos:      <http://www.w3.org/2004/02/skos/core#> .
 
-<http://localhost:5000/organizations/972417866>
+<http://localhost:5050/organizations/972417866>
         a                     rov:RegisteredOrganization ;
         dct:identifier        "972417866" ;
         rov:legalName         "KULTURDEPARTEMENTET" ;

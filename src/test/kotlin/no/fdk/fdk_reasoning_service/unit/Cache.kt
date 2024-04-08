@@ -23,8 +23,8 @@ class Cache : ApiTestContext() {
     @Test
     fun testCacheOrganizations() {
         whenever(uris.orgInternal)
-            .thenReturn("http://localhost:5000/organizations")
-            .thenReturn("http://localhost:5000/404")
+            .thenReturn("http://localhost:5050/organizations")
+            .thenReturn("http://localhost:5050/404")
 
         val expected = responseReader.parseTurtleFile("orgs.ttl")
 
@@ -37,8 +37,8 @@ class Cache : ApiTestContext() {
     @Test
     fun testCacheLOS() {
         whenever(uris.los)
-            .thenReturn("http://localhost:5000/reference-data/los")
-            .thenReturn("http://localhost:5000/404")
+            .thenReturn("http://localhost:5050/reference-data/los")
+            .thenReturn("http://localhost:5050/404")
 
         val expected = responseReader.parseTurtleFile("los.ttl")
 
@@ -51,8 +51,8 @@ class Cache : ApiTestContext() {
     @Test
     fun testCacheEUROVOC() {
         whenever(uris.eurovocs)
-            .thenReturn("http://localhost:5000/reference-data/eu/eurovocs")
-            .thenReturn("http://localhost:5000/404")
+            .thenReturn("http://localhost:5050/reference-data/eu/eurovocs")
+            .thenReturn("http://localhost:5050/404")
 
         val expected = responseReader.parseTurtleFile("eurovocs.ttl")
 
@@ -65,8 +65,8 @@ class Cache : ApiTestContext() {
     @Test
     fun testCacheDataThemes() {
         whenever(uris.dataThemes)
-            .thenReturn("http://localhost:5000/reference-data/eu/data-themes")
-            .thenReturn("http://localhost:5000/404")
+            .thenReturn("http://localhost:5050/reference-data/eu/data-themes")
+            .thenReturn("http://localhost:5050/404")
 
         val expected = responseReader.parseTurtleFile("data_themes.ttl")
 
@@ -79,8 +79,8 @@ class Cache : ApiTestContext() {
     @Test
     fun testCacheConceptSubjects() {
         whenever(uris.conceptSubjects)
-            .thenReturn("http://localhost:5000/reference-data/digdir/concept-subjects")
-            .thenReturn("http://localhost:5000/404")
+            .thenReturn("http://localhost:5050/reference-data/digdir/concept-subjects")
+            .thenReturn("http://localhost:5050/404")
 
         val expected = responseReader.parseTurtleFile("concept_subjects.ttl")
 
@@ -93,8 +93,8 @@ class Cache : ApiTestContext() {
     @Test
     fun testCacheConceptStatuses() {
         whenever(uris.conceptStatuses)
-            .thenReturn("http://localhost:5000/reference-data/eu/concept-statuses")
-            .thenReturn("http://localhost:5000/404")
+            .thenReturn("http://localhost:5050/reference-data/eu/concept-statuses")
+            .thenReturn("http://localhost:5050/404")
 
         val expected = responseReader.parseTurtleFile("concept_statuses.ttl")
 

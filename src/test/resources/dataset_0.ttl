@@ -52,12 +52,12 @@
         fdk:isOpenData            true .
 
 
-<http://localhost:5000/datasets/4667277a-9d27-32c1-aed5-612fa601f393>
+<http://localhost:5050/datasets/4667277a-9d27-32c1-aed5-612fa601f393>
         a                  dcat:CatalogRecord ;
         dct:identifier     "4667277a-9d27-32c1-aed5-612fa601f393" ;
         dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
         dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
-        dct:isPartOf       <http://localhost:5000/catalogs/6e4237cc-98d6-3e7c-a892-8ac1f0ffb37f> ;
+        dct:isPartOf       <http://localhost:5050/catalogs/6e4237cc-98d6-3e7c-a892-8ac1f0ffb37f> ;
         foaf:primaryTopic  <http://brreg.no/catalogs/910244132/datasets/c32b7a4f-655f-45f6-88f6-d01f05d0f7c2> .
 
 <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132>

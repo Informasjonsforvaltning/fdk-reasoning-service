@@ -39,7 +39,7 @@ const val EVENT_ID_0 = "2fda2afd-9087-337b-8b16-23627ccaa9c4"
 const val EVENT_ID_1 = "12af419b-b010-3acd-bd4d-c52c3a62990f"
 const val EVENT_CATALOG_ID = "4d2c9e29-2f9a-304f-9e48-34e30a36d068"
 val EVENT_REPORT = HarvestReport(id = "id", "https://events.com",
-    changedCatalogs = listOf(FdkIdAndUri(EVENT_CATALOG_ID, "http://localhost:5000/events/catalogs/$EVENT_CATALOG_ID")),
+    changedCatalogs = listOf(FdkIdAndUri(EVENT_CATALOG_ID, "http://localhost:5050/events/catalogs/$EVENT_CATALOG_ID")),
     changedResources = listOf(
         FdkIdAndUri(EVENT_ID_0, "https://events.com/$EVENT_ID_0"),
         FdkIdAndUri(EVENT_ID_1, "https://events.com/$EVENT_ID_1")))
@@ -70,13 +70,13 @@ const val PUBLIC_SERVICE_CATALOG_0_ID = "4d2c9e29-2f9a-304f-9e48-34e30a36d068"
 const val PUBLIC_SERVICE_CATALOG_1_ID = "8d2c9e29-2f9a-304f-9e48-34e30a36d068"
 val PUBLIC_SERVICE_REPORT = HarvestReport(id = "id", "https://public-services.com",
     changedCatalogs = listOf(
-        FdkIdAndUri(PUBLIC_SERVICE_CATALOG_0_ID, "http://localhost:5000/public-services/catalogs/$PUBLIC_SERVICE_CATALOG_0_ID"),
-        FdkIdAndUri(PUBLIC_SERVICE_CATALOG_1_ID, "http://localhost:5000/public-services/catalogs/$PUBLIC_SERVICE_CATALOG_1_ID")),
+        FdkIdAndUri(PUBLIC_SERVICE_CATALOG_0_ID, "http://localhost:5050/public-services/catalogs/$PUBLIC_SERVICE_CATALOG_0_ID"),
+        FdkIdAndUri(PUBLIC_SERVICE_CATALOG_1_ID, "http://localhost:5050/public-services/catalogs/$PUBLIC_SERVICE_CATALOG_1_ID")),
     changedResources = listOf(
         FdkIdAndUri(PUBLIC_SERVICE_ID_0, "https://public-services.com/$PUBLIC_SERVICE_ID_0"),
         FdkIdAndUri(PUBLIC_SERVICE_ID_1, "https://public-services.com/$PUBLIC_SERVICE_ID_1")))
 val PUBLIC_SERVICE_REPORT_0 = HarvestReport(id = "id", "https://public-services.com",
-    changedCatalogs = listOf(FdkIdAndUri(PUBLIC_SERVICE_CATALOG_0_ID, "http://localhost:5000/public-services/catalogs/$PUBLIC_SERVICE_CATALOG_0_ID")),
+    changedCatalogs = listOf(FdkIdAndUri(PUBLIC_SERVICE_CATALOG_0_ID, "http://localhost:5050/public-services/catalogs/$PUBLIC_SERVICE_CATALOG_0_ID")),
     changedResources = listOf(FdkIdAndUri(PUBLIC_SERVICE_ID_0, "https://public-services.com/$PUBLIC_SERVICE_ID_0")))
 
 const val INFOMODEL_CATALOG_ID = "f25c939d-0722-3aa3-82b1-eaa457086444"

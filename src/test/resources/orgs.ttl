@@ -8,7 +8,7 @@
 @prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/org-type.ttl#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
 
-<http://localhost:5000/organizations/910298062>
+<http://localhost:5050/organizations/910298062>
         a                     rov:RegisteredOrganization ;
         dct:identifier        "910298062" ;
         rov:legalName         "KARMSUND OG KYSNESSTRAND REVISJON" ;
@@ -22,7 +22,7 @@
         br:norwegianRegistry  <https://data.brreg.no/enhetsregisteret/api/enheter/910298062> ;
         br:orgPath            "/ANNET/910298062" .
 
-<http://localhost:5000/organizations/910244132>
+<http://localhost:5050/organizations/910244132>
         a                     rov:RegisteredOrganization ;
         dct:identifier        "910244132" ;
         rov:legalName         "RAMSUND OG ROGNAN REVISJON" ;
@@ -36,7 +36,7 @@
         br:norwegianRegistry  <https://data.brreg.no/enhetsregisteret/api/enheter/910244132> ;
         br:orgPath            "/ANNET/910244132" .
 
-<http://localhost:5000/organizations/991825827>
+<http://localhost:5050/organizations/991825827>
         a                      rov:RegisteredOrganization ;
         dct:identifier         "991825827" ;
         org:subOrganizationOf  <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/972417858> ;
@@ -56,7 +56,7 @@
         br:orgPath             "/STAT/972417858/991825827" ;
         br:sectorCode          "6100" .
 
-<http://localhost:5000/organizations/984582021>
+<http://localhost:5050/organizations/984582021>
         a                      rov:RegisteredOrganization ;
         dct:identifier         "984582021" ;
         org:subOrganizationOf  <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/921693230> ;

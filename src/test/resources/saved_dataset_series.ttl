@@ -60,43 +60,43 @@ ex:budget-2020 a dcat:Dataset ;
         rov:orgType           orgtype:ORGL ;
         br:orgPath            "/ANNET/910298062" .
 
-<http://localhost:5000/catalogs/df68b420-fb97-3770-9580-7518734632b1>
+<http://localhost:5050/catalogs/df68b420-fb97-3770-9580-7518734632b1>
         a                  dcat:CatalogRecord ;
         dct:identifier     "df68b420-fb97-3770-9580-7518734632b1" ;
         dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
         dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
         foaf:primaryTopic  ex:EUCatalog .
 
-<http://localhost:5000/datasets/f1e8443d-910f-3838-87e3-2b5e7ee307a6>
+<http://localhost:5050/datasets/f1e8443d-910f-3838-87e3-2b5e7ee307a6>
         a                  dcat:CatalogRecord ;
         dct:identifier     "f1e8443d-910f-3838-87e3-2b5e7ee307a6" ;
         dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
         dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
-        dct:isPartOf       <http://localhost:5000/catalogs/df68b420-fb97-3770-9580-7518734632b1> ;
+        dct:isPartOf       <http://localhost:5050/catalogs/df68b420-fb97-3770-9580-7518734632b1> ;
         foaf:primaryTopic  ex:budget-2020 .
 
-<http://localhost:5000/datasets/ca883493-7848-3116-8e1a-2b2e610a0fc1>
+<http://localhost:5050/datasets/ca883493-7848-3116-8e1a-2b2e610a0fc1>
         a                  dcat:CatalogRecord ;
         dct:identifier     "ca883493-7848-3116-8e1a-2b2e610a0fc1" ;
         dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
         dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
-        dct:isPartOf       <http://localhost:5000/catalogs/df68b420-fb97-3770-9580-7518734632b1> ;
+        dct:isPartOf       <http://localhost:5050/catalogs/df68b420-fb97-3770-9580-7518734632b1> ;
         foaf:primaryTopic  ex:budget-2018 .
 
-<http://localhost:5000/datasets/51704c08-c174-393d-add5-348d3b304aeb>
+<http://localhost:5050/datasets/51704c08-c174-393d-add5-348d3b304aeb>
         a                  dcat:CatalogRecord ;
         dct:identifier     "51704c08-c174-393d-add5-348d3b304aeb" ;
         dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
         dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
-        dct:isPartOf       <http://localhost:5000/catalogs/df68b420-fb97-3770-9580-7518734632b1> ;
+        dct:isPartOf       <http://localhost:5050/catalogs/df68b420-fb97-3770-9580-7518734632b1> ;
         foaf:primaryTopic  ex:budget-2019 .
 
-<http://localhost:5000/datasets/ad115f63-9edc-30dc-ab81-f6866e0631ea>
+<http://localhost:5050/datasets/ad115f63-9edc-30dc-ab81-f6866e0631ea>
         a                  dcat:CatalogRecord ;
         dct:identifier     "ad115f63-9edc-30dc-ab81-f6866e0631ea" ;
         dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
         dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
-        dct:isPartOf       <http://localhost:5000/catalogs/df68b420-fb97-3770-9580-7518734632b1> ;
+        dct:isPartOf       <http://localhost:5050/catalogs/df68b420-fb97-3770-9580-7518734632b1> ;
         foaf:primaryTopic  ex:budget .
 
 <http://data.brreg.no/datakatalog/provinens/nasjonal>

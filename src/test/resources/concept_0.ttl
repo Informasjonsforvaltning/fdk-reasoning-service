@@ -37,10 +37,10 @@
         rov:orgType           orgtype:ORGL ;
         br:orgPath            "/ANNET/910298062" .
 
-<http://localhost:5000/concepts/db1b701c-b4b9-3c20-bc23-236a91236754>
+<http://localhost:5050/concepts/db1b701c-b4b9-3c20-bc23-236a91236754>
         a               dcat:CatalogRecord ;
         dct:identifier  "db1b701c-b4b9-3c20-bc23-236a91236754" ;
-        dct:isPartOf    <http://localhost:5000/collections/9b8f1c42-1161-33b1-9d43-a733ee94ddfc> ;
+        dct:isPartOf    <http://localhost:5050/collections/9b8f1c42-1161-33b1-9d43-a733ee94ddfc> ;
         dct:issued      "2021-01-05T13:15:39.831Z"^^xsd:dateTime ;
         dct:modified    "2021-01-05T13:15:39.831Z"^^xsd:dateTime ;
         foaf:primaryTopic   <http://begrepskatalogen/begrep/20b2e1a1-9fe1-11e5-a9f8-e4115b280940> .
@@ -62,7 +62,7 @@
     foaf:name             "Do not overwrite"@nb ;
     br:orgPath            "/ANNET/910244132" .
 
-<http://localhost:5000/collections/9b8f1c42-1161-33b1-9d43-a733ee94ddfc>
+<http://localhost:5050/collections/9b8f1c42-1161-33b1-9d43-a733ee94ddfc>
         a                  dcat:CatalogRecord;
         dct:identifier     "9b8f1c42-1161-33b1-9d43-a733ee94ddfc";
         dct:issued         "2021-01-05T13:15:39.831Z"^^xsd:dateTime;

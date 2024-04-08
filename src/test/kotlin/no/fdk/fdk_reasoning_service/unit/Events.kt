@@ -43,7 +43,7 @@ class Events {
         val expectedReport = ReasoningReport(
             id = "id", url = "https://events.com", dataType = "event",
             harvestError = false, startTime = "2022-05-05 07:39:41 +0200", endTime = report.endTime,
-            changedCatalogs = listOf(FdkIdAndUri(EVENT_CATALOG_ID, "http://localhost:5000/events/catalogs/$EVENT_CATALOG_ID")),
+            changedCatalogs = listOf(FdkIdAndUri(EVENT_CATALOG_ID, "http://localhost:5050/events/catalogs/$EVENT_CATALOG_ID")),
             changedResources = listOf(
                 FdkIdAndUri(EVENT_ID_0, "https://events.com/$EVENT_ID_0"),
                 FdkIdAndUri(EVENT_ID_1, "https://events.com/$EVENT_ID_1")))

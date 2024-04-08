@@ -272,7 +272,7 @@
         dct:description       "Endring som skal kunngjøres - Aksjeselskap: - andre endringer: papir kr 0,-" , "Endring som skal kunngjøres - Aksjeselskap: - andre endringer" ;
         dct:identifier        "10" .
 
-<http://localhost:5000/public-services/catalogs/8d2c9e29-2f9a-304f-9e48-34e30a36d068>
+<http://localhost:5050/public-services/catalogs/8d2c9e29-2f9a-304f-9e48-34e30a36d068>
         a                  dcat:CatalogRecord ;
         dct:identifier     "8d2c9e29-2f9a-304f-9e48-34e30a36d068" ;
         dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;

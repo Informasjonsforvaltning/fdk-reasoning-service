@@ -21,12 +21,12 @@
         dct:format     <http://publications.europa.eu/resource/authority/file-type/ZIP> ;
         dcat:endpointURL   <https://aho.no/> .
 
-<http://localhost:5000/dataservices/ea51178e-f843-3025-98c5-7d02ce887f90>
+<http://localhost:5050/dataservices/ea51178e-f843-3025-98c5-7d02ce887f90>
         a                  dcat:CatalogRecord ;
         dct:identifier     "ea51178e-f843-3025-98c5-7d02ce887f90" ;
         dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
         dct:modified       "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
-        dct:isPartOf       <http://localhost:5000/catalogs/e422e2a7-287f-349f-876a-dc3541676f21> ;
+        dct:isPartOf       <http://localhost:5050/catalogs/e422e2a7-287f-349f-876a-dc3541676f21> ;
         foaf:primaryTopic  <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e> .
 
 <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910298062>
@@ -43,7 +43,7 @@
         dct:title      "Data service catalog (910298062)"@en ;
         dcat:service   <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f586b0cdbffd544ae76a5e5> , <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e> .
 
-<http://localhost:5000/catalogs/e422e2a7-287f-349f-876a-dc3541676f21>
+<http://localhost:5050/catalogs/e422e2a7-287f-349f-876a-dc3541676f21>
         a                  dcat:CatalogRecord ;
         dct:identifier     "e422e2a7-287f-349f-876a-dc3541676f21" ;
         dct:issued         "2020-03-12T11:52:16.122Z"^^xsd:dateTime ;
