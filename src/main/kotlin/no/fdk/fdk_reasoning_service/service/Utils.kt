@@ -1,17 +1,10 @@
 package no.fdk.fdk_reasoning_service.service
 
 import no.fdk.fdk_reasoning_service.Application
-import no.fdk.fdk_reasoning_service.rdf.BR
-import no.fdk.fdk_reasoning_service.rdf.PROV
 import org.apache.jena.query.QueryExecutionFactory
 import org.apache.jena.query.QueryFactory
 import org.apache.jena.rdf.model.*
 import org.apache.jena.riot.Lang
-import org.apache.jena.riot.RDFDataMgr
-import org.apache.jena.sparql.vocabulary.FOAF
-import org.apache.jena.vocabulary.DCTerms
-import org.apache.jena.vocabulary.RDF
-import org.apache.jena.vocabulary.ROV
 import org.slf4j.LoggerFactory
 import java.io.ByteArrayOutputStream
 import java.io.StringReader
@@ -19,8 +12,6 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-
-private val logger = LoggerFactory.getLogger(Application::class.java)
 
 private const val dateFormat: String = "yyyy-MM-dd HH:mm:ss Z"
 
@@ -31,87 +22,18 @@ fun Model.createRDFResponse(responseType: Lang): String =
         out.toString("UTF-8")
     }
 
-fun parseRDFResponse(responseBody: String, rdfLanguage: Lang, rdfSource: String?): Model? {
+fun parseRDFResponse(responseBody: String, rdfLanguage: Lang): Model {
     val responseModel = ModelFactory.createDefaultModel()
-
-    try {
-        responseModel.read(StringReader(responseBody), "", rdfLanguage.name)
-    } catch (ex: Exception) {
-        logger.error("Parse from $rdfSource has failed", ex)
-        return null
-    }
-
+    responseModel.read(StringReader(responseBody), "", rdfLanguage.name)
     return responseModel
 }
 
 fun Model.fdkPrefix(): Model =
     setNsPrefix("fdk", "https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#")
 
-fun Model.createModelOfOrganizationsWithOrgData(organizationURIs: Set<String>, orgsURI: String): Model {
-    val model = ModelFactory.createDefaultModel()
-    model.setNsPrefixes(nsPrefixMap)
-
-    organizationURIs.map { Pair(it, orgResourceForOrganization(it, orgsURI)) }
-        .filter { it.second != null }
-        .forEach {
-            model.createResource(it.first).addPropertiesFromOrgResource(it.second)
-        }
-
-    return model
-}
-
-fun Model.orgResourceForOrganization(organizationURI: String, orgsURI: String): Resource? =
-    orgIdFromURI(organizationURI)
-        ?.let { downloadOrgDataIfMissing("$orgsURI/${orgIdFromURI(organizationURI)}") }
-
-fun Model.downloadOrgDataIfMissing(uri: String): Resource? =
-    if (containsTriple("<$uri>", "a", "?o")) {
-        getResource(uri)
-    } else {
-        try {
-            RDFDataMgr.loadModel(uri, Lang.TURTLE).getResource(uri)
-        } catch (ex: Exception) {
-            null
-        }
-    }
-
-fun Resource.addPropertiesFromOrgResource(orgResource: Resource?) {
-    if (orgResource != null) {
-        safeAddProperty(RDF.type, orgResource.getProperty(RDF.type)?.`object`)
-        safeAddProperty(DCTerms.identifier, orgResource.getProperty(DCTerms.identifier)?.`object`)
-        safeAddProperty(BR.orgPath, orgResource.getProperty(BR.orgPath)?.`object`)
-        safeAddProperty(ROV.legalName, orgResource.getProperty(ROV.legalName)?.`object`)
-        safeAddProperty(FOAF.name, orgResource.getProperty(FOAF.name)?.`object`)
-        safeAddProperty(ROV.orgType, orgResource.getProperty(ROV.orgType)?.`object`)
-    }
-}
-
 fun Resource.safeAddProperty(property: Property, value: RDFNode?): Resource =
     if (value == null) this
     else addProperty(property, value)
-
-fun Model.extreactQualifiedAttributionAgents(): List<Resource> =
-    listResourcesWithProperty(PROV.qualifiedAttribution)
-        .toList()
-        .flatMap { it.listProperties(PROV.qualifiedAttribution).toList() }
-        .asSequence()
-        .filter { it.isResourceProperty() }
-        .map { it.resource }
-        .flatMap { it.listProperties(PROV.agent).toList() }
-        .filter { it.isResourceProperty() }
-        .map { it.resource }
-        .toList()
-
-fun Model.extractOrganizations(organizationsPredicates: List<Property>): List<Resource> =
-    organizationsPredicates.flatMap { organizationPredicate ->
-        listResourcesWithProperty(organizationPredicate)
-            .toList()
-            .flatMap { it.listProperties(organizationPredicate).toList() }
-            .asSequence()
-            .filter { it.isResourceProperty() }
-            .map { it.resource }
-            .toList()
-    }
 
 fun Statement.isResourceProperty(): Boolean =
     try {
@@ -127,28 +49,6 @@ fun Model.containsTriple(subj: String, pred: String, obj: String): Boolean {
         val query = QueryFactory.create(askQuery)
         return QueryExecutionFactory.create(query, this).execAsk()
     } catch (ex: Exception) { false }
-}
-
-fun Resource.dctIdentifierIsInadequate(): Boolean =
-    listProperties(DCTerms.identifier)
-        .toList()
-        .map { it.`object` }
-        .mapNotNull { it.extractOrganizationId() }
-        .isEmpty()
-
-fun RDFNode.extractOrganizationId(): String? =
-    when {
-        isURIResource -> orgIdFromURI(asResource().uri)
-        isLiteral -> orgIdFromURI(asLiteral().string)
-        else -> null
-    }
-
-fun orgIdFromURI(uri: String): String? {
-    val regex = Regex("""[0-9]{9}""")
-    val allMatching = regex.findAll(uri).toList()
-
-    return if (allMatching.size == 1) allMatching.first().value
-    else null
 }
 
 val napThemes: Set<String> = setOf(

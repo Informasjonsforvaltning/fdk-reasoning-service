@@ -3,7 +3,6 @@ package no.fdk.fdk_reasoning_service.service
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.model.ExternalRDFData
 import org.apache.jena.rdf.model.Model
-import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang
 import org.apache.jena.vocabulary.DCAT
@@ -12,23 +11,21 @@ import org.apache.jena.vocabulary.RDF
 import org.springframework.stereotype.Service
 
 @Service
-class ConceptService(
-    private val reasoningService: ReasoningService
+class ReasoningService(
+    private val organizationService: OrganizationService,
+    private val referenceDataService: ReferenceDataService
 ) {
-    fun reasonConcept(graph: String, fdkId: String, rdfData: ExternalRDFData) : String =
-        parseRDFResponse(graph, Lang.TURTLE, "concepts")
-            ?.let { reasoningService.catalogReasoning(it, CatalogType.CONCEPTS, rdfData) }
-            ?.union(rdfData.toModel())
-            ?.extractReasonedModel(fdkId)
-            ?.createRDFResponse(Lang.TURTLE)
-            ?: throw Exception("Reasoning of concept failed")
+    fun CatalogType.reason(graph: String, fdkId: String, referenceData: ExternalRDFData): String {
+        val inputModel = parseRDFResponse(graph, Lang.TURTLE)
 
-    private fun ExternalRDFData.toModel(): Model {
-        val m = ModelFactory.createDefaultModel()
-        m.add(conceptStatuses)
-        m.add(conceptSubjects)
-        return m
+        return deductionsModel(inputModel, referenceData)
+            .add(organizationService.extraOrganizationTriples(inputModel, this))
+            .add(referenceDataService.referenceDataModel(this))
+            .add(inputModel)
+            .extractReasonedModel(fdkId)
+            .createRDFResponse(Lang.TURTLE)
     }
+
 
     private fun Model.extractReasonedModel(fdkId: String): Model {
         val conceptRecord = listSubjectsWithProperty(DCTerms.identifier, fdkId)

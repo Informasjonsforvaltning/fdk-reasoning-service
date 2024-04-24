@@ -2,7 +2,6 @@ package no.fdk.fdk_reasoning_service.unit
 
 import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.model.CatalogType
-import no.fdk.fdk_reasoning_service.service.ReasoningService
 import no.fdk.fdk_reasoning_service.utils.*
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
@@ -14,7 +13,6 @@ import kotlin.test.assertTrue
 class Reasoning : ApiTestContext() {
     private val uris: ApplicationURI = mock()
     private val reasoningService = ReasoningService(uris)
-
     private val responseReader = TestResponseReader()
 
     @Test
