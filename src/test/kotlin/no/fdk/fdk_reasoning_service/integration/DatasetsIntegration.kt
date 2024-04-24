@@ -1,6 +1,5 @@
 package no.fdk.fdk_reasoning_service.integration
 
-import no.fdk.fdk_reasoning_service.service.DatasetService
 import no.fdk.fdk_reasoning_service.utils.*
 import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.Assertions.assertEquals

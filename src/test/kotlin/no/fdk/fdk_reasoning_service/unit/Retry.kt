@@ -1,19 +1,12 @@
 package no.fdk.fdk_reasoning_service.unit
 
 import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
-import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.model.RetryReportsWrap
 import no.fdk.fdk_reasoning_service.rabbit.RabbitMQPublisher
 import no.fdk.fdk_reasoning_service.service.ConceptService
-import no.fdk.fdk_reasoning_service.service.DataServiceService
-import no.fdk.fdk_reasoning_service.service.DatasetService
-import no.fdk.fdk_reasoning_service.service.EventService
-import no.fdk.fdk_reasoning_service.service.InfoModelService
-import no.fdk.fdk_reasoning_service.service.PublicServiceService
 import no.fdk.fdk_reasoning_service.service.RETRY_QUEUE
 import no.fdk.fdk_reasoning_service.service.ReasoningActivity
-import no.fdk.fdk_reasoning_service.utils.LOCAL_SERVER_PORT
 import no.fdk.fdk_reasoning_service.utils.RDF_DATA
 import org.apache.jena.rdf.model.ModelFactory
 import org.junit.jupiter.api.BeforeEach

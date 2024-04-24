@@ -2,7 +2,6 @@ package no.fdk.fdk_reasoning_service.service
 
 import no.fdk.fdk_reasoning_service.Application
 import no.fdk.fdk_reasoning_service.model.CatalogType
-import no.fdk.fdk_reasoning_service.model.TurtleDBO
 import no.fdk.fdk_reasoning_service.rdf.BR
 import no.fdk.fdk_reasoning_service.rdf.PROV
 import org.apache.jena.query.QueryExecutionFactory
@@ -204,24 +203,6 @@ fun orgIdFromURI(uri: String): String? {
     else null
 }
 
-fun TurtleDBO.toRDF(lang: Lang): String? =
-    ungzip(turtle)
-        .let {
-            if (lang == Lang.TURTLE) it
-            else parseRDFResponse(it, Lang.TURTLE, null)?.createRDFResponse(lang)
-        }
-
-fun Model.createUnionDBO(): TurtleDBO =
-    TurtleDBO(
-        id = UNION_ID,
-        turtle = gzip(createRDFResponse(Lang.TURTLE))
-    )
-
-fun Model.createDBO(fdkId: String): TurtleDBO =
-    TurtleDBO(
-        id = fdkId,
-        turtle = gzip(createRDFResponse(Lang.TURTLE))
-    )
 
 val napThemes: Set<String> = setOf(
     "https://psi.norge.no/los/tema/mobilitetstilbud",

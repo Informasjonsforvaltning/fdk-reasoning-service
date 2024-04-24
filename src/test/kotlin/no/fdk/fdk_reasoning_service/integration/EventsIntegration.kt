@@ -1,6 +1,5 @@
 package no.fdk.fdk_reasoning_service.integration
 
-import no.fdk.fdk_reasoning_service.service.EventService
 import no.fdk.fdk_reasoning_service.utils.ApiTestContext
 import no.fdk.fdk_reasoning_service.utils.EVENT_CATALOG_ID
 import no.fdk.fdk_reasoning_service.utils.EVENT_ID_0

@@ -1,6 +1,5 @@
 package no.fdk.fdk_reasoning_service.integration
 
-import no.fdk.fdk_reasoning_service.service.PublicServiceService
 import no.fdk.fdk_reasoning_service.utils.ApiTestContext
 import no.fdk.fdk_reasoning_service.utils.PUBLIC_SERVICE_ID_0
 import no.fdk.fdk_reasoning_service.utils.PUBLIC_SERVICE_REPORT
