@@ -3,11 +3,7 @@ package no.fdk.fdk_reasoning_service.unit
 import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
 import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.utils.ApiTestContext
-import no.fdk.fdk_reasoning_service.utils.CONCEPT_REPORT
-import no.fdk.fdk_reasoning_service.utils.RDF_DATA
-import no.fdk.fdk_reasoning_service.utils.TEST_DATE
 import no.fdk.fdk_reasoning_service.utils.TestResponseReader
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock

@@ -18,7 +18,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import java.io.BufferedReader
 import java.net.HttpURLConnection
-import java.net.URL
+import java.net.URI
 import java.net.URLEncoder
 
 private val LOGGER: Logger = LoggerFactory.getLogger(ReasoningService::class.java)
@@ -112,7 +112,7 @@ class ReasoningService(
 
     private fun orgPathAdapter(value: String): String? {
         val uri = "${uris.orgExternal}/orgpath/${URLEncoder.encode(value, "UTF-8")}"
-        with(URL(uri).openConnection() as HttpURLConnection) {
+        with(URI(uri).toURL().openConnection() as HttpURLConnection) {
             setRequestProperty("Accept", "text/plain");
             try {
                 if (HttpStatus.valueOf(responseCode).is2xxSuccessful) {
