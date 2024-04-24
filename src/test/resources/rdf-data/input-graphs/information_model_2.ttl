@@ -1,0 +1,202 @@
+@prefix br:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/organization-catalog.owl#> .
+@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/org-type.ttl#> .
+@prefix rov:   <http://www.w3.org/ns/regorg#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix modelldcatno: <https://data.norge.no/vocabulary/modelldcatno#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix locn:  <http://www.w3.org/ns/locn#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix skebase: <http://data.skatteetaten.no/ns/modell/basetyper/> .
+@prefix test: <http://test.no/catalogs/> .
+
+
+test:TestKatalog  a        dcat:Catalog , owl:NamedIndividual ;
+        dct:description     "En modell fra Testetaten"@nb , "An information model from the Test Agency"@en ;
+        dct:identifier      "http://data.test.no/ns/katalog/TestKatalog"^^xsd:anyURI ;
+        dct:issued          "2020-03-30T16:00:00+02:00"^^xsd:dateTime ;
+        dct:license         <http://publications.europa.eu/resource/authority/licence/CC_BY_4_0> ;
+        dct:publisher       <https://data.brreg.no/enhetsregisteret/oppslag/enheter/987654321> ;
+        dct:title           "Testkatalogen™"@nb , "Testkatalogen™"@en ;
+        modelldcatno:model  test:ModellForÅTesteAtReferanseDataIkkeLeggesTil .
+
+
+test:ModellForÅTesteAtReferanseDataIkkeLeggesTil
+        a                   owl:NamedIndividual , modelldcatno:InformationModel ;
+        dct:description     "Katalog for å teste at ikke ekstra tripler blir lagt på fra Reference Data"@nb ;
+        dct:identifier      "urn:test:test:informasjons:modell:v1"^^xsd:anyURI ;
+        dct:issued          "2020-03-30T18:35:07.950+02:00"^^xsd:dateTime ;
+        dct:title           "Testinformasjonsmodell"@nn , "Testinformasjonsmodell"@nb ;
+        dcat:keyword        "TestModell"@nb , "TestModell"@nb ;
+        foaf:homepage       <http://www.test.no/testsiden> ;
+
+        dct:temporal        test:gyldighetsintervall ;
+
+        dct:language        <http://publications.europa.eu/resource/authority/language/SMI> ,
+                            <http://publications.europa.eu/resource/authority/language/NOB> ;
+        dct:license         <http://publications.europa.eu/resource/authority/licence/CC_BY_4_0> ;
+        dct:spatial         <https://data.geonorge.no/administrativeEnheter/nasjon/id/173163> ;
+
+        modelldcatno:containsModelElement
+                skebase:LeveranseReferanseType ,
+                skebase:organisasjonsnavnType ,
+                skebase:ÅrstallType ,
+                skebase:DatoType ,
+                skebase:AntallType ,
+                skebase:OrganisasjonsnummerType ,
+                skebase:FødselsnummerType ,
+                skebase:TekstType ,
+                skebase:KildesystemType ,
+                skebase:beløpSomHeltallType ,
+                skebase:EpostadresseType ,
+                skebase:BoolskType ,
+                skebase:TelefonnummerType ;
+        modelldcatno:informationModelIdentifier
+                "urn:test:test:informasjons:modell:v1"^^xsd:anyURI .
+
+
+<http://localhost:5050/catalogs/f25c939d-0722-3aa3-82b1-eaa457086444>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "f25c939d-0722-3aa3-82b1-eaa457086444" ;
+        dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        foaf:primaryTopic  test:TestKatalog .
+
+
+<http://localhost:5050/informationmodels/bcbe6738-85f6-388c-afcc-ef1fafd7cc45>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "bcbe6738-85f6-388c-afcc-ef1fafd7cc45" ;
+        dct:isPartOf       <http://localhost:5050/catalogs/f25c939d-0722-3aa3-82b1-eaa457086444> ;
+        dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+        foaf:primaryTopic  test:ModellForÅTesteAtReferanseDataIkkeLeggesTil .
+
+<https://data.brreg.no/enhetsregisteret/oppslag/enheter/987654321>
+        a          foaf:Agent , owl:NamedIndividual ;
+        dct:type   "Organisasjonsledd"@nb ;
+        foaf:name  "Testetaten"@nb ;
+        br:orgPath "/GENERATED/ORGPATH" .
+
+
+test:gyldighetsintervall
+        a               dct:PeriodOfTime , owl:NamedIndividual ;
+        dcat:startDate  "2019-10-10T16:00:00Z"^^xsd:dateTime .
+
+
+skebase:EpostadresseType
+        a                             modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/epostadresseType"^^xsd:anyURI ;
+        dct:title                     "Epostadresse"@nb ;
+        xsd:maxLength                 "254"^^xsd:nonNegativeInteger ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+
+skebase:TelefonnummerType
+        a                             modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/telefonnummerType"^^xsd:anyURI ;
+        dct:title                     "Telefonnummer"@nb ;
+        xsd:maxLength                 "20"^^xsd:nonNegativeInteger ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+
+skebase:BoolskType  a                 modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/boolskType"^^xsd:anyURI ;
+        dct:title                     "BoolskType"@nb ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#boolean"^^xsd:anyURI .
+
+
+skebase:TekstType  a                  modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/tekstType"^^xsd:anyURI ;
+        dct:title                     "Tekst"@nb ;
+        xsd:maxLength                 4000 ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+
+
+skebase:KildesystemType
+        a                             modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/kildesystemType"^^xsd:anyURI ;
+        dct:title                     "Kildesystem"@nb ;
+        xsd:maxLength                 "100"^^xsd:nonNegativeInteger ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+
+skebase:BeløpType  a                  modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/beløpType"^^xsd:anyURI ;
+        dct:title                     "Beløp"@nb ;
+        xsd:minInclusive              0 ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#integer"^^xsd:anyURI .
+
+
+skebase:AntallType  a                 modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/antallType"^^xsd:anyURI ;
+        dct:title                     "Antall"@nb ;
+        xsd:maxInclusive              "9223372036854775807"^^xsd:int ;
+        xsd:minInclusive              "-9223372036854775808"^^xsd:int ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#long"^^xsd:anyURI .
+
+
+skebase:FødselsnummerType
+        a                             modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/fødselsnummerType"^^xsd:anyURI ;
+        dct:title                     "Fødselsnummer"@nb ;
+        xsd:length                    "11"^^xsd:nonNegativeInteger ;
+        xsd:pattern                   "[0-9]+"^^xsd:nonNegativeInteger ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+
+skebase:OrganisasjonsnummerType
+        a                             modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/organisasjonsnummerType"^^xsd:anyURI ;
+        dct:title                     "Organisasjonsnummer"@nb ;
+        xsd:length                    "9"^^xsd:nonNegativeInteger ;
+        xsd:pattern                   "[0-9]+" ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+
+skebase:LeveranseReferanseType
+        a                             modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/leveranseReferanseType"^^xsd:anyURI ;
+        dct:title                     "LeveranseReferanseType"@nb ;
+        xsd:maxLength                 "100" ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#string"^^xsd:anyURI .
+
+
+skebase:DatoType  a                   modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/DatoType"^^xsd:anyURI ;
+        dct:title                     "Dato"@nb ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#date"^^xsd:anyURI .
+
+
+skebase:ÅrstallType  a                modelldcatno:SimpleType , owl:NamedIndividual ;
+        dct:identifier                "http://data.skatteetaten.no/ns/modell/basetyper/årstalltype"^^xsd:anyURI ;
+        dct:title                     "Årstall"@nb ;
+        modelldcatno:belongsToModule  "TyperForGrunnlagsdata"@nb ;
+        modelldcatno:typeDefinitionReference
+                "http://www.w3.org/2001/XMLSchema#gYear"^^xsd:anyURI .

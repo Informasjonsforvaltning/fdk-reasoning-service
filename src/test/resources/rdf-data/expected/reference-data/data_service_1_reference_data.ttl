@@ -1,0 +1,8 @@
+@prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix euvoc:	<http://publications.europa.eu/ontology/euvoc#> .
+@prefix dc:	    <http://purl.org/dc/elements/1.1/> .
+
+<http://publications.europa.eu/resource/authority/file-type/XML>
+    rdf:type            euvoc:FileType ;
+	euvoc:xlNotation    [ euvoc:xlCodification	"application/xml" ] ;
+	dc:identifier       "XML" .

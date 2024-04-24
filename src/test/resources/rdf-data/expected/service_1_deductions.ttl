@@ -1,0 +1,7 @@
+<http://publications.europa.eu/resource/authority/data-theme/EDUC>
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Utdanning, kultur og sport"@no , "Utdanning, kultur og sport"@nb , "Utdanning, kultur og sport"@nn , "Education, culture and sport"@en .
+
+<https://psi.norge.no/los/tema/skole-og-utdanning>
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Skule og utdanning"@nn , "Schools and education"@en , "Skole og utdanning"@nb .

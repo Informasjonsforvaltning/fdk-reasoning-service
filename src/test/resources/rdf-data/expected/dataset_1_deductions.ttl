@@ -1,0 +1,31 @@
+<https://psi.norge.no/los/tema/lov-og-rett>
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Legal matters"@en , "Lov og rett"@nn , "Lov og rett"@nb .
+
+<https://psi.norge.no/los/tema/helse-og-omsorg>
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Health and care"@en , "Helse og omsorg"@nn , "Helse og omsorg"@nb .
+
+<http://publications.europa.eu/resource/authority/data-theme/HEAL>
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Health"@en , "Helse"@nb , "Helse"@no , "Helse"@nn .
+
+<http://publications.europa.eu/resource/authority/data-theme/JUST>
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Justis, rettssystem og allmenn sikkerhet"@no , "Justis, rettssystem og allmenn sikkerhet"@nb , "Justis, rettssystem og allmenn tryggleik"@nn , "Justice, legal system and public safety"@en .
+
+<http://publications.europa.eu/resource/authority/data-theme/EDUC>
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Utdanning, kultur og sport"@no , "Utdanning, kultur og sport"@nb , "Utdanning, kultur og sport"@nn , "Education, culture and sport"@en .
+
+<http://brreg.no/catalogs/910298062/datasets/7e4fbd01-2684-45c3-8ac1-70ebfebe8513>
+        <http://www.w3.org/ns/dcat#theme>
+                <http://publications.europa.eu/resource/authority/data-theme/HEAL> , <http://publications.europa.eu/resource/authority/data-theme/JUST> .
+
+<https://psi.norge.no/los/tema/kultur-idrett-og-fritid>
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Culture, sport and recreation"@en , "Kultur, idrett og fritid"@nn , "Kultur, idrett og fritid"@nb .
+
+<http://eurovoc.europa.eu/5490>
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "mitigating circumstances"@en .

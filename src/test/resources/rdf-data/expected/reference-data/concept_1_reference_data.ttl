@@ -1,0 +1,18 @@
+<https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#3>
+        a       <http://www.w3.org/2004/02/skos/core#Concept>;
+        <http://purl.org/dc/terms/identifier>
+                "https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#3"^^<http://www.w3.org/2001/XMLSchema#anyURI>;
+        <http://www.w3.org/2004/02/skos/core#broader>
+                <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#1>;
+        <http://www.w3.org/2004/02/skos/core#inScheme>
+                <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects>;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "nn 3"@nn , "nb 3"@nb .
+
+<http://publications.europa.eu/resource/authority/concept-status/CURRENT>
+        <http://purl.org/dc/elements/1.1/identifier>
+                "CURRENT";
+        <http://www.w3.org/2004/02/skos/core#inScheme>
+                <http://publications.europa.eu/resource/authority/concept-status>;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "gjeldende"@nb , "gjeldande"@nn , "gjeldende"@no , "current"@en .

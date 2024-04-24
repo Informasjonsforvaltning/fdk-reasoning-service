@@ -1,0 +1,23 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+
+@prefix euvoc:  <http://eurovoc.europa.eu/> .
+@prefix datatheme:  <http://publications.europa.eu/resource/authority/data-theme/> .
+@prefix eu-publication:  <http://publications.europa.eu/resource/authority/> .
+
+<https://psi.norge.no/los/tema/helse-og-omsorg>
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "helse-og-omsorg" .
+
+<https://psi.norge.no/los/tema/lov-og-rett>
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "lov-og-rett" .
+
+<https://psi.norge.no/los/tema/kultur-idrett-og-fritid>
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "kultur-idrett-og-fritid" .
+
+euvoc:5490
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+             "3513/5490" .

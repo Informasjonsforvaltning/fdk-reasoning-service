@@ -1,0 +1,13 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix ns1:  <http://publications.europa.eu/resource/authority/data-theme/> .
+@prefix ns2:  <http://publications.europa.eu/resource/authority/> .
+@prefix ns3:  <http://publications.europa.eu/ontology/euvoc#> .
+@prefix ns4:  <http://eurovoc.europa.eu/> .
+
+
+<https://psi.norge.no/los/tema/skole-og-utdanning>
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "skole-og-utdanning" .

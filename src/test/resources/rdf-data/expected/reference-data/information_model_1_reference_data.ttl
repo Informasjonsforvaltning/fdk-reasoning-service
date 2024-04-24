@@ -1,0 +1,21 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<https://psi.norge.no/los/tema/energi>
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "natur-klima-og-miljo/energi" .
+
+
+<https://psi.norge.no/los/tema/landbruk>
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "naring/landbruk" .
+
+
+<https://psi.norge.no/los/tema/natur-klima-og-miljo>
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "natur-klima-og-miljo" .
+
+
+<https://psi.norge.no/los/tema/samfunnssikkerhet-og-beredskap>
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "samfunnssikkerhet-og-beredskap" .
