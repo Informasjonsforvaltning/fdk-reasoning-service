@@ -1,7 +1,6 @@
 package no.fdk.fdk_reasoning_service.service
 
 import no.fdk.fdk_reasoning_service.Application
-import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.rdf.BR
 import no.fdk.fdk_reasoning_service.rdf.PROV
 import org.apache.jena.query.QueryExecutionFactory
@@ -20,11 +19,8 @@ import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.zip.GZIPInputStream
-import java.util.zip.GZIPOutputStream
 
 private val logger = LoggerFactory.getLogger(Application::class.java)
-const val UNION_ID = "union-graph"
 
 private const val dateFormat: String = "yyyy-MM-dd HH:mm:ss Z"
 
@@ -48,27 +44,14 @@ fun parseRDFResponse(responseBody: String, rdfLanguage: Lang, rdfSource: String?
     return responseModel
 }
 
-fun gzip(content: String): String {
-    val bos = ByteArrayOutputStream()
-    GZIPOutputStream(bos).bufferedWriter(Charsets.UTF_8).use { it.write(content) }
-    return Base64.getEncoder().encodeToString(bos.toByteArray())
-}
-
-fun ungzip(base64Content: String): String {
-    val content = Base64.getDecoder().decode(base64Content)
-    return GZIPInputStream(content.inputStream())
-        .bufferedReader(Charsets.UTF_8)
-        .use { it.readText() }
-}
-
 fun Model.fdkPrefix(): Model =
     setNsPrefix("fdk", "https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#")
 
-fun Model.createModelOfPublishersWithOrgData(publisherURIs: Set<String>, orgsURI: String): Model {
+fun Model.createModelOfOrganizationsWithOrgData(organizationURIs: Set<String>, orgsURI: String): Model {
     val model = ModelFactory.createDefaultModel()
     model.setNsPrefixes(nsPrefixMap)
 
-    publisherURIs.map { Pair(it, orgResourceForPublisher(it, orgsURI)) }
+    organizationURIs.map { Pair(it, orgResourceForOrganization(it, orgsURI)) }
         .filter { it.second != null }
         .forEach {
             model.createResource(it.first).addPropertiesFromOrgResource(it.second)
@@ -77,9 +60,9 @@ fun Model.createModelOfPublishersWithOrgData(publisherURIs: Set<String>, orgsURI
     return model
 }
 
-fun Model.orgResourceForPublisher(publisherURI: String, orgsURI: String): Resource? =
-    orgIdFromURI(publisherURI)
-        ?.let { downloadOrgDataIfMissing("$orgsURI/${orgIdFromURI(publisherURI)}") }
+fun Model.orgResourceForOrganization(organizationURI: String, orgsURI: String): Resource? =
+    orgIdFromURI(organizationURI)
+        ?.let { downloadOrgDataIfMissing("$orgsURI/${orgIdFromURI(organizationURI)}") }
 
 fun Model.downloadOrgDataIfMissing(uri: String): Resource? =
     if (containsTriple("<$uri>", "a", "?o")) {
@@ -119,11 +102,11 @@ fun Model.extreactQualifiedAttributionAgents(): List<Resource> =
         .map { it.resource }
         .toList()
 
-fun Model.extractPublishers(publisherPredicates: List<Property>): List<Resource> =
-    publisherPredicates.flatMap { publisherPredicate ->
-        listResourcesWithProperty(publisherPredicate)
+fun Model.extractOrganizations(organizationsPredicates: List<Property>): List<Resource> =
+    organizationsPredicates.flatMap { organizationPredicate ->
+        listResourcesWithProperty(organizationPredicate)
             .toList()
-            .flatMap { it.listProperties(publisherPredicate).toList() }
+            .flatMap { it.listProperties(organizationPredicate).toList() }
             .asSequence()
             .filter { it.isResourceProperty() }
             .map { it.resource }
@@ -146,49 +129,14 @@ fun Model.containsTriple(subj: String, pred: String, obj: String): Boolean {
     } catch (ex: Exception) { false }
 }
 
-fun Resource.catalogRecordURI(): String? {
-    val selectQuery = "SELECT ?record { ?record <http://xmlns.com/foaf/0.1/primaryTopic> <$uri> . } LIMIT 1"
-
-    return try {
-        val query = QueryFactory.create(selectQuery)
-        return QueryExecutionFactory.create(query, model).execSelect()
-            .asSequence()
-            .firstOrNull()
-            ?.get("record")
-            ?.toString()
-    } catch (ex: Exception) {
-        logger.error("Unable to find record for $uri", ex)
-        null
-    }
-}
-
-fun Resource.fdkId(recordURI: String): String? {
-    val selectQuery = "SELECT ?fdkId { <$recordURI> <http://purl.org/dc/terms/identifier> ?fdkId . } LIMIT 1"
-
-    return try {
-        val query = QueryFactory.create(selectQuery)
-        return QueryExecutionFactory.create(query, model).execSelect()
-            .asSequence()
-            .firstOrNull()
-            ?.get("fdkId")
-            ?.toString()
-    } catch (ex: Exception) {
-        logger.error("Unable to find fdkId for $recordURI", ex)
-        null
-    }
-}
-
-fun Resource.catalogRecordModel(recordURI: String): Model =
-    model.getResource(recordURI).listProperties().toModel()
-
 fun Resource.dctIdentifierIsInadequate(): Boolean =
     listProperties(DCTerms.identifier)
         .toList()
         .map { it.`object` }
-        .mapNotNull { it.extractPublisherId() }
+        .mapNotNull { it.extractOrganizationId() }
         .isEmpty()
 
-fun RDFNode.extractPublisherId(): String? =
+fun RDFNode.extractOrganizationId(): String? =
     when {
         isURIResource -> orgIdFromURI(asResource().uri)
         isLiteral -> orgIdFromURI(asLiteral().string)
@@ -202,7 +150,6 @@ fun orgIdFromURI(uri: String): String? {
     return if (allMatching.size == 1) allMatching.first().value
     else null
 }
-
 
 val napThemes: Set<String> = setOf(
     "https://psi.norge.no/los/tema/mobilitetstilbud",
@@ -251,49 +198,6 @@ val openDataURIBases: Set<String> = setOf(
     "publications.europa.eu/resource/authority/licence/CC0",
     "publications.europa.eu/resource/authority/licence/NLOD_2_0",
     "publications.europa.eu/resource/authority/licence/CC_BY_4_0")
-
-fun Resource.extractFDKIdAndRecordURI(): FDKIdAndRecordURI? {
-
-    val recordURI = catalogRecordURI()
-    if (recordURI == null) {
-        logger.error("Unable to find record for $uri", Exception())
-        return null
-    }
-
-    val fdkId = fdkId(recordURI)
-    if (fdkId == null) {
-        logger.error("Unable to find fdkId for $recordURI", Exception())
-        return null
-    }
-
-    return FDKIdAndRecordURI(fdkId, recordURI)
-}
-
-data class FDKIdAndRecordURI(
-    val fdkId: String,
-    val recordURI: String
-)
-
-fun catalogTypeFromRabbitMessageKey(key: String): CatalogType? =
-    when {
-        key.contains("concepts") -> CatalogType.CONCEPTS
-        key.contains("dataservices") -> CatalogType.DATASERVICES
-        key.contains("datasets") -> CatalogType.DATASETS
-        key.contains("informationmodels") -> CatalogType.INFORMATIONMODELS
-        key.contains("events") -> CatalogType.EVENTS
-        key.contains("public_services") -> CatalogType.PUBLICSERVICES
-        else -> null
-    }
-
-fun CatalogType.toReportType(): String =
-    when(this) {
-        CatalogType.CONCEPTS -> "concept"
-        CatalogType.DATASERVICES -> "dataservice"
-        CatalogType.DATASETS -> "dataset"
-        CatalogType.INFORMATIONMODELS -> "informationmodel"
-        CatalogType.EVENTS -> "event"
-        CatalogType.PUBLICSERVICES -> "publicService"
-    }
 
 fun formatNowWithOsloTimeZone(): String =
     ZonedDateTime.now(ZoneId.of("Europe/Oslo"))
