@@ -3,11 +3,7 @@ package no.fdk.fdk_reasoning_service.unit
 import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
 import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.utils.ApiTestContext
-import no.fdk.fdk_reasoning_service.utils.CONCEPT_REPORT
-import no.fdk.fdk_reasoning_service.utils.RDF_DATA
-import no.fdk.fdk_reasoning_service.utils.TEST_DATE
 import no.fdk.fdk_reasoning_service.utils.TestResponseReader
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -26,7 +22,7 @@ class Cache : ApiTestContext() {
             .thenReturn("http://localhost:5050/organizations")
             .thenReturn("http://localhost:5050/404")
 
-        val expected = responseReader.parseTurtleFile("orgs.ttl")
+        val expected = responseReader.parseTurtleFile("rdf-data/organization-catalog/orgs.ttl")
 
         cache.updateOrganizations()
         assertTrue(expected.isIsomorphicWith(cache.organizations()), "able to update model")
@@ -40,7 +36,7 @@ class Cache : ApiTestContext() {
             .thenReturn("http://localhost:5050/reference-data/los")
             .thenReturn("http://localhost:5050/404")
 
-        val expected = responseReader.parseTurtleFile("los.ttl")
+        val expected = responseReader.parseTurtleFile("rdf-data/reference-data/los.ttl")
 
         cache.updateLOS()
         assertTrue(expected.isIsomorphicWith(cache.los()), "able to update model")
@@ -54,7 +50,7 @@ class Cache : ApiTestContext() {
             .thenReturn("http://localhost:5050/reference-data/eu/eurovocs")
             .thenReturn("http://localhost:5050/404")
 
-        val expected = responseReader.parseTurtleFile("eurovocs.ttl")
+        val expected = responseReader.parseTurtleFile("rdf-data/reference-data/eurovocs.ttl")
 
         cache.updateEUROVOC()
         assertTrue(expected.isIsomorphicWith(cache.eurovocs()), "able to update model")
@@ -68,7 +64,7 @@ class Cache : ApiTestContext() {
             .thenReturn("http://localhost:5050/reference-data/eu/data-themes")
             .thenReturn("http://localhost:5050/404")
 
-        val expected = responseReader.parseTurtleFile("data_themes.ttl")
+        val expected = responseReader.parseTurtleFile("rdf-data/reference-data/data_themes.ttl")
 
         cache.updateDataThemes()
         assertTrue(expected.isIsomorphicWith(cache.dataThemes()), "able to update model")
@@ -82,7 +78,7 @@ class Cache : ApiTestContext() {
             .thenReturn("http://localhost:5050/reference-data/digdir/concept-subjects")
             .thenReturn("http://localhost:5050/404")
 
-        val expected = responseReader.parseTurtleFile("concept_subjects.ttl")
+        val expected = responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl")
 
         cache.updateConceptSubjects()
         assertTrue(expected.isIsomorphicWith(cache.conceptSubjects()), "able to update model")
@@ -96,7 +92,7 @@ class Cache : ApiTestContext() {
             .thenReturn("http://localhost:5050/reference-data/eu/concept-statuses")
             .thenReturn("http://localhost:5050/404")
 
-        val expected = responseReader.parseTurtleFile("concept_statuses.ttl")
+        val expected = responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl")
 
         cache.updateConceptStatuses()
         assertTrue(expected.isIsomorphicWith(cache.conceptStatuses()), "able to update model")

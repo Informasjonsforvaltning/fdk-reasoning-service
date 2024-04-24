@@ -11,10 +11,6 @@ class CV {
 
         val hasCompetentAuthority: Property = ResourceFactory.createProperty("${uri}hasCompetentAuthority")
         val ownedBy: Property = ResourceFactory.createProperty("${uri}ownedBy")
-        val playsRole: Property = ResourceFactory.createProperty("${uri}playsRole")
-        val Event: Resource = ResourceFactory.createResource("${uri}Event")
-        val BusinessEvent: Resource = ResourceFactory.createResource("${uri}BusinessEvent")
-        val LifeEvent: Resource = ResourceFactory.createResource("${uri}LifeEvent")
         val Participation: Resource = ResourceFactory.createResource("${uri}Participation")
     }
 

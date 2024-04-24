@@ -29,4 +29,9 @@ class TestResponseReader {
         return responseModel
     }
 
+    fun parseTurtleFiles(filenames: List<String>, lang: String = "Turtle"): Model {
+        val m = ModelFactory.createDefaultModel()
+        filenames.forEach {m.add(parseTurtleFile(it))}
+        return m
+    }
 }
