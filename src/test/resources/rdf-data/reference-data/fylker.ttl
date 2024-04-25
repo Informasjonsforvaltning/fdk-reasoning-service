@@ -1,0 +1,6 @@
+@prefix dct: <http://purl.org/dc/terms/> .
+
+<https://data.geonorge.no/administrativeEnheter/fylke/id/11>
+        a               dct:Location;
+        dct:identifier  "11";
+        dct:title       "Rogaland" .

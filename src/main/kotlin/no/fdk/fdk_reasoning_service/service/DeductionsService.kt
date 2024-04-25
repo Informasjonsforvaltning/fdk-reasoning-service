@@ -2,7 +2,6 @@ package no.fdk.fdk_reasoning_service.service
 
 import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
 import no.fdk.fdk_reasoning_service.model.CatalogType
-import no.fdk.fdk_reasoning_service.model.ExternalRDFData
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner
@@ -13,8 +12,8 @@ class DeductionService(
     private val referenceDataCache: ReferenceDataCache
 ) {
 
-    fun CatalogType.deductionsModel(catalogData: Model): Model =
-        when (this) {
+    fun deductionsModel(catalogData: Model, catalogType: CatalogType): Model =
+        when (catalogType) {
             CatalogType.CONCEPTS -> ModelFactory.createInfModel(
                 GenericRuleReasoner(Rule.parseRules(conceptRules)),
                 catalogData

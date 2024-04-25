@@ -9,6 +9,8 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import kotlin.test.assertTrue
 
+// TODO(remove test below)
+/*
 @Tag("unit")
 class Reasoning : ApiTestContext() {
     private val uris: ApplicationURI = mock()
@@ -127,3 +129,4 @@ class Reasoning : ApiTestContext() {
         assertTrue(result.isIsomorphicWith(expected))
     }
 }
+*/

@@ -1,0 +1,7 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<http://purl.org/adms/publishertype/Company>
+        a               skos:Concept;
+        skos:inScheme   <http://purl.org/adms/publishertype/1.0>;
+        skos:notation   "Company";
+        skos:prefLabel  "Verksemd"@nn , "Virksomhet"@nb , "Company"@en .

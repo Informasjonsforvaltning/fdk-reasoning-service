@@ -1,0 +1,28 @@
+@prefix at:   <http://publications.europa.eu/ontology/authority/> .
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<http://publications.europa.eu/resource/authority/licence/CC0>
+        rdf:type           skos:Concept;
+        at:authority-code  "CC0 1.0";
+        dc:identifier      "CC0 1.0";
+        skos:inScheme      <http://publications.europa.eu/resource/authority/licence>;
+        skos:prefLabel     "Creative Commons Universal Fristatus-erklæring"@no , "Creative Commons Universal Public Domain Dedication"@en .
+
+<http://publications.europa.eu/resource/authority/licence/NLOD_2_0>
+        rdf:type           skos:Concept;
+        at:authority-code  "NLOD20";
+        dc:identifier      "NLOD20";
+        skos:inScheme      <http://publications.europa.eu/resource/authority/licence>;
+        skos:prefLabel     "Norsk lisens for offentlige data"@no , "Norwegian Licence for Open Government Data"@en .
+
+<http://publications.europa.eu/resource/authority/licence/CC_BY_4_0>
+        rdf:type           skos:Concept;
+        at:authority-code  "CC BY 4.0";
+        dc:identifier      "CC BY 4.0";
+        skos:inScheme      <http://publications.europa.eu/resource/authority/licence>;
+        skos:prefLabel     "Creative Commons Navngivelse 4.0 Internasjonal"@no , "Creative Commons Attribution 4.0 International"@en .

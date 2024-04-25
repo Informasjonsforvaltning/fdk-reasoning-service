@@ -1,0 +1,92 @@
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+@prefix ns1:  <http://publications.europa.eu/resource/authority/data-theme/> .
+@prefix ns2:  <http://publications.europa.eu/resource/authority/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+ns1:ECON  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "ECON" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Economy and finance"@en , "Økonomi og finans"@nb , "Økonomi og finans"@nn , "Økonomi og finans"@no .
+
+ns1:AGRI  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "AGRI" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Jordbruk, fiskeri, skogbruk og mat"@no , "Agriculture, fisheries, forestry and food"@en , "Jordbruk, fiskeri, skogbruk og mat"@nb , "Jordbruk, fiskeri, skogbruk og mat"@nn .
+
+ns1:GOVE  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "GOVE" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Forvaltning og offentleg sektor"@nn , "Government and public sector"@en , "Forvaltning og offentlig sektor"@nb , "Forvaltning og offentlig sektor"@no .
+
+ns1:ENVI  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "ENVI" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Environment"@en , "Miljø"@nb , "Miljø"@nn , "Miljø"@no .
+
+ns1:ENER  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "ENER" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Energi"@no , "Energi"@nn , "Energy"@en , "Energi"@nb .
+
+ns1:EDUC  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "EDUC" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Utdanning, kultur og sport"@no , "Utdanning, kultur og sport"@nb , "Utdanning, kultur og sport"@nn , "Education, culture and sport"@en .
+
+ns1:JUST  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "JUST" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Justis, rettssystem og allmenn sikkerhet"@no , "Justis, rettssystem og allmenn tryggleik"@nn , "Justice, legal system and public safety"@en , "Justis, rettssystem og allmenn sikkerhet"@nb .
+
+ns1:REGI  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "REGI" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Regionar og byar"@nn , "Regions and cities"@en , "Regioner og byer"@no , "Regioner og byer"@nb .
+
+ns2:data-theme  owl:versionInfo  "20220715-0" ;
+        skos:prefLabel   "Data theme"@en .
+
+ns1:HEAL  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "HEAL" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Helse"@nb , "Helse"@no , "Helse"@nn , "Health"@en .
+
+ns1:INTR  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "INTR" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Internasjonale temaer"@no , "Internasjonale temaer"@nb , "Internasjonale tema"@nn , "International issues"@en .
+
+ns1:SOCI  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "SOCI" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Befolkning og samfunn"@nb , "Befolkning og samfunn"@nn , "Population and society"@en , "Befolkning og samfunn"@no .
+
+ns1:OP_DATPRO  <http://publications.europa.eu/ontology/authority/start.use>
+                "1952-07-23" ;
+        dc:identifier   "OP_DATPRO" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Provisional data"@en .
+
+ns1:TECH  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "TECH" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Vitenskap og teknologi"@nb , "Science and technology"@en , "Vitenskap og teknologi"@no , "Vitskap og teknologi"@nn .
+
+ns1:TRAN  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "TRAN" ;
+        skos:inScheme   ns2:data-theme ;
+        skos:prefLabel  "Transport"@en , "Transport"@nb , "Transport"@no , "Transport"@nn .
