@@ -6,8 +6,9 @@ import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.reasoner.rulesys.GenericRuleReasoner
 import org.apache.jena.reasoner.rulesys.Rule
+import org.springframework.stereotype.Service
 
-
+@Service
 class DeductionService(
     private val referenceDataCache: ReferenceDataCache
 ) {

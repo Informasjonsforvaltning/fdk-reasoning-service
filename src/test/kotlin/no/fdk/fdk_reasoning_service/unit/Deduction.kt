@@ -53,7 +53,7 @@ class Deduction {
     }
 
     @Nested
-    internal inner class Concept {
+    internal inner class Concept2 {
         @Test
         fun `test add publisher rule`() {
             val result = deductionService.deductionsModel(
