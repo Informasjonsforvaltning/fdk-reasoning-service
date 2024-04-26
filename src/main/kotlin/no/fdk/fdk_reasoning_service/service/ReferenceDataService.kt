@@ -2,7 +2,6 @@ package no.fdk.fdk_reasoning_service.service
 
 import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
 import no.fdk.fdk_reasoning_service.model.CatalogType
-import no.fdk.fdk_reasoning_service.model.ExternalRDFData
 import no.fdk.fdk_reasoning_service.rdf.FDK
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
@@ -12,8 +11,20 @@ import org.springframework.stereotype.Service
 class ReferenceDataService(
     private val referenceDataCache: ReferenceDataCache
 ) {
-    fun referenceDataModel(catalogType: CatalogType): Model =
-        when (catalogType) {
+    fun referenceDataModel(inputModel: Model, catalogType: CatalogType): Model {
+        val m = ModelFactory.createDefaultModel()
+
+        catalogType.completeReferenceDataModel()
+            .listSubjects()
+            .toList()
+            .filter { inputModel.containsTriple("?s", "?p", "<${it.uri}>") }
+            .forEach { m.add(it.listProperties()) }
+
+        return m
+    }
+
+    private fun CatalogType.completeReferenceDataModel(): Model =
+        when (this) {
             CatalogType.CONCEPTS -> conceptReferenceData()
             CatalogType.DATASERVICES -> dataServiceReferenceData()
             CatalogType.DATASETS -> datasetReferenceData()
@@ -143,7 +154,7 @@ class ReferenceDataService(
         return m
     }
 
-    fun selectedThemeTriples(): Model {
+    private fun selectedThemeTriples(): Model {
         val losData = referenceDataCache.los()
         if (losData.isEmpty) throw Exception("LOS are missing in reference data cache")
 
