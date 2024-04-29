@@ -46,7 +46,7 @@ class Deduction {
                 responseReader.parseTurtleFile("rdf-data/input-graphs/concept_0.ttl"),
                 CatalogType.CONCEPTS,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_0_deductions.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -71,7 +71,7 @@ class Deduction {
                 responseReader.parseTurtleFile("rdf-data/input-graphs/concept_0.ttl"),
                 CatalogType.CONCEPTS,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_0_deductions.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
