@@ -1,0 +1,66 @@
+@prefix at:   <http://publications.europa.eu/ontology/authority/> .
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix atold: <http://publications.europa.eu/resource/authority/> .
+
+<http://publications.europa.eu/resource/authority/licence/NLOD_2_0>
+        rdf:type           skos:Concept;
+        at:authority-code  "NLOD20";
+        dc:identifier      "NLOD20";
+        skos:inScheme      <http://publications.europa.eu/resource/authority/licence>;
+        skos:prefLabel     "Norsk lisens for offentlige data"@no , "Norwegian Licence for Open Government Data"@en .
+
+<http://publications.europa.eu/resource/authority/language/NNO>
+        rdf:type           skos:Concept;
+        at:authority-code  "NNO";
+        at:deprecated      "false";
+        at:op-code         "NNO";
+        at:start.use       "1950-05-09";
+        atold:op-code      "NNO";
+        dc:identifier      "NNO";
+        owl:versionInfo    "20190918-0";
+        skos:exactMatch    <http://id.loc.gov/vocabulary/iso639-1/nn>;
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Norsk Nynorsk"@nb , "Norwegian Nynorsk"@en , "Norsk Nynorsk"@nn , "Norsk Nynorsk"@no .
+
+<http://publications.europa.eu/resource/authority/language/ENG>
+        rdf:type           skos:Concept;
+        at:authority-code  "ENG";
+        at:deprecated      "false";
+        at:op-code         "ENG";
+        at:protocol-order  "EU-08";
+        at:protocol.order  "EU-08";
+        at:start.use       "1950-05-09";
+        atold:op-code      "ENG";
+        dc:identifier      "ENG";
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Engelsk"@nb , "Engelsk"@nn , "Engelsk"@no , "English"@en .
+
+<https://data.geonorge.no/administrativeEnheter/fylke/id/11>
+        a               dct:Location;
+        dct:identifier  "11";
+        dct:title       "Rogaland" .
+
+<http://publications.europa.eu/resource/authority/access-right/PUBLIC>
+    dc:identifier  "PUBLIC";
+    skos:inScheme   <http://publications.europa.eu/resource/authority/access-right> ;
+    skos:prefLabel  "public"@en .
+
+<http://publications.europa.eu/resource/authority/frequency/ANNUAL>
+    dc:identifier  "ANNUAL";
+    skos:inScheme   <http://publications.europa.eu/resource/authority/frequency> ;
+    skos:prefLabel  "annual"@en , "årleg"@nn , "årlig"@nb , "årlig"@no .
+
+<http://data.brreg.no/datakatalog/provinens/nasjonal>
+        rdf:type           skos:Concept;
+        at:authority-code  "NASJONAL";
+        at:deprecated      "false";
+        at:op-code         "NASJONAL";
+        atold:op-code      "NASJONAL";
+        dc:identifier      "NASJONAL";
+        skos:inScheme      <http://data.brreg.no/datakatalog/provinens>;
+        skos:prefLabel     "Autoritativ kilde"@nn , "Autoritativ kilde"@nb , "Authoritativ source"@en .

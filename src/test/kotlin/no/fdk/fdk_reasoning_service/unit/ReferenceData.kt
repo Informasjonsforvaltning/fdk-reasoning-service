@@ -54,7 +54,9 @@ class ReferenceData {
             .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/provenance_statements.ttl"))
     }
 
-    init {setupReferenceDataCacheMocks()}
+    init {
+        setupReferenceDataCacheMocks()
+    }
 
     @Nested
     internal inner class Concept {
@@ -122,7 +124,7 @@ class ReferenceData {
         }
 
         @Test
-        fun `test all reference data are added`() {
+        fun `test los, eurovoc and data themes are added from reference data`() {
             val result = referenceDataService.referenceDataModel(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_1.ttl"),
                 CatalogType.DATASETS,
@@ -135,342 +137,106 @@ class ReferenceData {
         @Test
         fun `test mediaTypes and fileTypes are added from reference data`() {
             val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_1.ttl"),
+                responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_2.ttl"),
                 CatalogType.DATASETS,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/dataset_1_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/dataset_2_reference_data.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
 
         @Test
-        fun `test licenses are added from reference data`() {
-            whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
+        fun `test licenses, linguistic systems, locations, access rights, frequencies and provenance are added from reference data`() {
             val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
+                responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_3.ttl"),
                 CatalogType.DATASETS,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/dataset_3_reference_data.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
-        }
-
-        @Test
-        fun `test linguistic systems are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.DATASETS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
-        @Test
-        fun `test locations are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
-        @Test
-        fun `test access rights are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
-        @Test
-        fun `test frequencies are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
-        @Test
-        fun `test provenance are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
-        @Test
-        fun `test los, eurovoc and data themes are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
         }
     }
 
     @Nested
     internal inner class InformationModel {
         @Test
-        fun `test licenses are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
+        fun `test no extra triples are added from reference data when not present as object in input`() {
             val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
+                responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_0.ttl"),
+                CatalogType.INFORMATIONMODELS,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
 
-            assertTrue(result.isIsomorphicWith(expected))*/
+            assertTrue(result.isIsomorphicWith(expected))
         }
-
-        @Test
-        fun `test linguistic systems are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
-        @Test
-        fun `test locations are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
 
         @Test
         fun `test los, eurovoc and data themes are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
             val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
+                responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_1.ttl"),
+                CatalogType.INFORMATIONMODELS,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/information_model_1_reference_data.ttl")
 
-            assertTrue(result.isIsomorphicWith(expected))*/
+            assertTrue(result.isIsomorphicWith(expected))
         }
 
+        @Test
+        fun `test licenses, linguistic systems and locations are added from reference data`() {
+            val result = referenceDataService.referenceDataModel(
+                responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_2.ttl"),
+                CatalogType.INFORMATIONMODELS,
+            )
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/information_model_2_reference_data.ttl")
+
+            assertTrue(result.isIsomorphicWith(expected))
+        }
     }
 
     @Nested
     internal inner class Service {
         @Test
-        fun `test linguistic systems are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
+        fun `test no extra triples are added from reference data when not present as object in input`() {
             val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
+                responseReader.parseTurtleFile("rdf-data/input-graphs/service_0.ttl"),
+                CatalogType.PUBLICSERVICES,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
 
-            assertTrue(result.isIsomorphicWith(expected))*/
+            assertTrue(result.isIsomorphicWith(expected))
         }
-
-        @Test
-        fun `test publisher types are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
-        @Test
-        fun `test adms statuses are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
-        @Test
-        fun `test role types are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
-        @Test
-        fun `test evidence types are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
-        @Test
-        fun `test channel types are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
-        @Test
-        fun `test main activities are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
-        @Test
-        fun `test weekdays are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
-            val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))*/
-        }
-
 
         @Test
         fun `test los, eurovoc and data themes are added from reference data`() {
-            /*whenever(referenceDataCache.conceptStatuses())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-            whenever(referenceDataCache.conceptSubjects())
-                .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-
             val result = referenceDataService.referenceDataModel(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
+                responseReader.parseTurtleFile("rdf-data/input-graphs/service_1.ttl"),
                 CatalogType.CONCEPTS,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/service_1_reference_data.ttl")
 
-            assertTrue(result.isIsomorphicWith(expected))*/
+            assertTrue(result.isIsomorphicWith(expected))
         }
 
+        @Test
+        fun `test publisher types, adms statuses, role types, evidence types and channel types are added from reference data`() {
+            val result = referenceDataService.referenceDataModel(
+                responseReader.parseTurtleFile("rdf-data/input-graphs/service_2.ttl"),
+                CatalogType.CONCEPTS,
+            )
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/service_2_reference_data.ttl")
+
+            assertTrue(result.isIsomorphicWith(expected))
+        }
+
+        @Test
+        fun `test linguistic systems, main activities and weekdays are added from reference data`() {
+            val result = referenceDataService.referenceDataModel(
+                responseReader.parseTurtleFile("rdf-data/input-graphs/service_3.ttl"),
+                CatalogType.CONCEPTS,
+            )
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/service_3_reference_data.ttl")
+
+            assertTrue(result.isIsomorphicWith(expected))
+        }
     }
 }

@@ -15,10 +15,11 @@
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
 @prefix oa:    <http://www.w3.org/ns/oa#> .
 
+
 <http://brreg.no/catalogs/910298062/datasets/7e4fbd01-2684-45c3-8ac1-70ebfebe8513>
         a                           dcat:Dataset ;
-        dct:title                   "Test av temaer"@nb ;
-        dct:description             "Tester at referansedata på Los, Eurovoc og DataTheme gir riktig resultat"@nb ;
+        dct:title                   "Testdatasett 2, for test av mediatype og filetype"@nb ;
+        dct:description             "Tester at referansedata på mediatype og filetype gir riktig resultat"@nb ;
         dct:publisher               <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;
         dct:subject                 <https://fellesdatakatalog.brreg.no/api/concepts/ac207ee9-972a-4ba9-a2d6-c368135caf0b> ,
                                     <https://fellesdatakatalog.brreg.no/api/concepts/5869bbec-f894-47a7-a8de-39a6941a76d1> ,
@@ -28,15 +29,10 @@
         dcat:contactPoint           [ a                        vcard:Organization ;
                                       vcard:organization-unit  "Ny test"
                                     ] ;
-        dcat:theme                  <https://psi.norge.no/los/tema/trafikkinformasjon> , # TODO: ikke i mock-data, hva skjer da?
-                                    <https://psi.norge.no/los/tema/mobilitetstilbud> , # TODO: ikke i mock-data, hva skjer da?
-                                    <https://psi.norge.no/los/tema/helse-og-omsorg> ,
-                                    <https://psi.norge.no/los/ord/reisebillett> , # TODO: ikke i mock-data, hva skjer da?
-                                    <https://psi.norge.no/los/tema/lov-og-rett> ,
-                                    <https://psi.norge.no/los/ord/ruteplanlegger> , # TODO: ikke i mock-data, hva skjer da?
-                                    <https://psi.norge.no/los/tema/kultur-idrett-og-fritid> ,
-                                    <http://publications.europa.eu/resource/authority/data-theme/EDUC> ,
-                                    <http://eurovoc.europa.eu/5490> ;
+        dcat:distribution           [ a  dcat:Distribution ;
+                                        dct:format     <http://publications.europa.eu/resource/authority/file-type/XML> ;
+                                        dcat:mediaType <https://www.iana.org/assignments/media-types/application/xml>
+                                    ] ;
         dqv:hasQualityAnnotation    [ a                dqv:QualityAnnotation ;
                                         dqv:inDimension  <iso:Currentness> ;
                                         prov:hasBody     []
@@ -49,7 +45,6 @@
                                       dcat:hadRole  <http://registry.it.csiro.au/def/isotc211/CI_RoleCode/contributor> ;
                                       prov:agent    <https://data.brreg.no/enhetsregisteret/api/enheter/984582021>
                                     ] .
-
 
 <http://registration-api:8080/catalogs/910298062>
         a              dcat:Catalog ;
