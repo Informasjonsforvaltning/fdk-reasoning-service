@@ -5,6 +5,7 @@ import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.rdf.FDK
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
+import org.apache.jena.rdf.model.Resource
 import org.springframework.stereotype.Service
 
 @Service
@@ -18,9 +19,20 @@ class ReferenceDataService(
             .listSubjects()
             .toList()
             .filter { inputModel.containsTriple("?s", "?p", "<${it.uri}>") }
-            .forEach { m.add(it.listProperties()) }
+            .forEach { it.recursiveAddReferenceCodeProperties(m) }
 
         return m
+    }
+
+    private fun Resource.recursiveAddReferenceCodeProperties(m: Model) {
+        listProperties()
+            .toList()
+            .filter { !m.contains(it) }
+            .also { m.add(it) }
+            .filter { it.isResourceProperty() }
+            .map { it.resource }
+            .filter { it.isAnon }
+            .forEach { it.recursiveAddReferenceCodeProperties(m) }
     }
 
     private fun CatalogType.completeReferenceDataModel(): Model =
