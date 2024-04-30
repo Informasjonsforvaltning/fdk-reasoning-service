@@ -1,0 +1,54 @@
+@prefix at:   <http://publications.europa.eu/ontology/authority/> .
+@prefix atold: <http://publications.europa.eu/resource/authority/> .
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+
+<http://publications.europa.eu/resource/authority/language/SMI>
+        rdf:type           skos:Concept;
+        at:authority-code  "SMI";
+        at:deprecated      "false";
+        at:op-code         "SMI";
+        at:op-mapped-code  [ rdf:type        at:MappedCode;
+                             at:legacy-code  "smi";
+                             dc:source       "iso-639-2b"
+                           ];
+        at:op-mapped-code  [ rdf:type        at:MappedCode;
+                             at:legacy-code  "smi";
+                             dc:source       "iso-639-2t"
+                           ];
+        at:start.use       "1950-05-09";
+        atold:op-code      "SMI";
+        dc:identifier      "SMI";
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Sami languages"@en .
+
+
+<http://publications.europa.eu/resource/authority/language/NOB>
+        rdf:type           skos:Concept;
+        at:authority-code  "NOB";
+        at:deprecated      "false";
+        at:op-code         "NOB";
+        at:start.use       "1950-05-09";
+        atold:op-code      "NOB";
+        dc:identifier      "NOB";
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Norsk Bokmål"@nb , "Norsk Bokmål"@nn , "Norsk Bokmål"@no , "Norwegian Bokmål"@en .
+
+
+<http://publications.europa.eu/resource/authority/licence/CC_BY_4_0>
+        rdf:type           skos:Concept;
+        at:authority-code  "CC BY 4.0";
+        dc:identifier      "CC BY 4.0";
+        skos:inScheme      <http://publications.europa.eu/resource/authority/licence>;
+        skos:prefLabel     "Creative Commons Navngivelse 4.0 Internasjonal"@no , "Creative Commons Attribution 4.0 International"@en .
+
+
+<https://data.geonorge.no/administrativeEnheter/nasjon/id/173163>
+        a               dct:Location;
+        dct:identifier  "173163";
+        dct:title       "Norge" .

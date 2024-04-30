@@ -17,6 +17,10 @@ class ReferenceData {
     private val referenceDataService = ReferenceDataService(referenceDataCache)
     private val responseReader = TestResponseReader()
 
+    init {
+        setupReferenceDataCacheMocks()
+    }
+
     private fun setupReferenceDataCacheMocks() {
         whenever(referenceDataCache.conceptStatuses())
             .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
@@ -52,10 +56,20 @@ class ReferenceData {
             .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/frequencies.ttl"))
         whenever(referenceDataCache.provenance())
             .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/provenance_statements.ttl"))
-    }
-
-    init {
-        setupReferenceDataCacheMocks()
+        whenever(referenceDataCache.publisherTypes())
+            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/publisher_types.ttl"))
+        whenever(referenceDataCache.roleTypes())
+            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/role_types.ttl"))
+        whenever(referenceDataCache.evidenceTypes())
+            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/evidence_types.ttl"))
+        whenever(referenceDataCache.channelTypes())
+            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/channel_types.ttl"))
+        whenever(referenceDataCache.mainActivities())
+            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/main_activities.ttl"))
+        whenever(referenceDataCache.admsStatuses())
+            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/adms_statuses.ttl"))
+        whenever(referenceDataCache.weekDays())
+            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/week_days.ttl"))
     }
 
     @Nested
@@ -171,7 +185,7 @@ class ReferenceData {
         }
 
         @Test
-        fun `test los, eurovoc and data themes are added from reference data`() {
+        fun `test los themes are added from reference data`() {
             val result = referenceDataService.referenceDataModel(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_1.ttl"),
                 CatalogType.INFORMATIONMODELS,
@@ -210,7 +224,7 @@ class ReferenceData {
         fun `test los, eurovoc and data themes are added from reference data`() {
             val result = referenceDataService.referenceDataModel(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_1.ttl"),
-                CatalogType.CONCEPTS,
+                CatalogType.PUBLICSERVICES,
             )
             val expected = responseReader.parseTurtleFile("rdf-data/expected/service_1_reference_data.ttl")
 
@@ -218,10 +232,10 @@ class ReferenceData {
         }
 
         @Test
-        fun `test publisher types, adms statuses, role types, evidence types and channel types are added from reference data`() {
+        fun `test publisher types, adms statuses, role types, evidence types, channel types and opening hours (weekdays) are added from reference data`() {
             val result = referenceDataService.referenceDataModel(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_2.ttl"),
-                CatalogType.CONCEPTS,
+                CatalogType.PUBLICSERVICES,
             )
             val expected = responseReader.parseTurtleFile("rdf-data/expected/service_2_reference_data.ttl")
 
@@ -229,10 +243,10 @@ class ReferenceData {
         }
 
         @Test
-        fun `test linguistic systems, main activities and weekdays are added from reference data`() {
+        fun `test linguistic systems and main activities are added from reference data`() {
             val result = referenceDataService.referenceDataModel(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_3.ttl"),
-                CatalogType.CONCEPTS,
+                CatalogType.PUBLICSERVICES,
             )
             val expected = responseReader.parseTurtleFile("rdf-data/expected/service_3_reference_data.ttl")
 

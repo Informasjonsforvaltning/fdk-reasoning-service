@@ -14,25 +14,33 @@
 @prefix skebase: <http://data.skatteetaten.no/ns/modell/basetyper/> .
 @prefix test: <http://test.no/catalogs/> .
 
+
 test:TestKatalog  a        dcat:Catalog , owl:NamedIndividual ;
-        dct:description     "En modell fra Testetaten"@nb , "An information model from the Test Agency"@en ;
-        dct:identifier      "http://data.test.no/ns/katalog/TestKatalog"^^xsd:anyURI ;
-        dct:issued          "2020-03-30T16:00:00+02:00"^^xsd:dateTime ;
-        dct:license         <https://creativecommons.org/licenses/by-nc-sa/4.0/> ;
-        dct:publisher       <https://data.brreg.no/enhetsregisteret/oppslag/enheter/987654321> ;
-        dct:title           "Testkatalogen™"@nb , "Testkatalogen™"@en ;
-        modelldcatno:model  test:ModellForÅTesteAtReferanseDataIkkeLeggesTil .
+        dct:description      "En modell fra Testetaten"@nb , "An information model from the Test Agency"@en ;
+        dct:identifier       "http://data.test.no/ns/katalog/TestKatalog"^^xsd:anyURI ;
+        dct:issued           "2020-03-30T16:00:00+02:00"^^xsd:dateTime ;
+        dct:license          <https://creativecommons.org/licenses/by-nc-sa/4.0/> ;
+        dct:publisher        <https://data.brreg.no/enhetsregisteret/oppslag/enheter/987654321> ;
+        dct:title            "Testkatalogen™"@nb , "Testkatalogen™"@en ;
+        modelldcatno:model   test:ModellForÅTesteLosReferanseData .
 
 
-test:ModellForÅTesteAtReferanseDataIkkeLeggesTil
-        a                  owl:NamedIndividual , modelldcatno:InformationModel ;
-        dct:description    "Modell for å teste at ikke ekstra tripler blir lagt på fra Reference Data"@nb ;
-        dct:identifier     "urn:test:test:informasjons:modell:v1"^^xsd:anyURI ;
-        dct:issued         "2020-03-30T18:35:07.950+02:00"^^xsd:dateTime ;
-        dct:publisher      <https://data.brreg.no/enhetsregisteret/oppslag/enheter/910244132> ;
-        dct:title          "Testinformasjonsmodell"@nn , "Testinformasjonsmodell"@nb ;
-        dcat:keyword       "TestModell"@nb , "TestModell"@nb ;
-        foaf:homepage      <http://www.test.no/testsiden> ;
+test:ModellForÅTesteLosReferanseData
+        a                   owl:NamedIndividual , modelldcatno:InformationModel ;
+        dct:description     "Informasjonsmodell for å teste at LOS-temaer blir korrekt lagt på"@nb ;
+        dct:identifier      "urn:test:test:informasjons:modell:v1"^^xsd:anyURI ;
+        dct:issued          "2020-03-30T18:35:07.950+02:00"^^xsd:dateTime ;
+        dct:publisher       <https://data.brreg.no/enhetsregisteret/oppslag/enheter/910244132> ;
+        dct:title           "Testinformasjonsmodell"@nn , "Testinformasjonsmodell"@nb ;
+        dcat:keyword        "TestModell"@nb , "TestModell"@nb ;
+        foaf:homepage       <http://www.test.no/testsiden> ;
+        dct:temporal        test:gyldighetsintervall ;
+
+        dcat:theme          <https://psi.norge.no/los/tema/energi> ,
+                            <https://psi.norge.no/los/tema/landbruk> ,
+                            <https://psi.norge.no/los/tema/natur-klima-og-miljo> ,
+                            <https://psi.norge.no/los/tema/samfunnssikkerhet-og-beredskap> ;
+
         modelldcatno:containsModelElement
                 skebase:LeveranseReferanseType ,
                 skebase:organisasjonsnavnType ,
@@ -65,7 +73,7 @@ test:ModellForÅTesteAtReferanseDataIkkeLeggesTil
         dct:isPartOf       <http://localhost:5050/catalogs/f25c939d-0722-3aa3-82b1-eaa457086444> ;
         dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
         dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
-        foaf:primaryTopic  test:ModellForÅTesteAtReferanseDataIkkeLeggesTil .
+        foaf:primaryTopic  test:ModellForÅTesteLosReferanseData .
 
 
 <https://data.brreg.no/enhetsregisteret/oppslag/enheter/910244132>
@@ -81,6 +89,11 @@ test:ModellForÅTesteAtReferanseDataIkkeLeggesTil
         dct:type   "Organisasjonsledd"@nb ;
         foaf:name  "Testetaten"@nb ;
         br:orgPath "/GENERATED/ORGPATH" .
+
+
+test:gyldighetsintervall
+        a               dct:PeriodOfTime , owl:NamedIndividual ;
+        dcat:startDate  "2019-10-10T16:00:00Z"^^xsd:dateTime .
 
 
 skebase:EpostadresseType

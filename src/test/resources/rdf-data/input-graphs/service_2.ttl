@@ -9,17 +9,25 @@
 @prefix skos:       <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
 @prefix adms:       <http://www.w3.org/ns/adms#> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix rov:        <http://www.w3.org/ns/regorg#> .
 @prefix orgtype:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/org-type.ttl#> .
 @prefix br:         <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/organization-catalog.owl#> .
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/12>
-        a                         cpsv:PublicService ;
-        dct:title                 "Testtjeneste for å teste at ingen referansedata legges til"@nb ;
-        cv:ownedBy                <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132> ;
-        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
-        dct:description           "Testtjeneste uten bruk av eksterne vokabularer"@nb ;
-        dct:identifier            "12" .
+        a                   cpsv:PublicService ;
+        dct:title           "Testtjeneste for å teste at publisher types, adms statuses, role types, evidence types, channel types og weekdays legges til"@nb ;
+        cv:ownedBy          <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132> ;
+        cv:isGroupedBy      <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
+        dct:description     "Testtjeneste for å teste at publisher types, adms statuses, role types, evidence types, channel types og weekdays legges til"@nb ;
+        dct:identifier      "12" ;
+
+        adms:status         <http://purl.org/adms/status/Completed> ;
+        cv:hasInputType     <https://data.norge.no/vocabulary/evidence-type#attestation> ;
+        cv:hasChannel       <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> ;
+
+        cv:hasParticipation <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> .
+
 
 <https://www.staging.fellesdatakatalog.digdir.no/public-services/62966d9d-a547-3a66-a588-3fdf0f97d885>
         a                  dcat:CatalogRecord ;
@@ -40,9 +48,34 @@
     dct:publisher   <https://data.brreg.no/enhetsregisteret/oppslag/enheter/910244132> ;
     dcatno:containsService <http://public-service-publisher.fellesdatakatalog.digdir.no/services/12> .
 
+<http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1>
+        a               cv:Channel ;
+        cv:ownedBy      <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        dct:identifier  "1" ;
+        cv:openingHours [
+                            a time:TemporalEntity ;
+                            time:hasBeginning [ a time:Instant ;
+                                  time:inDateTime [ a time:DateTimeDescription ;
+                                     time:dayOfWeek schema:PublicHolidays ;
+                                     ] ;
+                                  ] ;
+                               time:hasEnd [ a time:Instant ;
+                                  time:inDateTime [ a time:DateTimeDescription ;
+                                     time:dayOfWeek schema:PublicHolidays ;
+                                     ] ;
+                                  ] ;
+                               dct:description "uregelmessige åpningstider på høytidsdager"@nb ;
+                        ] ;
+        dct:type <https://data.norge.no/vocabulary/service-channel-type#homepage> .
+
+<https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl>
+       cv:role <https://data.norge.no/vocabulary/role-type#data-provider> ;
+       a cv:Participation .
+
 <https://data.brreg.no/enhetsregisteret/oppslag/enheter/910244132>
         a               rov:RegisteredOrganization ;
         dct:identifier  "910244132" ;
+        dct:type        <http://purl.org/adms/publishertype/Company> ;
         rov:legalName   "RAMSUND OG ROGNAN REVISJON" ;
         rov:orgType     orgtype:ASA ;
         foaf:name       "Ramsund og Rognand revisjon"@nb ;

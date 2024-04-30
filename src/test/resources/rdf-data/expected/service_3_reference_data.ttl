@@ -1,0 +1,27 @@
+@prefix at:    <http://publications.europa.eu/ontology/authority/> .
+@prefix atold:    <http://publications.europa.eu/resource/authority/> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+
+<http://publications.europa.eu/resource/authority/language/NOR>
+        rdf:type           skos:Concept;
+        at:authority-code  "NOR";
+        at:deprecated      "false";
+        at:op-code         "NOR";
+        at:protocol-order  "EU-08";
+        at:protocol.order  "EU-08";
+        at:start.use       "1950-05-09";
+        atold:op-code      "NOR";
+        dc:identifier      "NOR";
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Norwegian"@en , "Norsk"@nb , "Norsk"@nn , "Norsk"@no .
+
+
+<http://publications.europa.eu/resource/authority/main-activity/education>
+    dc:identifier  "education" ;
+    skos:inScheme   <http://publications.europa.eu/resource/authority/main-activity> ;
+    skos:prefLabel  "Education"@en .

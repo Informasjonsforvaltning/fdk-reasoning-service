@@ -14,25 +14,34 @@
 @prefix skebase: <http://data.skatteetaten.no/ns/modell/basetyper/> .
 @prefix test: <http://test.no/catalogs/> .
 
+
 test:TestKatalog  a        dcat:Catalog , owl:NamedIndividual ;
         dct:description     "En modell fra Testetaten"@nb , "An information model from the Test Agency"@en ;
         dct:identifier      "http://data.test.no/ns/katalog/TestKatalog"^^xsd:anyURI ;
         dct:issued          "2020-03-30T16:00:00+02:00"^^xsd:dateTime ;
-        dct:license         <https://creativecommons.org/licenses/by-nc-sa/4.0/> ;
+        dct:license         <http://publications.europa.eu/resource/authority/licence/CC_BY_4_0> ;
         dct:publisher       <https://data.brreg.no/enhetsregisteret/oppslag/enheter/987654321> ;
         dct:title           "Testkatalogen™"@nb , "Testkatalogen™"@en ;
         modelldcatno:model  test:ModellForÅTesteAtReferanseDataIkkeLeggesTil .
 
 
 test:ModellForÅTesteAtReferanseDataIkkeLeggesTil
-        a                  owl:NamedIndividual , modelldcatno:InformationModel ;
-        dct:description    "Modell for å teste at ikke ekstra tripler blir lagt på fra Reference Data"@nb ;
-        dct:identifier     "urn:test:test:informasjons:modell:v1"^^xsd:anyURI ;
-        dct:issued         "2020-03-30T18:35:07.950+02:00"^^xsd:dateTime ;
-        dct:publisher      <https://data.brreg.no/enhetsregisteret/oppslag/enheter/910244132> ;
-        dct:title          "Testinformasjonsmodell"@nn , "Testinformasjonsmodell"@nb ;
-        dcat:keyword       "TestModell"@nb , "TestModell"@nb ;
-        foaf:homepage      <http://www.test.no/testsiden> ;
+        a                   owl:NamedIndividual , modelldcatno:InformationModel ;
+        dct:description     "Katalog for å teste at ikke ekstra tripler blir lagt på fra Reference Data"@nb ;
+        dct:identifier      "urn:test:test:informasjons:modell:v1"^^xsd:anyURI ;
+        dct:issued          "2020-03-30T18:35:07.950+02:00"^^xsd:dateTime ;
+        dct:publisher       <https://data.brreg.no/enhetsregisteret/oppslag/enheter/910244132> ;
+        dct:title           "Testinformasjonsmodell"@nn , "Testinformasjonsmodell"@nb ;
+        dcat:keyword        "TestModell"@nb , "TestModell"@nb ;
+        foaf:homepage       <http://www.test.no/testsiden> ;
+
+        dct:temporal        test:gyldighetsintervall ;
+
+        dct:language        <http://publications.europa.eu/resource/authority/language/SMI> ,
+                            <http://publications.europa.eu/resource/authority/language/NOB> ;
+        dct:license         <http://publications.europa.eu/resource/authority/licence/CC_BY_4_0> ;
+        dct:spatial         <https://data.geonorge.no/administrativeEnheter/nasjon/id/173163> ;
+
         modelldcatno:containsModelElement
                 skebase:LeveranseReferanseType ,
                 skebase:organisasjonsnavnType ,
@@ -81,6 +90,11 @@ test:ModellForÅTesteAtReferanseDataIkkeLeggesTil
         dct:type   "Organisasjonsledd"@nb ;
         foaf:name  "Testetaten"@nb ;
         br:orgPath "/GENERATED/ORGPATH" .
+
+
+test:gyldighetsintervall
+        a               dct:PeriodOfTime , owl:NamedIndividual ;
+        dcat:startDate  "2019-10-10T16:00:00Z"^^xsd:dateTime .
 
 
 skebase:EpostadresseType

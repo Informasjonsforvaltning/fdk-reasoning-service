@@ -14,12 +14,16 @@
 @prefix br:         <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/organization-catalog.owl#> .
 
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/12>
-        a                         cpsv:PublicService ;
-        dct:title                 "Testtjeneste for å teste at ingen referansedata legges til"@nb ;
-        cv:ownedBy                <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132> ;
-        cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
-        dct:description           "Testtjeneste uten bruk av eksterne vokabularer"@nb ;
-        dct:identifier            "12" .
+        a                   cpsv:PublicService ;
+        dct:title           "Testtjeneste for å teste at temaer legges til"@nb ;
+        cv:ownedBy          <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132> ;
+        cv:isGroupedBy      <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
+        dct:description     "Testtjeneste for å teste at temaer legges til"@nb ;
+        dct:identifier      "12" ;
+        cv:hasParticipation <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> ;
+        cv:thematicArea     <https://psi.norge.no/los/tema/skole-og-utdanning> ,
+                            <http://publications.europa.eu/resource/authority/data-theme/EDUC> ,
+                            <http://publications.europa.eu/ontology/euvoc#1528> .
 
 <https://www.staging.fellesdatakatalog.digdir.no/public-services/62966d9d-a547-3a66-a588-3fdf0f97d885>
         a                  dcat:CatalogRecord ;
