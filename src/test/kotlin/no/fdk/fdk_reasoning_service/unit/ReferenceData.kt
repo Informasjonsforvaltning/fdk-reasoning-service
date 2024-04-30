@@ -91,7 +91,7 @@ class ReferenceData {
                 responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
                 CatalogType.CONCEPTS,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/concept_1_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/concept_1_reference_data.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -117,7 +117,7 @@ class ReferenceData {
                 responseReader.parseTurtleFile("rdf-data/input-graphs/data_service_1.ttl"),
                 CatalogType.DATASERVICES,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/data_service_1_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/data_service_1_reference_data.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -143,7 +143,7 @@ class ReferenceData {
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_1.ttl"),
                 CatalogType.DATASETS,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/dataset_1_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/dataset_1_reference_data.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -154,7 +154,7 @@ class ReferenceData {
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_2.ttl"),
                 CatalogType.DATASETS,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/dataset_2_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/dataset_2_reference_data.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -165,7 +165,7 @@ class ReferenceData {
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_3.ttl"),
                 CatalogType.DATASETS,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/dataset_3_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/dataset_3_reference_data.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -190,7 +190,7 @@ class ReferenceData {
                 responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_1.ttl"),
                 CatalogType.INFORMATIONMODELS,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/information_model_1_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/information_model_1_reference_data.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -201,7 +201,7 @@ class ReferenceData {
                 responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_2.ttl"),
                 CatalogType.INFORMATIONMODELS,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/information_model_2_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/information_model_2_reference_data.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -226,7 +226,7 @@ class ReferenceData {
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_1.ttl"),
                 CatalogType.PUBLICSERVICES,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/service_1_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service_1_reference_data.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -237,7 +237,7 @@ class ReferenceData {
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_2.ttl"),
                 CatalogType.PUBLICSERVICES,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/service_2_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service_2_reference_data.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -248,7 +248,7 @@ class ReferenceData {
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_3.ttl"),
                 CatalogType.PUBLICSERVICES,
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/service_3_reference_data.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service_3_reference_data.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
