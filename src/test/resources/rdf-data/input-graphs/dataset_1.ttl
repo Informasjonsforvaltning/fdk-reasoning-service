@@ -28,12 +28,12 @@
         dcat:contactPoint           [ a                        vcard:Organization ;
                                       vcard:organization-unit  "Ny test"
                                     ] ;
-        dcat:theme                  <https://psi.norge.no/los/tema/trafikkinformasjon> , # TODO: ikke i mock-data, hva skjer da?
-                                    <https://psi.norge.no/los/tema/mobilitetstilbud> , # TODO: ikke i mock-data, hva skjer da?
+        dcat:theme                  <https://psi.norge.no/los/tema/trafikkinformasjon> ,
+                                    <https://psi.norge.no/los/tema/mobilitetstilbud> ,
                                     <https://psi.norge.no/los/tema/helse-og-omsorg> ,
-                                    <https://psi.norge.no/los/ord/reisebillett> , # TODO: ikke i mock-data, hva skjer da?
+                                    <https://psi.norge.no/los/ord/reisebillett> ,
                                     <https://psi.norge.no/los/tema/lov-og-rett> ,
-                                    <https://psi.norge.no/los/ord/ruteplanlegger> , # TODO: ikke i mock-data, hva skjer da?
+                                    <https://psi.norge.no/los/ord/ruteplanlegger> ,
                                     <https://psi.norge.no/los/tema/kultur-idrett-og-fritid> ,
                                     <http://publications.europa.eu/resource/authority/data-theme/EDUC> ,
                                     <http://eurovoc.europa.eu/5490> ;

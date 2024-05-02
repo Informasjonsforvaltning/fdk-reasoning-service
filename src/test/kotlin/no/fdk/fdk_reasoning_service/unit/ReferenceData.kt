@@ -138,7 +138,7 @@ class ReferenceData {
         }
 
         @Test
-        fun `test los, eurovoc and data themes are added from reference data`() {
+        fun `test selected theme triples are added from reference data`() {
             val result = referenceDataService.referenceDataModel(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_1.ttl"),
                 CatalogType.DATASETS,
@@ -185,7 +185,7 @@ class ReferenceData {
         }
 
         @Test
-        fun `test los themes are added from reference data`() {
+        fun `test selected theme triples are added from reference data`() {
             val result = referenceDataService.referenceDataModel(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_1.ttl"),
                 CatalogType.INFORMATIONMODELS,
@@ -221,7 +221,7 @@ class ReferenceData {
         }
 
         @Test
-        fun `test los, eurovoc and data themes are added from reference data`() {
+        fun `test selected theme triples are added from reference data`() {
             val result = referenceDataService.referenceDataModel(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_1.ttl"),
                 CatalogType.PUBLICSERVICES,

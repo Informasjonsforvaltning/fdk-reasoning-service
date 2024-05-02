@@ -9,23 +9,5 @@
 
 
 <https://psi.norge.no/los/tema/skole-og-utdanning>
-        rdf:type           skos:Concept ;
-        skos:broadMatch    <http://publications.europa.eu/resource/authority/data-theme/EDUC> ;
-        skos:inScheme      <https://psi.norge.no/los/ontologi/tema> ;
-        skos:narrower      <https://psi.norge.no/los/tema/hoyere-utdanning> , <https://psi.norge.no/los/tema/voksenopplaring> , <https://psi.norge.no/los/tema/grunnskole> , <https://psi.norge.no/los/tema/studiefinansiering> , <https://psi.norge.no/los/tema/skolemiljo> , <https://psi.norge.no/los/tema/skolehverdag> , <https://psi.norge.no/los/tema/videregaende-skole> ;
-        skos:prefLabel     "Skule og utdanning"@nn , "Skole og utdanning"@nb , "Schools and education"@en ;
-        skos:topConceptOf  <https://psi.norge.no/los/struktur> ;
         <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
                 "skole-og-utdanning" .
-
-
-ns1:EDUC  <http://publications.europa.eu/ontology/authority/start.use>
-                "2015-10-01" ;
-        dc:identifier   "EDUC" ;
-        skos:inScheme   ns2:data-theme ;
-        skos:prefLabel  "Utdanning, kultur og sport"@no , "Utdanning, kultur og sport"@nb , "Utdanning, kultur og sport"@nn , "Education, culture and sport"@en .
-
-ns4:1528  rdf:type      skos:Concept ;
-        skos:prefLabel  "young person"@en ;
-        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
-                "52/3327/1528" .
