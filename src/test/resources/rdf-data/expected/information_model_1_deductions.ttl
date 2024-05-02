@@ -1,0 +1,15 @@
+<https://psi.norge.no/los/tema/natur-klima-og-miljo>
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Natur, klima og miljø"@nn , "Natur, klima og miljø"@nb , "Nature, climate and environment"@en .
+
+<https://psi.norge.no/los/tema/samfunnssikkerhet-og-beredskap>
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Civil protection and emergency planning"@en , "Samfunnssikkerhet og beredskap"@nb , "Samfunnstryggleik og beredskap"@nn .
+
+<https://psi.norge.no/los/tema/energi>
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Energy"@en , "Energi"@nn , "Energi"@nb .
+
+<https://psi.norge.no/los/tema/landbruk>
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Landbruk"@nn , "Landbruk"@nb , "Agriculture sector"@en .

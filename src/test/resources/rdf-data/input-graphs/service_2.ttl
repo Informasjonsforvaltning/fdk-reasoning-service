@@ -72,6 +72,10 @@
        cv:role <https://data.norge.no/vocabulary/role-type#data-provider> ;
        a cv:Participation .
 
+<https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exAktorDummy.ttl>
+       a foaf:Agent;
+       cv:participates <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> .
+
 <https://data.brreg.no/enhetsregisteret/oppslag/enheter/910244132>
         a               rov:RegisteredOrganization ;
         dct:identifier  "910244132" ;

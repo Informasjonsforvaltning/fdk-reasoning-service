@@ -1,0 +1,7 @@
+<http://brreg.no/catalogs/910298062/datasets/7e4fbd01-2684-45c3-8ac1-70ebfebe8513>
+        <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#isAuthoritative>
+                true;
+        <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#isOpenData>
+                true;
+        <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#isRelatedToTransportportal>
+                true .

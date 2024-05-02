@@ -30,7 +30,6 @@ test:ModellForÅTesteAtReferanseDataIkkeLeggesTil
         dct:description     "Katalog for å teste at ikke ekstra tripler blir lagt på fra Reference Data"@nb ;
         dct:identifier      "urn:test:test:informasjons:modell:v1"^^xsd:anyURI ;
         dct:issued          "2020-03-30T18:35:07.950+02:00"^^xsd:dateTime ;
-        dct:publisher       <https://data.brreg.no/enhetsregisteret/oppslag/enheter/910244132> ;
         dct:title           "Testinformasjonsmodell"@nn , "Testinformasjonsmodell"@nb ;
         dcat:keyword        "TestModell"@nb , "TestModell"@nb ;
         foaf:homepage       <http://www.test.no/testsiden> ;
@@ -75,15 +74,6 @@ test:ModellForÅTesteAtReferanseDataIkkeLeggesTil
         dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
         dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
         foaf:primaryTopic  test:ModellForÅTesteAtReferanseDataIkkeLeggesTil .
-
-
-<https://data.brreg.no/enhetsregisteret/oppslag/enheter/910244132>
-        a                     rov:RegisteredOrganization ;
-        dct:identifier        "910244132" ;
-        rov:legalName         "RAMSUND OG ROGNAN REVISJON" ;
-        rov:orgType           orgtype:ASA ;
-        foaf:name             "Ramsund og Rognand revisjon"@nb ;
-        br:orgPath            "/ANNET/910244132" .
 
 <https://data.brreg.no/enhetsregisteret/oppslag/enheter/987654321>
         a          foaf:Agent , owl:NamedIndividual ;

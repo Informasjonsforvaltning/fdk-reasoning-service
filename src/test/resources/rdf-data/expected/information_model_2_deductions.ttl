@@ -1,0 +1,3 @@
+<http://test.no/catalogs/ModellForÅTesteAtReferanseDataIkkeLeggesTil>
+        <http://purl.org/dc/terms/publisher>
+                <https://data.brreg.no/enhetsregisteret/oppslag/enheter/987654321> .

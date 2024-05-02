@@ -29,6 +29,16 @@
         dct:publisher               <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910244132> ;
 
         dct:type                   "Data" ;
+        dcat:theme                 <https://psi.norge.no/los/tema/trafikkinformasjon> ;
+        dcat:distribution         [ a                    dcat:Distribution ;
+                                    dct:description  "Åpent"@nb ;
+                                    dct:license      [ a               dct:LicenseDocument , skos:Concept ;
+                                                       dct:source  "http://publications.europa.eu/resource/authority/licence/NLOD_2_0" ;
+                                                       skos:prefLabel  "Norsk lisens for offentlige data"@no , "Norwegian Licence for Open Government Data"@en
+                                                     ] ;
+                                    dct:title        "TEST"@nb ;
+                                    dcat:accessURL       <https://vg.no>
+                                   ] ;
         dcat:contactPoint          [ a                        vcard:Organization ;
                                      vcard:organization-unit  "Ny test"
                                    ] ;
