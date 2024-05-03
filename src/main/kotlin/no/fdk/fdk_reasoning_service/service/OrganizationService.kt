@@ -7,6 +7,8 @@ import no.fdk.fdk_reasoning_service.rdf.BR
 import no.fdk.fdk_reasoning_service.rdf.CV
 import no.fdk.fdk_reasoning_service.rdf.PROV
 import org.apache.jena.rdf.model.*
+import org.apache.jena.riot.Lang
+import org.apache.jena.riot.RDFDataMgr
 import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.DCTerms
 import org.apache.jena.vocabulary.RDF
@@ -25,7 +27,7 @@ class OrganizationService(
         if (orgData.isEmpty) throw Exception("Missing org data")
 
         val organizationPredicates = when (catalogType) {
-            CatalogType.PUBLICSERVICES -> listOf(CV.hasCompetentAuthority, CV.ownedBy)
+            CatalogType.PUBLICSERVICES -> listOf(CV.hasCompetentAuthority, CV.ownedBy, DCTerms.publisher)
             else -> listOf(DCTerms.publisher)
         }
         val organizationResources = if (catalogType == CatalogType.DATASETS) {
@@ -38,18 +40,20 @@ class OrganizationService(
                 .filter { it.isURIResource }
                 .mapNotNull { it.uri }
                 .toSet(),
-            orgsURI = uris.orgExternal
-        ).addOrgPathAndNameWhenMissing(organizationResources.toSet(), inputModel, orgData, uris.orgExternal)
+            orgBaseURI = uris.orgExternal
+        ).addNameWhenMissing(organizationResources.toSet(), inputModel, orgData, uris.orgExternal)
+            .addOrgPathWhenMissing(organizationResources.toSet(), inputModel, orgData, uris.orgExternal)
     }
 
-    private fun Model.addOrgPathAndNameWhenMissing(
+    private fun Model.addNameWhenMissing(
         organizations: Set<Resource>,
         catalogData: Model,
         orgData: Model,
         orgBaseURI: String
     ): Model {
+        val names = ModelFactory.createDefaultModel()
+
         organizations.asSequence()
-            .filterNot { containsTriple("<$it>", "<${FOAF.name.uri}>", "?o") }
             .filterNot { it.hasProperty(FOAF.name) }
             .map {
                 Pair(
@@ -58,10 +62,21 @@ class OrganizationService(
                         ?.let { orgId -> orgData.getResource(orgURI(orgId, orgBaseURI)) })
             }
             .filter { it.second != null }
-            .forEach { it.first.safeAddProperty(FOAF.name, it.second?.getProperty(FOAF.name)?.`object`) }
+            .forEach { names.add(names.createResource(it.first.uri), FOAF.name, it.second?.getProperty(FOAF.name)?.`object`) }
+
+        add(names)
+        return this
+    }
+
+    private fun Model.addOrgPathWhenMissing(
+        organizations: Set<Resource>,
+        catalogData: Model,
+        orgData: Model,
+        orgBaseURI: String
+    ): Model {
+        val orgPaths = ModelFactory.createDefaultModel()
 
         val organizationsMissingOrgPath = organizations.asSequence()
-            .filterNot { containsTriple("<$it>", "<${BR.orgPath.uri}>", "?o") }
             .filterNot { it.hasProperty(BR.orgPath) }
 
         organizationsMissingOrgPath
@@ -72,20 +87,18 @@ class OrganizationService(
                         ?.let { orgId -> orgData.getResource(orgURI(orgId, orgBaseURI)) })
             }
             .filter { it.second != null }
-            .forEach { it.first.safeAddProperty(BR.orgPath, it.second?.getProperty(BR.orgPath)?.`object`) }
+            .forEach { orgPaths.add(orgPaths.createResource(it.first.uri), BR.orgPath, it.second?.getProperty(BR.orgPath)?.`object`) }
 
         organizationsMissingOrgPath
-            .filterNot { containsTriple("<$it>", "<${BR.orgPath.uri}>", "?o") }
+            .filterNot { orgPaths.containsTriple("<${it.uri}>", "?p", "?o") }
             .map { Triple(it, catalogData.dctIdentifierIfOrgId(it), it.foafName()) }
             .forEach {
                 getOrgPath(it.second, it.third, orgBaseURI)?.let { orgPath ->
-                    it.first.addProperty(
-                        BR.orgPath,
-                        orgPath
-                    )
+                    orgPaths.add(orgPaths.createResource(it.first.uri), BR.orgPath, orgPath)
                 }
             }
 
+        add(orgPaths)
         return this
     }
 
@@ -124,11 +137,11 @@ class OrganizationService(
     private fun orgURI(orgId: String, orgBaseURI: String) = "$orgBaseURI/$orgId"
 
 
-    private fun Model.createModelOfOrganizationsWithOrgData(organizationURIs: Set<String>, orgsURI: String): Model {
+    private fun Model.createModelOfOrganizationsWithOrgData(organizationURIs: Set<String>, orgBaseURI: String): Model {
         val model = ModelFactory.createDefaultModel()
         model.setNsPrefixes(nsPrefixMap)
 
-        organizationURIs.map { Pair(it, orgResourceForOrganization(it, orgsURI)) }
+        organizationURIs.map { Pair(it, orgResourceForOrganization(it, orgBaseURI)) }
             .filter { it.second != null }
             .forEach {
                 model.createResource(it.first).addPropertiesFromOrgResource(it.second)
@@ -137,9 +150,13 @@ class OrganizationService(
         return model
     }
 
-    private fun Model.orgResourceForOrganization(organizationURI: String, orgsURI: String): Resource? =
+    private fun Model.orgResourceForOrganization(organizationURI: String, orgBaseURI: String): Resource? =
         orgIdFromURI(organizationURI)
-            ?.let { orgAdapter.downloadOrgDataIfMissing(this, "$orgsURI/${orgIdFromURI(organizationURI)}") }
+            ?.let { "$orgBaseURI/${orgIdFromURI(organizationURI)}" }
+            ?.let { uri ->
+                if (containsTriple("<$uri>", "?p", "?o")) getResource(uri)
+                else orgAdapter.downloadOrgData(uri)
+            }
 
     private fun Resource.addPropertiesFromOrgResource(orgResource: Resource?) {
         if (orgResource != null) {

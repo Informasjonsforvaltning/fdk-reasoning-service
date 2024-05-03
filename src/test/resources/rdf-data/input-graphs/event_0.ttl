@@ -1,0 +1,54 @@
+@prefix br:     <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/organization-catalog.owl#> .
+@prefix orgtype:   <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/org-type.ttl#> .
+@prefix cpsv:   <http://purl.org/vocab/cpsv#> .
+@prefix cv:     <http://data.europa.eu/m8g/> .
+@prefix dcat:   <http://www.w3.org/ns/dcat#> .
+@prefix dcatno: <https://data.norge.no/vocabulary/dcatno#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix eli:    <http://data.europa.eu/eli/ontology#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+@prefix rov:    <http://www.w3.org/ns/regorg#> .
+@prefix schema: <https://schema.org/> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+<https://www.staging.fellesdatakatalog.digdir.no/events/2fda2afd-9087-337b-8b16-23627ccaa9c4>
+        a                  dcat:CatalogRecord ;
+        dct:identifier     "2fda2afd-9087-337b-8b16-23627ccaa9c4" ;
+        dct:issued         "2021-02-15T10:00:04.475Z"^^xsd:dateTime ;
+        dct:modified       "2021-09-28T08:00:04.243Z"^^xsd:dateTime ;
+        foaf:primaryTopic  <http://public-service-publisher.fellesdatakatalog.digdir.no/events/09c9429e-af32-4387-b14b-f24ac0c37265> .
+
+<https://data.norge.no/concepts/311>
+        a               skos:Concept ;
+        skos:broader    <https://data.norge.no/concepts/298> ;
+        skos:narrower   <https://data.norge.no/concepts/312> ;
+        skos:prefLabel  "Having a child"@en , "Få barn"@nb .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/events/09c9429e-af32-4387-b14b-f24ac0c37265>
+        a                         cv:LifeEvent ;
+        dct:description           "ASD forvalter i dag flere ordninger i folketrygdloven med relevans for livshendelsen. Direktoratet forvalter også ordninger som tilhører BFD. I forbindelse med direktoratets langsiktige IKT-moderniseringsarbeid er det innført digitale tjenester for innsyn, dialog, samhandling og automatisert saksbehandling for foreldrepenger og pleiepenger. Dette digitaliseringsarbeidet understøtter målsettingene i digitaliseringsstrategien."@nb ;
+        dct:identifier            "09c9429e-af32-4387-b14b-f24ac0c37265" ;
+        dct:relation              <http://public-service-publisher.fellesdatakatalog.digdir.no/services/13> ;
+        dct:title                 "Få barn"@nb ;
+        dct:type                  <https://data.norge.no/concepts/311> .
+
+<https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132>
+        a               rov:RegisteredOrganization ;
+        dct:identifier  "910244132" ;
+        rov:orgType     orgtype:ASA .
+
+<http://localhost:5050/fdk-public-service-publisher.ttl#GeneratedCatalog>
+        a       dcat:Catalog ;
+        <http://www.w3.org/2000/01/rdf-schema#label>
+                        "Testdirektoratet - Hendelsekatalog"@nb , "TESTDIREKTORATET - Hendingskatalog"@nn , "TESTDIREKTORATET - Event catalog"@en ;
+        dct:publisher  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910244132> ;
+        dcatno:containsEvent <http://public-service-publisher.fellesdatakatalog.digdir.no/events/745d1372-2b71-4e20-bcc4-49023379e7cf> ,
+            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/09c9429e-af32-4387-b14b-f24ac0c37265> .
+
+<http://localhost:5050/events/catalogs/4d2c9e29-2f9a-304f-9e48-34e30a36d068>
+  a               dcat:CatalogRecord ;
+  dct:identifier  "4d2c9e29-2f9a-304f-9e48-34e30a36d068" ;
+  dct:issued         "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+  dct:modified       "2020-10-05T13:15:39.831Z"^^xsd:dateTime ;
+  foaf:primaryTopic <http://localhost:5050/fdk-public-service-publisher.ttl#GeneratedCatalog> .

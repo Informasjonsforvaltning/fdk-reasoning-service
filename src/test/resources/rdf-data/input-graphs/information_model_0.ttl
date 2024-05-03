@@ -79,8 +79,7 @@ test:ModellForÅTesteAtReferanseDataIkkeLeggesTil
 <https://data.brreg.no/enhetsregisteret/oppslag/enheter/987654321>
         a          foaf:Agent , owl:NamedIndividual ;
         dct:type   "Organisasjonsledd"@nb ;
-        foaf:name  "Testetaten"@nb ;
-        br:orgPath "/GENERATED/ORGPATH" .
+        foaf:name  "Testetaten"@nb .
 
 
 skebase:EpostadresseType

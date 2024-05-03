@@ -10,7 +10,7 @@
 
 <https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e>
         a                  dcat:DataService ;
-        dct:publisher      <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/910298062> ;
+        dct:publisher      <https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations/972417866> ;
         dct:description    "Beskrivelse av apiet"@nb ;
         dct:title          "API - Høgskolen for IT og arkitektur"@nb ;
         dcat:contactPoint  [ a         vcard:Organization ;

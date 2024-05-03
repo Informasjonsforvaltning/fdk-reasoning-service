@@ -1,6 +1,5 @@
 package no.fdk.fdk_reasoning_service.service
 
-import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.riot.Lang
 import org.apache.jena.riot.RDFDataMgr
@@ -40,16 +39,11 @@ class OrganizationCatalogAdapter {
         }
     }
 
-
-    fun downloadOrgDataIfMissing(orgData: Model, uri: String): Resource? =
-        if (orgData.containsTriple("<$uri>", "a", "?o")) {
-            orgData.getResource(uri)
-        } else {
-            try {
-                RDFDataMgr.loadModel(uri, Lang.TURTLE).getResource(uri)
-            } catch (ex: Exception) {
-                logger.debug("Failed to fetch organization data for $uri")
-                null
-            }
+    fun downloadOrgData(uri: String): Resource? =
+        try {
+            RDFDataMgr.loadModel(uri, Lang.TURTLE).getResource(uri)
+        } catch (ex: Exception) {
+            logger.debug("Failed to fetch organization data for $uri")
+            null
         }
 }
