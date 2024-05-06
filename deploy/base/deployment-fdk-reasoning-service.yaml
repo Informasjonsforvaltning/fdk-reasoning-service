@@ -2,26 +2,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fdk-reasoning-service
+  name: fdk-kafka-reasoning-service
   labels:
-    app: fdk-reasoning-service
+    app: fdk-kafka-reasoning-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fdk-reasoning-service
+      app: fdk-kafka-reasoning-service
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: fdk-reasoning-service
+        app: fdk-kafka-reasoning-service
       annotations:
         prometheus.io/scrape: "false"
     spec:
       containers:
-        - name: fdk-reasoning-service
-          image: fdk-reasoning-service
+        - name: fdk-kafka-reasoning-service
+          image: fdk-kafka-reasoning-service
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

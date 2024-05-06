@@ -5,6 +5,6 @@ resources:
   - deployment-fdk-reasoning-service.yaml
   - service-fdk-reasoning-service.yaml
 images:
-  - name: fdk-reasoning-service
-    newName: eu.gcr.io/digdir-fdk-infra/fdk-reasoning-service
+  - name: fdk-kafka-reasoning-service
+    newName: eu.gcr.io/digdir-fdk-infra/fdk-kafka-reasoning-service
     newTag: $(GIT_COMMIT_SHA)
