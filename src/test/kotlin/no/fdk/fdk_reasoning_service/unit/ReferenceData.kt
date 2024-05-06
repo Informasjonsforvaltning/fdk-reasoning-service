@@ -76,7 +76,7 @@ class ReferenceData {
     internal inner class Concept {
         @Test
         fun `test no extra triples are added from reference data when not present as object in input`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/concept_0.ttl"),
                 CatalogType.CONCEPTS,
             )
@@ -87,7 +87,7 @@ class ReferenceData {
 
         @Test
         fun `test concept status and concept subject triples are added from reference data`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
                 CatalogType.CONCEPTS,
             )
@@ -102,7 +102,7 @@ class ReferenceData {
 
         @Test
         fun `test no extra triples are added from reference data when not present as object in input`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/data_service_0.ttl"),
                 CatalogType.DATASERVICES,
             )
@@ -113,7 +113,7 @@ class ReferenceData {
 
         @Test
         fun `test mediaTypes and fileTypes are added from reference data`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/data_service_1.ttl"),
                 CatalogType.DATASERVICES,
             )
@@ -128,7 +128,7 @@ class ReferenceData {
     internal inner class Dataset {
         @Test
         fun `test no extra triples are added from reference data when not present as object in input`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_0.ttl"),
                 CatalogType.DATASETS,
             )
@@ -139,7 +139,7 @@ class ReferenceData {
 
         @Test
         fun `test selected theme triples are added from reference data`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_1.ttl"),
                 CatalogType.DATASETS,
             )
@@ -150,7 +150,7 @@ class ReferenceData {
 
         @Test
         fun `test mediaTypes and fileTypes are added from reference data`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_2.ttl"),
                 CatalogType.DATASETS,
             )
@@ -161,7 +161,7 @@ class ReferenceData {
 
         @Test
         fun `test licenses, linguistic systems, locations, access rights, frequencies and provenance are added from reference data`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_3.ttl"),
                 CatalogType.DATASETS,
             )
@@ -175,7 +175,7 @@ class ReferenceData {
     internal inner class InformationModel {
         @Test
         fun `test no extra triples are added from reference data when not present as object in input`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_0.ttl"),
                 CatalogType.INFORMATIONMODELS,
             )
@@ -186,7 +186,7 @@ class ReferenceData {
 
         @Test
         fun `test selected theme triples are added from reference data`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_1.ttl"),
                 CatalogType.INFORMATIONMODELS,
             )
@@ -197,7 +197,7 @@ class ReferenceData {
 
         @Test
         fun `test licenses, linguistic systems and locations are added from reference data`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_2.ttl"),
                 CatalogType.INFORMATIONMODELS,
             )
@@ -211,7 +211,7 @@ class ReferenceData {
     internal inner class Service {
         @Test
         fun `test no extra triples are added from reference data when not present as object in input`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_0.ttl"),
                 CatalogType.PUBLICSERVICES,
             )
@@ -222,7 +222,7 @@ class ReferenceData {
 
         @Test
         fun `test selected theme triples are added from reference data`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_1.ttl"),
                 CatalogType.PUBLICSERVICES,
             )
@@ -233,7 +233,7 @@ class ReferenceData {
 
         @Test
         fun `test publisher types, adms statuses, role types, evidence types, channel types and opening hours (weekdays) are added from reference data`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_2.ttl"),
                 CatalogType.PUBLICSERVICES,
             )
@@ -244,7 +244,7 @@ class ReferenceData {
 
         @Test
         fun `test linguistic systems and main activities are added from reference data`() {
-            val result = referenceDataService.referenceDataModel(
+            val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_3.ttl"),
                 CatalogType.PUBLICSERVICES,
             )

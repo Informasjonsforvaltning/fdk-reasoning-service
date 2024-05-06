@@ -15,9 +15,9 @@ class ReasoningService(
         val inputModel = parseRDFResponse(graph, Lang.TURTLE)
 
         return ModelFactory.createDefaultModel()
-            .add(deductionService.deductionsModel(inputModel, catalogType))
-            .add(organizationService.extraOrganizationTriples(inputModel, catalogType))
-            .add(referenceDataService.referenceDataModel(inputModel, catalogType))
+            .add(deductionService.reason(inputModel, catalogType))
+            .add(organizationService.reason(inputModel, catalogType))
+            .add(referenceDataService.reason(inputModel, catalogType))
             .add(inputModel)
             .createRDFResponse(Lang.TURTLE)
     }

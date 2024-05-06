@@ -46,7 +46,7 @@ class Organization {
     internal inner class Concept {
         @Test
         fun `test add triples for concept publisher`() {
-            val result = orgService.extraOrganizationTriples(
+            val result = orgService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/concept_0.ttl"),
                 CatalogType.CONCEPTS,
             )
@@ -60,7 +60,7 @@ class Organization {
     internal inner class DataService {
         @Test
         fun `test no added triples for org with both name and orgPath`() {
-            val result = orgService.extraOrganizationTriples(
+            val result = orgService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/data_service_0.ttl"),
                 CatalogType.DATASERVICES,
             )
@@ -71,7 +71,7 @@ class Organization {
 
         @Test
         fun `test add triples for organization new in organization catalog`() {
-            val result = orgService.extraOrganizationTriples(
+            val result = orgService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/data_service_1.ttl"),
                 CatalogType.DATASERVICES,
             )
@@ -85,7 +85,7 @@ class Organization {
     internal inner class Dataset {
         @Test
         fun `test add triples for dataset publisher`() {
-            val result = orgService.extraOrganizationTriples(
+            val result = orgService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_0.ttl"),
                 CatalogType.DATASETS,
             )
@@ -99,7 +99,7 @@ class Organization {
     internal inner class Event {
         @Test
         fun `test add triples for event catalog publisher`() {
-            val result = orgService.extraOrganizationTriples(
+            val result = orgService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/event_0.ttl"),
                 CatalogType.EVENTS,
             )
@@ -113,7 +113,7 @@ class Organization {
     internal inner class InformationModel {
         @Test
         fun `test add triples for information model publisher`() {
-            val result = orgService.extraOrganizationTriples(
+            val result = orgService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_0.ttl"),
                 CatalogType.INFORMATIONMODELS,
             )
@@ -127,7 +127,7 @@ class Organization {
     internal inner class Service {
         @Test
         fun `test add triples for service hasCompetentAuthority`() {
-            val result = orgService.extraOrganizationTriples(
+            val result = orgService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_0.ttl"),
                 CatalogType.PUBLICSERVICES,
             )
@@ -138,7 +138,7 @@ class Organization {
 
         @Test
         fun `test add triples for service ownedBy`() {
-            val result = orgService.extraOrganizationTriples(
+            val result = orgService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_1.ttl"),
                 CatalogType.PUBLICSERVICES,
             )
@@ -149,7 +149,7 @@ class Organization {
 
         @Test
         fun `test add triples for service catalog publisher`() {
-            val result = orgService.extraOrganizationTriples(
+            val result = orgService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_3.ttl"),
                 CatalogType.PUBLICSERVICES,
             )

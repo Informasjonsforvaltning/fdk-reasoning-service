@@ -32,11 +32,11 @@ class Reasoning : ApiTestContext() {
         val orgResult = responseReader.parseTurtleFile("rdf-data/expected/org-data/service_1_org.ttl")
         val refDataResult = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service_1_reference_data.ttl")
 
-        whenever(organizationService.extraOrganizationTriples(any(), any()))
+        whenever(organizationService.reason(any(), any()))
             .thenReturn(orgResult)
-        whenever(deductionService.deductionsModel(any(), any()))
+        whenever(deductionService.reason(any(), any()))
             .thenReturn(deductionsResult)
-        whenever(referenceDataService.referenceDataModel(any(), any()))
+        whenever(referenceDataService.reason(any(), any()))
             .thenReturn(refDataResult)
         val result = reasoningService.reasonGraph(input.createRDFResponse(Lang.TURTLE), CatalogType.PUBLICSERVICES)
 

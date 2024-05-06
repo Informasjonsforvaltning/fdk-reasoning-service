@@ -34,7 +34,7 @@ class Deduction {
     internal inner class Concept {
         @Test
         fun `test add publisher rule`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
                 CatalogType.CONCEPTS,
             )
@@ -45,7 +45,7 @@ class Deduction {
 
         @Test
         fun `test no added triples when no rules are applicable`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/concept_0.ttl"),
                 CatalogType.CONCEPTS,
             )
@@ -59,7 +59,7 @@ class Deduction {
     internal inner class DataService {
         @Test
         fun `test add publisher rule`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/data_service_0.ttl"),
                 CatalogType.DATASERVICES,
             )
@@ -70,7 +70,7 @@ class Deduction {
 
         @Test
         fun `test no added triples when no rules are applicable`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/data_service_1.ttl"),
                 CatalogType.DATASERVICES,
             )
@@ -84,7 +84,7 @@ class Deduction {
     internal inner class Dataset {
         @Test
         fun `test add publisher rule`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_0.ttl"),
                 CatalogType.DATASETS,
             )
@@ -95,7 +95,7 @@ class Deduction {
 
         @Test
         fun `test add theme triples, associated data themes added from los & labels for all themes`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_1.ttl"),
                 CatalogType.DATASETS,
             )
@@ -106,7 +106,7 @@ class Deduction {
 
         @Test
         fun `test no added triples when no rules are applicable`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_2.ttl"),
                 CatalogType.DATASETS,
             )
@@ -117,7 +117,7 @@ class Deduction {
 
         @Test
         fun `test add isAuth = true, isOpen = true & transportPortal = true when applicable`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_3.ttl"),
                 CatalogType.DATASETS,
             )
@@ -131,7 +131,7 @@ class Deduction {
     internal inner class InformationModel {
         @Test
         fun `test no added triples when no rules are applicable`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_0.ttl"),
                 CatalogType.INFORMATIONMODELS,
             )
@@ -142,7 +142,7 @@ class Deduction {
 
         @Test
         fun `test theme labels added`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_1.ttl"),
                 CatalogType.INFORMATIONMODELS,
             )
@@ -153,7 +153,7 @@ class Deduction {
 
         @Test
         fun `test add publisher rule`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_2.ttl"),
                 CatalogType.INFORMATIONMODELS,
             )
@@ -167,7 +167,7 @@ class Deduction {
     internal inner class Service {
         @Test
         fun `test no added triples when no rules are applicable`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_0.ttl"),
                 CatalogType.PUBLICSERVICES,
             )
@@ -178,7 +178,7 @@ class Deduction {
 
         @Test
         fun `test theme labels added`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_1.ttl"),
                 CatalogType.PUBLICSERVICES,
             )
@@ -189,7 +189,7 @@ class Deduction {
 
         @Test
         fun `test add hasParticipate for participating agent`() {
-            val result = deductionService.deductionsModel(
+            val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/service_2.ttl"),
                 CatalogType.PUBLICSERVICES,
             )

@@ -7,8 +7,6 @@ import no.fdk.fdk_reasoning_service.rdf.BR
 import no.fdk.fdk_reasoning_service.rdf.CV
 import no.fdk.fdk_reasoning_service.rdf.PROV
 import org.apache.jena.rdf.model.*
-import org.apache.jena.riot.Lang
-import org.apache.jena.riot.RDFDataMgr
 import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.DCTerms
 import org.apache.jena.vocabulary.RDF
@@ -21,8 +19,9 @@ class OrganizationService(
     private val referenceDataCache: ReferenceDataCache,
     private val uris: ApplicationURI,
     private val orgAdapter: OrganizationCatalogAdapter
-) {
-    fun extraOrganizationTriples(inputModel: Model, catalogType: CatalogType): Model {
+): Reasoner {
+
+    override fun reason(inputModel: Model, catalogType: CatalogType): Model {
         val orgData = referenceDataCache.organizations()
         if (orgData.isEmpty) throw Exception("Missing org data")
 

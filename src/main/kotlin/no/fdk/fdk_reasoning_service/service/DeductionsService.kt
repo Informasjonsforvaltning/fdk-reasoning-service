@@ -11,23 +11,23 @@ import org.springframework.stereotype.Service
 @Service
 class DeductionService(
     private val referenceDataCache: ReferenceDataCache
-) {
+): Reasoner {
 
-    fun deductionsModel(catalogData: Model, catalogType: CatalogType): Model =
+    override fun reason(inputModel: Model, catalogType: CatalogType): Model =
         when (catalogType) {
             CatalogType.CONCEPTS -> ModelFactory.createInfModel(
                 GenericRuleReasoner(Rule.parseRules(conceptRules)),
-                catalogData
+                inputModel
             ).deductionsModel
 
-            CatalogType.DATASETS -> catalogData.fdkPrefix().datasetDeductions()
+            CatalogType.DATASETS -> inputModel.fdkPrefix().datasetDeductions()
             CatalogType.DATASERVICES -> ModelFactory.createInfModel(
                 GenericRuleReasoner(Rule.parseRules(dataServiceRules)),
-                catalogData
+                inputModel
             ).deductionsModel
 
-            CatalogType.INFORMATIONMODELS -> catalogData.informationModelDeductions()
-            CatalogType.PUBLICSERVICES -> catalogData.servicesDeductions()
+            CatalogType.INFORMATIONMODELS -> inputModel.informationModelDeductions()
+            CatalogType.PUBLICSERVICES -> inputModel.servicesDeductions()
             else -> ModelFactory.createDefaultModel()
         }
 

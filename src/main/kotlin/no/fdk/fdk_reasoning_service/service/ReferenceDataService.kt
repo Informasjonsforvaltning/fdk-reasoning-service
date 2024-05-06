@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service
 @Service
 class ReferenceDataService(
     private val referenceDataCache: ReferenceDataCache
-) {
-    fun referenceDataModel(inputModel: Model, catalogType: CatalogType): Model {
+): Reasoner {
+
+    override fun reason(inputModel: Model, catalogType: CatalogType): Model {
         val m = ModelFactory.createDefaultModel()
 
         catalogType.completeReferenceDataModel()
