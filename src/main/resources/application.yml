@@ -4,6 +4,18 @@ logging:
   level.org.springframework: WARN
   level.org.springframework.web: WARN
   level.org.apache.jena: ERROR
+management:
+  endpoints:
+    web:
+      base-path: /
+      path-mapping:
+        info: ping
+        health: ready
+      exposure:
+        include: health, info, prometheus
+  metrics:
+    tags:
+      application: fdk-reasoning-service
 server:
   port: 8080
 application:
