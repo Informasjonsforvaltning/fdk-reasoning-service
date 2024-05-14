@@ -4,6 +4,8 @@ logging:
   level.org.springframework: WARN
   level.org.springframework.web: WARN
   level.org.apache.jena: ERROR
+  level.org.apache.avro: ERROR
+  level.org.apache.kafka: ERROR
 management:
   endpoints:
     web:
