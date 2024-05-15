@@ -22,8 +22,8 @@ class KafkaHarvestedEventConsumer(
         ],
         groupId = "fdk-reasoning-service",
         concurrency = "4",
-        containerFactory = "kafkaDatasetListenerContainerFactory",
-        id = "dataset-reasoning"
+        containerFactory = "kafkaListenerContainerFactory",
+        id = "reasoning"
     )
     fun listen(record: ConsumerRecord<String, SpecificRecord>, ack: Acknowledgment) {
         try {
