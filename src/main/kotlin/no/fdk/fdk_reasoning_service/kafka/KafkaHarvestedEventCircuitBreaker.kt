@@ -28,45 +28,35 @@ class KafkaHarvestedEventCircuitBreaker {
         val event = record.value()
 
         try {
-            event.let {
-                if (it is DatasetEvent && it.type == DatasetEventType.DATASET_HARVESTED) {
-                    LOGGER.debug("Reason dataset - id: " + it.fdkId)
-                    reasonAndProduceEvent(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.DATASETS)
-                } else if (it is ConceptEvent && it.type == ConceptEventType.CONCEPT_HARVESTED) {
-                    LOGGER.debug("Reason concept - id: " + it.fdkId)
-                    reasonAndProduceEvent(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.CONCEPTS)
-                } else if (it is DataServiceEvent && it.type == DataServiceEventType.DATA_SERVICE_HARVESTED) {
-                    LOGGER.debug("Reason data-service - id: " + it.fdkId)
-                    reasonAndProduceEvent(
-                        it.fdkId.toString(),
-                        it.graph.toString(),
-                        it.timestamp,
-                        CatalogType.INFORMATIONMODELS
-                    )
-                } else if (it is InformationModelEvent && it.type == InformationModelEventType.INFORMATION_MODEL_HARVESTED) {
-                    LOGGER.debug("Reason information-model - id: " + it.fdkId)
-                    reasonAndProduceEvent(
-                        it.fdkId.toString(),
-                        it.graph.toString(),
-                        it.timestamp,
-                        CatalogType.INFORMATIONMODELS
-                    )
-                } else if (it is ServiceEvent && it.type == ServiceEventType.SERVICE_HARVESTED) {
-                    LOGGER.debug("Reason information-model - id: " + it.fdkId)
-                    reasonAndProduceEvent(
-                        it.fdkId.toString(),
-                        it.graph.toString(),
-                        it.timestamp,
-                        CatalogType.PUBLICSERVICES
-                    )
-                } else if (it is EventEvent && it.type == EventEventType.EVENT_HARVESTED) {
-                    LOGGER.debug("Reason information-model - id: " + it.fdkId)
-                    reasonAndProduceEvent(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.EVENTS)
-                }
+            getKafkaEventData(event)?.let {
+                val (fdkId, graph, timestamp, resourceType) = it
+                LOGGER.debug("Reason {} - id: {}", resourceType, fdkId)
+                reasonAndProduceEvent(fdkId, graph, timestamp, resourceType)
             }
+
         } catch (e: Exception) {
             LOGGER.error("Error occurred during reasoning: " + e.message)
             throw e
+        }
+    }
+
+    private fun getKafkaEventData(event: SpecificRecord): EventData? {
+        event.let {
+            if (it is DatasetEvent && it.type == DatasetEventType.DATASET_HARVESTED) {
+                return EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.DATASETS)
+            } else if (it is ConceptEvent && it.type == ConceptEventType.CONCEPT_HARVESTED) {
+                return EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.CONCEPTS)
+            } else if (it is DataServiceEvent && it.type == DataServiceEventType.DATA_SERVICE_HARVESTED) {
+                return EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.DATASERVICES)
+            } else if (it is InformationModelEvent && it.type == InformationModelEventType.INFORMATION_MODEL_HARVESTED) {
+                return EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.INFORMATIONMODELS)
+            } else if (it is ServiceEvent && it.type == ServiceEventType.SERVICE_HARVESTED) {
+                return EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.PUBLICSERVICES)
+            } else if (it is EventEvent && it.type == EventEventType.EVENT_HARVESTED) {
+                return EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.EVENTS)
+            } else {
+                return null
+            }
         }
     }
 
@@ -76,6 +66,7 @@ class KafkaHarvestedEventCircuitBreaker {
         // TODO: produce kafka message with producer
     }
 
+    private data class EventData(val fdkId: String, val graph: String, val timestamp: Long, val resourceType: CatalogType)
 
     companion object {
         private val LOGGER: Logger = LoggerFactory.getLogger(KafkaHarvestedEventCircuitBreaker::class.java)
