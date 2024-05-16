@@ -28,7 +28,7 @@ open class KafkaHarvestedEventCircuitBreaker {
         val event = record.value()
 
         try {
-            getKafkaEventData(event)?.let {(fdkId, graph, timestamp, resourceType) ->
+            getKafkaEventData(event)?.let { (fdkId, graph, timestamp, resourceType) ->
                 reasonAndProduceEvent(fdkId, graph, timestamp, resourceType)
             }
         } catch (e: Exception) {
@@ -61,8 +61,9 @@ open class KafkaHarvestedEventCircuitBreaker {
 
             event is EventEvent && event.type == EventEventType.EVENT_HARVESTED ->
                 EventData(event.fdkId.toString(), event.graph.toString(), event.timestamp, CatalogType.EVENTS)
+
             else -> null
-            }
+        }
 
     private fun reasonAndProduceEvent(fdkId: String, graph: String, timestamp: Long, resourceType: CatalogType) {
         LOGGER.debug("Reason {} - id: {}", resourceType, fdkId)
@@ -70,7 +71,12 @@ open class KafkaHarvestedEventCircuitBreaker {
         // TODO: produce kafka message with producer
     }
 
-    private data class EventData(val fdkId: String, val graph: String, val timestamp: Long, val resourceType: CatalogType)
+    private data class EventData(
+        val fdkId: String,
+        val graph: String,
+        val timestamp: Long,
+        val resourceType: CatalogType
+    )
 
     companion object {
         private val LOGGER: Logger = LoggerFactory.getLogger(KafkaHarvestedEventCircuitBreaker::class.java)
