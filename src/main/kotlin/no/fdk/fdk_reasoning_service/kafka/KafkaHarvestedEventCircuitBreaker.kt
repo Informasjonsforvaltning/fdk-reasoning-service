@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
-class KafkaHarvestedEventCircuitBreaker {
+open class KafkaHarvestedEventCircuitBreaker {
     @CircuitBreaker(name = "reasoning")
     fun process(record: ConsumerRecord<String, SpecificRecord>) {
         LOGGER.debug("Received message - offset: {}", record.offset())
@@ -37,23 +37,32 @@ class KafkaHarvestedEventCircuitBreaker {
         }
     }
 
-    private fun getKafkaEventData(event: SpecificRecord): EventData? = event.let {
+    private fun getKafkaEventData(event: SpecificRecord): EventData? =
         when {
-            it is DatasetEvent && it.type == DatasetEventType.DATASET_HARVESTED ->
-                EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.DATASETS)
-            it is ConceptEvent && it.type == ConceptEventType.CONCEPT_HARVESTED ->
-                EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.CONCEPTS)
-            it is DataServiceEvent && it.type == DataServiceEventType.DATA_SERVICE_HARVESTED ->
-                EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.DATASERVICES)
-            it is InformationModelEvent && it.type == InformationModelEventType.INFORMATION_MODEL_HARVESTED ->
-                EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.INFORMATIONMODELS)
-            it is ServiceEvent && it.type == ServiceEventType.SERVICE_HARVESTED ->
-                EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.PUBLICSERVICES)
-            it is EventEvent && it.type == EventEventType.EVENT_HARVESTED ->
-                EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.EVENTS)
+            event is DatasetEvent && event.type == DatasetEventType.DATASET_HARVESTED ->
+                EventData(event.fdkId.toString(), event.graph.toString(), event.timestamp, CatalogType.DATASETS)
+
+            event is ConceptEvent && event.type == ConceptEventType.CONCEPT_HARVESTED ->
+                EventData(event.fdkId.toString(), event.graph.toString(), event.timestamp, CatalogType.CONCEPTS)
+
+            event is DataServiceEvent && event.type == DataServiceEventType.DATA_SERVICE_HARVESTED ->
+                EventData(event.fdkId.toString(), event.graph.toString(), event.timestamp, CatalogType.DATASERVICES)
+
+            event is InformationModelEvent && event.type == InformationModelEventType.INFORMATION_MODEL_HARVESTED ->
+                EventData(
+                    event.fdkId.toString(),
+                    event.graph.toString(),
+                    event.timestamp,
+                    CatalogType.INFORMATIONMODELS
+                )
+
+            event is ServiceEvent && event.type == ServiceEventType.SERVICE_HARVESTED ->
+                EventData(event.fdkId.toString(), event.graph.toString(), event.timestamp, CatalogType.PUBLICSERVICES)
+
+            event is EventEvent && event.type == EventEventType.EVENT_HARVESTED ->
+                EventData(event.fdkId.toString(), event.graph.toString(), event.timestamp, CatalogType.EVENTS)
             else -> null
             }
-    }
 
     private fun reasonAndProduceEvent(fdkId: String, graph: String, timestamp: Long, resourceType: CatalogType) {
         LOGGER.debug("Reason {} - id: {}", resourceType, fdkId)

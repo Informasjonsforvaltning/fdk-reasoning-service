@@ -13,6 +13,22 @@ open class CircuitBreakerConsumerConfiguration(
     private val circuitBreakerRegistry: CircuitBreakerRegistry,
     private val kafkaManager: KafkaManager
 ) {
+    init {
+        LOGGER.debug("Configuring circuit breaker event listener")
+        val topics = listOf(
+            "dataset-reasoning",
+            "concept-reasoning",
+            "data-service-reasoning",
+            "information-model-reasoning",
+            "service-reasoning",
+            "event-reasoning"
+        )
+        topics.forEach {
+            circuitBreakerRegistry.circuitBreaker(it).eventPublisher.onStateTransition { event: CircuitBreakerOnStateTransitionEvent ->
+                handleStateTransition(event, it)
+            }
+        }
+    }
 
     private fun handleStateTransition(event: CircuitBreakerOnStateTransitionEvent, id: String) {
         when (event.stateTransition) {
@@ -26,21 +42,6 @@ open class CircuitBreakerConsumerConfiguration(
             StateTransition.FORCED_OPEN_TO_HALF_OPEN -> kafkaManager.resume(id)
 
             else -> throw IllegalStateException("Unknown transition state: " + event.stateTransition)
-        }
-    }
-
-    init {
-        LOGGER.debug("Configuring circuit breaker event listener")
-        listOf(
-            "dataset-reasoning",
-            "concept-reasoning",
-            "data-service-reasoning",
-            "information-model-reasoning",
-            "service-reasoning",
-            "event-reasoning"
-        ).map { circuitBreakerRegistry.circuitBreaker(it).eventPublisher.onStateTransition { event: CircuitBreakerOnStateTransitionEvent ->
-                handleStateTransition(event, it)
-            }
         }
     }
 
