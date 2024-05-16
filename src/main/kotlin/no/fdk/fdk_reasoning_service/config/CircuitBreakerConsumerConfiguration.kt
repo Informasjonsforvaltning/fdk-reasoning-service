@@ -23,10 +23,12 @@ open class CircuitBreakerConsumerConfiguration(
             "service-reasoning",
             "event-reasoning"
         )
-        topics.forEach {
-            circuitBreakerRegistry.circuitBreaker(it).eventPublisher.onStateTransition { event: CircuitBreakerOnStateTransitionEvent ->
-                handleStateTransition(event, it)
-            }
+        topics.forEach { topic ->
+            circuitBreakerRegistry.circuitBreaker(topic)
+                .eventPublisher
+                .onStateTransition { event: CircuitBreakerOnStateTransitionEvent ->
+                    handleStateTransition(event, topic)
+                }
         }
     }
 
