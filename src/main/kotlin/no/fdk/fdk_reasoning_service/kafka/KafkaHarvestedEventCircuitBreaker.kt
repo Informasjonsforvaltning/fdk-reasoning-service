@@ -24,44 +24,39 @@ import org.springframework.stereotype.Component
 class KafkaHarvestedEventCircuitBreaker {
     @CircuitBreaker(name = "reasoning")
     fun process(record: ConsumerRecord<String, SpecificRecord>) {
-        LOGGER.debug("Received message - offset: ${record.offset()}")
+        LOGGER.debug("Received message - offset: {}", record.offset())
         val event = record.value()
 
         try {
-            getKafkaEventData(event)?.let {
-                val (fdkId, graph, timestamp, resourceType) = it
-                LOGGER.debug("Reason {} - id: {}", resourceType, fdkId)
+            getKafkaEventData(event)?.let {(fdkId, graph, timestamp, resourceType) ->
                 reasonAndProduceEvent(fdkId, graph, timestamp, resourceType)
             }
-
         } catch (e: Exception) {
-            LOGGER.error("Error occurred during reasoning: " + e.message)
+            LOGGER.error("Error occurred during reasoning: {}", e.message)
             throw e
         }
     }
 
-    private fun getKafkaEventData(event: SpecificRecord): EventData? {
-        event.let {
-            if (it is DatasetEvent && it.type == DatasetEventType.DATASET_HARVESTED) {
-                return EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.DATASETS)
-            } else if (it is ConceptEvent && it.type == ConceptEventType.CONCEPT_HARVESTED) {
-                return EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.CONCEPTS)
-            } else if (it is DataServiceEvent && it.type == DataServiceEventType.DATA_SERVICE_HARVESTED) {
-                return EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.DATASERVICES)
-            } else if (it is InformationModelEvent && it.type == InformationModelEventType.INFORMATION_MODEL_HARVESTED) {
-                return EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.INFORMATIONMODELS)
-            } else if (it is ServiceEvent && it.type == ServiceEventType.SERVICE_HARVESTED) {
-                return EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.PUBLICSERVICES)
-            } else if (it is EventEvent && it.type == EventEventType.EVENT_HARVESTED) {
-                return EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.EVENTS)
-            } else {
-                return null
+    private fun getKafkaEventData(event: SpecificRecord): EventData? = event.let {
+        when {
+            it is DatasetEvent && it.type == DatasetEventType.DATASET_HARVESTED ->
+                EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.DATASETS)
+            it is ConceptEvent && it.type == ConceptEventType.CONCEPT_HARVESTED ->
+                EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.CONCEPTS)
+            it is DataServiceEvent && it.type == DataServiceEventType.DATA_SERVICE_HARVESTED ->
+                EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.DATASERVICES)
+            it is InformationModelEvent && it.type == InformationModelEventType.INFORMATION_MODEL_HARVESTED ->
+                EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.INFORMATIONMODELS)
+            it is ServiceEvent && it.type == ServiceEventType.SERVICE_HARVESTED ->
+                EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.PUBLICSERVICES)
+            it is EventEvent && it.type == EventEventType.EVENT_HARVESTED ->
+                EventData(it.fdkId.toString(), it.graph.toString(), it.timestamp, CatalogType.EVENTS)
+            else -> null
             }
-        }
     }
 
     private fun reasonAndProduceEvent(fdkId: String, graph: String, timestamp: Long, resourceType: CatalogType) {
-        LOGGER.debug("Reason dataset - id: $fdkId")
+        LOGGER.debug("Reason {} - id: {}", resourceType, fdkId)
         // TODO: reason on graph
         // TODO: produce kafka message with producer
     }
