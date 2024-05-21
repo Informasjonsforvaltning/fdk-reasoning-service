@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component
 
 @Component
 open class KafkaHarvestedEventCircuitBreaker {
-    @CircuitBreaker(name = "reasoning-cb")
+    @CircuitBreaker(name = CIRCUIT_BREAKER_ID)
     fun process(record: ConsumerRecord<String, SpecificRecord>) {
         LOGGER.debug("Received message - offset: {}", record.offset())
         val event = record.value()
@@ -53,7 +53,7 @@ open class KafkaHarvestedEventCircuitBreaker {
                     event.fdkId.toString(),
                     event.graph.toString(),
                     event.timestamp,
-                    CatalogType.INFORMATIONMODELS
+                    CatalogType.INFORMATIONMODELS,
                 )
 
             event is ServiceEvent && event.type == ServiceEventType.SERVICE_HARVESTED ->
@@ -65,7 +65,12 @@ open class KafkaHarvestedEventCircuitBreaker {
             else -> null
         }
 
-    private fun reasonAndProduceEvent(fdkId: String, graph: String, timestamp: Long, resourceType: CatalogType) {
+    private fun reasonAndProduceEvent(
+        fdkId: String,
+        graph: String,
+        timestamp: Long,
+        resourceType: CatalogType,
+    ) {
         LOGGER.debug("Reason {} - id: {}", resourceType, fdkId)
         // TODO: reason on graph
         // TODO: produce kafka message with producer
@@ -75,10 +80,11 @@ open class KafkaHarvestedEventCircuitBreaker {
         val fdkId: String,
         val graph: String,
         val timestamp: Long,
-        val resourceType: CatalogType
+        val resourceType: CatalogType,
     )
 
     companion object {
         private val LOGGER: Logger = LoggerFactory.getLogger(KafkaHarvestedEventCircuitBreaker::class.java)
+        const val CIRCUIT_BREAKER_ID = "reasoning-cb"
     }
 }

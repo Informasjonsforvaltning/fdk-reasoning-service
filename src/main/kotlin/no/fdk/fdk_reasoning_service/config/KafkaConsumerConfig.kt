@@ -12,7 +12,9 @@ import org.springframework.kafka.listener.ContainerProperties
 @Configuration
 open class KafkaConsumerConfig {
     @Bean
-    open fun kafkaListenerContainerFactory(consumerFactory: ConsumerFactory<String, SpecificRecord>): ConcurrentKafkaListenerContainerFactory<String, SpecificRecord> {
+    open fun kafkaListenerContainerFactory(
+        consumerFactory: ConsumerFactory<String, SpecificRecord>,
+    ): ConcurrentKafkaListenerContainerFactory<String, SpecificRecord> {
         val factory: ConcurrentKafkaListenerContainerFactory<String, SpecificRecord> =
             ConcurrentKafkaListenerContainerFactory()
         factory.consumerFactory = consumerFactory
