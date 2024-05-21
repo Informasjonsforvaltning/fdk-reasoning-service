@@ -37,13 +37,18 @@ class KafkaHarvestedEventConsumerTest {
     @Test
     fun `listen should produce a reasoned event`() {
         val inputGraph = """<http://data.test.no/catalogs/1/datasets/1> a <http://www.w3.org/ns/dcat#Dataset> ."""
-        val outputGraph = ""
+        val outputGraph =
+            """
+                <http://data.test.no/catalogs/1/datasets/1> a <http://www.w3.org/ns/dcat#Dataset> .
+                <http://data.test.no/catalogs/1/datasets/1> a <http://www.w3.org/ns/dcat#Resource> .
+            """.trimMargin()
         every { reasoningService.reasonGraph(inputGraph, CatalogType.DATASETS) } returns outputGraph
         every { kafkaTemplate.send(any(), any()) } returns CompletableFuture()
         every { ack.acknowledge() } returns Unit
         every { ack.nack(Duration.ZERO) } returns Unit
 
-        val datasetEvent = DatasetEvent(DatasetEventType.DATASET_HARVESTED, "my-id", outputGraph, System.currentTimeMillis())
+        val datasetEvent =
+            DatasetEvent(DatasetEventType.DATASET_HARVESTED, "my-id", inputGraph, System.currentTimeMillis())
         kafkaHarvestedEventConsumer.listen(
             record = ConsumerRecord("dataset-events", 0, 0, "my-id", datasetEvent),
             ack = ack,
