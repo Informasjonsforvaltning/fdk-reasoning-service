@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component
 
 @Component
 open class KafkaHarvestedEventCircuitBreaker {
-    @CircuitBreaker(name = "reasoning")
+    @CircuitBreaker(name = "reasoning-cb")
     fun process(record: ConsumerRecord<String, SpecificRecord>) {
         LOGGER.debug("Received message - offset: {}", record.offset())
         val event = record.value()

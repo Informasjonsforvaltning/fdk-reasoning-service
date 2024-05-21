@@ -23,7 +23,7 @@ class KafkaHarvestedEventConsumer(
         groupId = "fdk-reasoning-service",
         concurrency = "4",
         containerFactory = "kafkaListenerContainerFactory",
-        id = "reasoning"
+        id = REASONING_LISTENER_ID
     )
     fun listen(record: ConsumerRecord<String, SpecificRecord>, ack: Acknowledgment) {
         try {
@@ -32,5 +32,9 @@ class KafkaHarvestedEventConsumer(
         } catch (e: Exception) {
             ack.nack(Duration.ZERO)
         }
+    }
+
+    companion object Const {
+        const val REASONING_LISTENER_ID = "reasoning"
     }
 }

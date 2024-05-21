@@ -3,6 +3,7 @@ package no.fdk.fdk_reasoning_service.config
 import io.github.resilience4j.circuitbreaker.CircuitBreaker.StateTransition
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry
 import io.github.resilience4j.circuitbreaker.event.CircuitBreakerOnStateTransitionEvent
+import no.fdk.fdk_reasoning_service.kafka.KafkaHarvestedEventConsumer
 import no.fdk.fdk_reasoning_service.kafka.KafkaManager
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -15,7 +16,7 @@ open class CircuitBreakerConsumerConfiguration(
 ) {
     init {
         LOGGER.debug("Configuring circuit breaker event listener")
-        circuitBreakerRegistry.circuitBreaker("reasoning")
+        circuitBreakerRegistry.circuitBreaker(KafkaHarvestedEventConsumer.REASONING_LISTENER_ID)
             .eventPublisher
             .onStateTransition { event: CircuitBreakerOnStateTransitionEvent ->
                 handleStateTransition(event)
@@ -26,12 +27,12 @@ open class CircuitBreakerConsumerConfiguration(
         when (event.stateTransition) {
             StateTransition.CLOSED_TO_OPEN,
             StateTransition.CLOSED_TO_FORCED_OPEN,
-            StateTransition.HALF_OPEN_TO_OPEN -> kafkaManager.pause("reasoning")
+            StateTransition.HALF_OPEN_TO_OPEN -> kafkaManager.pause(KafkaHarvestedEventConsumer.REASONING_LISTENER_ID)
 
             StateTransition.OPEN_TO_HALF_OPEN,
             StateTransition.HALF_OPEN_TO_CLOSED,
             StateTransition.FORCED_OPEN_TO_CLOSED,
-            StateTransition.FORCED_OPEN_TO_HALF_OPEN -> kafkaManager.resume("reasoning")
+            StateTransition.FORCED_OPEN_TO_HALF_OPEN -> kafkaManager.resume(KafkaHarvestedEventConsumer.REASONING_LISTENER_ID)
 
             else -> throw IllegalStateException("Unknown transition state: " + event.stateTransition)
         }
