@@ -73,6 +73,16 @@ spring:
       compression-type: snappy
     listener:
       ack-mode: manual_immediate
+resilience4j:
+  circuitbreaker:
+    instances:
+      reasoning:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 3
+        waitDurationInOpenState: 60000
+        automaticTransitionFromOpenToHalfOpenEnabled: true
 ---
 spring:
   config.activate.on-profile: develop
