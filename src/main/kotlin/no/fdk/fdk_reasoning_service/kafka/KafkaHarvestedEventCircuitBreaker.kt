@@ -10,6 +10,7 @@ import no.fdk.dataset.DatasetEventType
 import no.fdk.event.EventEvent
 import no.fdk.event.EventEventType
 import no.fdk.fdk_reasoning_service.model.CatalogType
+import no.fdk.fdk_reasoning_service.service.ReasoningService
 import no.fdk.informationmodel.InformationModelEvent
 import no.fdk.informationmodel.InformationModelEventType
 import no.fdk.service.ServiceEvent
@@ -21,7 +22,10 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
-open class KafkaHarvestedEventCircuitBreaker {
+open class KafkaHarvestedEventCircuitBreaker(
+    private val kafkaReasonedEventProducer: KafkaReasonedEventProducer,
+    private val reasoningService: ReasoningService,
+) {
     @CircuitBreaker(name = CIRCUIT_BREAKER_ID)
     fun process(record: ConsumerRecord<String, SpecificRecord>) {
         LOGGER.debug("Received message - offset: {}", record.offset())
@@ -72,8 +76,10 @@ open class KafkaHarvestedEventCircuitBreaker {
         resourceType: CatalogType,
     ) {
         LOGGER.debug("Reason {} - id: {}", resourceType, fdkId)
-        // TODO: reason on graph
-        // TODO: produce kafka message with producer
+        val reasonedGraph = reasoningService.reasonGraph(graph, resourceType)
+        if (reasonedGraph.isNotEmpty()) {
+            kafkaReasonedEventProducer.sendMessage(fdkId, reasonedGraph, timestamp, resourceType)
+        }
     }
 
     private data class EventData(
