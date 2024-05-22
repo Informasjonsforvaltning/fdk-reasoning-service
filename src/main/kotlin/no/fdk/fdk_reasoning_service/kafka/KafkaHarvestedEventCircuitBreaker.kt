@@ -38,7 +38,7 @@ open class KafkaHarvestedEventCircuitBreaker(
                 reasonAndProduceEvent(fdkId, graph, timestamp, resourceType)
             }
         } catch (e: Exception) {
-            LOGGER.error("Error occurred during reasoning: {}", e.message)
+            LOGGER.error("Error occurred during reasoning: {} {}", e.javaClass.toString(), e.message)
             throw e
         }
     }
