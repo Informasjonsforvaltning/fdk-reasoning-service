@@ -41,7 +41,7 @@ open class KafkaHarvestedEventCircuitBreaker(
         }
     }
 
-    private fun getKafkaEventData(event: SpecificRecord): EventData? =
+    fun getKafkaEventData(event: SpecificRecord): EventData? =
         when {
             event is DatasetEvent && event.type == DatasetEventType.DATASET_HARVESTED ->
                 EventData(event.fdkId.toString(), event.graph.toString(), event.timestamp, CatalogType.DATASETS)
@@ -82,7 +82,7 @@ open class KafkaHarvestedEventCircuitBreaker(
         }
     }
 
-    private data class EventData(
+    data class EventData(
         val fdkId: String,
         val graph: String,
         val timestamp: Long,

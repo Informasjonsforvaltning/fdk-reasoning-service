@@ -13,6 +13,7 @@ import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.service.ReasoningService
 import org.apache.avro.specific.SpecificRecord
 import org.apache.kafka.clients.consumer.ConsumerRecord
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.kafka.support.Acknowledgment
@@ -23,12 +24,13 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 @ActiveProfiles("test")
+@Tag("integration")
 class KafkaHarvestedEventConsumerTest {
     private val reasoningService: ReasoningService = mockk()
     private val kafkaTemplate: KafkaTemplate<String, SpecificRecord> = mockk()
     private val ack: Acknowledgment = mockk()
-    private val kafkaRdfParseEventProducer = KafkaReasonedEventProducer(kafkaTemplate)
-    private val circuitBreaker = KafkaHarvestedEventCircuitBreaker(kafkaRdfParseEventProducer, reasoningService)
+    private val kafkaReasonedEventProducer = KafkaReasonedEventProducer(kafkaTemplate)
+    private val circuitBreaker = KafkaHarvestedEventCircuitBreaker(kafkaReasonedEventProducer, reasoningService)
     private val kafkaHarvestedEventConsumer = KafkaHarvestedEventConsumer(circuitBreaker)
 
     /* Ignores checking the mocked graph returned from reasoningService,
@@ -62,12 +64,35 @@ class KafkaHarvestedEventConsumerTest {
                 withArg {
                     assertIs<DatasetEvent>(it)
                     assertEquals(datasetEvent.fdkId, it.fdkId)
-                    assertEquals(datasetEvent.type, it.type)
+                    assertEquals(DatasetEventType.DATASET_REASONED, it.type)
                     assertEquals(datasetEvent.timestamp, it.timestamp)
                 },
             )
             ack.acknowledge()
         }
+        confirmVerified(kafkaTemplate, ack)
+    }
+
+    @Test
+    fun `empty reasoned graph should acknowledge but not produce reasoned event`() {
+        val inputGraph = """<http://data.test.no/catalogs/1/datasets/1> a <http://www.w3.org/ns/dcat#Dataset> ."""
+        val outputGraph = ""
+        every { reasoningService.reasonGraph(inputGraph, CatalogType.DATASETS) } returns outputGraph
+        every { kafkaTemplate.send(any(), any()) } returns CompletableFuture()
+        every { ack.acknowledge() } returns Unit
+        every { ack.nack(Duration.ZERO) } returns Unit
+
+        val datasetEvent =
+            DatasetEvent(DatasetEventType.DATASET_HARVESTED, "my-id", inputGraph, System.currentTimeMillis())
+        kafkaHarvestedEventConsumer.listen(
+            record = ConsumerRecord("dataset-events", 0, 0, "my-id", datasetEvent),
+            ack = ack,
+        )
+
+        verify(exactly = 0) { kafkaTemplate.send(any(), any()) }
+        verify(exactly = 1) { ack.acknowledge() }
+        verify(exactly = 0) { ack.nack(Duration.ZERO) }
+        confirmVerified(kafkaTemplate, ack)
         confirmVerified(kafkaTemplate, ack)
     }
 

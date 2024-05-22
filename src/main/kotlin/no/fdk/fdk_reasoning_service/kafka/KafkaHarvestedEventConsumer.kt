@@ -9,7 +9,7 @@ import java.time.Duration
 
 @Component
 class KafkaHarvestedEventConsumer(
-    private val circuitBreaker: KafkaHarvestedEventCircuitBreaker
+    private val circuitBreaker: KafkaHarvestedEventCircuitBreaker,
 ) {
     @KafkaListener(
         topics = [
@@ -23,9 +23,12 @@ class KafkaHarvestedEventConsumer(
         groupId = "fdk-reasoning-service",
         concurrency = "4",
         containerFactory = "kafkaListenerContainerFactory",
-        id = REASONING_LISTENER_ID
+        id = REASONING_LISTENER_ID,
     )
-    fun listen(record: ConsumerRecord<String, SpecificRecord>, ack: Acknowledgment) {
+    fun listen(
+        record: ConsumerRecord<String, SpecificRecord>,
+        ack: Acknowledgment,
+    ) {
         try {
             circuitBreaker.process(record)
             ack.acknowledge()
