@@ -30,13 +30,15 @@ open class KafkaHarvestedEventCircuitBreaker(
     fun process(record: ConsumerRecord<String, SpecificRecord>) {
         LOGGER.debug("Received message - offset: {}", record.offset())
         val event = record.value()
+        val eventData = getKafkaEventData(event)
 
         try {
-            getKafkaEventData(event)?.let { (fdkId, graph, timestamp, resourceType) ->
+            LOGGER.debug("eventData: {} {} {} {}", eventData?.timestamp, eventData?.resourceType, eventData?.fdkId, eventData?.graph)
+            eventData?.let { (fdkId, graph, timestamp, resourceType) ->
                 reasonAndProduceEvent(fdkId, graph, timestamp, resourceType)
             }
         } catch (e: Exception) {
-            LOGGER.error("Error occurred during reasoning: ${e.message}")
+            LOGGER.error("Error occurred during reasoning: {}", e.message)
             throw e
         }
     }
