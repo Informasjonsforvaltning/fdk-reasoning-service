@@ -27,18 +27,18 @@ open class KafkaHarvestedEventCircuitBreaker(
     private val reasoningService: ReasoningService,
 ) {
     @CircuitBreaker(name = CIRCUIT_BREAKER_ID)
-    fun process(record: ConsumerRecord<String, SpecificRecord>) {
+    open fun process(record: ConsumerRecord<String, SpecificRecord>) {
         LOGGER.debug("Received message - offset: {}", record.offset())
         val event = record.value()
         val eventData = getKafkaEventData(event)
 
         try {
-            LOGGER.debug("eventData: {} {} {} {}", eventData?.timestamp, eventData?.resourceType, eventData?.fdkId, eventData?.graph)
+            LOGGER.debug("eventData: {} {} {}", eventData?.timestamp, eventData?.resourceType, eventData?.fdkId)
             eventData?.let { (fdkId, graph, timestamp, resourceType) ->
                 reasonAndProduceEvent(fdkId, graph, timestamp, resourceType)
             }
         } catch (e: Exception) {
-            LOGGER.error("Error occurred during reasoning: {} {}", e.javaClass.toString(), e.message)
+            LOGGER.error("Error occurred during reasoning: $e")
             throw e
         }
     }
