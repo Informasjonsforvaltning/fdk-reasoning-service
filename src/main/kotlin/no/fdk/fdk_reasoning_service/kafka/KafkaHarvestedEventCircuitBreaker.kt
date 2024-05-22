@@ -33,12 +33,11 @@ open class KafkaHarvestedEventCircuitBreaker(
         val eventData = getKafkaEventData(event)
 
         try {
-            LOGGER.debug("eventData: {} {} {}", eventData?.timestamp, eventData?.resourceType, eventData?.fdkId)
             eventData?.let { (fdkId, graph, timestamp, resourceType) ->
                 reasonAndProduceEvent(fdkId, graph, timestamp, resourceType)
             }
         } catch (e: Exception) {
-            LOGGER.error("Error occurred during reasoning: $e")
+            LOGGER.error("Error occurred during reasoning", e)
             throw e
         }
     }
