@@ -4,6 +4,8 @@ import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import no.fdk.concept.ConceptEvent
+import no.fdk.concept.ConceptEventType
 import no.fdk.dataset.DatasetEvent
 import no.fdk.dataset.DatasetEventType
 import no.fdk.fdk_reasoning_service.kafka.KafkaHarvestedEventCircuitBreaker
@@ -37,7 +39,47 @@ class KafkaHarvestedEventConsumerTest {
      * since the reasoning functionality is already tested.
      */
     @Test
-    fun `listen should produce a reasoned event`() {
+    fun `listen should produce a reasoned dataset event`() {
+        val inputGraph = """<http://data.test.no/catalogs/1/concepts/1> a <http://www.w3.org/2004/02/skos/core#Concept> ."""
+        val outputGraph =
+            """
+                <http://data.test.no/catalogs/1/concepts/1> a <http://www.w3.org/2004/02/skos/core#Concept> .
+                <http://data.test.no/catalogs/1/datasets/1> <http://www.w3.org/2004/02/skos/core#prefLabel> "Tittel"@nb .
+            """.trimMargin()
+        every { reasoningService.reasonGraph(inputGraph, CatalogType.CONCEPTS) } returns outputGraph
+        every { kafkaTemplate.send(any(), any()) } returns CompletableFuture()
+        every { ack.acknowledge() } returns Unit
+        every { ack.nack(Duration.ZERO) } returns Unit
+
+        val conceptEvent =
+            ConceptEvent(ConceptEventType.CONCEPT_HARVESTED, "my-id", inputGraph, System.currentTimeMillis())
+        kafkaHarvestedEventConsumer.listen(
+            record = ConsumerRecord("concept-events", 0, 0, "my-id", conceptEvent),
+            ack = ack,
+        )
+
+        verify {
+            kafkaTemplate.send(
+                withArg {
+                    assertEquals("concept-events", it)
+                },
+                withArg {
+                    assertIs<ConceptEvent>(it)
+                    assertEquals(conceptEvent.fdkId, it.fdkId)
+                    assertEquals(ConceptEventType.CONCEPT_REASONED, it.type)
+                    assertEquals(conceptEvent.timestamp, it.timestamp)
+                },
+            )
+            ack.acknowledge()
+        }
+        confirmVerified(kafkaTemplate, ack)
+    }
+
+    /* Ignores checking the mocked graph returned from reasoningService,
+     * since the reasoning functionality is already tested.
+     */
+    @Test
+    fun `listen should produce a reasoned concept event`() {
         val inputGraph = """<http://data.test.no/catalogs/1/datasets/1> a <http://www.w3.org/ns/dcat#Dataset> ."""
         val outputGraph =
             """
