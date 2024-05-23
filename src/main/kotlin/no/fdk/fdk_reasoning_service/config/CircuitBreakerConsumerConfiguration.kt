@@ -25,6 +25,7 @@ open class CircuitBreakerConsumerConfiguration(
     }
 
     private fun handleStateTransition(event: CircuitBreakerOnStateTransitionEvent) {
+        LOGGER.debug("Handling state transition in circuit breaker {}", event)
         when (event.stateTransition) {
             StateTransition.CLOSED_TO_OPEN,
             StateTransition.CLOSED_TO_FORCED_OPEN,
