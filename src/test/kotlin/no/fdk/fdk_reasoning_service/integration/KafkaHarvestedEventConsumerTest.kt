@@ -116,7 +116,7 @@ class KafkaHarvestedEventConsumerTest {
     }
 
     @Test
-    fun `empty reasoned graph should acknowledge but not produce reasoned event`() {
+    fun `empty reasoned graph should throw error`() {
         val inputGraph = """<http://data.test.no/catalogs/1/datasets/1> a <http://www.w3.org/ns/dcat#Dataset> ."""
         val outputGraph = ""
         every { reasoningService.reasonGraph(inputGraph, CatalogType.DATASETS) } returns outputGraph
@@ -132,9 +132,8 @@ class KafkaHarvestedEventConsumerTest {
         )
 
         verify(exactly = 0) { kafkaTemplate.send(any(), any()) }
-        verify(exactly = 1) { ack.acknowledge() }
-        verify(exactly = 0) { ack.nack(Duration.ZERO) }
-        confirmVerified(kafkaTemplate, ack)
+        verify(exactly = 0) { ack.acknowledge() }
+        verify(exactly = 1) { ack.nack(Duration.ZERO) }
         confirmVerified(kafkaTemplate, ack)
     }
 
