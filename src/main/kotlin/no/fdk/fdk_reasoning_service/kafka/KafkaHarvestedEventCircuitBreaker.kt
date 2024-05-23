@@ -80,6 +80,8 @@ open class KafkaHarvestedEventCircuitBreaker(
         val reasonedGraph = reasoningService.reasonGraph(graph, resourceType)
         if (reasonedGraph.isNotEmpty()) {
             kafkaReasonedEventProducer.sendMessage(fdkId, reasonedGraph, timestamp, resourceType)
+        } else {
+            throw Exception("Reasoned graph is empty")
         }
     }
 
