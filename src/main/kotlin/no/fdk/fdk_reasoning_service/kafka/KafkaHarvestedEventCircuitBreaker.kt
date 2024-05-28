@@ -1,6 +1,7 @@
 package no.fdk.fdk_reasoning_service.kafka
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker
+import io.micrometer.core.instrument.Metrics
 import no.fdk.concept.ConceptEvent
 import no.fdk.concept.ConceptEventType
 import no.fdk.dataservice.DataServiceEvent
@@ -20,6 +21,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import kotlin.time.measureTimedValue
+import kotlin.time.toJavaDuration
 
 @Component
 open class KafkaHarvestedEventCircuitBreaker(
@@ -38,6 +41,12 @@ open class KafkaHarvestedEventCircuitBreaker(
             }
         } catch (e: Exception) {
             LOGGER.error("Error occurred during reasoning", e)
+            val resourceType = eventData?.resourceType
+            Metrics.counter(
+                "reasoning_error",
+                "type",
+                resourceType.toString().lowercase(),
+            ).increment()
             throw e
         }
     }
@@ -79,7 +88,20 @@ open class KafkaHarvestedEventCircuitBreaker(
         LOGGER.debug("Reason {} - id: {}", resourceType, fdkId)
         val reasonedGraph = reasoningService.reasonGraph(graph, resourceType)
         if (reasonedGraph.isNotEmpty()) {
-            kafkaReasonedEventProducer.sendMessage(fdkId, reasonedGraph, timestamp, resourceType)
+            val timeElapsed =
+                measureTimedValue {
+                    kafkaReasonedEventProducer.sendMessage(fdkId, reasonedGraph, timestamp, resourceType)
+                }
+            Metrics.counter(
+                "reasoning_success",
+                "type",
+                resourceType.toString().lowercase(),
+            ).increment()
+            Metrics.timer(
+                "reasoning",
+                "type",
+                resourceType.toString().lowercase(),
+            ).record(timeElapsed.duration.toJavaDuration())
         } else {
             throw Exception("Reasoned graph is empty")
         }
