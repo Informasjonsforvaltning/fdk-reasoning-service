@@ -92,11 +92,6 @@ open class KafkaHarvestedEventCircuitBreaker(
                 measureTimedValue {
                     kafkaReasonedEventProducer.sendMessage(fdkId, reasonedGraph, timestamp, resourceType)
                 }
-            Metrics.counter(
-                "reasoning_success",
-                "type",
-                resourceType.toString().lowercase(),
-            ).increment()
             Metrics.timer(
                 "reasoning",
                 "type",
