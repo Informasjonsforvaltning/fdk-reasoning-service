@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service
 
 @Service
 class ReferenceDataService(
-    private val referenceDataCache: ReferenceDataCache
-): Reasoner {
-
-    override fun reason(inputModel: Model, catalogType: CatalogType): Model {
+    private val referenceDataCache: ReferenceDataCache,
+) : Reasoner {
+    override fun reason(
+        inputModel: Model,
+        catalogType: CatalogType,
+    ): Model {
         val m = ModelFactory.createDefaultModel()
 
         catalogType.completeReferenceDataModel()
@@ -110,7 +112,6 @@ class ReferenceDataService(
         return m
     }
 
-
     private fun informationModelReferenceData(): Model {
         val openLicenses = referenceDataCache.openLicenses()
         if (openLicenses.isEmpty) throw Exception("Open licenses are missing in reference data cache")
@@ -182,5 +183,4 @@ class ReferenceDataService(
             .add(eurovocs.listStatements().filterKeep { s -> s.predicate == FDK.themePath }.toList())
             .add(dataThemes.listStatements().filterKeep { s -> s.predicate == FDK.themePath }.toList())
     }
-
 }
