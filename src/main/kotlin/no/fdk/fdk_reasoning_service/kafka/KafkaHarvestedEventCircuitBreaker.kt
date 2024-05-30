@@ -90,13 +90,13 @@ open class KafkaHarvestedEventCircuitBreaker(
             measureTimedValue {
                 reasoningService.reasonGraph(graph, resourceType)
             }
-        Metrics.timer(
-            "reasoning",
-            "type",
-            resourceType.toString().lowercase(),
-        ).record(timeElapsed.duration.toJavaDuration())
         val reasonedGraph = timeElapsed.value
         if (reasonedGraph.isNotEmpty()) {
+            Metrics.timer(
+                "reasoning",
+                "type",
+                resourceType.toString().lowercase(),
+            ).record(timeElapsed.duration.toJavaDuration())
             kafkaReasonedEventProducer.sendMessage(fdkId, reasonedGraph, timestamp, resourceType)
         } else {
             throw Exception("Reasoned graph is empty")
