@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: fdk-kafka-reasoning-service
+  name: fdk-reasoning-service
 spec:
   selector:
-    app: fdk-kafka-reasoning-service
+    app: fdk-reasoning-service
   ports:
     - name: http
       protocol: TCP

@@ -11,7 +11,7 @@ jobs:
     if: github.event.pull_request.draft == false
     uses: Informasjonsforvaltning/workflows/.github/workflows/build-push.yaml@main
     with:
-      app_name: fdk-kafka-reasoning-service
+      app_name: fdk-reasoning-service
       environment: prod
       java_version: '17'
       coverage_file_path: ./target/site/jacoco/jacoco.xml
@@ -24,7 +24,7 @@ jobs:
     needs: [ build-fdk-reasoning-service ]
     uses: Informasjonsforvaltning/workflows/.github/workflows/kustomize-deploy.yaml@main
     with:
-      app_name: fdk-kafka-reasoning-service
+      app_name: fdk-reasoning-service
       environment: prod
       cluster: digdir-fdk-prod
     secrets:
@@ -37,7 +37,7 @@ jobs:
     needs: [deploy-prod ]
     uses: Informasjonsforvaltning/workflows/.github/workflows/kustomize-deploy.yaml@main
     with:
-      app_name: fdk-kafka-reasoning-service
+      app_name: fdk-reasoning-service
       environment: demo
       cluster: digdir-fdk-dev
     secrets:
