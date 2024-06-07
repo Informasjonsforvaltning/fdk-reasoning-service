@@ -1,0 +1,7 @@
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<http://eurovoc.europa.eu/5073>
+    a               skos:Concept ;
+    skos:prefLabel  "butter oil"@en ;
+    <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+            "2763/5073" .

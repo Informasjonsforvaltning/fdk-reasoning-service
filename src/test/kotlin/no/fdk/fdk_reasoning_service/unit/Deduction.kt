@@ -13,22 +13,8 @@ import kotlin.test.assertTrue
 
 @Tag("unit")
 class Deduction {
-    private val referenceDataCache: ReferenceDataCache = mock()
-    private val deductionService = DeductionService(referenceDataCache)
+    private val deductionService = DeductionService()
     private val responseReader = TestResponseReader()
-
-    init {
-        setupReferenceDataCacheMocks()
-    }
-
-    private fun setupReferenceDataCacheMocks() {
-        whenever(referenceDataCache.los())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/los.ttl"))
-        whenever(referenceDataCache.eurovocs())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/eurovocs.ttl"))
-        whenever(referenceDataCache.dataThemes())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/data_themes.ttl"))
-    }
 
     @Nested
     internal inner class Concept {
@@ -94,17 +80,6 @@ class Deduction {
         }
 
         @Test
-        fun `test add theme triples, associated data themes added from los & labels for all themes`() {
-            val result = deductionService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_1.ttl"),
-                CatalogType.DATASETS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/dataset_1_deductions.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))
-        }
-
-        @Test
         fun `test no added triples when no rules are applicable`() {
             val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_2.ttl"),
@@ -141,17 +116,6 @@ class Deduction {
         }
 
         @Test
-        fun `test theme labels added`() {
-            val result = deductionService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_1.ttl"),
-                CatalogType.INFORMATIONMODELS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/information_model_1_deductions.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))
-        }
-
-        @Test
         fun `test add publisher rule`() {
             val result = deductionService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_2.ttl"),
@@ -172,17 +136,6 @@ class Deduction {
                 CatalogType.PUBLICSERVICES,
             )
             val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))
-        }
-
-        @Test
-        fun `test theme labels added`() {
-            val result = deductionService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/service_1.ttl"),
-                CatalogType.PUBLICSERVICES,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/service_1_deductions.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }

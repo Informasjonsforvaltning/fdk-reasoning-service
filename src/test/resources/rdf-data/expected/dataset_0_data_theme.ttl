@@ -1,0 +1,9 @@
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+@prefix ns1:  <http://publications.europa.eu/resource/authority/data-theme/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+ns1:ENER  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "ENER" ;
+        skos:inScheme   <http://publications.europa.eu/resource/authority/data-theme> ;
+        skos:prefLabel  "Energi"@no , "Energi"@nn , "Energy"@en , "Energi"@nb .

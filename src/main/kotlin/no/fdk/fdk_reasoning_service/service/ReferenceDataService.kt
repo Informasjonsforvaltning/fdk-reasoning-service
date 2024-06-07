@@ -15,28 +15,11 @@ class ReferenceDataService(
     override fun reason(
         inputModel: Model,
         catalogType: CatalogType,
-    ): Model {
-        val m = ModelFactory.createDefaultModel()
-
-        catalogType.completeReferenceDataModel()
-            .listSubjects()
-            .toList()
-            .filter { inputModel.containsTriple("?s", "?p", "<${it.uri}>") }
-            .forEach { it.recursiveAddReferenceCodeProperties(m) }
-
-        return m
-    }
-
-    private fun Resource.recursiveAddReferenceCodeProperties(m: Model) {
-        listProperties()
-            .toList()
-            .filter { !m.contains(it) }
-            .also { m.add(it) }
-            .filter { it.isResourceProperty() }
-            .map { it.resource }
-            .filter { it.isAnon }
-            .forEach { it.recursiveAddReferenceCodeProperties(m) }
-    }
+    ): Model =
+        modelOfContainedReferenceData(
+            inputModel,
+            catalogType.completeReferenceDataModel()
+        )
 
     private fun CatalogType.completeReferenceDataModel(): Model =
         when (this) {
@@ -100,7 +83,6 @@ class ReferenceDataService(
         if (provenance.isEmpty) throw Exception("Provenance are missing in reference data cache")
 
         val m = ModelFactory.createDefaultModel()
-        m.add(selectedThemeTriples())
         m.add(ianaMediaTypes)
         m.add(fileTypes)
         m.add(openLicenses)
@@ -123,7 +105,6 @@ class ReferenceDataService(
         if (locations.isEmpty) throw Exception("Locations are missing in reference data cache")
 
         val m = ModelFactory.createDefaultModel()
-        m.add(selectedThemeTriples())
         m.add(openLicenses)
         m.add(linguisticSystems)
         m.add(locations)
@@ -156,7 +137,6 @@ class ReferenceDataService(
         if (weekDays.isEmpty) throw Exception("Week days are missing in reference data cache")
 
         val m = ModelFactory.createDefaultModel()
-        m.add(selectedThemeTriples())
         m.add(linguisticSystems)
         m.add(publisherTypes)
         m.add(admsStatuses)
@@ -166,21 +146,5 @@ class ReferenceDataService(
         m.add(mainActivities)
         m.add(weekDays)
         return m
-    }
-
-    private fun selectedThemeTriples(): Model {
-        val losData = referenceDataCache.los()
-        if (losData.isEmpty) throw Exception("LOS are missing in reference data cache")
-
-        val eurovocs = referenceDataCache.eurovocs()
-        if (eurovocs.isEmpty) throw Exception("EUROVOCS are missing in reference data cache")
-
-        val dataThemes = referenceDataCache.dataThemes()
-        if (dataThemes.isEmpty) throw Exception("Data themes are missing in reference data cache")
-
-        return ModelFactory.createDefaultModel()
-            .add(losData.listStatements().filterKeep { s -> s.predicate == FDK.themePath }.toList())
-            .add(eurovocs.listStatements().filterKeep { s -> s.predicate == FDK.themePath }.toList())
-            .add(dataThemes.listStatements().filterKeep { s -> s.predicate == FDK.themePath }.toList())
     }
 }

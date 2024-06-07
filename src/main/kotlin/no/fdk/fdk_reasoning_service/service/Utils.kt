@@ -1,17 +1,12 @@
 package no.fdk.fdk_reasoning_service.service
 
+import no.fdk.fdk_reasoning_service.model.CatalogType
 import org.apache.jena.query.QueryExecutionFactory
 import org.apache.jena.query.QueryFactory
 import org.apache.jena.rdf.model.*
 import org.apache.jena.riot.Lang
 import java.io.ByteArrayOutputStream
 import java.io.StringReader
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
-
-private const val dateFormat: String = "yyyy-MM-dd HH:mm:ss Z"
 
 fun Model.createRDFResponse(responseType: Lang): String =
     ByteArrayOutputStream().use { out ->
@@ -97,10 +92,27 @@ val openDataURIBases: Set<String> = setOf(
     "publications.europa.eu/resource/authority/licence/NLOD_2_0",
     "publications.europa.eu/resource/authority/licence/CC_BY_4_0")
 
-fun formatNowWithOsloTimeZone(): String =
-    ZonedDateTime.now(ZoneId.of("Europe/Oslo"))
-        .format(DateTimeFormatter.ofPattern(dateFormat))
+fun modelOfContainedReferenceData(
+    inputModel: Model,
+    referenceDataModel: Model,
+): Model {
+    val m = ModelFactory.createDefaultModel()
 
-fun Date.formatWithOsloTimeZone(): String =
-    ZonedDateTime.from(toInstant().atZone(ZoneId.of("Europe/Oslo")))
-        .format(DateTimeFormatter.ofPattern(dateFormat))
+    referenceDataModel.listSubjects()
+        .toList()
+        .filter { inputModel.containsTriple("?s", "?p", "<${it.uri}>") }
+        .forEach { it.recursiveAddReferenceCodeProperties(m) }
+
+    return m
+}
+
+private fun Resource.recursiveAddReferenceCodeProperties(m: Model) {
+    listProperties()
+        .toList()
+        .filter { !m.contains(it) }
+        .also { m.add(it) }
+        .filter { it.isResourceProperty() }
+        .map { it.resource }
+        .filter { it.isAnon }
+        .forEach { it.recursiveAddReferenceCodeProperties(m) }
+}

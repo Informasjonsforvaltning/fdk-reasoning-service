@@ -50,27 +50,6 @@ val datasetRules = """
         -> (?dataset fdk:isOpenData 'true'^^xsd:boolean)
     ]
 
-    [exactMatch:
-        (?dataset rdf:type dcat:Dataset),
-        (?dataset dcat:theme ?theme),
-        (?theme skos:exactMatch ?exactMatch)
-        -> (?dataset dcat:theme ?exactMatch)
-    ]
-
-    [closeMatch:
-        (?dataset rdf:type dcat:Dataset),
-        (?dataset dcat:theme ?theme),
-        (?theme skos:closeMatch ?exactMatch)
-        -> (?dataset dcat:theme ?exactMatch)
-    ]
-
-    [broadMatch:
-        (?dataset rdf:type dcat:Dataset),
-        (?dataset dcat:theme ?theme),
-        (?theme skos:broadMatch ?exactMatch)
-        -> (?dataset dcat:theme ?exactMatch)
-    ]
-
     [catalogPublisherWhenMissing:
         (?dataset rdf:type dcat:Dataset),
         (?catalog dcat:dataset ?dataset),
@@ -138,71 +117,26 @@ const val serviceRules = """
     ]
 """
 
-const val addThemeTitles = """
+const val dataThemesMatchingLOS = """
+    @prefix dcat: <http://www.w3.org/ns/dcat#> .
     @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-    @prefix cv: <http://data.europa.eu/m8g/> .
-    @prefix dct: <http://purl.org/dc/terms/> .
-    @prefix dcat:  <http://www.w3.org/ns/dcat#> .
-    @prefix fdk: <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#> .
 
-    [themeTitleToLabelWhenMissing:
+    [addExactDataThemeMatch:
         (?subject dcat:theme ?theme),
-        (?theme dct:title ?themeTitle),
-        (?theme fdk:missingLabel ?missingLabel),
-        equal(?missingLabel 'true'^^xsd:boolean)
-        -> (?theme skos:prefLabel ?themeTitle)
+        (?theme skos:exactMatch ?exactMatch)
+        -> (?subject dcat:theme ?exactMatch)
     ]
 
-    [themeTaxonomyTitleToLabelWhenMissing:
-        (?subject dcat:themeTaxonomy ?theme),
-        (?theme dct:title ?themeTitle),
-        (?theme fdk:missingLabel ?missingLabel),
-        equal(?missingLabel 'true'^^xsd:boolean)
-        -> (?theme skos:prefLabel ?themeTitle)
-    ]
-
-    [thematicAreaTitleToLabelWhenMissing:
-        (?subject cv:thematicArea ?theme),
-        (?theme dct:title ?themeTitle),
-        (?theme fdk:missingLabel ?missingLabel),
-        equal(?missingLabel 'true'^^xsd:boolean)
-        -> (?theme skos:prefLabel ?themeTitle)
-    ]
-"""
-
-const val tagThemesMissingLabel = """
-    @prefix dcat:  <http://www.w3.org/ns/dcat#> .
-    @prefix cv: <http://data.europa.eu/m8g/> .
-    @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-    @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-    @prefix fdk: <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#> .
-
-    [themeTitleToLabelWhenMissing:
+    [addCloseDataThemeMatch:
         (?subject dcat:theme ?theme),
-        noValue(?theme skos:prefLabel)
-        -> (?theme fdk:missingLabel 'true'^^xsd:boolean)
+        (?theme skos:closeMatch ?closeMatch)
+        -> (?subject dcat:theme ?closeMatch)
     ]
 
-    [themeTaxonomyTitleToLabelWhenMissing:
-        (?subject dcat:themeTaxonomy ?theme),
-        noValue(?theme skos:prefLabel)
-        -> (?theme fdk:missingLabel 'true'^^xsd:boolean)
-    ]
-
-    [thematicAreaTitleToLabelWhenMissing:
-        (?subject cv:thematicArea ?theme),
-        noValue(?theme skos:prefLabel)
-        -> (?theme fdk:missingLabel 'true'^^xsd:boolean)
-    ]
-"""
-
-const val labelToTitle = """
-    @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-    @prefix dct: <http://purl.org/dc/terms/> .
-
-    [prefLabelToTitle:
-        (?subject skos:prefLabel ?prefLabel),
-        -> (?subject dct:title ?prefLabel)
+    [addBroadDataThemeMatch:
+        (?subject dcat:theme ?theme),
+        (?theme skos:broadMatch ?broadMatch)
+        -> (?subject dcat:theme ?broadMatch)
     ]
 """
 

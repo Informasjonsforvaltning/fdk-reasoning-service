@@ -26,12 +26,6 @@ class ReferenceData {
             .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
         whenever(referenceDataCache.conceptSubjects())
             .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-        whenever(referenceDataCache.los())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/los.ttl"))
-        whenever(referenceDataCache.eurovocs())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/eurovocs.ttl"))
-        whenever(referenceDataCache.dataThemes())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/data_themes.ttl"))
         whenever(referenceDataCache.ianaMediaTypes())
             .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/media_types.ttl"))
         whenever(referenceDataCache.fileTypes())
@@ -138,17 +132,6 @@ class ReferenceData {
         }
 
         @Test
-        fun `test selected theme triples are added from reference data`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_1.ttl"),
-                CatalogType.DATASETS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/dataset_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))
-        }
-
-        @Test
         fun `test mediaTypes and fileTypes are added from reference data`() {
             val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_2.ttl"),
@@ -185,17 +168,6 @@ class ReferenceData {
         }
 
         @Test
-        fun `test selected theme triples are added from reference data`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_1.ttl"),
-                CatalogType.INFORMATIONMODELS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/information_model_1_reference_data.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))
-        }
-
-        @Test
         fun `test licenses, linguistic systems and locations are added from reference data`() {
             val result = referenceDataService.reason(
                 responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_2.ttl"),
@@ -216,17 +188,6 @@ class ReferenceData {
                 CatalogType.PUBLICSERVICES,
             )
             val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
-
-            assertTrue(result.isIsomorphicWith(expected))
-        }
-
-        @Test
-        fun `test selected theme triples are added from reference data`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/service_1.ttl"),
-                CatalogType.PUBLICSERVICES,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service_1_reference_data.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }

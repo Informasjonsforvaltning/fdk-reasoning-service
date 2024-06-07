@@ -5,6 +5,7 @@ import no.fdk.fdk_reasoning_service.service.DeductionService
 import no.fdk.fdk_reasoning_service.service.OrganizationService
 import no.fdk.fdk_reasoning_service.service.ReasoningService
 import no.fdk.fdk_reasoning_service.service.ReferenceDataService
+import no.fdk.fdk_reasoning_service.service.ThemeService
 import no.fdk.fdk_reasoning_service.service.createRDFResponse
 import no.fdk.fdk_reasoning_service.utils.*
 import org.apache.jena.rdf.model.ModelFactory
@@ -22,7 +23,8 @@ class Reasoning : ApiTestContext() {
     private val organizationService: OrganizationService = mock()
     private val referenceDataService: ReferenceDataService = mock()
     private val deductionService: DeductionService = mock()
-    private val reasoningService = ReasoningService(organizationService, referenceDataService, deductionService)
+    private val themeService: ThemeService = mock()
+    private val reasoningService = ReasoningService(organizationService, referenceDataService, deductionService, themeService)
     private val responseReader = TestResponseReader()
 
     @Test
@@ -38,6 +40,8 @@ class Reasoning : ApiTestContext() {
             .thenReturn(deductionsResult)
         whenever(referenceDataService.reason(any(), any()))
             .thenReturn(refDataResult)
+        whenever(themeService.reason(any(), any()))
+            .thenReturn(ModelFactory.createDefaultModel())
         val result = reasoningService.reasonGraph(input.createRDFResponse(Lang.TURTLE), CatalogType.PUBLICSERVICES)
 
         val expected = ModelFactory.createDefaultModel()

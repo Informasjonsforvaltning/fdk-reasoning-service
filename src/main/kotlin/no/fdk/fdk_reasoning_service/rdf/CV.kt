@@ -11,6 +11,7 @@ class CV {
 
         val hasCompetentAuthority: Property = ResourceFactory.createProperty("${uri}hasCompetentAuthority")
         val ownedBy: Property = ResourceFactory.createProperty("${uri}ownedBy")
+        val thematicArea: Property = ResourceFactory.createProperty("${uri}thematicArea")
     }
 
 }

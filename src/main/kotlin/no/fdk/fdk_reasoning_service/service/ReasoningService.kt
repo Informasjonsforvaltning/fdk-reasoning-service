@@ -13,6 +13,7 @@ class ReasoningService(
     private val organizationService: OrganizationService,
     private val referenceDataService: ReferenceDataService,
     private val deductionService: DeductionService,
+    private val themeService: ThemeService,
 ) {
     fun reasonGraph(
         graph: String,
@@ -31,6 +32,10 @@ class ReasoningService(
         val referenceDataReasoning =
             measureTimedValue {
                 referenceDataService.reason(inputModel, catalogType)
+            }
+        val themeReasoning =
+            measureTimedValue {
+                themeService.reason(inputModel, catalogType)
             }
 
         Metrics.timer(
@@ -51,10 +56,17 @@ class ReasoningService(
             catalogType.toString().lowercase(),
         ).record(referenceDataReasoning.duration.toJavaDuration())
 
+        Metrics.timer(
+            "reasoning.themes",
+            "type",
+            catalogType.toString().lowercase(),
+        ).record(themeReasoning.duration.toJavaDuration())
+
         return ModelFactory.createDefaultModel()
             .add(deductionReasoning.value)
             .add(organizationReasoning.value)
             .add(referenceDataReasoning.value)
+            .add(themeReasoning.value)
             .add(inputModel)
             .createRDFResponse(Lang.TURTLE)
     }

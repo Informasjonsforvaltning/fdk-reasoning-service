@@ -1,0 +1,23 @@
+@prefix dc:   <http://purl.org/dc/elements/1.1/> .
+@prefix dcat:  <http://www.w3.org/ns/dcat#> .
+@prefix ns1:  <http://publications.europa.eu/resource/authority/data-theme/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+<https://psi.norge.no/los/tema/familie-og-barn>
+        a                  skos:Concept ;
+        skos:broadMatch    <http://publications.europa.eu/resource/authority/data-theme/SOCI> ;
+        skos:inScheme      <https://psi.norge.no/los/ontologi/tema> ;
+        skos:narrower      <https://psi.norge.no/los/tema/ekteskap> , <https://psi.norge.no/los/tema/familieytelser> , <https://psi.norge.no/los/tema/barnevern-og-foreldrestotte> , <https://psi.norge.no/los/tema/samliv> , <https://psi.norge.no/los/tema/foreldre-og-foresatte> , <https://psi.norge.no/los/tema/dodsfall-og-gravferd> , <https://psi.norge.no/los/tema/barnehage> ;
+        skos:prefLabel     "Family and children"@en , "Familie og barn"@nb , "Familie og barn"@nn ;
+        skos:topConceptOf  <https://psi.norge.no/los/struktur> ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "familie-og-barn" .
+
+<https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e>
+        dcat:theme  <http://publications.europa.eu/resource/authority/data-theme/SOCI> .
+
+ns1:SOCI  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-01" ;
+        dc:identifier   "SOCI" ;
+        skos:inScheme   <http://publications.europa.eu/resource/authority/data-theme> ;
+        skos:prefLabel  "Befolkning og samfunn"@nb , "Befolkning og samfunn"@nn , "Population and society"@en , "Befolkning og samfunn"@no .
