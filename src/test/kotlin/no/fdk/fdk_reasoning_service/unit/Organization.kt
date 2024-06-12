@@ -54,6 +54,17 @@ class Organization {
 
             assertTrue(result.isIsomorphicWith(expected))
         }
+
+        @Test
+        fun `test add triples for concept creator`() {
+            val result = orgService.reason(
+                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
+                CatalogType.CONCEPTS,
+            )
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/org-data/concept_1_org.ttl")
+
+            assertTrue(result.isIsomorphicWith(expected))
+        }
     }
 
     @Nested

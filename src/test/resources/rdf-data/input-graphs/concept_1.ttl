@@ -25,6 +25,7 @@
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "eiendomsrett"@nb
                                       ] ;
+        dct:creator                   <http://localhost:5050/organizations/991825827> ;
         dcat:contactPoint             [ a                       vcard:Organization ;
                                         vcard:hasEmail          <mailto:begrepskatalogen@skatteetaten.no> ;
                                         vcard:organizationUnit  "Informasjonsforvaltning - innhenting"

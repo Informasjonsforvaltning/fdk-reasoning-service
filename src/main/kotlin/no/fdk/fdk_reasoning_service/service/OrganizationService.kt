@@ -29,6 +29,7 @@ class OrganizationService(
         val organizationPredicates =
             when (catalogType) {
                 CatalogType.PUBLICSERVICES -> listOf(CV.hasCompetentAuthority, CV.ownedBy, DCTerms.publisher)
+                CatalogType.CONCEPTS -> listOf(DCTerms.creator, DCTerms.publisher)
                 else -> listOf(DCTerms.publisher)
             }
         val organizationResources =
