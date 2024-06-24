@@ -1,5 +1,7 @@
 package no.fdk.fdk_reasoning_service.unit
 
+import io.mockk.every
+import io.mockk.mockk
 import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.rdf.CV
@@ -9,27 +11,23 @@ import org.apache.jena.vocabulary.DCAT
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 import kotlin.test.assertTrue
 
 @Tag("unit")
 class Theme {
-    private val referenceDataCache: ReferenceDataCache = mock()
+    private val referenceDataCache: ReferenceDataCache = mockk()
     private val themeService = ThemeService(referenceDataCache)
     private val responseReader = TestResponseReader()
 
-    init {
-        setupReferenceDataCacheMocks()
-    }
+    init { setupReferenceDataCacheMocks() }
 
     private fun setupReferenceDataCacheMocks() {
-        whenever(referenceDataCache.los())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/los.ttl"))
-        whenever(referenceDataCache.eurovocs())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/eurovocs.ttl"))
-        whenever(referenceDataCache.dataThemes())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/data_themes.ttl"))
+        every { referenceDataCache.los() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/los.ttl")
+        every { referenceDataCache.eurovocs() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/eurovocs.ttl")
+        every { referenceDataCache.dataThemes() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/data_themes.ttl")
     }
 
     @Nested

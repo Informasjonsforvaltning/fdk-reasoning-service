@@ -1,14 +1,11 @@
 package no.fdk.fdk_reasoning_service.unit
 
-import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.service.DeductionService
 import no.fdk.fdk_reasoning_service.utils.TestResponseReader
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 import kotlin.test.assertTrue
 
 @Tag("unit")

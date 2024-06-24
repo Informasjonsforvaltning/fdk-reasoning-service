@@ -1,26 +1,26 @@
 package no.fdk.fdk_reasoning_service.unit
 
+import io.mockk.every
+import io.mockk.mockk
 import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
 import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.utils.ApiTestContext
 import no.fdk.fdk_reasoning_service.utils.TestResponseReader
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 import kotlin.test.assertTrue
 
 @Tag("unit")
 class Cache : ApiTestContext() {
-    private val uris: ApplicationURI = mock()
+    private val uris: ApplicationURI = mockk()
     private val cache = ReferenceDataCache(uris)
     private val responseReader = TestResponseReader()
 
     @Test
     fun testCacheOrganizations() {
-        whenever(uris.orgInternal)
-            .thenReturn("http://localhost:5050/organizations")
-            .thenReturn("http://localhost:5050/404")
+        every { uris.orgInternal } returns
+            "http://localhost:5050/organizations" andThen
+            "http://localhost:5050/404"
 
         val expected = responseReader.parseTurtleFile("rdf-data/organization-catalog/orgs.ttl")
 
@@ -32,9 +32,9 @@ class Cache : ApiTestContext() {
 
     @Test
     fun testCacheLOS() {
-        whenever(uris.los)
-            .thenReturn("http://localhost:5050/reference-data/los")
-            .thenReturn("http://localhost:5050/404")
+        every { uris.los } returns
+            "http://localhost:5050/reference-data/los" andThen
+            "http://localhost:5050/404"
 
         val expected = responseReader.parseTurtleFile("rdf-data/reference-data/los.ttl")
 
@@ -46,9 +46,9 @@ class Cache : ApiTestContext() {
 
     @Test
     fun testCacheEUROVOC() {
-        whenever(uris.eurovocs)
-            .thenReturn("http://localhost:5050/reference-data/eu/eurovocs")
-            .thenReturn("http://localhost:5050/404")
+        every { uris.eurovocs } returns
+            "http://localhost:5050/reference-data/eu/eurovocs" andThen
+            "http://localhost:5050/404"
 
         val expected = responseReader.parseTurtleFile("rdf-data/reference-data/eurovocs.ttl")
 
@@ -60,9 +60,9 @@ class Cache : ApiTestContext() {
 
     @Test
     fun testCacheDataThemes() {
-        whenever(uris.dataThemes)
-            .thenReturn("http://localhost:5050/reference-data/eu/data-themes")
-            .thenReturn("http://localhost:5050/404")
+        every { uris.dataThemes } returns
+            "http://localhost:5050/reference-data/eu/data-themes" andThen
+            "http://localhost:5050/404"
 
         val expected = responseReader.parseTurtleFile("rdf-data/reference-data/data_themes.ttl")
 
@@ -74,9 +74,9 @@ class Cache : ApiTestContext() {
 
     @Test
     fun testCacheConceptSubjects() {
-        whenever(uris.conceptSubjects)
-            .thenReturn("http://localhost:5050/reference-data/digdir/concept-subjects")
-            .thenReturn("http://localhost:5050/404")
+        every { uris.conceptSubjects } returns
+            "http://localhost:5050/reference-data/digdir/concept-subjects" andThen
+            "http://localhost:5050/404"
 
         val expected = responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl")
 
@@ -88,9 +88,9 @@ class Cache : ApiTestContext() {
 
     @Test
     fun testCacheConceptStatuses() {
-        whenever(uris.conceptStatuses)
-            .thenReturn("http://localhost:5050/reference-data/eu/concept-statuses")
-            .thenReturn("http://localhost:5050/404")
+        every { uris.conceptStatuses } returns
+            "http://localhost:5050/reference-data/eu/concept-statuses" andThen
+            "http://localhost:5050/404"
 
         val expected = responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl")
 

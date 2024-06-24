@@ -137,12 +137,6 @@
             <artifactId>avro-maven-plugin</artifactId>
             <version>${avro.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents.client5</groupId>
-            <artifactId>httpclient5</artifactId>
-            <version>5.3.1</version>
-            <scope>test</scope>
-        </dependency>
 
         <!-- Resilience4j -->
         <dependency>
@@ -162,12 +156,6 @@
                     <artifactId>android-json</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito.kotlin</groupId>
-            <artifactId>mockito-kotlin</artifactId>
-            <version>5.3.1</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.wiremock</groupId>
@@ -191,18 +179,6 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
             <version>${testcontainers.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${testcontainers.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite-api</artifactId>
-            <version>1.10.2</version>
             <scope>test</scope>
         </dependency>
 
