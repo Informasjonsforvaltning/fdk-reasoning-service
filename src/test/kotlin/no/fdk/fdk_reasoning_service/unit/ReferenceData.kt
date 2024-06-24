@@ -1,5 +1,7 @@
 package no.fdk.fdk_reasoning_service.unit
 
+import io.mockk.every
+import io.mockk.mockk
 import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.service.ReferenceDataService
@@ -7,63 +9,57 @@ import no.fdk.fdk_reasoning_service.utils.TestResponseReader
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 import kotlin.test.assertTrue
 
 @Tag("unit")
 class ReferenceData {
-    private val referenceDataCache: ReferenceDataCache = mock()
+    private val referenceDataCache: ReferenceDataCache = mockk()
     private val referenceDataService = ReferenceDataService(referenceDataCache)
     private val responseReader = TestResponseReader()
 
-    init {
-        setupReferenceDataCacheMocks()
-    }
+    init { setupReferenceDataCacheMocks() }
 
     private fun setupReferenceDataCacheMocks() {
-        whenever(referenceDataCache.conceptStatuses())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl"))
-        whenever(referenceDataCache.conceptSubjects())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl"))
-        whenever(referenceDataCache.ianaMediaTypes())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/media_types.ttl"))
-        whenever(referenceDataCache.fileTypes())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/file_types.ttl"))
-        whenever(referenceDataCache.openLicenses())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/open_licenses.ttl"))
-        whenever(referenceDataCache.linguisticSystems())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/linguistic_systems.ttl"))
-        whenever(referenceDataCache.locations())
-            .thenReturn(
-                responseReader.parseTurtleFiles(
-                    listOf(
-                        "rdf-data/reference-data/kommuner.ttl",
-                        "rdf-data/reference-data/fylker.ttl",
-                        "rdf-data/reference-data/nasjoner.ttl"
-                    )
-                )
+        every { referenceDataCache.conceptStatuses() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/concept_statuses.ttl")
+        every { referenceDataCache.conceptSubjects() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/concept_subjects.ttl")
+        every { referenceDataCache.ianaMediaTypes() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/media_types.ttl")
+        every { referenceDataCache.fileTypes() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/file_types.ttl")
+        every { referenceDataCache.openLicenses() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/open_licenses.ttl")
+        every { referenceDataCache.linguisticSystems() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/linguistic_systems.ttl")
+        every { referenceDataCache.locations() } returns responseReader.parseTurtleFiles(
+            listOf(
+                "rdf-data/reference-data/kommuner.ttl",
+                "rdf-data/reference-data/fylker.ttl",
+                "rdf-data/reference-data/nasjoner.ttl"
             )
-        whenever(referenceDataCache.accessRights())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/access_rights.ttl"))
-        whenever(referenceDataCache.frequencies())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/frequencies.ttl"))
-        whenever(referenceDataCache.provenance())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/provenance_statements.ttl"))
-        whenever(referenceDataCache.publisherTypes())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/publisher_types.ttl"))
-        whenever(referenceDataCache.roleTypes())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/role_types.ttl"))
-        whenever(referenceDataCache.evidenceTypes())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/evidence_types.ttl"))
-        whenever(referenceDataCache.channelTypes())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/channel_types.ttl"))
-        whenever(referenceDataCache.mainActivities())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/main_activities.ttl"))
-        whenever(referenceDataCache.admsStatuses())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/adms_statuses.ttl"))
-        whenever(referenceDataCache.weekDays())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/reference-data/week_days.ttl"))
+        )
+
+        every { referenceDataCache.accessRights() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/access_rights.ttl")
+        every { referenceDataCache.frequencies() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/frequencies.ttl")
+        every { referenceDataCache.provenance() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/provenance_statements.ttl")
+        every { referenceDataCache.publisherTypes() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/publisher_types.ttl")
+        every { referenceDataCache.roleTypes() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/role_types.ttl")
+        every { referenceDataCache.evidenceTypes() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/evidence_types.ttl")
+        every { referenceDataCache.channelTypes() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/channel_types.ttl")
+        every { referenceDataCache.mainActivities() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/main_activities.ttl")
+        every { referenceDataCache.admsStatuses() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/adms_statuses.ttl")
+        every { referenceDataCache.weekDays() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/week_days.ttl")
     }
 
     @Nested

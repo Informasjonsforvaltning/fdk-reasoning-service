@@ -1,5 +1,7 @@
 package no.fdk.fdk_reasoning_service.unit
 
+import io.mockk.every
+import io.mockk.mockk
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.service.DeductionService
 import no.fdk.fdk_reasoning_service.service.OrganizationService
@@ -12,18 +14,15 @@ import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.riot.Lang
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.any
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 import kotlin.test.assertTrue
 
 
 @Tag("unit")
 class Reasoning : ApiTestContext() {
-    private val organizationService: OrganizationService = mock()
-    private val referenceDataService: ReferenceDataService = mock()
-    private val deductionService: DeductionService = mock()
-    private val themeService: ThemeService = mock()
+    private val organizationService: OrganizationService = mockk()
+    private val referenceDataService: ReferenceDataService = mockk()
+    private val deductionService: DeductionService = mockk()
+    private val themeService: ThemeService = mockk()
     private val reasoningService = ReasoningService(organizationService, referenceDataService, deductionService, themeService)
     private val responseReader = TestResponseReader()
 
@@ -34,14 +33,10 @@ class Reasoning : ApiTestContext() {
         val orgResult = responseReader.parseTurtleFile("rdf-data/expected/org-data/service_1_org.ttl")
         val refDataResult = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service_1_reference_data.ttl")
 
-        whenever(organizationService.reason(any(), any()))
-            .thenReturn(orgResult)
-        whenever(deductionService.reason(any(), any()))
-            .thenReturn(deductionsResult)
-        whenever(referenceDataService.reason(any(), any()))
-            .thenReturn(refDataResult)
-        whenever(themeService.reason(any(), any()))
-            .thenReturn(ModelFactory.createDefaultModel())
+        every { organizationService.reason(any(), any()) } returns orgResult
+        every { deductionService.reason(any(), any()) } returns deductionsResult
+        every { referenceDataService.reason(any(), any()) } returns refDataResult
+        every { themeService.reason(any(), any()) } returns ModelFactory.createDefaultModel()
         val result = reasoningService.reasonGraph(input.createRDFResponse(Lang.TURTLE), CatalogType.PUBLICSERVICES)
 
         val expected = ModelFactory.createDefaultModel()

@@ -1,5 +1,7 @@
 package no.fdk.fdk_reasoning_service.unit
 
+import io.mockk.every
+import io.mockk.mockk
 import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
 import no.fdk.fdk_reasoning_service.config.ApplicationURI
 import no.fdk.fdk_reasoning_service.model.CatalogType
@@ -9,36 +11,29 @@ import no.fdk.fdk_reasoning_service.utils.TestResponseReader
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.any
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 import kotlin.test.assertTrue
 
 @Tag("unit")
 class Organization {
-    private val uris: ApplicationURI = mock()
-    private val referenceDataCache: ReferenceDataCache = mock()
-    private val orgAdapter: OrganizationCatalogAdapter = mock()
+    private val uris: ApplicationURI = mockk()
+    private val referenceDataCache: ReferenceDataCache = mockk()
+    private val orgAdapter: OrganizationCatalogAdapter = mockk()
     private val orgService = OrganizationService(referenceDataCache, uris, orgAdapter)
     private val responseReader = TestResponseReader()
 
-    init {
-        setupReferenceDataCacheMocks()
-    }
+    init { setupReferenceDataCacheMocks() }
 
     private fun setupReferenceDataCacheMocks() {
-        whenever(referenceDataCache.organizations())
-            .thenReturn(responseReader.parseTurtleFile("rdf-data/organization-catalog/orgs.ttl"))
+        every { referenceDataCache.organizations() } returns responseReader
+            .parseTurtleFile("rdf-data/organization-catalog/orgs.ttl")
 
-        whenever(orgAdapter.orgPathAdapter(any(), any()))
-            .thenReturn("/GENERATED/ORG/PATH")
-        whenever(orgAdapter.downloadOrgData("http://localhost:5050/organizations/972417866"))
-            .thenReturn(
-                responseReader.parseTurtleFile("rdf-data/organization-catalog/org.ttl")
-                    .getResource("http://localhost:5050/organizations/972417866")
-            )
+        every { orgAdapter.orgPathAdapter(any(), any()) } returns "/GENERATED/ORG/PATH"
+        every { orgAdapter.downloadOrgData("http://localhost:5050/organizations/972417866") } returns responseReader
+            .parseTurtleFile("rdf-data/organization-catalog/org.ttl")
+            .getResource("http://localhost:5050/organizations/972417866")
+        every { orgAdapter.downloadOrgData("http://localhost:5050/organizations/987654321") } returns null
 
-        whenever(uris.orgExternal).thenReturn("http://localhost:5050/organizations")
+        every { uris.orgExternal } returns "http://localhost:5050/organizations"
     }
 
 
