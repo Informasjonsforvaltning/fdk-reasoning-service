@@ -7,7 +7,6 @@
 @prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
 @prefix dcat:  <http://www.w3.org/ns/dcat#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
-@prefix euvoc:  <http://publications.europa.eu/ontology/euvoc#> .
 
 <http://begrepskatalogen/begrep/46f4d710-4c6c-11e8-bb3e-005056821322>
         a                             skos:Concept ;
@@ -20,27 +19,18 @@
         skosno:datastrukturterm       "eiendomsrett"@nb ;
         dct:identifier                "46f4d710-4c6c-11e8-bb3e-005056821322" ;
         dct:modified                  "2018-04-10"^^xsd:date ;
-        dct:subject                   "Formues- og inntektsskatt"@nb , <https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#3> ;
-        euvoc:status                  <http://publications.europa.eu/resource/authority/concept-status/CURRENT> ;
         skosxl:prefLabel              [ a                   skosxl:Label ;
                                         skosxl:literalForm  "eiendomsrett"@nb
                                       ] ;
-        dct:creator                   <http://localhost:5050/organizations/991825827> ;
         dcat:contactPoint             [ a                       vcard:Organization ;
                                         vcard:hasEmail          <mailto:begrepskatalogen@skatteetaten.no> ;
                                         vcard:organizationUnit  "Informasjonsforvaltning - innhenting"
                                       ] .
 
-<https://data.brreg.no/enhetsregisteret/api/enheter/910244132>
-    a                     foaf:Agent ;
-    dct:identifier        "910244132" ;
-    foaf:name             "Do not overwrite"@nb .
-
 <https://www.example.com/begrepskatalog/0> a skos:Collection ;
     rdfs:label "Begrepskatalog 0"@nb ;
     dct:description "Testbegreper" ;
     dct:identifier "0" ;
-    dct:publisher <https://data.brreg.no/enhetsregisteret/api/enheter/910244132> ;
     skos:member <http://begrepskatalogen/begrep/20b2e1a1-9fe1-11e5-a9f8-e4115b280940>,
         <http://begrepskatalogen/begrep/46f4d710-4c6c-11e8-bb3e-005056821322>;
     dcat:contactPoint [ a vcard:Organization ;

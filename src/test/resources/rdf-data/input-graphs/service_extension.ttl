@@ -1,0 +1,61 @@
+@prefix cpsv:       <http://purl.org/vocab/cpsv#> .
+@prefix cv:         <http://data.europa.eu/m8g/> .
+@prefix dcat:       <http://www.w3.org/ns/dcat#> .
+@prefix dcatno:     <https://data.norge.no/vocabulary/dcatno#> .
+@prefix dct:        <http://purl.org/dc/terms/> .
+@prefix eli:        <http://data.europa.eu/eli/ontology#> .
+@prefix foaf:       <http://xmlns.com/foaf/0.1/> .
+@prefix schema:     <https://schema.org/> .
+@prefix skos:       <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:        <http://www.w3.org/2001/XMLSchema#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix adms:       <http://www.w3.org/ns/adms#> .
+@prefix rov:        <http://www.w3.org/ns/regorg#> .
+@prefix orgtype:    <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/org-type.ttl#> .
+@prefix br:         <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/organization-catalog.owl#> .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/services/12>
+        adms:status         <http://purl.org/adms/status/Completed> ;
+        dct:publisher       <https://data.brreg.no/enhetsregisteret/oppslag/enheter/910244132> ;
+        cv:hasInputType     <https://data.norge.no/vocabulary/evidence-type#attestation> ;
+        cv:hasChannel       <http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1> ;
+        dct:language        <http://publications.europa.eu/resource/authority/language/NOR> ;
+        cv:hasParticipation <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> ;
+        dct:type            <http://publications.europa.eu/resource/authority/main-activity/education> .
+
+<https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl>
+       cv:role <https://data.norge.no/vocabulary/role-type#data-provider> ;
+       a cv:Participation .
+
+<https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exAktorDummy.ttl>
+       a foaf:Agent;
+       cv:participates <https://raw.githubusercontent.com/Informasjonsforvaltning/cpsv-ap-no/develop/examples/exDeltagelseTjenesteMottaker.ttl> .
+
+<https://data.brreg.no/enhetsregisteret/oppslag/enheter/910244132>
+        a               rov:RegisteredOrganization ;
+        dct:identifier  "910244132" ;
+        dct:type        <http://purl.org/adms/publishertype/Company> ;
+        rov:legalName   "RAMSUND OG ROGNAN REVISJON" ;
+        rov:orgType     orgtype:ASA ;
+        foaf:name       "Ramsund og Rognand revisjon"@nb ;
+        br:orgPath      "/ANNET/910244132" .
+
+<http://public-service-publisher.fellesdatakatalog.digdir.no/channel/1>
+        a               cv:Channel ;
+        cv:ownedBy      <http://public-service-publisher.fellesdatakatalog.digdir.no/public-organisation/1> ;
+        dct:identifier  "1" ;
+        cv:openingHours [
+                            a time:TemporalEntity ;
+                            time:hasBeginning [ a time:Instant ;
+                                  time:inDateTime [ a time:DateTimeDescription ;
+                                     time:dayOfWeek schema:PublicHolidays ;
+                                     ] ;
+                                  ] ;
+                               time:hasEnd [ a time:Instant ;
+                                  time:inDateTime [ a time:DateTimeDescription ;
+                                     time:dayOfWeek schema:PublicHolidays ;
+                                     ] ;
+                                  ] ;
+                               dct:description "uregelmessige åpningstider på høytidsdager"@nb ;
+                        ] ;
+        dct:type <https://data.norge.no/vocabulary/service-channel-type#homepage> .

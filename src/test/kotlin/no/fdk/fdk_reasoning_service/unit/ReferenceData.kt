@@ -6,6 +6,9 @@ import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
 import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.service.ReferenceDataService
 import no.fdk.fdk_reasoning_service.utils.TestResponseReader
+import org.apache.jena.rdf.model.ResourceFactory
+import org.apache.jena.vocabulary.DCAT
+import org.apache.jena.vocabulary.DCTerms
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
@@ -64,12 +67,12 @@ class ReferenceData {
 
     @Nested
     internal inner class Concept {
+        private val conceptURI = "http://begrepskatalogen/begrep/46f4d710-4c6c-11e8-bb3e-005056821322"
+
         @Test
         fun `test no extra triples are added from reference data when not present as object in input`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_0.ttl"),
-                CatalogType.CONCEPTS,
-            )
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/concept.ttl")
+            val result = referenceDataService.reason(input, CatalogType.CONCEPTS)
             val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
@@ -77,11 +80,20 @@ class ReferenceData {
 
         @Test
         fun `test concept status and concept subject triples are added from reference data`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/concept_1.ttl"),
-                CatalogType.CONCEPTS,
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/concept.ttl")
+            input.add(
+                input.getResource(conceptURI),
+                DCTerms.subject,
+                input.createResource("https://catalog-admin-service.staging.fellesdatakatalog.digdir.no/123456789/concepts/subjects#3")
             )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/concept_1_reference_data.ttl")
+            input.add(
+                input.getResource(conceptURI),
+                ResourceFactory.createProperty("http://publications.europa.eu/ontology/euvoc#status"),
+                input.createResource("http://publications.europa.eu/resource/authority/concept-status/CURRENT")
+            )
+
+            val result = referenceDataService.reason(input, CatalogType.CONCEPTS)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/concept.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -89,13 +101,12 @@ class ReferenceData {
 
     @Nested
     internal inner class DataService {
+        private val dataServiceURI = "https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e"
 
         @Test
         fun `test no extra triples are added from reference data when not present as object in input`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/data_service_0.ttl"),
-                CatalogType.DATASERVICES,
-            )
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/data_service.ttl")
+            val result = referenceDataService.reason(input, CatalogType.DATASERVICES)
             val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
@@ -103,11 +114,11 @@ class ReferenceData {
 
         @Test
         fun `test mediaTypes and fileTypes are added from reference data`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/data_service_1.ttl"),
-                CatalogType.DATASERVICES,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/data_service_1_reference_data.ttl")
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/data_service.ttl")
+            input.add(input.getResource(dataServiceURI), DCTerms.format, input.createResource("http://publications.europa.eu/resource/authority/file-type/XML"))
+
+            val result = referenceDataService.reason(input, CatalogType.DATASERVICES)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/data_service.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -118,10 +129,9 @@ class ReferenceData {
     internal inner class Dataset {
         @Test
         fun `test no extra triples are added from reference data when not present as object in input`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_0.ttl"),
-                CatalogType.DATASETS,
-            )
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
+
+            val result = referenceDataService.reason(input, CatalogType.DATASETS)
             val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
@@ -129,22 +139,27 @@ class ReferenceData {
 
         @Test
         fun `test mediaTypes and fileTypes are added from reference data`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_2.ttl"),
-                CatalogType.DATASETS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/dataset_2_reference_data.ttl")
+            val datasetURI = "https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e"
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
+
+            val distribution = input.createResource()
+            distribution.addProperty(DCTerms.format, input.createResource("http://publications.europa.eu/resource/authority/file-type/XML"))
+            distribution.addProperty(DCAT.mediaType, input.createResource("https://www.iana.org/assignments/media-types/application/xml"))
+            input.add(input.getResource(datasetURI), DCAT.distribution, distribution)
+
+            val result = referenceDataService.reason(input, CatalogType.DATASETS)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/dataset_formats.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
 
         @Test
         fun `test licenses, linguistic systems, locations, access rights, frequencies and provenance are added from reference data`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_3.ttl"),
-                CatalogType.DATASETS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/dataset_3_reference_data.ttl")
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
+            input.add(responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_extension.ttl"))
+
+            val result = referenceDataService.reason(input, CatalogType.DATASETS)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/dataset.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -152,12 +167,12 @@ class ReferenceData {
 
     @Nested
     internal inner class InformationModel {
+        private val infoModelURI = "http://test.no/catalogs/TestModell"
+
         @Test
         fun `test no extra triples are added from reference data when not present as object in input`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_0.ttl"),
-                CatalogType.INFORMATIONMODELS,
-            )
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/information_model.ttl")
+            val result = referenceDataService.reason(input, CatalogType.INFORMATIONMODELS)
             val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
@@ -165,11 +180,14 @@ class ReferenceData {
 
         @Test
         fun `test licenses, linguistic systems and locations are added from reference data`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_2.ttl"),
-                CatalogType.INFORMATIONMODELS,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/information_model_2_reference_data.ttl")
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/information_model.ttl")
+            input.add(input.getResource(infoModelURI), DCTerms.language, input.createResource("http://publications.europa.eu/resource/authority/language/SMI"))
+            input.add(input.getResource(infoModelURI), DCTerms.language, input.createResource("http://publications.europa.eu/resource/authority/language/NOB"))
+            input.add(input.getResource(infoModelURI), DCTerms.license, input.createResource("http://publications.europa.eu/resource/authority/licence/CC_BY_4_0"))
+            input.add(input.getResource(infoModelURI), DCTerms.spatial, input.createResource("https://data.geonorge.no/administrativeEnheter/nasjon/id/173163"))
+
+            val result = referenceDataService.reason(input, CatalogType.INFORMATIONMODELS)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/information_model.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -179,33 +197,20 @@ class ReferenceData {
     internal inner class Service {
         @Test
         fun `test no extra triples are added from reference data when not present as object in input`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/service_0.ttl"),
-                CatalogType.PUBLICSERVICES,
-            )
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/service.ttl")
+            val result = referenceDataService.reason(input, CatalogType.PUBLICSERVICES)
             val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
 
         @Test
-        fun `test publisher types, adms statuses, role types, evidence types, channel types and opening hours (weekdays) are added from reference data`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/service_2.ttl"),
-                CatalogType.PUBLICSERVICES,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service_2_reference_data.ttl")
+        fun `test service containing reference data triples`() {
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/service.ttl")
+            input.add(responseReader.parseTurtleFile("rdf-data/input-graphs/service_extension.ttl"))
 
-            assertTrue(result.isIsomorphicWith(expected))
-        }
-
-        @Test
-        fun `test linguistic systems and main activities are added from reference data`() {
-            val result = referenceDataService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/service_3.ttl"),
-                CatalogType.PUBLICSERVICES,
-            )
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service_3_reference_data.ttl")
+            val result = referenceDataService.reason(input, CatalogType.PUBLICSERVICES)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
