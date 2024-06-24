@@ -36,7 +36,7 @@ class Theme {
         @Test
         fun `test no extra theme triples are added when not applicable`() {
             val result = themeService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/data_service_0.ttl"),
+                responseReader.parseTurtleFile("rdf-data/input-graphs/data_service.ttl"),
                 CatalogType.DATASERVICES,
             )
             val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
@@ -47,11 +47,11 @@ class Theme {
         @Test
         fun `test theme triples are added from reference data`() {
             val dataServiceURI = "https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e"
-            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/data_service_0.ttl")
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/data_service.ttl")
             input.add(input.getResource(dataServiceURI), DCAT.theme, input.createResource("https://psi.norge.no/los/tema/energi"))
 
             val result = themeService.reason(input, CatalogType.DATASERVICES)
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/data_service_0_theme.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/theme-data/data_service.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -65,7 +65,7 @@ class Theme {
         @Test
         fun `test no extra theme triples are added when not applicable`() {
             val result = themeService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_0.ttl"),
+                responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl"),
                 CatalogType.DATASETS,
             )
             val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
@@ -75,44 +75,44 @@ class Theme {
 
         @Test
         fun `test data theme`() {
-            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_0.ttl")
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
             input.add(input.getResource(datasetURI), DCAT.theme, input.createResource("http://publications.europa.eu/resource/authority/data-theme/ENER"))
 
             val result = themeService.reason(input, CatalogType.DATASETS)
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/dataset_0_data_theme.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/theme-data/dataset_data_theme.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
 
         @Test
         fun `test los with exact match`() {
-            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_0.ttl")
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
             input.add(input.getResource(datasetURI), DCAT.theme, input.createResource("https://psi.norge.no/los/tema/energi"))
 
             val result = themeService.reason(input, CatalogType.DATASETS)
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/dataset_0_los_exact_match.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/theme-data/dataset_los_exact_match.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
 
         @Test
         fun `test los with close match`() {
-            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_0.ttl")
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
             input.add(input.getResource(datasetURI), DCAT.theme, input.createResource("https://psi.norge.no/los/tema/natur-klima-og-miljo"))
 
             val result = themeService.reason(input, CatalogType.DATASETS)
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/dataset_0_los_close_match.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/theme-data/dataset_los_close_match.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
 
         @Test
         fun `test los with broad match`() {
-            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_0.ttl")
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
             input.add(input.getResource(datasetURI), DCAT.theme, input.createResource("https://psi.norge.no/los/tema/familie-og-barn"))
 
             val result = themeService.reason(input, CatalogType.DATASETS)
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/dataset_0_los_broad_match.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/theme-data/dataset_los_broad_match.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -123,7 +123,7 @@ class Theme {
         @Test
         fun `test no extra theme triples are added when not applicable`() {
             val result = themeService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_0.ttl"),
+                responseReader.parseTurtleFile("rdf-data/input-graphs/information_model.ttl"),
                 CatalogType.INFORMATIONMODELS,
             )
             val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
@@ -134,11 +134,11 @@ class Theme {
         @Test
         fun `test theme triples are added from reference data`() {
             val infoModelURI = "https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e"
-            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/information_model_0.ttl")
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/information_model.ttl")
             input.add(input.getResource(infoModelURI), DCAT.theme, input.createResource("http://eurovoc.europa.eu/5073"))
 
             val result = themeService.reason(input, CatalogType.INFORMATIONMODELS)
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/information_model_0_theme.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/theme-data/information_model.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
@@ -149,7 +149,7 @@ class Theme {
         @Test
         fun `test no extra theme triples are added when not applicable`() {
             val result = themeService.reason(
-                responseReader.parseTurtleFile("rdf-data/input-graphs/service_0.ttl"),
+                responseReader.parseTurtleFile("rdf-data/input-graphs/service.ttl"),
                 CatalogType.PUBLICSERVICES,
             )
             val expected = responseReader.parseTurtleFile("rdf-data/expected/empty_graph.ttl")
@@ -160,11 +160,11 @@ class Theme {
         @Test
         fun `test theme triples are added from reference data`() {
             val infoModelURI = "https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e"
-            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/service_0.ttl")
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/service.ttl")
             input.add(input.getResource(infoModelURI), CV.thematicArea, input.createResource("http://eurovoc.europa.eu/272"))
 
             val result = themeService.reason(input, CatalogType.PUBLICSERVICES)
-            val expected = responseReader.parseTurtleFile("rdf-data/expected/service_0_theme.ttl")
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/theme-data/service.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }

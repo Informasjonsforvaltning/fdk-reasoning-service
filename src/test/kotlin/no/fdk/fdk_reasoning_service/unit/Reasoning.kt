@@ -28,10 +28,11 @@ class Reasoning : ApiTestContext() {
 
     @Test
     fun testCombineReasonedGraphs() {
-        val input = responseReader.parseTurtleFile("rdf-data/input-graphs/service_1.ttl")
-        val deductionsResult = responseReader.parseTurtleFile("rdf-data/expected/service_1_deductions.ttl")
-        val orgResult = responseReader.parseTurtleFile("rdf-data/expected/org-data/service_1_org.ttl")
-        val refDataResult = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service_1_reference_data.ttl")
+        val input = responseReader.parseTurtleFile("rdf-data/input-graphs/service.ttl")
+            .union(responseReader.parseTurtleFile("rdf-data/input-graphs/service_extension.ttl"))
+        val deductionsResult = responseReader.parseTurtleFile("rdf-data/expected/deduction-data/service.ttl")
+        val orgResult = responseReader.parseTurtleFile("rdf-data/expected/org-data/service_org.ttl")
+        val refDataResult = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service.ttl")
 
         every { organizationService.reason(any(), any()) } returns orgResult
         every { deductionService.reason(any(), any()) } returns deductionsResult

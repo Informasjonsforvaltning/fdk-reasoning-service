@@ -16,7 +16,6 @@
 <http://public-service-publisher.fellesdatakatalog.digdir.no/services/12>
         a                         cpsv:PublicService ;
         dct:title                 "Testtjeneste for å teste at ingen referansedata legges til"@nb ;
-        cv:hasCompetentAuthority  <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/910298062> ;
         cv:isGroupedBy            <http://public-service-publisher.fellesdatakatalog.digdir.no/events/6def2332-1fe9-4979-b002-ba06f4b6bd0d> ;
         dct:description           "Testtjeneste uten bruk av eksterne vokabularer"@nb ;
         dct:identifier            "12" .

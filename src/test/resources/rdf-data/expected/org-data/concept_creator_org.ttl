@@ -8,10 +8,10 @@
 @prefix rov:       <http://www.w3.org/ns/regorg#> .
 @prefix skos:      <http://www.w3.org/2004/02/skos/core#> .
 
-<https://data.brreg.no/enhetsregisteret/oppslag/enheter/910298062>
-        a               rov:RegisteredOrganization;
-        dct:identifier  "910298062";
-        rov:legalName   "KARMSUND OG KYSNESSTRAND REVISJON";
-        rov:orgType     orgtype:ORGL;
-        foaf:name       "Karmsund og kysnesstrand revisjon"@nb;
-        br:orgPath      "/ANNET/910298062" .
+<http://localhost:5050/organizations/991825827>
+        a                      rov:RegisteredOrganization ;
+        dct:identifier         "991825827" ;
+        rov:legalName          "DIGITALISERINGSDIREKTORATET" ;
+        rov:orgType            orgtype:ORGL ;
+        foaf:name              "Digitaliseringsdirektoratet"@nb ;
+        br:orgPath             "/STAT/972417858/991825827"  .

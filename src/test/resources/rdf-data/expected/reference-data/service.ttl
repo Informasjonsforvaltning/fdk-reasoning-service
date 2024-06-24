@@ -1,3 +1,6 @@
+@prefix at:    <http://publications.europa.eu/ontology/authority/> .
+@prefix atold:    <http://publications.europa.eu/resource/authority/> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
 @prefix dct:     <http://purl.org/dc/terms/> .
 @prefix foaf:    <http://xmlns.com/foaf/0.1/> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
@@ -41,6 +44,26 @@
         skos:inScheme   <http://purl.org/adms/publishertype/1.0>;
         skos:notation   "Company";
         skos:prefLabel  "Verksemd"@nn , "Virksomhet"@nb , "Company"@en .
+
+
+<http://publications.europa.eu/resource/authority/language/NOR>
+        a                  skos:Concept;
+        at:authority-code  "NOR";
+        at:deprecated      "false";
+        at:op-code         "NOR";
+        at:protocol-order  "EU-08";
+        at:protocol.order  "EU-08";
+        at:start.use       "1950-05-09";
+        atold:op-code      "NOR";
+        dc:identifier      "NOR";
+        skos:inScheme      atold:language;
+        skos:prefLabel     "Norwegian"@en , "Norsk"@nb , "Norsk"@nn , "Norsk"@no .
+
+
+<http://publications.europa.eu/resource/authority/main-activity/education>
+    dc:identifier  "education" ;
+    skos:inScheme   <http://publications.europa.eu/resource/authority/main-activity> ;
+    skos:prefLabel  "Education"@en .
 
 
 schema:PublicHolidays
