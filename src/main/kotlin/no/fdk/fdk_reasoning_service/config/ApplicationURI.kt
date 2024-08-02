@@ -27,5 +27,6 @@ data class ApplicationURI(
     val evidenceTypes: String,
     val channelTypes: String,
     val mainActivities: String,
-    val weekDays: String
+    val weekDays: String,
+    val datasetTypes: String
 )

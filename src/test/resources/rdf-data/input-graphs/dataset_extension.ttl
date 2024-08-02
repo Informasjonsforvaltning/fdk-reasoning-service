@@ -5,6 +5,7 @@
 <http://brreg.no/catalogs/910244132/datasets/c32b7a4f-655f-45f6-88f6-d01f05d0f7c2>
     dct:accessRights        <http://publications.europa.eu/resource/authority/access-right/PUBLIC> ;
     dct:provenance          <http://data.brreg.no/datakatalog/provinens/nasjonal> ;
+    dct:type                <http://publications.europa.eu/resource/authority/dataset-type/TEST_DATA> ;
     dct:language            <http://publications.europa.eu/resource/authority/language/NNO> ,
                             <http://publications.europa.eu/resource/authority/language/ENG> ;
     dct:spatial             <https://data.geonorge.no/administrativeEnheter/fylke/id/11> ;

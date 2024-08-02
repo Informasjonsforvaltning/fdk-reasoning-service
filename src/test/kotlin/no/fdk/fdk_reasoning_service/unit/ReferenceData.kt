@@ -63,6 +63,8 @@ class ReferenceData {
             .parseTurtleFile("rdf-data/reference-data/adms_statuses.ttl")
         every { referenceDataCache.weekDays() } returns responseReader
             .parseTurtleFile("rdf-data/reference-data/week_days.ttl")
+        every { referenceDataCache.datasetTypes() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/dataset-types.ttl")
     }
 
     @Nested
