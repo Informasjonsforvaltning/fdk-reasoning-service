@@ -38,6 +38,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun channelTypes(): Model = CHANNEL_TYPES
     fun mainActivities(): Model = MAIN_ACTIVITIES
     fun weekDays(): Model = WEEK_DAYS
+    fun datasetTypes(): Model = DATASET_TYPES
 
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
@@ -62,6 +63,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         updateChannelTypes()
         updateMainActivities()
         updateWeekDays()
+        updateDatasetTypes()
     }
 
     @Scheduled(cron = "0 10 */3 * * ?")
@@ -318,6 +320,18 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(cron = "0 10 21 * * ?")
+    fun updateDatasetTypes() {
+        try {
+            with(RDFDataMgr.loadModel(uris.datasetTypes, Lang.TURTLE)) {
+                DATASET_TYPES.removeAll().add(this)
+            }
+            logger.info("successfully updated dataset types cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.datasetTypes}", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -340,5 +354,6 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val CHANNEL_TYPES: Model = ModelFactory.createDefaultModel()
         val MAIN_ACTIVITIES: Model = ModelFactory.createDefaultModel()
         val WEEK_DAYS: Model = ModelFactory.createDefaultModel()
+        val DATASET_TYPES: Model = ModelFactory.createDefaultModel()
     }
 }

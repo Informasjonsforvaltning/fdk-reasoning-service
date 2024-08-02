@@ -1,0 +1,8 @@
+PREFIX dc:   <http://purl.org/dc/elements/1.1/>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<http://publications.europa.eu/resource/authority/dataset-type/TEST_DATA>
+        dc:identifier   "TEST_DATA";
+        skos:inScheme   <http://publications.europa.eu/resource/authority/dataset-type>;
+        skos:prefLabel  "Testdata"@nn , "Test data"@en , "Testdata"@no , "Testdata"@nb .

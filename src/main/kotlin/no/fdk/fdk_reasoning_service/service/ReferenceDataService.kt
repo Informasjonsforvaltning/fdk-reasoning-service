@@ -82,6 +82,9 @@ class ReferenceDataService(
         val provenance = referenceDataCache.provenance()
         if (provenance.isEmpty) throw Exception("Provenance are missing in reference data cache")
 
+        val datasetTypes = referenceDataCache.datasetTypes()
+        if (datasetTypes.isEmpty) throw Exception("Dataset types are missing in reference data cache")
+
         val m = ModelFactory.createDefaultModel()
         m.add(ianaMediaTypes)
         m.add(fileTypes)
@@ -91,6 +94,7 @@ class ReferenceDataService(
         m.add(accessRights)
         m.add(frequencies)
         m.add(provenance)
+        m.add(datasetTypes)
         return m
     }
 

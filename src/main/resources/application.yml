@@ -46,6 +46,7 @@ application:
     channelTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/service-channel-types
     mainActivities: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/main-activities
     weekDays: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/schema/week-days
+    datasetTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/dataset-types
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -120,3 +121,4 @@ application:
     channelTypes: http://localhost:5050/reference-data/digdir/service-channel-types
     mainActivities: http://localhost:5050/reference-data/eu/main-activities
     weekDays: http://localhost:5050/reference-data/schema/week-days
+    datasetTypes: http://localhost:5050/reference-data/eu/dataset-types

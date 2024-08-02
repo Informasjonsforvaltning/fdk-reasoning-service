@@ -64,3 +64,8 @@
         dc:identifier      "NASJONAL";
         skos:inScheme      <http://data.brreg.no/datakatalog/provinens>;
         skos:prefLabel     "Autoritativ kilde"@nn , "Autoritativ kilde"@nb , "Authoritativ source"@en .
+
+<http://publications.europa.eu/resource/authority/dataset-type/TEST_DATA>
+        dc:identifier   "TEST_DATA";
+        skos:inScheme   <http://publications.europa.eu/resource/authority/dataset-type>;
+        skos:prefLabel  "Testdata"@nn , "Test data"@en , "Testdata"@no , "Testdata"@nb .
