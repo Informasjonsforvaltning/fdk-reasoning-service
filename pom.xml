@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.1</version>
+        <version>3.3.2</version>
         <relativePath/>
     </parent>
 
@@ -32,8 +32,8 @@
         <maven.compiler.target>${java.release}</maven.compiler.target>
 
         <kotlin.version>2.0.0</kotlin.version>
-        <testcontainers.version>1.19.8</testcontainers.version>
-        <jena.version>5.0.0</jena.version>
+        <testcontainers.version>1.20.1</testcontainers.version>
+        <jena.version>5.1.0</jena.version>
         <avro.version>1.11.3</avro.version>
     </properties>
 
@@ -68,7 +68,7 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-            <version>7.4</version>
+            <version>8.0</version>
         </dependency>
 
         <dependency>
@@ -119,12 +119,12 @@
         <dependency>
             <groupId>io.confluent</groupId>
             <artifactId>kafka-schema-registry-client</artifactId>
-            <version>7.6.1</version>
+            <version>7.7.0</version>
         </dependency>
         <dependency>
             <groupId>io.confluent</groupId>
             <artifactId>kafka-avro-serializer</artifactId>
-            <version>7.6.1</version>
+            <version>7.7.0</version>
         </dependency>
 
         <dependency>
@@ -160,13 +160,13 @@
         <dependency>
             <groupId>org.wiremock</groupId>
             <artifactId>wiremock-standalone</artifactId>
-            <version>3.7.0</version>
+            <version>3.9.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.mockk</groupId>
             <artifactId>mockk-jvm</artifactId>
-            <version>1.13.11</version>
+            <version>1.13.12</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -305,7 +305,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.3.1</version>
                 <configuration>
                     <useSystemClassLoader>false</useSystemClassLoader>
                     <argLine>${surefire.jacoco.args}</argLine>
@@ -319,7 +319,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.3.1</version>
                 <configuration>
                     <argLine>${failsafe.jacoco.args}</argLine>
                     <groups>integration</groups>
