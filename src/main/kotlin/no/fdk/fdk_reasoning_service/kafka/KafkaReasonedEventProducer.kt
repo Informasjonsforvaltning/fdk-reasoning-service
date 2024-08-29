@@ -39,7 +39,7 @@ class KafkaReasonedEventProducer(
                 CatalogType.EVENTS -> TOPIC_NAME_EVENT
             }
         val msg = getKafkaEvent(fdkId, graph, timestamp, resourceType)
-        LOGGER.debug("Sending message to Kafka topic: $topicName")
+        LOGGER.debug("Sending message with fdkId $fdkId to Kafka topic: $topicName")
         kafkaTemplate.send(topicName, msg)
     }
 
