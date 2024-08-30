@@ -56,27 +56,37 @@ open class KafkaHarvestedEventCircuitBreaker(
             event is DatasetEvent && event.type == DatasetEventType.DATASET_HARVESTED ->
                 EventData(event.fdkId.toString(), event.graph.toString(), event.timestamp, CatalogType.DATASETS)
 
+            event is DatasetEvent -> null
+
             event is ConceptEvent && event.type == ConceptEventType.CONCEPT_HARVESTED ->
                 EventData(event.fdkId.toString(), event.graph.toString(), event.timestamp, CatalogType.CONCEPTS)
+
+            event is ConceptEvent -> null
 
             event is DataServiceEvent && event.type == DataServiceEventType.DATA_SERVICE_HARVESTED ->
                 EventData(event.fdkId.toString(), event.graph.toString(), event.timestamp, CatalogType.DATASERVICES)
 
+            event is DataServiceEvent -> null
+
             event is InformationModelEvent && event.type == InformationModelEventType.INFORMATION_MODEL_HARVESTED ->
-                EventData(
-                    event.fdkId.toString(),
-                    event.graph.toString(),
-                    event.timestamp,
-                    CatalogType.INFORMATIONMODELS,
-                )
+                EventData(event.fdkId.toString(), event.graph.toString(), event.timestamp, CatalogType.INFORMATIONMODELS)
+
+            event is InformationModelEvent -> null
 
             event is ServiceEvent && event.type == ServiceEventType.SERVICE_HARVESTED ->
                 EventData(event.fdkId.toString(), event.graph.toString(), event.timestamp, CatalogType.PUBLICSERVICES)
 
+            event is ServiceEvent -> null
+
             event is EventEvent && event.type == EventEventType.EVENT_HARVESTED ->
                 EventData(event.fdkId.toString(), event.graph.toString(), event.timestamp, CatalogType.EVENTS)
 
-            else -> null
+            event is EventEvent -> null
+
+            else -> {
+                LOGGER.warn("Unrecognized event was ignored: {}", event.toString())
+                null
+            }
         }
 
     private fun reasonAndProduceEvent(
