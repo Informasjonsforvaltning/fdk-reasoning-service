@@ -33,9 +33,7 @@ application:
     fileTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/file-types
     openLicenses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/open-licenses
     linguisticSystems: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/linguistic-systems
-    geonorgeNasjoner: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/geonorge/administrative-enheter/nasjoner
-    geonorgeFylker: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/geonorge/administrative-enheter/fylker
-    geonorgeKommuner: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/geonorge/administrative-enheter/kommuner
+    administrativeEnheter: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/geonorge/administrative-enheter
     accessRights: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/access-rights
     frequencies: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/frequencies
     provenance: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/provenance-statements

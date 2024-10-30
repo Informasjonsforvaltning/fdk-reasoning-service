@@ -189,11 +189,9 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     @Scheduled(cron = "0 15 22 * * ?")
     fun updateLocations() {
         try {
-            val m = ModelFactory.createDefaultModel()
-            with(RDFDataMgr.loadModel(uris.geonorgeNasjoner, Lang.TURTLE)) { m.add(this) }
-            with(RDFDataMgr.loadModel(uris.geonorgeFylker, Lang.TURTLE)) { m.add(this) }
-            with(RDFDataMgr.loadModel(uris.geonorgeKommuner, Lang.TURTLE)) { m.add(this) }
-            LOCATIONS.removeAll().add(m)
+            with(RDFDataMgr.loadModel(uris.administrativeEnheter, Lang.TURTLE)) {
+                LOCATIONS.removeAll().add(this)
+            }
             logger.info("successfully updated locations cache")
         } catch (ex: Exception) {
             logger.error("Update of locations failed", ex)

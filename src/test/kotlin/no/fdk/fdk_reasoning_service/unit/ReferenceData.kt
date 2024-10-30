@@ -35,14 +35,8 @@ class ReferenceData {
             .parseTurtleFile("rdf-data/reference-data/open_licenses.ttl")
         every { referenceDataCache.linguisticSystems() } returns responseReader
             .parseTurtleFile("rdf-data/reference-data/linguistic_systems.ttl")
-        every { referenceDataCache.locations() } returns responseReader.parseTurtleFiles(
-            listOf(
-                "rdf-data/reference-data/kommuner.ttl",
-                "rdf-data/reference-data/fylker.ttl",
-                "rdf-data/reference-data/nasjoner.ttl"
-            )
-        )
-
+        every { referenceDataCache.locations() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/administrative_enheter.ttl")
         every { referenceDataCache.accessRights() } returns responseReader
             .parseTurtleFile("rdf-data/reference-data/access_rights.ttl")
         every { referenceDataCache.frequencies() } returns responseReader
