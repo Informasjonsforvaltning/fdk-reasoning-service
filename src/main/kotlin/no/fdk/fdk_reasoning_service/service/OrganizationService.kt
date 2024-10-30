@@ -95,7 +95,7 @@ class OrganizationService(
                         ?.let { orgId -> orgData.getResource(orgURI(orgId, orgBaseURI)) },
                 )
             }
-            .filter { it.second != null }
+            .filter { it.second?.getProperty(BR.orgPath)?.`object` != null }
             .forEach { orgPaths.add(orgPaths.createResource(it.first.uri), BR.orgPath, it.second?.getProperty(BR.orgPath)?.`object`) }
 
         organizationsMissingOrgPath
