@@ -6,5 +6,5 @@ resources:
   - service-fdk-reasoning-service.yaml
 images:
   - name: fdk-reasoning-service
-    newName: eu.gcr.io/digdir-fdk-infra/fdk-reasoning-service
+    newName: ghcr.io/informasjonsforvaltning/fdk-reasoning-service
     newTag: $(GIT_COMMIT_SHA)
