@@ -7,14 +7,21 @@ on:
       - main
 
 jobs:
+  dependabot-build:
+    name: Build image on PR from dependabot
+    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
+    uses: Informasjonsforvaltning/workflows/.github/workflows/build.yaml@main
+    with:
+      java_version: '21'
+
   build-fdk-reasoning-service:
     name: Build when pull request is created
-    if: github.event.pull_request.draft == false
+    if: ${{ github.actor != 'dependabot[bot]' && github.event.pull_request.draft == false }}
     uses: Informasjonsforvaltning/workflows/.github/workflows/build-push.yaml@main
     with:
       app_name: fdk-reasoning-service
       environment: staging
-      java_version: '17'
+      java_version: '21'
       coverage_file_path: ./target/site/jacoco/jacoco.xml
     secrets:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
