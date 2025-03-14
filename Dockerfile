@@ -19,7 +19,7 @@ WORKDIR $HOME
 
 COPY --chown=$USER:$USER /target/app.jar app.jar
 
-CMD ["sh", "-c", "java -jar -XX:+UseZGC -Xmx8g \
+CMD ["sh", "-c", "java -jar -XX:+UseZGC -Xmx4g \
         -Dorg.xerial.snappy.use.systemlib=true \
         -Dorg.xerial.snappy.lib.path=/usr/lib/libsnappy.so.1 \
         $JAVA_OPTS app.jar"]
