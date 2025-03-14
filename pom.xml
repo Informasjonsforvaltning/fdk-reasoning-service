@@ -24,7 +24,7 @@
     </parent>
 
     <properties>
-        <java.release>17</java.release>
+        <java.release>21</java.release>
         <java.encoding>UTF-8</java.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
