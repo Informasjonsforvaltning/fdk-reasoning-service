@@ -44,7 +44,7 @@ spec:
             failureThreshold: 5
           resources:
             requests:
-              memory: 4Gi
+              memory: 4500Mi
               cpu: 200m
             limits:
-              memory: 4Gi
+              memory: 4500Mi
