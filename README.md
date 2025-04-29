@@ -50,6 +50,9 @@ specific context on this application, see the **Harvesting** subsystem section.
       services
     - [week days](https://data.norge.no/reference-data/schema/week-days) is extended for resource types: services
 
+## Getting Started
+These instructions will give you a copy of the project up and running on your local machine for development and testing purposes.
+
 ### Prerequisites
 
 Ensure you have the following installed:
