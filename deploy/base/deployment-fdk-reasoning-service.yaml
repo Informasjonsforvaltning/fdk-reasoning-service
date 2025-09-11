@@ -22,6 +22,37 @@ spec:
     spec:
       containers:
         - name: fdk-reasoning-service
+          env:
+            - name: ORGANIZATION_CATALOG_INTERNAL
+              valueFrom:
+                secretKeyRef:
+                  name: commonurl
+                  key: ORGANIZATION_CATALOG_HOST
+            - name: ORGANIZATION_CATALOG_EXTERNAL
+              valueFrom:
+                secretKeyRef:
+                  name: commonurl
+                  key: ORGANIZATION_CATALOG_BASE_URI
+            - name: REASONING_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: commonurl
+                  key: FDK_REASONING_SERVICE_URI
+            - name: REFERENCE_DATA_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: commonurl
+                  key: FDK_REFERENCE_DATA_BASE_URI
+            - name: KAFKA_SCHEMA_REGISTRY
+              valueFrom:
+                secretKeyRef:
+                  name: fdk-metadata-quality
+                  key: SCHEMA_REGISTRY
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              valueFrom:
+                secretKeyRef:
+                  name: fdk-metadata-quality
+                  key: BROKERS
           image: fdk-reasoning-service
           imagePullPolicy: Always
           ports:
