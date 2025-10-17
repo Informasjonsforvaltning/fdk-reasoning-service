@@ -5,6 +5,7 @@ val datasetRules = """
     @prefix dct: <http://purl.org/dc/terms/> .
     @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
     @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+    @prefix mobilitydcatap: <https://w3id.org/mobilitydcat-ap#> .
     @prefix fdk: <https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#> .
 
     [seriesIsDataset:
@@ -24,6 +25,12 @@ val datasetRules = """
         (?dataset dcat:theme ?theme),
         strConcat(?theme,?themeStr),
         regex(?themeStr, '${napThemes.joinToString(separator = "|")}')
+        -> (?dataset fdk:isRelatedToTransportportal 'true'^^xsd:boolean)
+    ]
+
+    [isMobilityDCAT:
+        (?dataset rdf:type dcat:Dataset),
+        (?dataset mobilitydcatap:mobilityTheme ?theme)
         -> (?dataset fdk:isRelatedToTransportportal 'true'^^xsd:boolean)
     ]
 

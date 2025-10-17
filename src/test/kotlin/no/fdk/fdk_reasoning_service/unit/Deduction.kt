@@ -104,6 +104,17 @@ class Deduction {
 
             assertTrue(result.isIsomorphicWith(expected))
         }
+
+        @Test
+        fun `test recognize datasets described by mobilityDCAT as related to transportPortal`() {
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
+            input.add(responseReader.parseTurtleFile("rdf-data/input-graphs/mobility_dcat_extension.ttl"))
+
+            val result = deductionService.reason(input, CatalogType.DATASETS)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/deduction-data/dataset_is_transport_portal.ttl")
+
+            assertTrue(result.isIsomorphicWith(expected))
+        }
     }
 
     @Nested
