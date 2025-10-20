@@ -113,6 +113,19 @@ class Organization {
 
             assertTrue(result.isIsomorphicWith(expected))
         }
+
+        @Test
+        fun `test adds orgPath based on org number from uri when missing dct identifier`() {
+            every { orgAdapter.downloadOrgData("http://localhost:5050/organizations/123456789") } returns null
+            every { orgAdapter.orgPathAdapter("123456789", any()) } returns "/GENERATED/123456789"
+            every { orgAdapter.orgPathAdapter("Testetaten", any()) } returns "/GENERATED/Testetaten"
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_no_publisher_dct_identifier.ttl")
+
+            val result = orgService.reason(input, CatalogType.DATASETS)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/org-data/dataset_org_when_missing_identifier.ttl")
+
+            assertTrue(result.isIsomorphicWith(expected))
+        }
     }
 
     @Nested

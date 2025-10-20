@@ -60,7 +60,7 @@ class OrganizationService(
         val names = ModelFactory.createDefaultModel()
 
         organizations.asSequence()
-            .filterNot { it.hasProperty(FOAF.name) }
+            .filterNot { it.hasProperty(FOAF.name) || containsTriple("<${it.uri}>", "<${FOAF.name.uri}>", "?o") }
             .map {
                 Pair(
                     it,
@@ -85,30 +85,34 @@ class OrganizationService(
 
         val organizationsMissingOrgPath =
             organizations.asSequence()
-                .filterNot { it.hasProperty(BR.orgPath) }
+                .filterNot { it.hasProperty(BR.orgPath) || containsTriple("<${it.uri}>", "<${BR.orgPath.uri}>", "?o") }
 
         organizationsMissingOrgPath
-            .map {
-                Pair(
-                    it,
-                    catalogData.dctIdentifierIfOrgId(it)
-                        ?.let { orgId -> orgData.getResource(orgURI(orgId, orgBaseURI)) },
-                )
-            }
-            .filter { it.second?.getProperty(BR.orgPath)?.`object` != null }
-            .forEach { orgPaths.add(orgPaths.createResource(it.first.uri), BR.orgPath, it.second?.getProperty(BR.orgPath)?.`object`) }
-
-        organizationsMissingOrgPath
-            .filterNot { orgPaths.containsTriple("<${it.uri}>", "?p", "?o") }
-            .map { Triple(it, catalogData.dctIdentifierIfOrgId(it), it.foafName()) }
-            .forEach {
-                getOrgPath(it.second, it.third, orgBaseURI)?.let { orgPath ->
-                    orgPaths.add(orgPaths.createResource(it.first.uri), BR.orgPath, orgPath)
-                }
-            }
+            .map { Pair(it, it.getOrgPathForOrgResource(catalogData, orgData, orgBaseURI)) }
+            .filter { it.second != null }
+            .forEach { orgPaths.add(orgPaths.createResource(it.first.uri), BR.orgPath, it.second) }
 
         add(orgPaths)
         return this
+    }
+
+    private fun Resource.getOrgPathForOrgResource(
+        catalogData: Model,
+        orgData: Model,
+        orgBaseURI: String
+    ): String? {
+        val orgId = catalogData.dctIdentifierIfOrgId(this) ?: orgIdFromURI(uri)
+
+        val orgPathFromOrgData: String? = orgId?.runCatching {
+            orgData.getResource(orgURI(orgId, orgBaseURI))
+            ?.getProperty(BR.orgPath)
+            ?.string
+        }?.getOrNull()
+
+        return when {
+            orgPathFromOrgData != null -> orgPathFromOrgData
+            else -> getOrgPath(orgId, foafName(), orgBaseURI)
+        }
     }
 
     private fun Model.dctIdentifierIfOrgId(organization: Resource): String? {
