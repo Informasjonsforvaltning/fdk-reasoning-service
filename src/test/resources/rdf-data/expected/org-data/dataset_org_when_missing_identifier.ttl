@@ -1,0 +1,4 @@
+@prefix br:        <https://raw.githubusercontent.com/Informasjonsforvaltning/organization-catalog/main/src/main/resources/ontology/organization-catalog.owl#> .
+
+<https://organization-catalogue.fellesdatakatalog.digdir.no/organizations/123456789>
+        br:orgPath      "/GENERATED/123456789" .
