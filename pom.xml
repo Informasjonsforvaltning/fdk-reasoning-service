@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.6</version>
+        <version>3.5.7</version>
         <relativePath/>
     </parent>
 
@@ -31,11 +31,11 @@
         <maven.compiler.source>${java.release}</maven.compiler.source>
         <maven.compiler.target>${java.release}</maven.compiler.target>
 
-        <kotlin.version>2.2.20</kotlin.version>
-        <testcontainers.version>1.21.3</testcontainers.version>
-        <jena.version>5.5.0</jena.version>
-        <avro.version>1.12.0</avro.version>
-        <confluent.version>8.0.0</confluent.version>
+        <kotlin.version>2.2.21</kotlin.version>
+        <testcontainers.version>2.0.1</testcontainers.version>
+        <jena.version>5.6.0</jena.version>
+        <avro.version>1.12.1</avro.version>
+        <confluent.version>8.1.0</confluent.version>
     </properties>
 
     <dependencies>
@@ -69,7 +69,7 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-            <version>8.1</version>
+            <version>9.0</version>
         </dependency>
 
         <dependency>
@@ -180,20 +180,13 @@
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
             <version>${testcontainers.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-compress</artifactId>
-                </exclusion>
-            </exclusions>
             <scope>test</scope>
         </dependency>
 
-        <!-- Fix CVE-2024-25710 / CVE-2024-26308 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-compress</artifactId>
-            <version>1.28.0</version>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.19.0</version>
         </dependency>
 
     </dependencies>
@@ -261,57 +254,20 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.13</version>
+                <version>0.8.14</version>
                 <executions>
                     <execution>
-                        <id>before-unit-test-execution</id>
+                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
-                        <configuration>
-                            <destFile>${project.build.directory}/jacoco-output/jacoco-unit-tests.exec</destFile>
-                            <propertyName>surefire.jacoco.args</propertyName>
-                        </configuration>
                     </execution>
                     <execution>
-                        <id>before-integration-test-execution</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                        <configuration>
-                            <destFile>${project.build.directory}/jacoco-output/jacoco-integration-tests.exec</destFile>
-                            <propertyName>failsafe.jacoco.args</propertyName>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>merge-unit-and-integration</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>merge</goal>
-                        </goals>
-                        <configuration>
-                            <fileSets>
-                                <fileSet>
-                                    <directory>${project.build.directory}/jacoco-output/</directory>
-                                    <includes>
-                                        <include>*.exec</include>
-                                    </includes>
-                                </fileSet>
-                            </fileSets>
-                            <destFile>${project.build.directory}/jacoco-output/merged.exec</destFile>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>create-merged-report</id>
+                        <id>report</id>
                         <phase>post-integration-test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
-                        <configuration>
-                            <dataFile>${project.build.directory}/jacoco-output/merged.exec</dataFile>
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -322,7 +278,6 @@
                 <version>3.5.4</version>
                 <configuration>
                     <useSystemClassLoader>false</useSystemClassLoader>
-                    <argLine>${surefire.jacoco.args}</argLine>
                     <groups>unit</groups>
                     <excludedGroups>integration</excludedGroups>
                     <includes>
@@ -335,7 +290,6 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.5.4</version>
                 <configuration>
-                    <argLine>${failsafe.jacoco.args}</argLine>
                     <groups>integration</groups>
                     <excludedGroups>unit</excludedGroups>
                     <includes>
