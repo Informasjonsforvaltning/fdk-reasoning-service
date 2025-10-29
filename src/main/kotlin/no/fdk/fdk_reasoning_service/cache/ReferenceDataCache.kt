@@ -21,6 +21,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun los(): Model = LOS
     fun eurovocs(): Model = EUROVOCS
     fun dataThemes(): Model = DATA_THEMES
+    fun mobilityThemes(): Model = MOBILITY_THEMES
     fun conceptStatuses(): Model = CONCEPT_STATUSES
     fun conceptSubjects(): Model = CONCEPT_SUBJECTS
     fun ianaMediaTypes(): Model = MEDIA_TYPES
@@ -46,6 +47,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         updateLOS()
         updateEUROVOC()
         updateDataThemes()
+        updateMobilityThemes()
         updateConceptStatuses()
         updateConceptSubjects()
         updateMediaTypes()
@@ -111,6 +113,18 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             logger.info("successfully updated data themes cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.dataThemes}", ex)
+        }
+    }
+
+    @Scheduled(cron = "0 42 23 * * ?")
+    fun updateMobilityThemes() {
+        try {
+            with(RDFDataMgr.loadModel(uris.mobilityThemes, Lang.TURTLE)) {
+                MOBILITY_THEMES.removeAll().add(this)
+            }
+            logger.info("successfully updated mobility themes cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.mobilityThemes}", ex)
         }
     }
 
@@ -335,6 +349,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val LOS: Model = ModelFactory.createDefaultModel()
         val EUROVOCS: Model = ModelFactory.createDefaultModel()
         val DATA_THEMES: Model = ModelFactory.createDefaultModel()
+        val MOBILITY_THEMES: Model = ModelFactory.createDefaultModel()
         val CONCEPT_STATUSES: Model = ModelFactory.createDefaultModel()
         val CONCEPT_SUBJECTS: Model = ModelFactory.createDefaultModel()
         val MEDIA_TYPES: Model = ModelFactory.createDefaultModel()

@@ -7,6 +7,7 @@ import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.rdf.CV
 import no.fdk.fdk_reasoning_service.service.ThemeService
 import no.fdk.fdk_reasoning_service.utils.TestResponseReader
+import org.apache.jena.rdf.model.ResourceFactory
 import org.apache.jena.vocabulary.DCAT
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Tag
@@ -28,6 +29,8 @@ class Theme {
             .parseTurtleFile("rdf-data/reference-data/eurovocs.ttl")
         every { referenceDataCache.dataThemes() } returns responseReader
             .parseTurtleFile("rdf-data/reference-data/data_themes.ttl")
+        every { referenceDataCache.mobilityThemes() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/mobility_themes.ttl")
     }
 
     @Nested
@@ -85,6 +88,17 @@ class Theme {
         }
 
         @Test
+        fun `test mobility theme`() {
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
+            input.add(input.getResource(datasetURI), ResourceFactory.createProperty("https://w3id.org/mobilitydcat-ap#mobilityTheme"), input.createResource("https://w3id.org/mobilitydcat-ap/mobility-theme/traffic-volume"))
+
+            val result = themeService.reason(input, CatalogType.DATASETS)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/theme-data/dataset_mobility_theme.ttl")
+
+            assertTrue(result.isIsomorphicWith(expected))
+        }
+
+        @Test
         fun `test los with exact match`() {
             val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
             input.add(input.getResource(datasetURI), DCAT.theme, input.createResource("https://psi.norge.no/los/tema/energi"))
@@ -135,7 +149,7 @@ class Theme {
         fun `test theme triples are added from reference data`() {
             val infoModelURI = "https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e"
             val input = responseReader.parseTurtleFile("rdf-data/input-graphs/information_model.ttl")
-            input.add(input.getResource(infoModelURI), DCAT.theme, input.createResource("http://eurovoc.europa.eu/5073"))
+            input.add(input.getResource(infoModelURI), DCAT.theme, input.createResource("https://psi.norge.no/los/tema/energi"))
 
             val result = themeService.reason(input, CatalogType.INFORMATIONMODELS)
             val expected = responseReader.parseTurtleFile("rdf-data/expected/theme-data/information_model.ttl")

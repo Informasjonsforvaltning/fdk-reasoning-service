@@ -16,11 +16,11 @@ class ThemeService(
     override fun reason(inputModel: Model, catalogType: CatalogType): Model =
         when (catalogType) {
             CatalogType.CONCEPTS -> ModelFactory.createDefaultModel()
-            CatalogType.DATASERVICES -> themeReferenceData(inputModel)
+            CatalogType.DATASERVICES -> baseThemeReferenceData(inputModel)
             CatalogType.DATASETS -> datasetThemeReasoning(inputModel)
             CatalogType.EVENTS -> ModelFactory.createDefaultModel()
-            CatalogType.INFORMATIONMODELS -> themeReferenceData(inputModel)
-            CatalogType.PUBLICSERVICES -> themeReferenceData(inputModel)
+            CatalogType.INFORMATIONMODELS -> baseThemeReferenceData(inputModel)
+            CatalogType.PUBLICSERVICES -> serviceThemeReferenceData(inputModel)
         }
 
     private fun datasetThemeReasoning(inputModel: Model): Model {
@@ -32,12 +32,12 @@ class ThemeService(
             ).deductionsModel
         )
 
-        val datasetThemes = themeReferenceData(inputModel.union(matchingThemes))
+        val datasetThemes = datasetThemeReferenceData(inputModel.union(matchingThemes))
 
         return datasetThemes.union(matchingThemes)
     }
 
-    private fun themeReferenceData(inputModel: Model): Model {
+    private fun baseThemeReferenceData(inputModel: Model): Model {
         val referenceDataThemes = ModelFactory.createDefaultModel()
 
         referenceDataThemes.add(
@@ -52,6 +52,26 @@ class ThemeService(
                 referenceDataCache.los()
             )
         )
+
+        return referenceDataThemes
+    }
+
+    private fun datasetThemeReferenceData(inputModel: Model): Model {
+        val referenceDataThemes = baseThemeReferenceData(inputModel)
+
+        referenceDataThemes.add(
+            modelOfContainedReferenceData(
+                inputModel,
+                referenceDataCache.mobilityThemes()
+            )
+        )
+
+        return referenceDataThemes
+    }
+
+    private fun serviceThemeReferenceData(inputModel: Model): Model {
+        val referenceDataThemes = baseThemeReferenceData(inputModel)
+
         referenceDataThemes.add(
             modelOfContainedReferenceData(
                 inputModel,
