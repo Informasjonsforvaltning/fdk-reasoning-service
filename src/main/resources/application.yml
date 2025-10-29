@@ -46,6 +46,9 @@ application:
     mainActivities: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/main-activities
     weekDays: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/schema/week-days
     datasetTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/dataset-types
+    distributionStatuses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/distribution-statuses
+    mobilityDataStandards: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/mobility/data-standards
+    mobilityConditions: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/mobility/conditions-for-access-and-usage
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -121,3 +124,6 @@ application:
     mainActivities: http://localhost:5050/reference-data/eu/main-activities
     weekDays: http://localhost:5050/reference-data/schema/week-days
     datasetTypes: http://localhost:5050/reference-data/eu/dataset-types
+    distributionStatuses: http://localhost:5050/reference-data/eu/distribution-statuses
+    mobilityDataStandards: http://localhost:5050/reference-data/mobility/data-standards
+    mobilityConditions: http://localhost:5050/reference-data/mobility/conditions-for-access-and-usage

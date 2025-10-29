@@ -59,6 +59,12 @@ class ReferenceData {
             .parseTurtleFile("rdf-data/reference-data/week_days.ttl")
         every { referenceDataCache.datasetTypes() } returns responseReader
             .parseTurtleFile("rdf-data/reference-data/dataset-types.ttl")
+        every { referenceDataCache.distributionStatuses() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/distribution_statuses.ttl")
+        every { referenceDataCache.mobilityDataStandards() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/mobility_data_standards.ttl")
+        every { referenceDataCache.mobilityConditions() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/mobility_conditions.ttl")
     }
 
     @Nested
@@ -123,6 +129,8 @@ class ReferenceData {
 
     @Nested
     internal inner class Dataset {
+        val datasetURI = "https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e"
+
         @Test
         fun `test no extra triples are added from reference data when not present as object in input`() {
             val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
@@ -135,7 +143,6 @@ class ReferenceData {
 
         @Test
         fun `test mediaTypes and fileTypes are added from reference data`() {
-            val datasetURI = "https://dataservice-catalog.staging.fellesdatakatalog.digdir.no/data-services/5f48b38626087749e9be175e"
             val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
 
             val distribution = input.createResource()
@@ -156,6 +163,33 @@ class ReferenceData {
 
             val result = referenceDataService.reason(input, CatalogType.DATASETS)
             val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/dataset.ttl")
+
+            assertTrue(result.isIsomorphicWith(expected))
+        }
+
+        @Test
+        fun `test distribution statuses, mobility data standards and mobility conditions are added from reference data`() {
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
+            val datasetResource = input.getResource(datasetURI)
+
+            input.add(
+                datasetResource,
+                ResourceFactory.createProperty("http://www.w3.org/ns/adms#status"),
+                ResourceFactory.createProperty("http://publications.europa.eu/resource/authority/distribution-status/COMPLETED")
+            )
+
+            input.add(
+                datasetResource,
+                ResourceFactory.createProperty("https://w3id.org/mobilitydcat-ap#mobilityDataStandard"),
+                ResourceFactory.createProperty("https://w3id.org/mobilitydcat-ap/mobility-data-standard/siri")
+            )
+
+            val rightsResource = input.createResource()
+            rightsResource.addProperty(DCTerms.type, input.createResource("https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/royalty-free"))
+            input.add(datasetResource, DCTerms.rights, rightsResource)
+
+            val result = referenceDataService.reason(input, CatalogType.DATASETS)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/mobility_dataset.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }

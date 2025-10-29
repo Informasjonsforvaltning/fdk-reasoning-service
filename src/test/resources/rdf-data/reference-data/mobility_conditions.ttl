@@ -1,0 +1,116 @@
+PREFIX :     <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xml:  <http://www.w3.org/XML/1998/namespace>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+<https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage>
+        rdf:type          owl:NamedIndividual , owl:Ontology , <http://www.w3.org/2004/02/skos/core#ConceptScheme>;
+        <http://purl.org/dc/terms/creator>
+                "Mario Scrocca (Cefriel)"@en , "Peter Lubrich (BASt)"@en;
+        <http://purl.org/dc/terms/description>
+                "Controlled vocabulary for the conditions for access and usage for a Rights Statement."@en;
+        <http://purl.org/dc/terms/license>
+                <https://creativecommons.org/licenses/by/4.0/>;
+        <http://purl.org/dc/terms/publisher>
+                "NAPCORE SubWG4.4"@en;
+        <http://purl.org/dc/terms/title>
+                "Conditions for access and usage"@en;
+        <http://purl.org/ontology/bibo/status>
+                "Published Controlled Vocabulary"@en;
+        owl:priorVersion  <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/1.0.0>;
+        owl:versionIRI    <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/1.1.0>;
+        owl:versionInfo   "1.1.0"@en;
+        <http://www.w3.org/2004/02/skos/core#hasTopConcept>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/contractual-arrangement-free-of-charge> , <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/contractual-arrangement-fee-required> , <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/fee-required> , <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/free-of-charge> , <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/licence-provided-fee-required> , <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/royalty-free> , <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/other> , <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/contractual-arrangement> , <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/licence-provided> , <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/licence-provided-free-of-charge> .
+
+<https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/licence-provided-free-of-charge>
+        rdf:type  owl:NamedIndividual , <http://www.w3.org/2004/02/skos/core#Concept>;
+        <http://www.w3.org/2004/02/skos/core#inScheme>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage>;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Licence provided, free of charge"@en;
+        <http://www.w3.org/2004/02/skos/core#topConceptOf>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage> .
+
+<https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/royalty-free>
+        rdf:type  owl:NamedIndividual , <http://www.w3.org/2004/02/skos/core#Concept>;
+        <http://www.w3.org/2004/02/skos/core#inScheme>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage>;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Royalty-free"@en;
+        <http://www.w3.org/2004/02/skos/core#topConceptOf>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage> .
+
+<https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/contractual-arrangement-fee-required>
+        rdf:type  owl:NamedIndividual , <http://www.w3.org/2004/02/skos/core#Concept>;
+        <http://www.w3.org/2004/02/skos/core#inScheme>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage>;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Contractual arrangement, fee required"@en;
+        <http://www.w3.org/2004/02/skos/core#topConceptOf>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage> .
+
+<https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/contractual-arrangement>
+        rdf:type  owl:NamedIndividual , <http://www.w3.org/2004/02/skos/core#Concept>;
+        <http://www.w3.org/2004/02/skos/core#inScheme>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage>;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Contractual arrangement"@en;
+        <http://www.w3.org/2004/02/skos/core#topConceptOf>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage> .
+
+<https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/fee-required>
+        rdf:type  owl:NamedIndividual , <http://www.w3.org/2004/02/skos/core#Concept>;
+        <http://www.w3.org/2004/02/skos/core#inScheme>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage>;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Fee required"@en;
+        <http://www.w3.org/2004/02/skos/core#topConceptOf>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage> .
+
+<https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/contractual-arrangement-free-of-charge>
+        rdf:type  owl:NamedIndividual , <http://www.w3.org/2004/02/skos/core#Concept>;
+        <http://www.w3.org/2004/02/skos/core#inScheme>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage>;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Contractual arrangement, free of charge"@en;
+        <http://www.w3.org/2004/02/skos/core#topConceptOf>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage> .
+
+<https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/licence-provided>
+        rdf:type  owl:NamedIndividual , <http://www.w3.org/2004/02/skos/core#Concept>;
+        <http://www.w3.org/2004/02/skos/core#inScheme>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage>;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Licence provided"@en;
+        <http://www.w3.org/2004/02/skos/core#topConceptOf>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage> .
+
+<https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/other>
+        rdf:type  owl:NamedIndividual , <http://www.w3.org/2004/02/skos/core#Concept>;
+        <http://www.w3.org/2004/02/skos/core#inScheme>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage>;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Other"@en;
+        <http://www.w3.org/2004/02/skos/core#topConceptOf>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage> .
+
+<https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/free-of-charge>
+        rdf:type  owl:NamedIndividual , <http://www.w3.org/2004/02/skos/core#Concept>;
+        <http://www.w3.org/2004/02/skos/core#inScheme>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage>;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Free of charge"@en;
+        <http://www.w3.org/2004/02/skos/core#topConceptOf>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage> .
+
+<https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/licence-provided-fee-required>
+        rdf:type  owl:NamedIndividual , <http://www.w3.org/2004/02/skos/core#Concept>;
+        <http://www.w3.org/2004/02/skos/core#inScheme>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage>;
+        <http://www.w3.org/2004/02/skos/core#prefLabel>
+                "Licence provided, fee required"@en;
+        <http://www.w3.org/2004/02/skos/core#topConceptOf>
+                <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage> .

@@ -1,0 +1,32 @@
+PREFIX dc:   <http://purl.org/dc/elements/1.1/>
+PREFIX ns1:  <http://publications.europa.eu/resource/authority/>
+PREFIX ns3:  <http://publications.europa.eu/resource/authority/distribution-status/>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+ns3:COMPLETED  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-23";
+        dc:identifier   "COMPLETED";
+        skos:inScheme   ns1:distribution-status;
+        skos:prefLabel  "completed"@en , "ferdigstilt"@nb , "ferdigstilt"@no , "ferdigstilt"@nn .
+
+ns1:distribution-status
+        owl:versionInfo  "20220615-0" .
+
+ns3:DEVELOP  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-23";
+        dc:identifier   "DEVELOP";
+        skos:inScheme   ns1:distribution-status;
+        skos:prefLabel  "under utvikling"@no , "under utvikling"@nb , "under development"@en , "under utvikling"@nn .
+
+ns3:WITHDRAWN  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-23";
+        dc:identifier   "WITHDRAWN";
+        skos:inScheme   ns1:distribution-status;
+        skos:prefLabel  "trukket tilbake"@nb , "trekt tilbake"@nn , "withdrawn"@en , "trukket tilbake"@no .
+
+ns3:DEPRECATED  <http://publications.europa.eu/ontology/authority/start.use>
+                "2015-10-23";
+        dc:identifier   "DEPRECATED";
+        skos:inScheme   ns1:distribution-status;
+        skos:prefLabel  "frarådet"@nb , "frarådd"@nn , "frarådet"@no , "deprecated"@en .

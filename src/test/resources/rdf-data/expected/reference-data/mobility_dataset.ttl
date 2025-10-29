@@ -1,0 +1,23 @@
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dc:   <http://purl.org/dc/elements/1.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+<http://publications.europa.eu/resource/authority/distribution-status/COMPLETED>
+    <http://publications.europa.eu/ontology/authority/start.use> "2015-10-23";
+    dc:identifier   "COMPLETED";
+    skos:inScheme   <http://publications.europa.eu/resource/authority/distribution-status>;
+    skos:prefLabel  "completed"@en , "ferdigstilt"@nb , "ferdigstilt"@no , "ferdigstilt"@nn .
+
+<https://w3id.org/mobilitydcat-ap/mobility-data-standard/siri>
+    rdf:type  owl:NamedIndividual , skos:Concept ;
+    skos:definition "SIRI (CEN/TS 15531)"@en;
+    skos:inScheme <https://w3id.org/mobilitydcat-ap/mobility-data-standard>;
+    skos:prefLabel "SIRI"@en;
+    skos:topConceptOf <https://w3id.org/mobilitydcat-ap/mobility-data-standard> .
+
+<https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage/royalty-free>
+        rdf:type  owl:NamedIndividual , skos:Concept ;
+        skos:inScheme <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage>;
+        skos:prefLabel "Royalty-free"@en;
+        skos:topConceptOf <https://w3id.org/mobilitydcat-ap/conditions-for-access-and-usage> .
