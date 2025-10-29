@@ -85,6 +85,15 @@ class ReferenceDataService(
         val datasetTypes = referenceDataCache.datasetTypes()
         if (datasetTypes.isEmpty) throw Exception("Dataset types are missing in reference data cache")
 
+        val distributionStatuses = referenceDataCache.distributionStatuses()
+        if (distributionStatuses.isEmpty) throw Exception("Distribution statuses are missing in reference data cache")
+
+        val mobilityDataStandards = referenceDataCache.mobilityDataStandards()
+        if (mobilityDataStandards.isEmpty) throw Exception("Mobility data standards are missing in reference data cache")
+
+        val mobilityConditions = referenceDataCache.mobilityConditions()
+        if (mobilityConditions.isEmpty) throw Exception("Mobility conditions are missing in reference data cache")
+
         val m = ModelFactory.createDefaultModel()
         m.add(ianaMediaTypes)
         m.add(fileTypes)
@@ -95,6 +104,9 @@ class ReferenceDataService(
         m.add(frequencies)
         m.add(provenance)
         m.add(datasetTypes)
+        m.add(distributionStatuses)
+        m.add(mobilityDataStandards)
+        m.add(mobilityConditions)
         return m
     }
 

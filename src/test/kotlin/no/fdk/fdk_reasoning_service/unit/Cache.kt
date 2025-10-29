@@ -114,4 +114,46 @@ class Cache : ApiTestContext() {
         assertTrue(expected.isIsomorphicWith(cache.conceptStatuses()), "keeps old data when update fails")
     }
 
+    @Test
+    fun testCacheDistributionStatuses() {
+        every { uris.distributionStatuses } returns
+            "http://localhost:5050/reference-data/eu/distribution-statuses" andThen
+            "http://localhost:5050/404"
+
+        val expected = responseReader.parseTurtleFile("rdf-data/reference-data/distribution_statuses.ttl")
+
+        cache.updateDistributionStatuses()
+        assertTrue(expected.isIsomorphicWith(cache.distributionStatuses()), "able to update model")
+        cache.updateDistributionStatuses()
+        assertTrue(expected.isIsomorphicWith(cache.distributionStatuses()), "keeps old data when update fails")
+    }
+
+    @Test
+    fun testCacheMobilityDataStandards() {
+        every { uris.mobilityDataStandards } returns
+            "http://localhost:5050/reference-data/mobility/data-standards" andThen
+            "http://localhost:5050/404"
+
+        val expected = responseReader.parseTurtleFile("rdf-data/reference-data/mobility_data_standards.ttl")
+
+        cache.updateMobilityDataStandards()
+        assertTrue(expected.isIsomorphicWith(cache.mobilityDataStandards()), "able to update model")
+        cache.updateMobilityDataStandards()
+        assertTrue(expected.isIsomorphicWith(cache.mobilityDataStandards()), "keeps old data when update fails")
+    }
+
+    @Test
+    fun testCacheMobilityConditions() {
+        every { uris.mobilityConditions } returns
+            "http://localhost:5050/reference-data/mobility/conditions-for-access-and-usage" andThen
+            "http://localhost:5050/404"
+
+        val expected = responseReader.parseTurtleFile("rdf-data/reference-data/mobility_conditions.ttl")
+
+        cache.updateMobilityConditions()
+        assertTrue(expected.isIsomorphicWith(cache.mobilityConditions()), "able to update model")
+        cache.updateMobilityConditions()
+        assertTrue(expected.isIsomorphicWith(cache.mobilityConditions()), "keeps old data when update fails")
+    }
+
 }

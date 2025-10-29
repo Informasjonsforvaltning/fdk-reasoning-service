@@ -27,5 +27,8 @@ data class ApplicationURI(
     val channelTypes: String,
     val mainActivities: String,
     val weekDays: String,
-    val datasetTypes: String
+    val datasetTypes: String,
+    val distributionStatuses: String,
+    val mobilityDataStandards: String,
+    val mobilityConditions: String
 )
