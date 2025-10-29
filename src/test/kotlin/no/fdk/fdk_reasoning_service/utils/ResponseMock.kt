@@ -25,6 +25,8 @@ fun startMockServer() {
             .willReturn(ok(File("src/test/resources/rdf-data/reference-data/eurovocs.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/reference-data/eu/data-themes"))
             .willReturn(ok(File("src/test/resources/rdf-data/reference-data/data_themes.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/eu/mobility-themes"))
+            .willReturn(ok(File("src/test/resources/rdf-data/reference-data/mobility_themes.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/reference-data/eu/concept-statuses"))
             .willReturn(ok(File("src/test/resources/rdf-data/reference-data/concept_statuses.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/reference-data/digdir/concept-subjects"))

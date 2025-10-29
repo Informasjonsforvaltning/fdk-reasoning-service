@@ -27,6 +27,7 @@ application:
     los: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/los/themes-and-words
     eurovocs: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/eurovocs
     dataThemes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/data-themes
+    mobilityThemes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/mobility/themes
     conceptStatuses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/concept-statuses
     conceptSubjects: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/concept-subjects
     ianaMediaTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/iana/media-types
@@ -99,6 +100,7 @@ application:
     los: http://localhost:5050/reference-data/los
     eurovocs: http://localhost:5050/reference-data/eu/eurovocs
     dataThemes: http://localhost:5050/reference-data/eu/data-themes
+    mobilityThemes: http://localhost:5050/reference-data/mobility/themes
     conceptStatuses: http://localhost:5050/reference-data/eu/concept-statuses
     conceptSubjects: http://localhost:5050/reference-data/digdir/concept-subjects
     ianaMediaTypes: http://localhost:5050/reference-data/iana/media-types

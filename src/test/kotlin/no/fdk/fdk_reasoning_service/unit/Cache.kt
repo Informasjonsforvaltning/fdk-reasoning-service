@@ -73,6 +73,20 @@ class Cache : ApiTestContext() {
     }
 
     @Test
+    fun testCacheMobilityThemes() {
+        every { uris.mobilityThemes } returns
+            "http://localhost:5050/reference-data/eu/mobility-themes" andThen
+            "http://localhost:5050/404"
+
+        val expected = responseReader.parseTurtleFile("rdf-data/reference-data/mobility_themes.ttl")
+
+        cache.updateMobilityThemes()
+        assertTrue(expected.isIsomorphicWith(cache.mobilityThemes()), "able to update model")
+        cache.updateMobilityThemes()
+        assertTrue(expected.isIsomorphicWith(cache.mobilityThemes()), "keeps old data when update fails")
+    }
+
+    @Test
     fun testCacheConceptSubjects() {
         every { uris.conceptSubjects } returns
             "http://localhost:5050/reference-data/digdir/concept-subjects" andThen
