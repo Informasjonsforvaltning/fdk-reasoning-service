@@ -210,6 +210,8 @@ open class KafkaHarvestedEventCircuitBreaker(
                 reasonedGraph,
                 eventData.timestamp,
                 eventData.resourceType,
+                eventData.harvestRunId,
+                eventData.uri,
             )
             if (eventData.harvestRunId != null) {
                 kafkaHarvestEventProducer.sendReasoningSuccessEvent(
