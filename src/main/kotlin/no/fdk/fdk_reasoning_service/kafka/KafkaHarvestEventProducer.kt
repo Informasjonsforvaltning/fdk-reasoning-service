@@ -37,7 +37,7 @@ class KafkaHarvestEventProducer(
             .setTimestamp(eventTimestamp)
             .setStartTime(startTime.toString())
             .setEndTime(endTime.toString())
-            .setDataSourceId("") // Not available from resource events
+            .setDataSourceId(null)
             .setDataSourceUrl(null)
             .setAcceptHeader(null)
             .setErrorMessage(null)
@@ -75,7 +75,7 @@ class KafkaHarvestEventProducer(
             .setStartTime(startTime.toString())
             .setEndTime(endTime.toString())
             .setErrorMessage(errorMessage)
-            .setDataSourceId("") // Not available from resource events
+            .setDataSourceId(null)
             .setDataSourceUrl(null)
             .setAcceptHeader(null)
             .setChangedResourcesCount(null)

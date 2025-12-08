@@ -28,6 +28,8 @@ class KafkaReasonedEventProducer(
         graph: String,
         timestamp: Long,
         resourceType: CatalogType,
+        harvestRunId: String? = null,
+        uri: String? = null,
     ) {
         val topicName =
             when (resourceType) {
@@ -38,7 +40,7 @@ class KafkaReasonedEventProducer(
                 CatalogType.PUBLICSERVICES -> TOPIC_NAME_SERVICE
                 CatalogType.EVENTS -> TOPIC_NAME_EVENT
             }
-        val msg = getKafkaEvent(fdkId, graph, timestamp, resourceType)
+        val msg = getKafkaEvent(fdkId, graph, timestamp, resourceType, harvestRunId, uri)
         LOGGER.debug("Sending message with fdkId $fdkId to Kafka topic: $topicName")
         kafkaTemplate.send(topicName, msg)
     }
@@ -48,13 +50,31 @@ class KafkaReasonedEventProducer(
         graph: String,
         timestamp: Long,
         resourceType: CatalogType,
+        harvestRunId: String?,
+        uri: String?,
     ): SpecificRecord =
         when (resourceType) {
-            CatalogType.DATASETS -> DatasetEvent(DatasetEventType.DATASET_REASONED, fdkId, graph, timestamp)
-            CatalogType.CONCEPTS -> ConceptEvent(ConceptEventType.CONCEPT_REASONED, fdkId, graph, timestamp)
+            CatalogType.DATASETS -> DatasetEvent(
+                DatasetEventType.DATASET_REASONED,
+                harvestRunId,
+                uri,
+                fdkId,
+                graph,
+                timestamp,
+            )
+            CatalogType.CONCEPTS -> ConceptEvent(
+                ConceptEventType.CONCEPT_REASONED,
+                harvestRunId,
+                uri,
+                fdkId,
+                graph,
+                timestamp,
+            )
             CatalogType.DATASERVICES ->
                 DataServiceEvent(
                     DataServiceEventType.DATA_SERVICE_REASONED,
+                    harvestRunId,
+                    uri,
                     fdkId,
                     graph,
                     timestamp,
@@ -63,13 +83,29 @@ class KafkaReasonedEventProducer(
             CatalogType.INFORMATIONMODELS ->
                 InformationModelEvent(
                     InformationModelEventType.INFORMATION_MODEL_REASONED,
+                    harvestRunId,
+                    uri,
                     fdkId,
                     graph,
                     timestamp,
                 )
 
-            CatalogType.PUBLICSERVICES -> ServiceEvent(ServiceEventType.SERVICE_REASONED, fdkId, graph, timestamp)
-            CatalogType.EVENTS -> EventEvent(EventEventType.EVENT_REASONED, fdkId, graph, timestamp)
+            CatalogType.PUBLICSERVICES -> ServiceEvent(
+                ServiceEventType.SERVICE_REASONED,
+                harvestRunId,
+                uri,
+                fdkId,
+                graph,
+                timestamp,
+            )
+            CatalogType.EVENTS -> EventEvent(
+                EventEventType.EVENT_REASONED,
+                harvestRunId,
+                uri,
+                fdkId,
+                graph,
+                timestamp,
+            )
         }
 
     companion object {

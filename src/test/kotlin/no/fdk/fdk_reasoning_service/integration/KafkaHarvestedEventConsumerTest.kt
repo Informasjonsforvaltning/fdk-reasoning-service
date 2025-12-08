@@ -8,6 +8,7 @@ import no.fdk.concept.ConceptEvent
 import no.fdk.concept.ConceptEventType
 import no.fdk.dataset.DatasetEvent
 import no.fdk.dataset.DatasetEventType
+import no.fdk.fdk_reasoning_service.kafka.KafkaHarvestEventProducer
 import no.fdk.fdk_reasoning_service.kafka.KafkaHarvestedEventCircuitBreaker
 import no.fdk.fdk_reasoning_service.kafka.KafkaHarvestedEventConsumer
 import no.fdk.fdk_reasoning_service.kafka.KafkaReasonedEventProducer
@@ -32,7 +33,8 @@ class KafkaHarvestedEventConsumerTest {
     private val kafkaTemplate: KafkaTemplate<String, SpecificRecord> = mockk()
     private val ack: Acknowledgment = mockk()
     private val kafkaReasonedEventProducer = KafkaReasonedEventProducer(kafkaTemplate)
-    private val circuitBreaker = KafkaHarvestedEventCircuitBreaker(kafkaReasonedEventProducer, reasoningService)
+    private val kafkaHarvestEventProducer = KafkaHarvestEventProducer(kafkaTemplate)
+    private val circuitBreaker = KafkaHarvestedEventCircuitBreaker(kafkaReasonedEventProducer, reasoningService, kafkaHarvestEventProducer)
     private val kafkaHarvestedEventConsumer = KafkaHarvestedEventConsumer(circuitBreaker)
 
     /* Ignores checking the mocked graph returned from reasoningService,
@@ -52,7 +54,7 @@ class KafkaHarvestedEventConsumerTest {
         every { ack.nack(Duration.ZERO) } returns Unit
 
         val conceptEvent =
-            ConceptEvent(ConceptEventType.CONCEPT_HARVESTED, "my-id", inputGraph, System.currentTimeMillis())
+            ConceptEvent(ConceptEventType.CONCEPT_HARVESTED, null, null, "my-id", inputGraph, System.currentTimeMillis())
         kafkaHarvestedEventConsumer.listen(
             record = ConsumerRecord("concept-events", 0, 0, "my-id", conceptEvent),
             ack = ack,
@@ -65,7 +67,7 @@ class KafkaHarvestedEventConsumerTest {
                 },
                 withArg {
                     assertIs<ConceptEvent>(it)
-                    assertEquals(conceptEvent.fdkId, it.fdkId)
+                    assertEquals(conceptEvent.fdkId.toString(), it.fdkId.toString())
                     assertEquals(ConceptEventType.CONCEPT_REASONED, it.type)
                     assertEquals(conceptEvent.timestamp, it.timestamp)
                 },
@@ -92,7 +94,7 @@ class KafkaHarvestedEventConsumerTest {
         every { ack.nack(Duration.ZERO) } returns Unit
 
         val datasetEvent =
-            DatasetEvent(DatasetEventType.DATASET_HARVESTED, "my-id", inputGraph, System.currentTimeMillis())
+            DatasetEvent(DatasetEventType.DATASET_HARVESTED, null, null, "my-id", inputGraph, System.currentTimeMillis())
         kafkaHarvestedEventConsumer.listen(
             record = ConsumerRecord("dataset-events", 0, 0, "my-id", datasetEvent),
             ack = ack,
@@ -105,7 +107,7 @@ class KafkaHarvestedEventConsumerTest {
                 },
                 withArg {
                     assertIs<DatasetEvent>(it)
-                    assertEquals(datasetEvent.fdkId, it.fdkId)
+                    assertEquals(datasetEvent.fdkId.toString(), it.fdkId.toString())
                     assertEquals(DatasetEventType.DATASET_REASONED, it.type)
                     assertEquals(datasetEvent.timestamp, it.timestamp)
                 },
@@ -125,7 +127,7 @@ class KafkaHarvestedEventConsumerTest {
         every { ack.nack(Duration.ZERO) } returns Unit
 
         val datasetEvent =
-            DatasetEvent(DatasetEventType.DATASET_HARVESTED, "my-id", inputGraph, System.currentTimeMillis())
+            DatasetEvent(DatasetEventType.DATASET_HARVESTED, null, null, "my-id", inputGraph, System.currentTimeMillis())
         kafkaHarvestedEventConsumer.listen(
             record = ConsumerRecord("dataset-events", 0, 0, "my-id", datasetEvent),
             ack = ack,
@@ -142,7 +144,7 @@ class KafkaHarvestedEventConsumerTest {
         every { ack.acknowledge() } returns Unit
         every { ack.nack(Duration.ZERO) } returns Unit
 
-        val datasetEvent = DatasetEvent(DatasetEventType.DATASET_REMOVED, "my-id", "uri", System.currentTimeMillis())
+        val datasetEvent = DatasetEvent(DatasetEventType.DATASET_REMOVED, null, null, "my-id", "uri", System.currentTimeMillis())
         kafkaHarvestedEventConsumer.listen(
             record = ConsumerRecord("dataset-events", 0, 0, "my-id", datasetEvent),
             ack = ack,
@@ -159,7 +161,7 @@ class KafkaHarvestedEventConsumerTest {
         every { reasoningService.reasonGraph(any(), any()) } throws Exception("Error on reasoning RDF")
         every { ack.nack(Duration.ZERO) } returns Unit
 
-        val datasetEvent = DatasetEvent(DatasetEventType.DATASET_HARVESTED, "my-id", "uri", System.currentTimeMillis())
+        val datasetEvent = DatasetEvent(DatasetEventType.DATASET_HARVESTED, null, null, "my-id", "uri", System.currentTimeMillis())
         kafkaHarvestedEventConsumer.listen(
             record = ConsumerRecord("dataset-events", 0, 0, "my-id", datasetEvent),
             ack = ack,
