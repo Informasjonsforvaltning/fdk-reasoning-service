@@ -19,11 +19,7 @@
           "SPARQL_PROCESSING"
         ]
       }
-    },
-    {
-      "name": "dataSourceId",
-      "type": "string"
-    },
+    },    
     {
       "name": "runId",
       "type": "string",
@@ -43,6 +39,11 @@
           "event"
         ]
       }
+    },
+    {
+      "name": "dataSourceId",
+      "type": ["null", "string"],
+      "default": null
     },
     {
       "name": "dataSourceUrl",
