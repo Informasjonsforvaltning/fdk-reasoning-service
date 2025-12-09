@@ -13,10 +13,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 1868544486204264801L;
+  private static final long serialVersionUID = -453777438884983562L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"HarvestEvent\",\"namespace\":\"no.fdk.harvest\",\"fields\":[{\"name\":\"phase\",\"type\":{\"type\":\"enum\",\"name\":\"HarvestPhase\",\"symbols\":[\"INITIATING\",\"HARVESTING\",\"REASONING\",\"RDF_PARSING\",\"RESOURCE_PROCESSING\",\"SEARCH_PROCESSING\",\"AI_SEARCH_PROCESSING\",\"SPARQL_PROCESSING\"]}},{\"name\":\"dataSourceId\",\"type\":\"string\"},{\"name\":\"runId\",\"type\":\"string\",\"doc\":\"Unique identifier (UUID) for the harvest run this event belongs to\"},{\"name\":\"dataType\",\"type\":{\"type\":\"enum\",\"name\":\"DataType\",\"symbols\":[\"concept\",\"dataset\",\"informationmodel\",\"dataservice\",\"publicService\",\"event\"]}},{\"name\":\"dataSourceUrl\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"acceptHeader\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"fdkId\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"resourceUri\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},{\"name\":\"startTime\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"endTime\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"errorMessage\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"changedResourcesCount\",\"type\":[\"null\",\"int\"],\"doc\":\"Number of changed resources (only for DATASOURCE_RESOURCE_EXTRACTION)\",\"default\":null},{\"name\":\"unchangedResourcesCount\",\"type\":[\"null\",\"int\"],\"doc\":\"Number of unchanged resources (only for DATASOURCE_RESOURCE_EXTRACTION)\",\"default\":null},{\"name\":\"removedResourcesCount\",\"type\":[\"null\",\"int\"],\"doc\":\"Number of removed resources (only for DATASOURCE_RESOURCE_EXTRACTION)\",\"default\":null}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"HarvestEvent\",\"namespace\":\"no.fdk.harvest\",\"fields\":[{\"name\":\"phase\",\"type\":{\"type\":\"enum\",\"name\":\"HarvestPhase\",\"symbols\":[\"INITIATING\",\"HARVESTING\",\"REASONING\",\"RDF_PARSING\",\"RESOURCE_PROCESSING\",\"SEARCH_PROCESSING\",\"AI_SEARCH_PROCESSING\",\"SPARQL_PROCESSING\"]}},{\"name\":\"runId\",\"type\":\"string\",\"doc\":\"Unique identifier (UUID) for the harvest run this event belongs to\"},{\"name\":\"dataType\",\"type\":{\"type\":\"enum\",\"name\":\"DataType\",\"symbols\":[\"concept\",\"dataset\",\"informationmodel\",\"dataservice\",\"publicService\",\"event\"]}},{\"name\":\"dataSourceId\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"dataSourceUrl\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"acceptHeader\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"fdkId\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"resourceUri\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"timestamp\",\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},{\"name\":\"startTime\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"endTime\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"errorMessage\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"changedResourcesCount\",\"type\":[\"null\",\"int\"],\"doc\":\"Number of changed resources (only for DATASOURCE_RESOURCE_EXTRACTION)\",\"default\":null},{\"name\":\"unchangedResourcesCount\",\"type\":[\"null\",\"int\"],\"doc\":\"Number of unchanged resources (only for DATASOURCE_RESOURCE_EXTRACTION)\",\"default\":null},{\"name\":\"removedResourcesCount\",\"type\":[\"null\",\"int\"],\"doc\":\"Number of removed resources (only for DATASOURCE_RESOURCE_EXTRACTION)\",\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -73,10 +73,10 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
   }
 
   private no.fdk.harvest.HarvestPhase phase;
-  private java.lang.CharSequence dataSourceId;
   /** Unique identifier (UUID) for the harvest run this event belongs to */
   private java.lang.CharSequence runId;
   private no.fdk.harvest.DataType dataType;
+  private java.lang.CharSequence dataSourceId;
   private java.lang.CharSequence dataSourceUrl;
   private java.lang.CharSequence acceptHeader;
   private java.lang.CharSequence fdkId;
@@ -102,9 +102,9 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
   /**
    * All-args constructor.
    * @param phase The new value for phase
-   * @param dataSourceId The new value for dataSourceId
    * @param runId Unique identifier (UUID) for the harvest run this event belongs to
    * @param dataType The new value for dataType
+   * @param dataSourceId The new value for dataSourceId
    * @param dataSourceUrl The new value for dataSourceUrl
    * @param acceptHeader The new value for acceptHeader
    * @param fdkId The new value for fdkId
@@ -117,11 +117,11 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
    * @param unchangedResourcesCount Number of unchanged resources (only for DATASOURCE_RESOURCE_EXTRACTION)
    * @param removedResourcesCount Number of removed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
    */
-  public HarvestEvent(no.fdk.harvest.HarvestPhase phase, java.lang.CharSequence dataSourceId, java.lang.CharSequence runId, no.fdk.harvest.DataType dataType, java.lang.CharSequence dataSourceUrl, java.lang.CharSequence acceptHeader, java.lang.CharSequence fdkId, java.lang.CharSequence resourceUri, java.lang.Long timestamp, java.lang.CharSequence startTime, java.lang.CharSequence endTime, java.lang.CharSequence errorMessage, java.lang.Integer changedResourcesCount, java.lang.Integer unchangedResourcesCount, java.lang.Integer removedResourcesCount) {
+  public HarvestEvent(no.fdk.harvest.HarvestPhase phase, java.lang.CharSequence runId, no.fdk.harvest.DataType dataType, java.lang.CharSequence dataSourceId, java.lang.CharSequence dataSourceUrl, java.lang.CharSequence acceptHeader, java.lang.CharSequence fdkId, java.lang.CharSequence resourceUri, java.lang.Long timestamp, java.lang.CharSequence startTime, java.lang.CharSequence endTime, java.lang.CharSequence errorMessage, java.lang.Integer changedResourcesCount, java.lang.Integer unchangedResourcesCount, java.lang.Integer removedResourcesCount) {
     this.phase = phase;
-    this.dataSourceId = dataSourceId;
     this.runId = runId;
     this.dataType = dataType;
+    this.dataSourceId = dataSourceId;
     this.dataSourceUrl = dataSourceUrl;
     this.acceptHeader = acceptHeader;
     this.fdkId = fdkId;
@@ -146,9 +146,9 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
   public java.lang.Object get(int field$) {
     switch (field$) {
     case 0: return phase;
-    case 1: return dataSourceId;
-    case 2: return runId;
-    case 3: return dataType;
+    case 1: return runId;
+    case 2: return dataType;
+    case 3: return dataSourceId;
     case 4: return dataSourceUrl;
     case 5: return acceptHeader;
     case 6: return fdkId;
@@ -170,9 +170,9 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
     case 0: phase = (no.fdk.harvest.HarvestPhase)value$; break;
-    case 1: dataSourceId = (java.lang.CharSequence)value$; break;
-    case 2: runId = (java.lang.CharSequence)value$; break;
-    case 3: dataType = (no.fdk.harvest.DataType)value$; break;
+    case 1: runId = (java.lang.CharSequence)value$; break;
+    case 2: dataType = (no.fdk.harvest.DataType)value$; break;
+    case 3: dataSourceId = (java.lang.CharSequence)value$; break;
     case 4: dataSourceUrl = (java.lang.CharSequence)value$; break;
     case 5: acceptHeader = (java.lang.CharSequence)value$; break;
     case 6: fdkId = (java.lang.CharSequence)value$; break;
@@ -203,23 +203,6 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
    */
   public void setPhase(no.fdk.harvest.HarvestPhase value) {
     this.phase = value;
-  }
-
-  /**
-   * Gets the value of the 'dataSourceId' field.
-   * @return The value of the 'dataSourceId' field.
-   */
-  public java.lang.CharSequence getDataSourceId() {
-    return dataSourceId;
-  }
-
-
-  /**
-   * Sets the value of the 'dataSourceId' field.
-   * @param value the value to set.
-   */
-  public void setDataSourceId(java.lang.CharSequence value) {
-    this.dataSourceId = value;
   }
 
   /**
@@ -255,6 +238,23 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
    */
   public void setDataType(no.fdk.harvest.DataType value) {
     this.dataType = value;
+  }
+
+  /**
+   * Gets the value of the 'dataSourceId' field.
+   * @return The value of the 'dataSourceId' field.
+   */
+  public java.lang.CharSequence getDataSourceId() {
+    return dataSourceId;
+  }
+
+
+  /**
+   * Sets the value of the 'dataSourceId' field.
+   * @param value the value to set.
+   */
+  public void setDataSourceId(java.lang.CharSequence value) {
+    this.dataSourceId = value;
   }
 
   /**
@@ -489,10 +489,10 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
     implements org.apache.avro.data.RecordBuilder<HarvestEvent> {
 
     private no.fdk.harvest.HarvestPhase phase;
-    private java.lang.CharSequence dataSourceId;
     /** Unique identifier (UUID) for the harvest run this event belongs to */
     private java.lang.CharSequence runId;
     private no.fdk.harvest.DataType dataType;
+    private java.lang.CharSequence dataSourceId;
     private java.lang.CharSequence dataSourceUrl;
     private java.lang.CharSequence acceptHeader;
     private java.lang.CharSequence fdkId;
@@ -523,16 +523,16 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
         this.phase = data().deepCopy(fields()[0].schema(), other.phase);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
-      if (isValidValue(fields()[1], other.dataSourceId)) {
-        this.dataSourceId = data().deepCopy(fields()[1].schema(), other.dataSourceId);
+      if (isValidValue(fields()[1], other.runId)) {
+        this.runId = data().deepCopy(fields()[1].schema(), other.runId);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
-      if (isValidValue(fields()[2], other.runId)) {
-        this.runId = data().deepCopy(fields()[2].schema(), other.runId);
+      if (isValidValue(fields()[2], other.dataType)) {
+        this.dataType = data().deepCopy(fields()[2].schema(), other.dataType);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
-      if (isValidValue(fields()[3], other.dataType)) {
-        this.dataType = data().deepCopy(fields()[3].schema(), other.dataType);
+      if (isValidValue(fields()[3], other.dataSourceId)) {
+        this.dataSourceId = data().deepCopy(fields()[3].schema(), other.dataSourceId);
         fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
       if (isValidValue(fields()[4], other.dataSourceUrl)) {
@@ -591,16 +591,16 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
         this.phase = data().deepCopy(fields()[0].schema(), other.phase);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.dataSourceId)) {
-        this.dataSourceId = data().deepCopy(fields()[1].schema(), other.dataSourceId);
+      if (isValidValue(fields()[1], other.runId)) {
+        this.runId = data().deepCopy(fields()[1].schema(), other.runId);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.runId)) {
-        this.runId = data().deepCopy(fields()[2].schema(), other.runId);
+      if (isValidValue(fields()[2], other.dataType)) {
+        this.dataType = data().deepCopy(fields()[2].schema(), other.dataType);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.dataType)) {
-        this.dataType = data().deepCopy(fields()[3].schema(), other.dataType);
+      if (isValidValue(fields()[3], other.dataSourceId)) {
+        this.dataSourceId = data().deepCopy(fields()[3].schema(), other.dataSourceId);
         fieldSetFlags()[3] = true;
       }
       if (isValidValue(fields()[4], other.dataSourceUrl)) {
@@ -690,46 +690,6 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
     }
 
     /**
-      * Gets the value of the 'dataSourceId' field.
-      * @return The value.
-      */
-    public java.lang.CharSequence getDataSourceId() {
-      return dataSourceId;
-    }
-
-
-    /**
-      * Sets the value of the 'dataSourceId' field.
-      * @param value The value of 'dataSourceId'.
-      * @return This builder.
-      */
-    public no.fdk.harvest.HarvestEvent.Builder setDataSourceId(java.lang.CharSequence value) {
-      validate(fields()[1], value);
-      this.dataSourceId = value;
-      fieldSetFlags()[1] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'dataSourceId' field has been set.
-      * @return True if the 'dataSourceId' field has been set, false otherwise.
-      */
-    public boolean hasDataSourceId() {
-      return fieldSetFlags()[1];
-    }
-
-
-    /**
-      * Clears the value of the 'dataSourceId' field.
-      * @return This builder.
-      */
-    public no.fdk.harvest.HarvestEvent.Builder clearDataSourceId() {
-      dataSourceId = null;
-      fieldSetFlags()[1] = false;
-      return this;
-    }
-
-    /**
       * Gets the value of the 'runId' field.
       * Unique identifier (UUID) for the harvest run this event belongs to
       * @return The value.
@@ -746,9 +706,9 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder setRunId(java.lang.CharSequence value) {
-      validate(fields()[2], value);
+      validate(fields()[1], value);
       this.runId = value;
-      fieldSetFlags()[2] = true;
+      fieldSetFlags()[1] = true;
       return this;
     }
 
@@ -758,7 +718,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
       * @return True if the 'runId' field has been set, false otherwise.
       */
     public boolean hasRunId() {
-      return fieldSetFlags()[2];
+      return fieldSetFlags()[1];
     }
 
 
@@ -769,7 +729,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
       */
     public no.fdk.harvest.HarvestEvent.Builder clearRunId() {
       runId = null;
-      fieldSetFlags()[2] = false;
+      fieldSetFlags()[1] = false;
       return this;
     }
 
@@ -788,9 +748,9 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder setDataType(no.fdk.harvest.DataType value) {
-      validate(fields()[3], value);
+      validate(fields()[2], value);
       this.dataType = value;
-      fieldSetFlags()[3] = true;
+      fieldSetFlags()[2] = true;
       return this;
     }
 
@@ -799,7 +759,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
       * @return True if the 'dataType' field has been set, false otherwise.
       */
     public boolean hasDataType() {
-      return fieldSetFlags()[3];
+      return fieldSetFlags()[2];
     }
 
 
@@ -809,6 +769,46 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
       */
     public no.fdk.harvest.HarvestEvent.Builder clearDataType() {
       dataType = null;
+      fieldSetFlags()[2] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'dataSourceId' field.
+      * @return The value.
+      */
+    public java.lang.CharSequence getDataSourceId() {
+      return dataSourceId;
+    }
+
+
+    /**
+      * Sets the value of the 'dataSourceId' field.
+      * @param value The value of 'dataSourceId'.
+      * @return This builder.
+      */
+    public no.fdk.harvest.HarvestEvent.Builder setDataSourceId(java.lang.CharSequence value) {
+      validate(fields()[3], value);
+      this.dataSourceId = value;
+      fieldSetFlags()[3] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'dataSourceId' field has been set.
+      * @return True if the 'dataSourceId' field has been set, false otherwise.
+      */
+    public boolean hasDataSourceId() {
+      return fieldSetFlags()[3];
+    }
+
+
+    /**
+      * Clears the value of the 'dataSourceId' field.
+      * @return This builder.
+      */
+    public no.fdk.harvest.HarvestEvent.Builder clearDataSourceId() {
+      dataSourceId = null;
       fieldSetFlags()[3] = false;
       return this;
     }
@@ -1270,9 +1270,9 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
       try {
         HarvestEvent record = new HarvestEvent();
         record.phase = fieldSetFlags()[0] ? this.phase : (no.fdk.harvest.HarvestPhase) defaultValue(fields()[0]);
-        record.dataSourceId = fieldSetFlags()[1] ? this.dataSourceId : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.runId = fieldSetFlags()[2] ? this.runId : (java.lang.CharSequence) defaultValue(fields()[2]);
-        record.dataType = fieldSetFlags()[3] ? this.dataType : (no.fdk.harvest.DataType) defaultValue(fields()[3]);
+        record.runId = fieldSetFlags()[1] ? this.runId : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.dataType = fieldSetFlags()[2] ? this.dataType : (no.fdk.harvest.DataType) defaultValue(fields()[2]);
+        record.dataSourceId = fieldSetFlags()[3] ? this.dataSourceId : (java.lang.CharSequence) defaultValue(fields()[3]);
         record.dataSourceUrl = fieldSetFlags()[4] ? this.dataSourceUrl : (java.lang.CharSequence) defaultValue(fields()[4]);
         record.acceptHeader = fieldSetFlags()[5] ? this.acceptHeader : (java.lang.CharSequence) defaultValue(fields()[5]);
         record.fdkId = fieldSetFlags()[6] ? this.fdkId : (java.lang.CharSequence) defaultValue(fields()[6]);
@@ -1318,11 +1318,17 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
   {
     out.writeEnum(this.phase.ordinal());
 
-    out.writeString(this.dataSourceId);
-
     out.writeString(this.runId);
 
     out.writeEnum(this.dataType.ordinal());
+
+    if (this.dataSourceId == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeString(this.dataSourceId);
+    }
 
     if (this.dataSourceUrl == null) {
       out.writeIndex(0);
@@ -1415,11 +1421,16 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
     if (fieldOrder == null) {
       this.phase = no.fdk.harvest.HarvestPhase.values()[in.readEnum()];
 
-      this.dataSourceId = in.readString(this.dataSourceId instanceof Utf8 ? (Utf8)this.dataSourceId : null);
-
       this.runId = in.readString(this.runId instanceof Utf8 ? (Utf8)this.runId : null);
 
       this.dataType = no.fdk.harvest.DataType.values()[in.readEnum()];
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.dataSourceId = null;
+      } else {
+        this.dataSourceId = in.readString(this.dataSourceId instanceof Utf8 ? (Utf8)this.dataSourceId : null);
+      }
 
       if (in.readIndex() != 1) {
         in.readNull();
@@ -1501,15 +1512,20 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
           break;
 
         case 1:
-          this.dataSourceId = in.readString(this.dataSourceId instanceof Utf8 ? (Utf8)this.dataSourceId : null);
-          break;
-
-        case 2:
           this.runId = in.readString(this.runId instanceof Utf8 ? (Utf8)this.runId : null);
           break;
 
-        case 3:
+        case 2:
           this.dataType = no.fdk.harvest.DataType.values()[in.readEnum()];
+          break;
+
+        case 3:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.dataSourceId = null;
+          } else {
+            this.dataSourceId = in.readString(this.dataSourceId instanceof Utf8 ? (Utf8)this.dataSourceId : null);
+          }
           break;
 
         case 4:
@@ -1617,9 +1633,9 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
   public int hashCode() {
     int result = 1;
     result = 31 * result + (phase == null ? 0 : ((java.lang.Enum) phase).ordinal());
-    result = 31 * result + (dataSourceId == null ? 0 : dataSourceId.hashCode());
     result = 31 * result + (runId == null ? 0 : runId.hashCode());
     result = 31 * result + (dataType == null ? 0 : ((java.lang.Enum) dataType).ordinal());
+    result = 31 * result + (dataSourceId == null ? 0 : dataSourceId.hashCode());
     result = 31 * result + (dataSourceUrl == null ? 0 : dataSourceUrl.hashCode());
     result = 31 * result + (acceptHeader == null ? 0 : acceptHeader.hashCode());
     result = 31 * result + (fdkId == null ? 0 : fdkId.hashCode());
@@ -1646,13 +1662,13 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
     if (!java.util.Objects.equals(this.phase, other.phase)) {
       return false;
     }
-    if (Utf8.compareSequences(this.dataSourceId, other.dataSourceId) != 0) {
-      return false;
-    }
     if (Utf8.compareSequences(this.runId, other.runId) != 0) {
       return false;
     }
     if (!java.util.Objects.equals(this.dataType, other.dataType)) {
+      return false;
+    }
+    if (Utf8.compareSequences(this.dataSourceId, other.dataSourceId) != 0) {
       return false;
     }
     if (Utf8.compareSequences(this.dataSourceUrl, other.dataSourceUrl) != 0) {
