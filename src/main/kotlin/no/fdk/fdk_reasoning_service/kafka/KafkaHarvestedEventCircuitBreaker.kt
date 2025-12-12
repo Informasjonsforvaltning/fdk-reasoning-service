@@ -53,7 +53,6 @@ open class KafkaHarvestedEventCircuitBreaker(
                         catalogType = data.resourceType,
                         fdkId = data.fdkId,
                         resourceUri = data.uri,
-                        eventTimestamp = data.timestamp,
                         startTime = startTime,
                         endTime = endTime,
                         errorMessage = e.message ?: "Unknown error during reasoning",
@@ -219,7 +218,6 @@ open class KafkaHarvestedEventCircuitBreaker(
                     catalogType = eventData.resourceType,
                     fdkId = eventData.fdkId,
                     resourceUri = eventData.uri,
-                    eventTimestamp = eventData.timestamp,
                     startTime = startTime,
                     endTime = endTime,
                 )

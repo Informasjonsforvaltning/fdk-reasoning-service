@@ -19,7 +19,6 @@ class KafkaHarvestEventProducer(
         catalogType: CatalogType,
         fdkId: String?,
         resourceUri: String?,
-        eventTimestamp: Long,
         startTime: Instant,
         endTime: Instant,
     ) {
@@ -34,7 +33,6 @@ class KafkaHarvestEventProducer(
             .setDataType(mapCatalogTypeToDataType(catalogType))
             .setFdkId(fdkId)
             .setResourceUri(resourceUri)
-            .setTimestamp(eventTimestamp)
             .setStartTime(startTime.toString())
             .setEndTime(endTime.toString())
             .setDataSourceId(null)
@@ -55,7 +53,6 @@ class KafkaHarvestEventProducer(
         catalogType: CatalogType,
         fdkId: String?,
         resourceUri: String?,
-        eventTimestamp: Long,
         startTime: Instant,
         endTime: Instant,
         errorMessage: String,
@@ -71,7 +68,6 @@ class KafkaHarvestEventProducer(
             .setDataType(mapCatalogTypeToDataType(catalogType))
             .setFdkId(fdkId)
             .setResourceUri(resourceUri)
-            .setTimestamp(eventTimestamp)
             .setStartTime(startTime.toString())
             .setEndTime(endTime.toString())
             .setErrorMessage(errorMessage)
