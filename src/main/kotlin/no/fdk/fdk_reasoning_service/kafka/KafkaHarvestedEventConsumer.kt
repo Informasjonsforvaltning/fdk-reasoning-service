@@ -21,7 +21,7 @@ class KafkaHarvestedEventConsumer(
             "event-events",
         ],
         groupId = "fdk-reasoning-service",
-        concurrency = "4",
+        concurrency = "2",
         containerFactory = "kafkaListenerContainerFactory",
         id = REASONING_LISTENER_ID,
     )
