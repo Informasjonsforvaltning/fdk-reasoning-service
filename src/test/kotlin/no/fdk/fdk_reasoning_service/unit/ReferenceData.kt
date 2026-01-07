@@ -7,12 +7,14 @@ import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.service.ReferenceDataService
 import no.fdk.fdk_reasoning_service.utils.TestResponseReader
 import org.apache.jena.rdf.model.ResourceFactory
+import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.vocabulary.DCAT
 import org.apache.jena.vocabulary.DCTerms
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import kotlin.test.assertTrue
+import kotlin.test.assertFailsWith
 
 @Tag("unit")
 class ReferenceData {
@@ -243,6 +245,17 @@ class ReferenceData {
             val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
+        }
+
+        @Test
+        fun `test exception is thrown when locations missing in reference data cache`() {
+            every { referenceDataCache.locations() } returns ModelFactory.createDefaultModel()
+
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/service.ttl")
+
+            assertFailsWith<Exception> {
+                referenceDataService.reason(input, CatalogType.PUBLICSERVICES)
+            }
         }
     }
 }
