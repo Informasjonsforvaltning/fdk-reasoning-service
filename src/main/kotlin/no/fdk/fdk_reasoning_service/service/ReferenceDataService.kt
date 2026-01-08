@@ -131,6 +131,9 @@ class ReferenceDataService(
         val linguisticSystems = referenceDataCache.linguisticSystems()
         if (linguisticSystems.isEmpty) throw Exception("Linguistic systems are missing in reference data cache")
 
+        val locations = referenceDataCache.locations()
+        if (locations.isEmpty) throw Exception("Locations are missing in reference data cache")
+
         val publisherTypes = referenceDataCache.publisherTypes()
         if (publisherTypes.isEmpty) throw Exception("Publisher types are missing in reference data cache")
 
@@ -154,6 +157,7 @@ class ReferenceDataService(
 
         val m = ModelFactory.createDefaultModel()
         m.add(linguisticSystems)
+        m.add(locations)
         m.add(publisherTypes)
         m.add(admsStatuses)
         m.add(roleTypes)
