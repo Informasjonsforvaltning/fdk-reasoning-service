@@ -257,5 +257,22 @@ class ReferenceData {
                 referenceDataService.reason(input, CatalogType.PUBLICSERVICES)
             }
         }
+
+        @Test
+        fun `test adds extra triples when containing relevant location`() {
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/service.ttl")
+            val datasetResource = input.getResource("http://public-service-publisher.fellesdatakatalog.digdir.no/services/12")
+
+            input.add(
+                datasetResource,
+                ResourceFactory.createProperty(DCTerms.spatial.uri),
+                ResourceFactory.createProperty("https://data.geonorge.no/administrativeEnheter/fylke/id/11")
+            )
+
+            val result = referenceDataService.reason(input, CatalogType.PUBLICSERVICES)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service_location.ttl")
+
+            assertTrue(result.isIsomorphicWith(expected))
+        }
     }
 }
