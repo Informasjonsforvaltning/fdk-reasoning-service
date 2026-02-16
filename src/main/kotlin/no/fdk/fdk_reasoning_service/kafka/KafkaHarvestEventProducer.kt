@@ -40,7 +40,6 @@ class KafkaHarvestEventProducer(
             .setAcceptHeader(null)
             .setErrorMessage(null)
             .setChangedResourcesCount(null)
-            .setUnchangedResourcesCount(null)
             .setRemovedResourcesCount(null)
             .build()
 
@@ -75,7 +74,6 @@ class KafkaHarvestEventProducer(
             .setDataSourceUrl(null)
             .setAcceptHeader(null)
             .setChangedResourcesCount(null)
-            .setUnchangedResourcesCount(null)
             .setRemovedResourcesCount(null)
             .build()
 
