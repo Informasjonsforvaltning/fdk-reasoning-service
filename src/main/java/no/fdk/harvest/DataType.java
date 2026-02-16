@@ -6,8 +6,8 @@
 package no.fdk.harvest;
 @org.apache.avro.specific.AvroGenerated
 public enum DataType implements org.apache.avro.generic.GenericEnumSymbol<DataType> {
-  concept, dataset, informationmodel, dataservice, publicService, event  ;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"DataType\",\"namespace\":\"no.fdk.harvest\",\"symbols\":[\"concept\",\"dataset\",\"informationmodel\",\"dataservice\",\"publicService\",\"event\"]}");
+  concept, dataset, informationmodel, dataservice, publicService, service, event  ;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"DataType\",\"namespace\":\"no.fdk.harvest\",\"symbols\":[\"concept\",\"dataset\",\"informationmodel\",\"dataservice\",\"publicService\",\"service\",\"event\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   @Override

@@ -13,10 +13,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -5248602439508991857L;
+  private static final long serialVersionUID = -5430076923246119330L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"HarvestEvent\",\"namespace\":\"no.fdk.harvest\",\"fields\":[{\"name\":\"phase\",\"type\":{\"type\":\"enum\",\"name\":\"HarvestPhase\",\"symbols\":[\"INITIATING\",\"HARVESTING\",\"REASONING\",\"RDF_PARSING\",\"RESOURCE_PROCESSING\",\"SEARCH_PROCESSING\",\"AI_SEARCH_PROCESSING\",\"SPARQL_PROCESSING\"]}},{\"name\":\"runId\",\"type\":[\"null\",\"string\"],\"doc\":\"Unique identifier (UUID) for the harvest run this event belongs to\",\"default\":null},{\"name\":\"dataType\",\"type\":{\"type\":\"enum\",\"name\":\"DataType\",\"symbols\":[\"concept\",\"dataset\",\"informationmodel\",\"dataservice\",\"publicService\",\"event\"]}},{\"name\":\"dataSourceId\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"dataSourceUrl\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"acceptHeader\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"fdkId\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"resourceUri\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"startTime\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"endTime\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"errorMessage\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"changedResourcesCount\",\"type\":[\"null\",\"int\"],\"doc\":\"Number of changed resources (only for DATASOURCE_RESOURCE_EXTRACTION)\",\"default\":null},{\"name\":\"unchangedResourcesCount\",\"type\":[\"null\",\"int\"],\"doc\":\"Number of unchanged resources (only for DATASOURCE_RESOURCE_EXTRACTION)\",\"default\":null},{\"name\":\"removedResourcesCount\",\"type\":[\"null\",\"int\"],\"doc\":\"Number of removed resources (only for DATASOURCE_RESOURCE_EXTRACTION)\",\"default\":null}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"HarvestEvent\",\"namespace\":\"no.fdk.harvest\",\"fields\":[{\"name\":\"phase\",\"type\":{\"type\":\"enum\",\"name\":\"HarvestPhase\",\"symbols\":[\"INITIATING\",\"HARVESTING\",\"REASONING\",\"RDF_PARSING\",\"RESOURCE_PROCESSING\",\"SEARCH_PROCESSING\",\"AI_SEARCH_PROCESSING\",\"SPARQL_PROCESSING\"]},\"doc\":\"Current phase of the harvest process\"},{\"name\":\"runId\",\"type\":[\"null\",\"string\"],\"doc\":\"Unique identifier (UUID) for the harvest run this event belongs to\",\"default\":null},{\"name\":\"dataType\",\"type\":{\"type\":\"enum\",\"name\":\"DataType\",\"symbols\":[\"concept\",\"dataset\",\"informationmodel\",\"dataservice\",\"publicService\",\"service\",\"event\"]},\"doc\":\"Type of data being harvested (concept, dataset, information model, etc.)\"},{\"name\":\"dataSourceId\",\"type\":[\"null\",\"string\"],\"doc\":\"Identifier of the data source being harvested\",\"default\":null},{\"name\":\"dataSourceUrl\",\"type\":[\"null\",\"string\"],\"doc\":\"URL of the data source endpoint being harvested\",\"default\":null},{\"name\":\"acceptHeader\",\"type\":[\"null\",\"string\"],\"doc\":\"HTTP Accept header used when fetching (e.g. for RDF content negotiation)\",\"default\":null},{\"name\":\"fdkId\",\"type\":[\"null\",\"string\"],\"doc\":\"FDK identifier for the harvested resource\",\"default\":null},{\"name\":\"resourceUri\",\"type\":[\"null\",\"string\"],\"doc\":\"URI of the harvested resource\",\"default\":null},{\"name\":\"startTime\",\"type\":[\"null\",\"string\"],\"doc\":\"ISO-8601 timestamp when the phase or operation started\",\"default\":null},{\"name\":\"endTime\",\"type\":[\"null\",\"string\"],\"doc\":\"ISO-8601 timestamp when the phase or operation ended\",\"default\":null},{\"name\":\"errorMessage\",\"type\":[\"null\",\"string\"],\"doc\":\"Error message if the harvest phase or operation failed\",\"default\":null},{\"name\":\"changedResourcesCount\",\"type\":[\"null\",\"int\"],\"doc\":\"Number of changed resources (only for HARVESTING)\",\"default\":null},{\"name\":\"removedResourcesCount\",\"type\":[\"null\",\"int\"],\"doc\":\"Number of removed resources (only for HARVESTING)\",\"default\":null},{\"name\":\"removeAll\",\"type\":[\"null\",\"boolean\"],\"doc\":\"If true, marks all resources for the dataSource as deleted (only INITIATING)\",\"default\":null},{\"name\":\"forced\",\"type\":[\"null\",\"boolean\"],\"doc\":\"If true, forces an update even if resources haven't changed (only INITIATING)\",\"default\":false}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -72,24 +72,36 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
     return DECODER.decode(b);
   }
 
+  /** Current phase of the harvest process */
   private no.fdk.harvest.HarvestPhase phase;
   /** Unique identifier (UUID) for the harvest run this event belongs to */
   private java.lang.CharSequence runId;
+  /** Type of data being harvested (concept, dataset, information model, etc.) */
   private no.fdk.harvest.DataType dataType;
+  /** Identifier of the data source being harvested */
   private java.lang.CharSequence dataSourceId;
+  /** URL of the data source endpoint being harvested */
   private java.lang.CharSequence dataSourceUrl;
+  /** HTTP Accept header used when fetching (e.g. for RDF content negotiation) */
   private java.lang.CharSequence acceptHeader;
+  /** FDK identifier for the harvested resource */
   private java.lang.CharSequence fdkId;
+  /** URI of the harvested resource */
   private java.lang.CharSequence resourceUri;
+  /** ISO-8601 timestamp when the phase or operation started */
   private java.lang.CharSequence startTime;
+  /** ISO-8601 timestamp when the phase or operation ended */
   private java.lang.CharSequence endTime;
+  /** Error message if the harvest phase or operation failed */
   private java.lang.CharSequence errorMessage;
-  /** Number of changed resources (only for DATASOURCE_RESOURCE_EXTRACTION) */
+  /** Number of changed resources (only for HARVESTING) */
   private java.lang.Integer changedResourcesCount;
-  /** Number of unchanged resources (only for DATASOURCE_RESOURCE_EXTRACTION) */
-  private java.lang.Integer unchangedResourcesCount;
-  /** Number of removed resources (only for DATASOURCE_RESOURCE_EXTRACTION) */
+  /** Number of removed resources (only for HARVESTING) */
   private java.lang.Integer removedResourcesCount;
+  /** If true, marks all resources for the dataSource as deleted (only INITIATING) */
+  private java.lang.Boolean removeAll;
+  /** If true, forces an update even if resources haven't changed (only INITIATING) */
+  private java.lang.Boolean forced;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -100,22 +112,23 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * All-args constructor.
-   * @param phase The new value for phase
+   * @param phase Current phase of the harvest process
    * @param runId Unique identifier (UUID) for the harvest run this event belongs to
-   * @param dataType The new value for dataType
-   * @param dataSourceId The new value for dataSourceId
-   * @param dataSourceUrl The new value for dataSourceUrl
-   * @param acceptHeader The new value for acceptHeader
-   * @param fdkId The new value for fdkId
-   * @param resourceUri The new value for resourceUri
-   * @param startTime The new value for startTime
-   * @param endTime The new value for endTime
-   * @param errorMessage The new value for errorMessage
-   * @param changedResourcesCount Number of changed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
-   * @param unchangedResourcesCount Number of unchanged resources (only for DATASOURCE_RESOURCE_EXTRACTION)
-   * @param removedResourcesCount Number of removed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
+   * @param dataType Type of data being harvested (concept, dataset, information model, etc.)
+   * @param dataSourceId Identifier of the data source being harvested
+   * @param dataSourceUrl URL of the data source endpoint being harvested
+   * @param acceptHeader HTTP Accept header used when fetching (e.g. for RDF content negotiation)
+   * @param fdkId FDK identifier for the harvested resource
+   * @param resourceUri URI of the harvested resource
+   * @param startTime ISO-8601 timestamp when the phase or operation started
+   * @param endTime ISO-8601 timestamp when the phase or operation ended
+   * @param errorMessage Error message if the harvest phase or operation failed
+   * @param changedResourcesCount Number of changed resources (only for HARVESTING)
+   * @param removedResourcesCount Number of removed resources (only for HARVESTING)
+   * @param removeAll If true, marks all resources for the dataSource as deleted (only INITIATING)
+   * @param forced If true, forces an update even if resources haven't changed (only INITIATING)
    */
-  public HarvestEvent(no.fdk.harvest.HarvestPhase phase, java.lang.CharSequence runId, no.fdk.harvest.DataType dataType, java.lang.CharSequence dataSourceId, java.lang.CharSequence dataSourceUrl, java.lang.CharSequence acceptHeader, java.lang.CharSequence fdkId, java.lang.CharSequence resourceUri, java.lang.CharSequence startTime, java.lang.CharSequence endTime, java.lang.CharSequence errorMessage, java.lang.Integer changedResourcesCount, java.lang.Integer unchangedResourcesCount, java.lang.Integer removedResourcesCount) {
+  public HarvestEvent(no.fdk.harvest.HarvestPhase phase, java.lang.CharSequence runId, no.fdk.harvest.DataType dataType, java.lang.CharSequence dataSourceId, java.lang.CharSequence dataSourceUrl, java.lang.CharSequence acceptHeader, java.lang.CharSequence fdkId, java.lang.CharSequence resourceUri, java.lang.CharSequence startTime, java.lang.CharSequence endTime, java.lang.CharSequence errorMessage, java.lang.Integer changedResourcesCount, java.lang.Integer removedResourcesCount, java.lang.Boolean removeAll, java.lang.Boolean forced) {
     this.phase = phase;
     this.runId = runId;
     this.dataType = dataType;
@@ -128,8 +141,9 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
     this.endTime = endTime;
     this.errorMessage = errorMessage;
     this.changedResourcesCount = changedResourcesCount;
-    this.unchangedResourcesCount = unchangedResourcesCount;
     this.removedResourcesCount = removedResourcesCount;
+    this.removeAll = removeAll;
+    this.forced = forced;
   }
 
   @Override
@@ -154,8 +168,9 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
     case 9: return endTime;
     case 10: return errorMessage;
     case 11: return changedResourcesCount;
-    case 12: return unchangedResourcesCount;
-    case 13: return removedResourcesCount;
+    case 12: return removedResourcesCount;
+    case 13: return removeAll;
+    case 14: return forced;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -177,15 +192,16 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
     case 9: endTime = (java.lang.CharSequence)value$; break;
     case 10: errorMessage = (java.lang.CharSequence)value$; break;
     case 11: changedResourcesCount = (java.lang.Integer)value$; break;
-    case 12: unchangedResourcesCount = (java.lang.Integer)value$; break;
-    case 13: removedResourcesCount = (java.lang.Integer)value$; break;
+    case 12: removedResourcesCount = (java.lang.Integer)value$; break;
+    case 13: removeAll = (java.lang.Boolean)value$; break;
+    case 14: forced = (java.lang.Boolean)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
   /**
    * Gets the value of the 'phase' field.
-   * @return The value of the 'phase' field.
+   * @return Current phase of the harvest process
    */
   public no.fdk.harvest.HarvestPhase getPhase() {
     return phase;
@@ -194,6 +210,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Sets the value of the 'phase' field.
+   * Current phase of the harvest process
    * @param value the value to set.
    */
   public void setPhase(no.fdk.harvest.HarvestPhase value) {
@@ -220,7 +237,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Gets the value of the 'dataType' field.
-   * @return The value of the 'dataType' field.
+   * @return Type of data being harvested (concept, dataset, information model, etc.)
    */
   public no.fdk.harvest.DataType getDataType() {
     return dataType;
@@ -229,6 +246,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Sets the value of the 'dataType' field.
+   * Type of data being harvested (concept, dataset, information model, etc.)
    * @param value the value to set.
    */
   public void setDataType(no.fdk.harvest.DataType value) {
@@ -237,7 +255,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Gets the value of the 'dataSourceId' field.
-   * @return The value of the 'dataSourceId' field.
+   * @return Identifier of the data source being harvested
    */
   public java.lang.CharSequence getDataSourceId() {
     return dataSourceId;
@@ -246,6 +264,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Sets the value of the 'dataSourceId' field.
+   * Identifier of the data source being harvested
    * @param value the value to set.
    */
   public void setDataSourceId(java.lang.CharSequence value) {
@@ -254,7 +273,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Gets the value of the 'dataSourceUrl' field.
-   * @return The value of the 'dataSourceUrl' field.
+   * @return URL of the data source endpoint being harvested
    */
   public java.lang.CharSequence getDataSourceUrl() {
     return dataSourceUrl;
@@ -263,6 +282,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Sets the value of the 'dataSourceUrl' field.
+   * URL of the data source endpoint being harvested
    * @param value the value to set.
    */
   public void setDataSourceUrl(java.lang.CharSequence value) {
@@ -271,7 +291,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Gets the value of the 'acceptHeader' field.
-   * @return The value of the 'acceptHeader' field.
+   * @return HTTP Accept header used when fetching (e.g. for RDF content negotiation)
    */
   public java.lang.CharSequence getAcceptHeader() {
     return acceptHeader;
@@ -280,6 +300,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Sets the value of the 'acceptHeader' field.
+   * HTTP Accept header used when fetching (e.g. for RDF content negotiation)
    * @param value the value to set.
    */
   public void setAcceptHeader(java.lang.CharSequence value) {
@@ -288,7 +309,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Gets the value of the 'fdkId' field.
-   * @return The value of the 'fdkId' field.
+   * @return FDK identifier for the harvested resource
    */
   public java.lang.CharSequence getFdkId() {
     return fdkId;
@@ -297,6 +318,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Sets the value of the 'fdkId' field.
+   * FDK identifier for the harvested resource
    * @param value the value to set.
    */
   public void setFdkId(java.lang.CharSequence value) {
@@ -305,7 +327,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Gets the value of the 'resourceUri' field.
-   * @return The value of the 'resourceUri' field.
+   * @return URI of the harvested resource
    */
   public java.lang.CharSequence getResourceUri() {
     return resourceUri;
@@ -314,6 +336,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Sets the value of the 'resourceUri' field.
+   * URI of the harvested resource
    * @param value the value to set.
    */
   public void setResourceUri(java.lang.CharSequence value) {
@@ -322,7 +345,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Gets the value of the 'startTime' field.
-   * @return The value of the 'startTime' field.
+   * @return ISO-8601 timestamp when the phase or operation started
    */
   public java.lang.CharSequence getStartTime() {
     return startTime;
@@ -331,6 +354,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Sets the value of the 'startTime' field.
+   * ISO-8601 timestamp when the phase or operation started
    * @param value the value to set.
    */
   public void setStartTime(java.lang.CharSequence value) {
@@ -339,7 +363,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Gets the value of the 'endTime' field.
-   * @return The value of the 'endTime' field.
+   * @return ISO-8601 timestamp when the phase or operation ended
    */
   public java.lang.CharSequence getEndTime() {
     return endTime;
@@ -348,6 +372,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Sets the value of the 'endTime' field.
+   * ISO-8601 timestamp when the phase or operation ended
    * @param value the value to set.
    */
   public void setEndTime(java.lang.CharSequence value) {
@@ -356,7 +381,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Gets the value of the 'errorMessage' field.
-   * @return The value of the 'errorMessage' field.
+   * @return Error message if the harvest phase or operation failed
    */
   public java.lang.CharSequence getErrorMessage() {
     return errorMessage;
@@ -365,6 +390,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Sets the value of the 'errorMessage' field.
+   * Error message if the harvest phase or operation failed
    * @param value the value to set.
    */
   public void setErrorMessage(java.lang.CharSequence value) {
@@ -373,7 +399,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Gets the value of the 'changedResourcesCount' field.
-   * @return Number of changed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
+   * @return Number of changed resources (only for HARVESTING)
    */
   public java.lang.Integer getChangedResourcesCount() {
     return changedResourcesCount;
@@ -382,7 +408,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Sets the value of the 'changedResourcesCount' field.
-   * Number of changed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
+   * Number of changed resources (only for HARVESTING)
    * @param value the value to set.
    */
   public void setChangedResourcesCount(java.lang.Integer value) {
@@ -390,26 +416,8 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
   }
 
   /**
-   * Gets the value of the 'unchangedResourcesCount' field.
-   * @return Number of unchanged resources (only for DATASOURCE_RESOURCE_EXTRACTION)
-   */
-  public java.lang.Integer getUnchangedResourcesCount() {
-    return unchangedResourcesCount;
-  }
-
-
-  /**
-   * Sets the value of the 'unchangedResourcesCount' field.
-   * Number of unchanged resources (only for DATASOURCE_RESOURCE_EXTRACTION)
-   * @param value the value to set.
-   */
-  public void setUnchangedResourcesCount(java.lang.Integer value) {
-    this.unchangedResourcesCount = value;
-  }
-
-  /**
    * Gets the value of the 'removedResourcesCount' field.
-   * @return Number of removed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
+   * @return Number of removed resources (only for HARVESTING)
    */
   public java.lang.Integer getRemovedResourcesCount() {
     return removedResourcesCount;
@@ -418,11 +426,47 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
   /**
    * Sets the value of the 'removedResourcesCount' field.
-   * Number of removed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
+   * Number of removed resources (only for HARVESTING)
    * @param value the value to set.
    */
   public void setRemovedResourcesCount(java.lang.Integer value) {
     this.removedResourcesCount = value;
+  }
+
+  /**
+   * Gets the value of the 'removeAll' field.
+   * @return If true, marks all resources for the dataSource as deleted (only INITIATING)
+   */
+  public java.lang.Boolean getRemoveAll() {
+    return removeAll;
+  }
+
+
+  /**
+   * Sets the value of the 'removeAll' field.
+   * If true, marks all resources for the dataSource as deleted (only INITIATING)
+   * @param value the value to set.
+   */
+  public void setRemoveAll(java.lang.Boolean value) {
+    this.removeAll = value;
+  }
+
+  /**
+   * Gets the value of the 'forced' field.
+   * @return If true, forces an update even if resources haven't changed (only INITIATING)
+   */
+  public java.lang.Boolean getForced() {
+    return forced;
+  }
+
+
+  /**
+   * Sets the value of the 'forced' field.
+   * If true, forces an update even if resources haven't changed (only INITIATING)
+   * @param value the value to set.
+   */
+  public void setForced(java.lang.Boolean value) {
+    this.forced = value;
   }
 
   /**
@@ -466,24 +510,36 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<HarvestEvent>
     implements org.apache.avro.data.RecordBuilder<HarvestEvent> {
 
+    /** Current phase of the harvest process */
     private no.fdk.harvest.HarvestPhase phase;
     /** Unique identifier (UUID) for the harvest run this event belongs to */
     private java.lang.CharSequence runId;
+    /** Type of data being harvested (concept, dataset, information model, etc.) */
     private no.fdk.harvest.DataType dataType;
+    /** Identifier of the data source being harvested */
     private java.lang.CharSequence dataSourceId;
+    /** URL of the data source endpoint being harvested */
     private java.lang.CharSequence dataSourceUrl;
+    /** HTTP Accept header used when fetching (e.g. for RDF content negotiation) */
     private java.lang.CharSequence acceptHeader;
+    /** FDK identifier for the harvested resource */
     private java.lang.CharSequence fdkId;
+    /** URI of the harvested resource */
     private java.lang.CharSequence resourceUri;
+    /** ISO-8601 timestamp when the phase or operation started */
     private java.lang.CharSequence startTime;
+    /** ISO-8601 timestamp when the phase or operation ended */
     private java.lang.CharSequence endTime;
+    /** Error message if the harvest phase or operation failed */
     private java.lang.CharSequence errorMessage;
-    /** Number of changed resources (only for DATASOURCE_RESOURCE_EXTRACTION) */
+    /** Number of changed resources (only for HARVESTING) */
     private java.lang.Integer changedResourcesCount;
-    /** Number of unchanged resources (only for DATASOURCE_RESOURCE_EXTRACTION) */
-    private java.lang.Integer unchangedResourcesCount;
-    /** Number of removed resources (only for DATASOURCE_RESOURCE_EXTRACTION) */
+    /** Number of removed resources (only for HARVESTING) */
     private java.lang.Integer removedResourcesCount;
+    /** If true, marks all resources for the dataSource as deleted (only INITIATING) */
+    private java.lang.Boolean removeAll;
+    /** If true, forces an update even if resources haven't changed (only INITIATING) */
+    private java.lang.Boolean forced;
 
     /** Creates a new Builder */
     private Builder() {
@@ -544,13 +600,17 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
         this.changedResourcesCount = data().deepCopy(fields()[11].schema(), other.changedResourcesCount);
         fieldSetFlags()[11] = other.fieldSetFlags()[11];
       }
-      if (isValidValue(fields()[12], other.unchangedResourcesCount)) {
-        this.unchangedResourcesCount = data().deepCopy(fields()[12].schema(), other.unchangedResourcesCount);
+      if (isValidValue(fields()[12], other.removedResourcesCount)) {
+        this.removedResourcesCount = data().deepCopy(fields()[12].schema(), other.removedResourcesCount);
         fieldSetFlags()[12] = other.fieldSetFlags()[12];
       }
-      if (isValidValue(fields()[13], other.removedResourcesCount)) {
-        this.removedResourcesCount = data().deepCopy(fields()[13].schema(), other.removedResourcesCount);
+      if (isValidValue(fields()[13], other.removeAll)) {
+        this.removeAll = data().deepCopy(fields()[13].schema(), other.removeAll);
         fieldSetFlags()[13] = other.fieldSetFlags()[13];
+      }
+      if (isValidValue(fields()[14], other.forced)) {
+        this.forced = data().deepCopy(fields()[14].schema(), other.forced);
+        fieldSetFlags()[14] = other.fieldSetFlags()[14];
       }
     }
 
@@ -608,18 +668,23 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
         this.changedResourcesCount = data().deepCopy(fields()[11].schema(), other.changedResourcesCount);
         fieldSetFlags()[11] = true;
       }
-      if (isValidValue(fields()[12], other.unchangedResourcesCount)) {
-        this.unchangedResourcesCount = data().deepCopy(fields()[12].schema(), other.unchangedResourcesCount);
+      if (isValidValue(fields()[12], other.removedResourcesCount)) {
+        this.removedResourcesCount = data().deepCopy(fields()[12].schema(), other.removedResourcesCount);
         fieldSetFlags()[12] = true;
       }
-      if (isValidValue(fields()[13], other.removedResourcesCount)) {
-        this.removedResourcesCount = data().deepCopy(fields()[13].schema(), other.removedResourcesCount);
+      if (isValidValue(fields()[13], other.removeAll)) {
+        this.removeAll = data().deepCopy(fields()[13].schema(), other.removeAll);
         fieldSetFlags()[13] = true;
+      }
+      if (isValidValue(fields()[14], other.forced)) {
+        this.forced = data().deepCopy(fields()[14].schema(), other.forced);
+        fieldSetFlags()[14] = true;
       }
     }
 
     /**
       * Gets the value of the 'phase' field.
+      * Current phase of the harvest process
       * @return The value.
       */
     public no.fdk.harvest.HarvestPhase getPhase() {
@@ -629,6 +694,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Sets the value of the 'phase' field.
+      * Current phase of the harvest process
       * @param value The value of 'phase'.
       * @return This builder.
       */
@@ -641,6 +707,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Checks whether the 'phase' field has been set.
+      * Current phase of the harvest process
       * @return True if the 'phase' field has been set, false otherwise.
       */
     public boolean hasPhase() {
@@ -650,6 +717,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Clears the value of the 'phase' field.
+      * Current phase of the harvest process
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder clearPhase() {
@@ -704,6 +772,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Gets the value of the 'dataType' field.
+      * Type of data being harvested (concept, dataset, information model, etc.)
       * @return The value.
       */
     public no.fdk.harvest.DataType getDataType() {
@@ -713,6 +782,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Sets the value of the 'dataType' field.
+      * Type of data being harvested (concept, dataset, information model, etc.)
       * @param value The value of 'dataType'.
       * @return This builder.
       */
@@ -725,6 +795,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Checks whether the 'dataType' field has been set.
+      * Type of data being harvested (concept, dataset, information model, etc.)
       * @return True if the 'dataType' field has been set, false otherwise.
       */
     public boolean hasDataType() {
@@ -734,6 +805,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Clears the value of the 'dataType' field.
+      * Type of data being harvested (concept, dataset, information model, etc.)
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder clearDataType() {
@@ -744,6 +816,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Gets the value of the 'dataSourceId' field.
+      * Identifier of the data source being harvested
       * @return The value.
       */
     public java.lang.CharSequence getDataSourceId() {
@@ -753,6 +826,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Sets the value of the 'dataSourceId' field.
+      * Identifier of the data source being harvested
       * @param value The value of 'dataSourceId'.
       * @return This builder.
       */
@@ -765,6 +839,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Checks whether the 'dataSourceId' field has been set.
+      * Identifier of the data source being harvested
       * @return True if the 'dataSourceId' field has been set, false otherwise.
       */
     public boolean hasDataSourceId() {
@@ -774,6 +849,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Clears the value of the 'dataSourceId' field.
+      * Identifier of the data source being harvested
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder clearDataSourceId() {
@@ -784,6 +860,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Gets the value of the 'dataSourceUrl' field.
+      * URL of the data source endpoint being harvested
       * @return The value.
       */
     public java.lang.CharSequence getDataSourceUrl() {
@@ -793,6 +870,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Sets the value of the 'dataSourceUrl' field.
+      * URL of the data source endpoint being harvested
       * @param value The value of 'dataSourceUrl'.
       * @return This builder.
       */
@@ -805,6 +883,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Checks whether the 'dataSourceUrl' field has been set.
+      * URL of the data source endpoint being harvested
       * @return True if the 'dataSourceUrl' field has been set, false otherwise.
       */
     public boolean hasDataSourceUrl() {
@@ -814,6 +893,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Clears the value of the 'dataSourceUrl' field.
+      * URL of the data source endpoint being harvested
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder clearDataSourceUrl() {
@@ -824,6 +904,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Gets the value of the 'acceptHeader' field.
+      * HTTP Accept header used when fetching (e.g. for RDF content negotiation)
       * @return The value.
       */
     public java.lang.CharSequence getAcceptHeader() {
@@ -833,6 +914,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Sets the value of the 'acceptHeader' field.
+      * HTTP Accept header used when fetching (e.g. for RDF content negotiation)
       * @param value The value of 'acceptHeader'.
       * @return This builder.
       */
@@ -845,6 +927,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Checks whether the 'acceptHeader' field has been set.
+      * HTTP Accept header used when fetching (e.g. for RDF content negotiation)
       * @return True if the 'acceptHeader' field has been set, false otherwise.
       */
     public boolean hasAcceptHeader() {
@@ -854,6 +937,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Clears the value of the 'acceptHeader' field.
+      * HTTP Accept header used when fetching (e.g. for RDF content negotiation)
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder clearAcceptHeader() {
@@ -864,6 +948,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Gets the value of the 'fdkId' field.
+      * FDK identifier for the harvested resource
       * @return The value.
       */
     public java.lang.CharSequence getFdkId() {
@@ -873,6 +958,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Sets the value of the 'fdkId' field.
+      * FDK identifier for the harvested resource
       * @param value The value of 'fdkId'.
       * @return This builder.
       */
@@ -885,6 +971,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Checks whether the 'fdkId' field has been set.
+      * FDK identifier for the harvested resource
       * @return True if the 'fdkId' field has been set, false otherwise.
       */
     public boolean hasFdkId() {
@@ -894,6 +981,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Clears the value of the 'fdkId' field.
+      * FDK identifier for the harvested resource
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder clearFdkId() {
@@ -904,6 +992,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Gets the value of the 'resourceUri' field.
+      * URI of the harvested resource
       * @return The value.
       */
     public java.lang.CharSequence getResourceUri() {
@@ -913,6 +1002,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Sets the value of the 'resourceUri' field.
+      * URI of the harvested resource
       * @param value The value of 'resourceUri'.
       * @return This builder.
       */
@@ -925,6 +1015,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Checks whether the 'resourceUri' field has been set.
+      * URI of the harvested resource
       * @return True if the 'resourceUri' field has been set, false otherwise.
       */
     public boolean hasResourceUri() {
@@ -934,6 +1025,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Clears the value of the 'resourceUri' field.
+      * URI of the harvested resource
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder clearResourceUri() {
@@ -944,6 +1036,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Gets the value of the 'startTime' field.
+      * ISO-8601 timestamp when the phase or operation started
       * @return The value.
       */
     public java.lang.CharSequence getStartTime() {
@@ -953,6 +1046,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Sets the value of the 'startTime' field.
+      * ISO-8601 timestamp when the phase or operation started
       * @param value The value of 'startTime'.
       * @return This builder.
       */
@@ -965,6 +1059,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Checks whether the 'startTime' field has been set.
+      * ISO-8601 timestamp when the phase or operation started
       * @return True if the 'startTime' field has been set, false otherwise.
       */
     public boolean hasStartTime() {
@@ -974,6 +1069,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Clears the value of the 'startTime' field.
+      * ISO-8601 timestamp when the phase or operation started
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder clearStartTime() {
@@ -984,6 +1080,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Gets the value of the 'endTime' field.
+      * ISO-8601 timestamp when the phase or operation ended
       * @return The value.
       */
     public java.lang.CharSequence getEndTime() {
@@ -993,6 +1090,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Sets the value of the 'endTime' field.
+      * ISO-8601 timestamp when the phase or operation ended
       * @param value The value of 'endTime'.
       * @return This builder.
       */
@@ -1005,6 +1103,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Checks whether the 'endTime' field has been set.
+      * ISO-8601 timestamp when the phase or operation ended
       * @return True if the 'endTime' field has been set, false otherwise.
       */
     public boolean hasEndTime() {
@@ -1014,6 +1113,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Clears the value of the 'endTime' field.
+      * ISO-8601 timestamp when the phase or operation ended
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder clearEndTime() {
@@ -1024,6 +1124,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Gets the value of the 'errorMessage' field.
+      * Error message if the harvest phase or operation failed
       * @return The value.
       */
     public java.lang.CharSequence getErrorMessage() {
@@ -1033,6 +1134,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Sets the value of the 'errorMessage' field.
+      * Error message if the harvest phase or operation failed
       * @param value The value of 'errorMessage'.
       * @return This builder.
       */
@@ -1045,6 +1147,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Checks whether the 'errorMessage' field has been set.
+      * Error message if the harvest phase or operation failed
       * @return True if the 'errorMessage' field has been set, false otherwise.
       */
     public boolean hasErrorMessage() {
@@ -1054,6 +1157,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Clears the value of the 'errorMessage' field.
+      * Error message if the harvest phase or operation failed
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder clearErrorMessage() {
@@ -1064,7 +1168,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Gets the value of the 'changedResourcesCount' field.
-      * Number of changed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
+      * Number of changed resources (only for HARVESTING)
       * @return The value.
       */
     public java.lang.Integer getChangedResourcesCount() {
@@ -1074,7 +1178,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Sets the value of the 'changedResourcesCount' field.
-      * Number of changed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
+      * Number of changed resources (only for HARVESTING)
       * @param value The value of 'changedResourcesCount'.
       * @return This builder.
       */
@@ -1087,7 +1191,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Checks whether the 'changedResourcesCount' field has been set.
-      * Number of changed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
+      * Number of changed resources (only for HARVESTING)
       * @return True if the 'changedResourcesCount' field has been set, false otherwise.
       */
     public boolean hasChangedResourcesCount() {
@@ -1097,7 +1201,7 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Clears the value of the 'changedResourcesCount' field.
-      * Number of changed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
+      * Number of changed resources (only for HARVESTING)
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder clearChangedResourcesCount() {
@@ -1107,52 +1211,8 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
     }
 
     /**
-      * Gets the value of the 'unchangedResourcesCount' field.
-      * Number of unchanged resources (only for DATASOURCE_RESOURCE_EXTRACTION)
-      * @return The value.
-      */
-    public java.lang.Integer getUnchangedResourcesCount() {
-      return unchangedResourcesCount;
-    }
-
-
-    /**
-      * Sets the value of the 'unchangedResourcesCount' field.
-      * Number of unchanged resources (only for DATASOURCE_RESOURCE_EXTRACTION)
-      * @param value The value of 'unchangedResourcesCount'.
-      * @return This builder.
-      */
-    public no.fdk.harvest.HarvestEvent.Builder setUnchangedResourcesCount(java.lang.Integer value) {
-      validate(fields()[12], value);
-      this.unchangedResourcesCount = value;
-      fieldSetFlags()[12] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'unchangedResourcesCount' field has been set.
-      * Number of unchanged resources (only for DATASOURCE_RESOURCE_EXTRACTION)
-      * @return True if the 'unchangedResourcesCount' field has been set, false otherwise.
-      */
-    public boolean hasUnchangedResourcesCount() {
-      return fieldSetFlags()[12];
-    }
-
-
-    /**
-      * Clears the value of the 'unchangedResourcesCount' field.
-      * Number of unchanged resources (only for DATASOURCE_RESOURCE_EXTRACTION)
-      * @return This builder.
-      */
-    public no.fdk.harvest.HarvestEvent.Builder clearUnchangedResourcesCount() {
-      unchangedResourcesCount = null;
-      fieldSetFlags()[12] = false;
-      return this;
-    }
-
-    /**
       * Gets the value of the 'removedResourcesCount' field.
-      * Number of removed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
+      * Number of removed resources (only for HARVESTING)
       * @return The value.
       */
     public java.lang.Integer getRemovedResourcesCount() {
@@ -1162,35 +1222,123 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
     /**
       * Sets the value of the 'removedResourcesCount' field.
-      * Number of removed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
+      * Number of removed resources (only for HARVESTING)
       * @param value The value of 'removedResourcesCount'.
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder setRemovedResourcesCount(java.lang.Integer value) {
-      validate(fields()[13], value);
+      validate(fields()[12], value);
       this.removedResourcesCount = value;
-      fieldSetFlags()[13] = true;
+      fieldSetFlags()[12] = true;
       return this;
     }
 
     /**
       * Checks whether the 'removedResourcesCount' field has been set.
-      * Number of removed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
+      * Number of removed resources (only for HARVESTING)
       * @return True if the 'removedResourcesCount' field has been set, false otherwise.
       */
     public boolean hasRemovedResourcesCount() {
-      return fieldSetFlags()[13];
+      return fieldSetFlags()[12];
     }
 
 
     /**
       * Clears the value of the 'removedResourcesCount' field.
-      * Number of removed resources (only for DATASOURCE_RESOURCE_EXTRACTION)
+      * Number of removed resources (only for HARVESTING)
       * @return This builder.
       */
     public no.fdk.harvest.HarvestEvent.Builder clearRemovedResourcesCount() {
       removedResourcesCount = null;
+      fieldSetFlags()[12] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'removeAll' field.
+      * If true, marks all resources for the dataSource as deleted (only INITIATING)
+      * @return The value.
+      */
+    public java.lang.Boolean getRemoveAll() {
+      return removeAll;
+    }
+
+
+    /**
+      * Sets the value of the 'removeAll' field.
+      * If true, marks all resources for the dataSource as deleted (only INITIATING)
+      * @param value The value of 'removeAll'.
+      * @return This builder.
+      */
+    public no.fdk.harvest.HarvestEvent.Builder setRemoveAll(java.lang.Boolean value) {
+      validate(fields()[13], value);
+      this.removeAll = value;
+      fieldSetFlags()[13] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'removeAll' field has been set.
+      * If true, marks all resources for the dataSource as deleted (only INITIATING)
+      * @return True if the 'removeAll' field has been set, false otherwise.
+      */
+    public boolean hasRemoveAll() {
+      return fieldSetFlags()[13];
+    }
+
+
+    /**
+      * Clears the value of the 'removeAll' field.
+      * If true, marks all resources for the dataSource as deleted (only INITIATING)
+      * @return This builder.
+      */
+    public no.fdk.harvest.HarvestEvent.Builder clearRemoveAll() {
+      removeAll = null;
       fieldSetFlags()[13] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'forced' field.
+      * If true, forces an update even if resources haven't changed (only INITIATING)
+      * @return The value.
+      */
+    public java.lang.Boolean getForced() {
+      return forced;
+    }
+
+
+    /**
+      * Sets the value of the 'forced' field.
+      * If true, forces an update even if resources haven't changed (only INITIATING)
+      * @param value The value of 'forced'.
+      * @return This builder.
+      */
+    public no.fdk.harvest.HarvestEvent.Builder setForced(java.lang.Boolean value) {
+      validate(fields()[14], value);
+      this.forced = value;
+      fieldSetFlags()[14] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'forced' field has been set.
+      * If true, forces an update even if resources haven't changed (only INITIATING)
+      * @return True if the 'forced' field has been set, false otherwise.
+      */
+    public boolean hasForced() {
+      return fieldSetFlags()[14];
+    }
+
+
+    /**
+      * Clears the value of the 'forced' field.
+      * If true, forces an update even if resources haven't changed (only INITIATING)
+      * @return This builder.
+      */
+    public no.fdk.harvest.HarvestEvent.Builder clearForced() {
+      forced = null;
+      fieldSetFlags()[14] = false;
       return this;
     }
 
@@ -1211,8 +1359,9 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
         record.endTime = fieldSetFlags()[9] ? this.endTime : (java.lang.CharSequence) defaultValue(fields()[9]);
         record.errorMessage = fieldSetFlags()[10] ? this.errorMessage : (java.lang.CharSequence) defaultValue(fields()[10]);
         record.changedResourcesCount = fieldSetFlags()[11] ? this.changedResourcesCount : (java.lang.Integer) defaultValue(fields()[11]);
-        record.unchangedResourcesCount = fieldSetFlags()[12] ? this.unchangedResourcesCount : (java.lang.Integer) defaultValue(fields()[12]);
-        record.removedResourcesCount = fieldSetFlags()[13] ? this.removedResourcesCount : (java.lang.Integer) defaultValue(fields()[13]);
+        record.removedResourcesCount = fieldSetFlags()[12] ? this.removedResourcesCount : (java.lang.Integer) defaultValue(fields()[12]);
+        record.removeAll = fieldSetFlags()[13] ? this.removeAll : (java.lang.Boolean) defaultValue(fields()[13]);
+        record.forced = fieldSetFlags()[14] ? this.forced : (java.lang.Boolean) defaultValue(fields()[14]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -1329,20 +1478,28 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
       out.writeInt(this.changedResourcesCount);
     }
 
-    if (this.unchangedResourcesCount == null) {
-      out.writeIndex(0);
-      out.writeNull();
-    } else {
-      out.writeIndex(1);
-      out.writeInt(this.unchangedResourcesCount);
-    }
-
     if (this.removedResourcesCount == null) {
       out.writeIndex(0);
       out.writeNull();
     } else {
       out.writeIndex(1);
       out.writeInt(this.removedResourcesCount);
+    }
+
+    if (this.removeAll == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeBoolean(this.removeAll);
+    }
+
+    if (this.forced == null) {
+      out.writeIndex(0);
+      out.writeNull();
+    } else {
+      out.writeIndex(1);
+      out.writeBoolean(this.forced);
     }
 
   }
@@ -1428,20 +1585,27 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
 
       if (in.readIndex() != 1) {
         in.readNull();
-        this.unchangedResourcesCount = null;
-      } else {
-        this.unchangedResourcesCount = in.readInt();
-      }
-
-      if (in.readIndex() != 1) {
-        in.readNull();
         this.removedResourcesCount = null;
       } else {
         this.removedResourcesCount = in.readInt();
       }
 
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.removeAll = null;
+      } else {
+        this.removeAll = in.readBoolean();
+      }
+
+      if (in.readIndex() != 1) {
+        in.readNull();
+        this.forced = null;
+      } else {
+        this.forced = in.readBoolean();
+      }
+
     } else {
-      for (int i = 0; i < 14; i++) {
+      for (int i = 0; i < 15; i++) {
         switch (fieldOrder[i].pos()) {
         case 0:
           this.phase = no.fdk.harvest.HarvestPhase.values()[in.readEnum()];
@@ -1544,18 +1708,27 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
         case 12:
           if (in.readIndex() != 1) {
             in.readNull();
-            this.unchangedResourcesCount = null;
+            this.removedResourcesCount = null;
           } else {
-            this.unchangedResourcesCount = in.readInt();
+            this.removedResourcesCount = in.readInt();
           }
           break;
 
         case 13:
           if (in.readIndex() != 1) {
             in.readNull();
-            this.removedResourcesCount = null;
+            this.removeAll = null;
           } else {
-            this.removedResourcesCount = in.readInt();
+            this.removeAll = in.readBoolean();
+          }
+          break;
+
+        case 14:
+          if (in.readIndex() != 1) {
+            in.readNull();
+            this.forced = null;
+          } else {
+            this.forced = in.readBoolean();
           }
           break;
 
@@ -1581,8 +1754,9 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
     result = 31 * result + (endTime == null ? 0 : endTime.hashCode());
     result = 31 * result + (errorMessage == null ? 0 : errorMessage.hashCode());
     result = 31 * result + (changedResourcesCount == null ? 0 : changedResourcesCount.hashCode());
-    result = 31 * result + (unchangedResourcesCount == null ? 0 : unchangedResourcesCount.hashCode());
     result = 31 * result + (removedResourcesCount == null ? 0 : removedResourcesCount.hashCode());
+    result = 31 * result + (removeAll == null ? 0 : removeAll.hashCode());
+    result = 31 * result + (forced == null ? 0 : forced.hashCode());
     return result;
   }
 
@@ -1631,10 +1805,13 @@ public class HarvestEvent extends org.apache.avro.specific.SpecificRecordBase im
     if (!java.util.Objects.equals(this.changedResourcesCount, other.changedResourcesCount)) {
       return false;
     }
-    if (!java.util.Objects.equals(this.unchangedResourcesCount, other.unchangedResourcesCount)) {
+    if (!java.util.Objects.equals(this.removedResourcesCount, other.removedResourcesCount)) {
       return false;
     }
-    if (!java.util.Objects.equals(this.removedResourcesCount, other.removedResourcesCount)) {
+    if (!java.util.Objects.equals(this.removeAll, other.removeAll)) {
+      return false;
+    }
+    if (!java.util.Objects.equals(this.forced, other.forced)) {
       return false;
     }
     return true;
