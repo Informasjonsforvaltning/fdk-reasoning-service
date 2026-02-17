@@ -30,5 +30,8 @@ data class ApplicationURI(
     val datasetTypes: String,
     val distributionStatuses: String,
     val mobilityDataStandards: String,
-    val mobilityConditions: String
+    val mobilityConditions: String,
+    val highValueCategories: String,
+    val qualityDimensions: String,
+    val legalResourceTypes: String
 )
