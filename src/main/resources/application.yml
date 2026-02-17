@@ -61,7 +61,8 @@ spring:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     properties:
       schema.registry.url: ${KAFKA_SCHEMA_REGISTRY:http://localhost:8081}
-      specific.avro.reader: true
+      # Deserialize as GenericRecord; we support both Generic and SpecificRecord in code (like fdk-resource-service)
+      specific.avro.reader: false
       auto.register.schemas: false
       use.latest.version: true
       value.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy

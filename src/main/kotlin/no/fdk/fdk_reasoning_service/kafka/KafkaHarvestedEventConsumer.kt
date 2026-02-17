@@ -1,6 +1,5 @@
 package no.fdk.fdk_reasoning_service.kafka
 
-import org.apache.avro.specific.SpecificRecord
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.Acknowledgment
@@ -26,10 +25,14 @@ class KafkaHarvestedEventConsumer(
         id = REASONING_LISTENER_ID,
     )
     fun listen(
-        record: ConsumerRecord<String, SpecificRecord>,
+        record: ConsumerRecord<String, Any?>,
         ack: Acknowledgment,
     ) {
         try {
+            if (record.value() == null) {
+                ack.acknowledge()
+                return
+            }
             circuitBreaker.process(record)
             ack.acknowledge()
         } catch (e: Exception) {
