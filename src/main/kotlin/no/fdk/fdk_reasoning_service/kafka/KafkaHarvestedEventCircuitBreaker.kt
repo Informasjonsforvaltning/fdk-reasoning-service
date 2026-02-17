@@ -16,6 +16,7 @@ import no.fdk.informationmodel.InformationModelEvent
 import no.fdk.informationmodel.InformationModelEventType
 import no.fdk.service.ServiceEvent
 import no.fdk.service.ServiceEventType
+import org.apache.avro.generic.GenericRecord
 import org.apache.avro.specific.SpecificRecord
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.slf4j.Logger
@@ -32,9 +33,9 @@ open class KafkaHarvestedEventCircuitBreaker(
     private val kafkaHarvestEventProducer: KafkaHarvestEventProducer,
 ) {
     @CircuitBreaker(name = CIRCUIT_BREAKER_ID)
-    open fun process(record: ConsumerRecord<String, SpecificRecord>) {
+    open fun process(record: ConsumerRecord<String, Any?>) {
+        val event = record.value() ?: return
         LOGGER.debug("Received message - offset: {}", record.offset())
-        val event = record.value()
         val eventData = getKafkaEventData(event)
 
         val startTime = Instant.now()
@@ -59,17 +60,50 @@ open class KafkaHarvestedEventCircuitBreaker(
                     )
                 }
             }
-            val resourceType = eventData?.resourceType
             Metrics.counter(
                 "reasoning_error",
                 "type",
-                resourceType.toString().lowercase(),
+                (eventData?.resourceType?.toString() ?: "unknown").lowercase(),
             ).increment()
             throw e
         }
     }
 
-    fun getKafkaEventData(event: SpecificRecord): EventData? {
+    fun getKafkaEventData(event: Any): EventData? {
+        return when (event) {
+            is GenericRecord -> getEventDataFromGenericRecord(event)
+            is SpecificRecord -> getEventDataFromSpecificRecord(event)
+            else -> {
+                LOGGER.warn("Unsupported event type: {}", event.javaClass.name)
+                null
+            }
+        }
+    }
+
+    private fun getEventDataFromGenericRecord(value: GenericRecord): EventData? {
+        val typeStr = value.get("type")?.toString() ?: return null
+        if (!typeStr.endsWith("_HARVESTED")) return null
+        val fdkId = value.get("fdkId")?.toString() ?: return null
+        val graph = value.get("graph")?.toString() ?: return null
+        val timestamp = value.get("timestamp") as? Long ?: return null
+        val harvestRunId = value.get("harvestRunId")?.toString()
+        val uri = value.get("uri")?.toString()
+        val catalogType = when (value.schema.fullName) {
+            "no.fdk.dataset.DatasetEvent" -> CatalogType.DATASETS
+            "no.fdk.concept.ConceptEvent" -> CatalogType.CONCEPTS
+            "no.fdk.dataservice.DataServiceEvent" -> CatalogType.DATASERVICES
+            "no.fdk.informationmodel.InformationModelEvent" -> CatalogType.INFORMATIONMODELS
+            "no.fdk.service.ServiceEvent" -> CatalogType.PUBLICSERVICES
+            "no.fdk.event.EventEvent" -> CatalogType.EVENTS
+            else -> {
+                LOGGER.debug("Ignoring GenericRecord with schema: {}", value.schema.fullName)
+                return null
+            }
+        }
+        return EventData(fdkId, uri, graph, timestamp, catalogType, harvestRunId)
+    }
+
+    private fun getEventDataFromSpecificRecord(event: SpecificRecord): EventData? {
         val harvestRunId = extractHarvestRunId(event)
         val uri = extractUri(event)
         return when {
@@ -146,7 +180,7 @@ open class KafkaHarvestedEventCircuitBreaker(
             event is EventEvent -> null
 
             else -> {
-                LOGGER.warn("Unrecognized event was ignored: {}", event.toString())
+                LOGGER.warn("Unrecognized SpecificRecord was ignored: {}", event.toString())
                 null
             }
         }
