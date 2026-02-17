@@ -43,6 +43,9 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun distributionStatuses(): Model = DISTRIBUTION_STATUSES
     fun mobilityDataStandards(): Model = MOBILITY_DATA_STANDARDS
     fun mobilityConditions(): Model = MOBILITY_CONDITIONS
+    fun highValueCategories(): Model = HIGH_VALUE_CATEGORIES
+    fun qualityDimensions(): Model = QUALITY_DIMENSIONS
+    fun legalResourceTypes(): Model = LEGAL_RESOURCE_TYPES
 
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
@@ -72,6 +75,9 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         updateDistributionStatuses()
         updateMobilityDataStandards()
         updateMobilityConditions()
+        updateHighValueCategories()
+        updateQualityDimensions()
+        updateLegalResourceTypes()
     }
 
     @Scheduled(cron = "0 10 */3 * * ?")
@@ -386,6 +392,42 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(cron = "0 50 20 * * ?")
+    fun updateHighValueCategories() {
+        try {
+            with(RDFDataMgr.loadModel(uris.highValueCategories, Lang.TURTLE)) {
+                HIGH_VALUE_CATEGORIES.removeAll().add(this)
+            }
+            logger.info("successfully updated high value categories cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.highValueCategories}", ex)
+        }
+    }
+
+    @Scheduled(cron = "0 45 20 * * ?")
+    fun updateQualityDimensions() {
+        try {
+            with(RDFDataMgr.loadModel(uris.qualityDimensions, Lang.TURTLE)) {
+                QUALITY_DIMENSIONS.removeAll().add(this)
+            }
+            logger.info("successfully updated quality dimensions cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.qualityDimensions}", ex)
+        }
+    }
+
+    @Scheduled(cron = "0 40 20 * * ?")
+    fun updateLegalResourceTypes() {
+        try {
+            with(RDFDataMgr.loadModel(uris.legalResourceTypes, Lang.TURTLE)) {
+                LEGAL_RESOURCE_TYPES.removeAll().add(this)
+            }
+            logger.info("successfully updated legal resource types cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.legalResourceTypes}", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -413,5 +455,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val DISTRIBUTION_STATUSES: Model = ModelFactory.createDefaultModel()
         val MOBILITY_DATA_STANDARDS: Model = ModelFactory.createDefaultModel()
         val MOBILITY_CONDITIONS: Model = ModelFactory.createDefaultModel()
+        val HIGH_VALUE_CATEGORIES: Model = ModelFactory.createDefaultModel()
+        val QUALITY_DIMENSIONS: Model = ModelFactory.createDefaultModel()
+        val LEGAL_RESOURCE_TYPES: Model = ModelFactory.createDefaultModel()
     }
 }

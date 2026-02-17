@@ -1,0 +1,26 @@
+@prefix owl:	<http://www.w3.org/2002/07/owl#> .
+@prefix skos:	<http://www.w3.org/2004/02/skos/core#> .
+@prefix dc:	<http://purl.org/dc/elements/1.1/> .
+
+<http://data.europa.eu/bna/asd487ae75>
+	owl:versionInfo	"2.1" .
+<http://data.europa.eu/bna/c_164e0bf5>
+	skos:inScheme	<http://data.europa.eu/bna/asd487ae75> ;
+	skos:prefLabel	"Meteorological"@en ;
+	dc:identifier	"c_164e0bf5" .
+<http://data.europa.eu/bna/c_a9135398>
+	skos:inScheme	<http://data.europa.eu/bna/asd487ae75> ;
+	skos:prefLabel	"Companies and company ownership"@en ;
+	dc:identifier	"c_a9135398" .
+<http://data.europa.eu/bna/c_ac64a52d>
+	skos:inScheme	<http://data.europa.eu/bna/asd487ae75> ;
+	skos:prefLabel	"Geospatial"@en ;
+	dc:identifier	"c_ac64a52d" .
+<http://data.europa.eu/bna/c_b79e35eb>
+	skos:inScheme	<http://data.europa.eu/bna/asd487ae75> ;
+	skos:prefLabel	"Mobility"@en ;
+	dc:identifier	"c_b79e35eb" .
+<http://data.europa.eu/bna/c_dd313021>
+	skos:inScheme	<http://data.europa.eu/bna/asd487ae75> ;
+	skos:prefLabel	"Earth observation and environment"@en ;
+	dc:identifier	"c_dd313021" .

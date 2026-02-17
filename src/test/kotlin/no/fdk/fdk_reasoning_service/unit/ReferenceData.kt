@@ -10,6 +10,7 @@ import org.apache.jena.rdf.model.ResourceFactory
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.vocabulary.DCAT
 import org.apache.jena.vocabulary.DCTerms
+import org.apache.jena.vocabulary.SKOS
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
@@ -67,6 +68,12 @@ class ReferenceData {
             .parseTurtleFile("rdf-data/reference-data/mobility_data_standards.ttl")
         every { referenceDataCache.mobilityConditions() } returns responseReader
             .parseTurtleFile("rdf-data/reference-data/mobility_conditions.ttl")
+        every { referenceDataCache.highValueCategories() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/high-value-categories.ttl")
+        every { referenceDataCache.qualityDimensions() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/quality-dimension.ttl")
+        every { referenceDataCache.legalResourceTypes() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/legal-resource-type.ttl")
     }
 
     @Nested
@@ -194,6 +201,61 @@ class ReferenceData {
             val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/mobility_dataset.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
+        }
+
+        @Test
+        fun `test high value categories, quality dimensions and legal resource types are added from reference data`() {
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
+            val datasetResource = input.getResource(datasetURI)
+
+            input.add(
+                datasetResource,
+                ResourceFactory.createProperty("http://data.europa.eu/r5r/hvdCategory"),
+                input.createResource("http://data.europa.eu/bna/c_164e0bf5")
+            )
+
+            val qualityAnnotation = input.createResource()
+            qualityAnnotation.addProperty(
+                ResourceFactory.createProperty("http://www.w3.org/ns/dqv#inDimension"),
+                input.createResource("https://data.norge.no/vocabulary/quality-dimension#accuracy")
+            )
+            input.add(datasetResource, ResourceFactory.createProperty("http://www.w3.org/ns/dqv#hasQualityAnnotation"), qualityAnnotation)
+
+            val legalResource = input.createResource()
+            legalResource.addProperty(
+                DCTerms.type,
+                input.createResource("https://data.norge.no/vocabulary/legal-resource-type#act")
+            )
+            input.add(datasetResource, ResourceFactory.createProperty("http://data.europa.eu/r5r/applicableLegislation"), legalResource)
+
+            val result = referenceDataService.reason(input, CatalogType.DATASETS)
+
+            assertTrue(
+                result.contains(
+                    ResourceFactory.createResource("http://data.europa.eu/bna/c_164e0bf5"),
+                    SKOS.prefLabel,
+                    "Meteorological",
+                    "en"
+                )
+            )
+
+            assertTrue(
+                result.contains(
+                    ResourceFactory.createResource("https://data.norge.no/vocabulary/quality-dimension#accuracy"),
+                    SKOS.prefLabel,
+                    "accuracy",
+                    "en"
+                )
+            )
+
+            assertTrue(
+                result.contains(
+                    ResourceFactory.createResource("https://data.norge.no/vocabulary/legal-resource-type#act"),
+                    SKOS.prefLabel,
+                    "act",
+                    "en"
+                )
+            )
         }
     }
 

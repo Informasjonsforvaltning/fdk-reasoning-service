@@ -49,6 +49,9 @@ application:
     distributionStatuses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/distribution-statuses
     mobilityDataStandards: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/mobility/data-standards
     mobilityConditions: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/mobility/conditions-for-access-and-usage
+    highValueCategories: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/high-value-categories
+    qualityDimensions: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/quality-dimensions
+    legalResourceTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/legal-resource-types
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -128,3 +131,6 @@ application:
     distributionStatuses: http://localhost:5050/reference-data/eu/distribution-statuses
     mobilityDataStandards: http://localhost:5050/reference-data/mobility/data-standards
     mobilityConditions: http://localhost:5050/reference-data/mobility/conditions-for-access-and-usage
+    highValueCategories: http://localhost:5050/reference-data/eu/high-value-categories
+    qualityDimensions: http://localhost:5050/reference-data/digdir/quality-dimensions
+    legalResourceTypes: http://localhost:5050/reference-data/digdir/legal-resource-types

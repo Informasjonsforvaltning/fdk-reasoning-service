@@ -94,6 +94,15 @@ class ReferenceDataService(
         val mobilityConditions = referenceDataCache.mobilityConditions()
         if (mobilityConditions.isEmpty) throw Exception("Mobility conditions are missing in reference data cache")
 
+        val highValueCategories = referenceDataCache.highValueCategories()
+        if (highValueCategories.isEmpty) throw Exception("High value categories are missing in reference data cache")
+
+        val qualityDimensions = referenceDataCache.qualityDimensions()
+        if (qualityDimensions.isEmpty) throw Exception("Quality dimensions are missing in reference data cache")
+
+        val legalResourceTypes = referenceDataCache.legalResourceTypes()
+        if (legalResourceTypes.isEmpty) throw Exception("Legal resource types are missing in reference data cache")
+
         val m = ModelFactory.createDefaultModel()
         m.add(ianaMediaTypes)
         m.add(fileTypes)
@@ -107,6 +116,9 @@ class ReferenceDataService(
         m.add(distributionStatuses)
         m.add(mobilityDataStandards)
         m.add(mobilityConditions)
+        m.add(highValueCategories)
+        m.add(qualityDimensions)
+        m.add(legalResourceTypes)
         return m
     }
 

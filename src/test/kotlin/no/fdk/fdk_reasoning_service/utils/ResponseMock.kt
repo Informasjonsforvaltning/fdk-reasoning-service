@@ -53,6 +53,12 @@ fun startMockServer() {
             .willReturn(ok(File("src/test/resources/rdf-data/reference-data/mobility_data_standards.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/reference-data/mobility/conditions-for-access-and-usage"))
             .willReturn(ok(File("src/test/resources/rdf-data/reference-data/mobility_conditions.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/eu/high-value-categories"))
+            .willReturn(ok(File("src/test/resources/rdf-data/reference-data/high-value-categories.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/digdir/quality-dimensions"))
+            .willReturn(ok(File("src/test/resources/rdf-data/reference-data/quality-dimension.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/digdir/legal-resource-types"))
+            .willReturn(ok(File("src/test/resources/rdf-data/reference-data/legal-resource-type.ttl").readText())))
 
         mockserver.start()
     }

@@ -1,0 +1,144 @@
+@prefix adms: <http://www.w3.org/ns/adms#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dqv: <http://www.w3.org/ns/dqv#> .
+@prefix dqvno: <https://data.norge.no/vocabulary/dqvno#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix schema1: <http://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix uneskos: <http://purl.org/umu/uneskos#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix xkos: <http://rdf-vocabulary.ddialliance.org/xkos#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://data.norge.no/vocabulary/quality-dimension#quality-dimensions> a xkos:ClassificationLevel ;
+    dct:identifier "https://data.norge.no/vocabulary/quality-dimension#quality-dimensions"^^xsd:anyURI ;
+    dct:title "Level 1 - quality dimensions"@en,
+        "Nivå 1 - kvalitetsdimensjoner"@nb,
+        "Nivå 1 - kvalitetsdimensjonar"@nn ;
+    xkos:depth "1"^^xsd:positiveInteger ;
+    skos:member <https://data.norge.no/vocabulary/quality-dimension#accuracy>,
+        <https://data.norge.no/vocabulary/quality-dimension#completeness>,
+        <https://data.norge.no/vocabulary/quality-dimension#consistency>,
+        <https://data.norge.no/vocabulary/quality-dimension#currentness> .
+
+<https://data.norge.no/vocabulary/quality-dimension#quality-subdimensions> a xkos:ClassificationLevel ;
+    dct:identifier "https://data.norge.no/vocabulary/quality-dimension#quality-subdimensions"^^xsd:anyURI ;
+    dct:title "Level 2 - quality subdimensions"@en,
+        "Nivå 2 - kvalitetsdeldimensjoner"@nb,
+        "Nivå 2 - kvalitetsdeldimensjonar"@nn ;
+    xkos:depth "2"^^xsd:positiveInteger ;
+    skos:member <https://data.norge.no/vocabulary/quality-dimension#classification-correctness>,
+        <https://data.norge.no/vocabulary/quality-dimension#consistency-within-dataset>,
+        <https://data.norge.no/vocabulary/quality-dimension#delay>,
+        <https://data.norge.no/vocabulary/quality-dimension#identifier-correctness>,
+        <https://data.norge.no/vocabulary/quality-dimension#imputation>,
+        <https://data.norge.no/vocabulary/quality-dimension#over-coverage>,
+        <https://data.norge.no/vocabulary/quality-dimension#under-coverage> .
+
+<https://data.norge.no/vocabulary/quality-dimension#consistency> a skos:Concept,
+        dqv:Dimension ;
+    dct:identifier "https://data.norge.no/vocabulary/quality-dimension#consistency"^^xsd:anyURI ;
+    dct:publisher <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/991825827> ;
+    dct:source "ISO 25012"@en,
+        "basert på ISO 25012"@nb ;
+    xkos:hasPart <https://data.norge.no/vocabulary/quality-dimension#consistency-within-dataset> ;
+    skos:definition "the degree to which data has attributes that are free from contradiction and are coherent with other data in a specific context of use"@en,
+        "graden av at dataene har egenskaper som ikke er motsigende og som samsvarer med andre egenskaper, for en spesifikk brukskontekst"@nb ;
+    skos:inScheme <https://data.norge.no/vocabulary/quality-dimension> ;
+    skos:note "It can be either or both among data regarding one entity and across similar data for comparable entities."@en,
+        "Konsistens kan gjelde én eller flere sammenlignbare enheter i datasettet."@nb ;
+    skos:prefLabel "consistency"@en,
+        "konsistens"@nb,
+        "konsistens"@nn ;
+    adms:status <http://publications.europa.eu/resource/authority/concept-status/CURRENT> ;
+    dcat:contactPoint <https://data.norge.no/vocabulary/quality-dimension#Digdir> .
+
+<https://data.norge.no/vocabulary/quality-dimension#currentness> a skos:Concept,
+        dqv:Dimension ;
+    dct:identifier "https://data.norge.no/vocabulary/quality-dimension#currentness"^^xsd:anyURI ;
+    dct:publisher <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/991825827> ;
+    dct:source "ISO 25012"@en,
+        "basert på ISO 25012"@nb ;
+    xkos:hasPart <https://data.norge.no/vocabulary/quality-dimension#delay> ;
+    skos:definition "the degree to which data has attributes that are of the right age in a specific context of use"@en,
+        "graden av «ferskhet» av datasettet, for en spesifikk brukskontekst"@nb ;
+    skos:inScheme <https://data.norge.no/vocabulary/quality-dimension> ;
+    skos:prefLabel "currentness"@en,
+        "aktualitet"@nb,
+        "aktualitet"@nn ;
+    adms:status <http://publications.europa.eu/resource/authority/concept-status/CURRENT> ;
+    dcat:contactPoint <https://data.norge.no/vocabulary/quality-dimension#Digdir> .
+
+<https://data.norge.no/vocabulary/quality-dimension#accuracy> a skos:Concept,
+        dqv:Dimension ;
+    dct:identifier "https://data.norge.no/vocabulary/quality-dimension#accuracy"^^xsd:anyURI ;
+    dct:publisher <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/991825827> ;
+    dct:source "ISO 25012"@en,
+        "basert på ISO 25012"@nb ;
+    xkos:hasPart <https://data.norge.no/vocabulary/quality-dimension#classification-correctness>,
+        <https://data.norge.no/vocabulary/quality-dimension#identifier-correctness> ;
+    skos:definition "the degree to which data has attributes that correctly represent the true value of the intended attribute of a concept or event in a specific context of use"@en,
+        "graden av at dataene korrekt representerer virkeligheten, for en spesifikk brukskontekst"@nb ;
+    skos:inScheme <https://data.norge.no/vocabulary/quality-dimension> ;
+    skos:prefLabel "accuracy"@en,
+        "nøyaktighet"@nb,
+        "nøyaktigheit"@nn ;
+    adms:status <http://publications.europa.eu/resource/authority/concept-status/CURRENT> ;
+    dcat:contactPoint <https://data.norge.no/vocabulary/quality-dimension#Digdir> .
+
+<https://data.norge.no/vocabulary/quality-dimension#completeness> a skos:Concept,
+        dqv:Dimension ;
+    dct:identifier "https://data.norge.no/vocabulary/quality-dimension#completeness"^^xsd:anyURI ;
+    dct:publisher <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/991825827> ;
+    dct:source "ISO 25012"@en,
+        "basert på ISO 25012"@nb ;
+    xkos:hasPart <https://data.norge.no/vocabulary/quality-dimension#imputation>,
+        <https://data.norge.no/vocabulary/quality-dimension#over-coverage>,
+        <https://data.norge.no/vocabulary/quality-dimension#under-coverage> ;
+    skos:altLabel "kompletthet"@nb ;
+    skos:definition "the degree to which subject data associated with an entity has values for all expected attributes and related entity instances in a specific context of use"@en,
+        "graden av at datasettet inneholder forventede elementer for en spesifikk brukskontekst"@nb ;
+    skos:inScheme <https://data.norge.no/vocabulary/quality-dimension> ;
+    skos:prefLabel "completeness"@en,
+        "fullstendighet"@nb,
+        "fullstendigheit"@nn ;
+    adms:status <http://publications.europa.eu/resource/authority/concept-status/CURRENT> ;
+    dcat:contactPoint <https://data.norge.no/vocabulary/quality-dimension#Digdir> .
+
+<https://data.norge.no/vocabulary/quality-dimension> a skos:ConceptScheme ;
+    dct:description "Controlled vocabulary with predefined quality (sub)dimensions, primarily meant to be used in connection with descriptions of quality of datasets, in accordance with DQV-AP-NO and DCAT-AP-NO."@en,
+        "Kontrollert vokabular med predefinerte kvalitets(del)dimensjoner, primært ment for å brukes i forbindelse med beskrivelser av kvalitet på datasett, i henhold til DQV-AP-NO og DCAT-AP-NO."@nb ;
+    dct:identifier "https://data.norge.no/vocabulary/quality-dimension"^^xsd:anyURI ;
+    dct:issued "2023-01-27"^^xsd:date ;
+    dct:language <http://publications.europa.eu/resource/authority/language/ENG>,
+        <http://publications.europa.eu/resource/authority/language/NOB> ;
+    dct:modified "2023-01-30"^^xsd:date ;
+    dct:publisher <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/991825827> ;
+    dct:title "Quality (sub)dimension"@en,
+        "Kvalitets(del)dimensjon"@nb,
+        "Kvalitets(del)dimensjon"@nn ;
+    uneskos:contains <https://data.norge.no/vocabulary/quality-dimension#accuracy>,
+        <https://data.norge.no/vocabulary/quality-dimension#classification-correctness>,
+        <https://data.norge.no/vocabulary/quality-dimension#completeness>,
+        <https://data.norge.no/vocabulary/quality-dimension#consistency>,
+        <https://data.norge.no/vocabulary/quality-dimension#consistency-within-dataset>,
+        <https://data.norge.no/vocabulary/quality-dimension#currentness>,
+        <https://data.norge.no/vocabulary/quality-dimension#delay>,
+        <https://data.norge.no/vocabulary/quality-dimension#identifier-correctness>,
+        <https://data.norge.no/vocabulary/quality-dimension#imputation>,
+        <https://data.norge.no/vocabulary/quality-dimension#over-coverage>,
+        <https://data.norge.no/vocabulary/quality-dimension#under-coverage> ;
+    xkos:levels [ a rdf:List ;
+            rdf:first <https://data.norge.no/vocabulary/quality-dimension#quality-dimensions> ;
+            rdf:rest [ a rdf:List ;
+                    rdf:first <https://data.norge.no/vocabulary/quality-dimension#quality-subdimensions> ;
+                    rdf:rest () ] ] ;
+    xkos:numberOfLevels "2"^^xsd:positiveInteger ;
+    schema1:validFrom "2023-01-27"^^xsd:date ;
+    adms:status <http://publications.europa.eu/resource/authority/dataset-status/DEVELOP> .
+
+<https://data.norge.no/vocabulary/quality-dimension#Digdir> a vcard:Organization ;
+    vcard:hasEmail "informasjonsforvaltning@digdir.no"^^xsd:anyURI ;
+    vcard:hasOrganizationName "Norwegian Digitalisation Agency"@en,
+        "Digitaliseringsdirektoratet"@nb .
