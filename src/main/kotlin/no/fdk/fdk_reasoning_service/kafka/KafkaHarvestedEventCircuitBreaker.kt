@@ -83,9 +83,13 @@ open class KafkaHarvestedEventCircuitBreaker(
     private fun getEventDataFromGenericRecord(value: GenericRecord): EventData? {
         val typeStr = value.get("type")?.toString() ?: return null
         if (!typeStr.endsWith("_HARVESTED")) return null
-        val fdkId = value.get("fdkId")?.toString() ?: return null
-        val graph = value.get("graph")?.toString() ?: return null
-        val timestamp = value.get("timestamp") as? Long ?: return null
+        val fdkId = value.get("fdkId")?.toString()
+        val graph = value.get("graph")?.toString()
+        val timestamp = value.get("timestamp") as? Long
+        if (!hasRequiredFields(fdkId, graph, timestamp)) {
+            LOGGER.debug("Ignoring message: required fields (fdkId, graph, timestamp) not set")
+            return null
+        }
         val harvestRunId = value.get("harvestRunId")?.toString()
         val uri = value.get("uri")?.toString()
         val catalogType = when (value.schema.fullName) {
@@ -100,7 +104,11 @@ open class KafkaHarvestedEventCircuitBreaker(
                 return null
             }
         }
-        return EventData(fdkId, uri, graph, timestamp, catalogType, harvestRunId)
+        return EventData(fdkId!!, uri, graph!!, timestamp!!, catalogType, harvestRunId)
+    }
+
+    private fun hasRequiredFields(fdkId: CharSequence?, graph: CharSequence?, timestamp: Long?): Boolean {
+        return !fdkId.isNullOrBlank() && !graph.isNullOrBlank() && timestamp != null
     }
 
     private fun getEventDataFromSpecificRecord(event: SpecificRecord): EventData? {
@@ -108,73 +116,73 @@ open class KafkaHarvestedEventCircuitBreaker(
         val uri = extractUri(event)
         return when {
             event is DatasetEvent && event.type == DatasetEventType.DATASET_HARVESTED ->
-                EventData(
-                    event.fdkId.toString(),
-                    uri = uri,
-                    event.graph.toString(),
+                eventDataIfRequiredFieldsSet(
+                    event.fdkId?.toString(),
+                    event.graph?.toString(),
                     event.timestamp,
                     CatalogType.DATASETS,
                     harvestRunId,
+                    uri,
                 )
 
             event is DatasetEvent -> null
 
             event is ConceptEvent && event.type == ConceptEventType.CONCEPT_HARVESTED ->
-                EventData(
-                    event.fdkId.toString(),
-                    uri = uri,
-                    event.graph.toString(),
+                eventDataIfRequiredFieldsSet(
+                    event.fdkId?.toString(),
+                    event.graph?.toString(),
                     event.timestamp,
                     CatalogType.CONCEPTS,
                     harvestRunId,
+                    uri,
                 )
 
             event is ConceptEvent -> null
 
             event is DataServiceEvent && event.type == DataServiceEventType.DATA_SERVICE_HARVESTED ->
-                EventData(
-                    event.fdkId.toString(),
-                    uri = uri,
-                    event.graph.toString(),
+                eventDataIfRequiredFieldsSet(
+                    event.fdkId?.toString(),
+                    event.graph?.toString(),
                     event.timestamp,
                     CatalogType.DATASERVICES,
                     harvestRunId,
+                    uri,
                 )
 
             event is DataServiceEvent -> null
 
             event is InformationModelEvent && event.type == InformationModelEventType.INFORMATION_MODEL_HARVESTED ->
-                EventData(
-                    event.fdkId.toString(),
-                    uri = uri,
-                    event.graph.toString(),
+                eventDataIfRequiredFieldsSet(
+                    event.fdkId?.toString(),
+                    event.graph?.toString(),
                     event.timestamp,
                     CatalogType.INFORMATIONMODELS,
                     harvestRunId,
+                    uri,
                 )
 
             event is InformationModelEvent -> null
 
             event is ServiceEvent && event.type == ServiceEventType.SERVICE_HARVESTED ->
-                EventData(
-                    event.fdkId.toString(),
-                    uri = uri,
-                    event.graph.toString(),
+                eventDataIfRequiredFieldsSet(
+                    event.fdkId?.toString(),
+                    event.graph?.toString(),
                     event.timestamp,
                     CatalogType.PUBLICSERVICES,
                     harvestRunId,
+                    uri,
                 )
 
             event is ServiceEvent -> null
 
             event is EventEvent && event.type == EventEventType.EVENT_HARVESTED ->
-                EventData(
-                    event.fdkId.toString(),
-                    uri = uri,
-                    event.graph.toString(),
+                eventDataIfRequiredFieldsSet(
+                    event.fdkId?.toString(),
+                    event.graph?.toString(),
                     event.timestamp,
                     CatalogType.EVENTS,
                     harvestRunId,
+                    uri,
                 )
 
             event is EventEvent -> null
@@ -184,6 +192,21 @@ open class KafkaHarvestedEventCircuitBreaker(
                 null
             }
         }
+    }
+
+    private fun eventDataIfRequiredFieldsSet(
+        fdkId: String?,
+        graph: String?,
+        timestamp: Long?,
+        resourceType: CatalogType,
+        harvestRunId: String?,
+        uri: String?,
+    ): EventData? {
+        if (!hasRequiredFields(fdkId, graph, timestamp)) {
+            LOGGER.debug("Ignoring message: required fields (fdkId, graph, timestamp) not set")
+            return null
+        }
+        return EventData(fdkId!!, uri, graph!!, timestamp!!, resourceType, harvestRunId)
     }
 
     private fun extractHarvestRunId(event: SpecificRecord): String? {
