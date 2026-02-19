@@ -48,7 +48,7 @@ open class KafkaHarvestedEventCircuitBreaker(
                 reasonAndProduceEvent(data, startTime)
             }
         } catch (e: Exception) {
-            LOGGER.error("Error occurred during reasoning", e)
+            LOGGER.error("Error occurred during reasoning (fdkId={})", eventData?.fdkId, e)
             val endTime = Instant.now()
             eventData?.let { data ->
                 if (data.harvestRunId != null) {
