@@ -35,8 +35,11 @@ open class KafkaHarvestedEventCircuitBreaker(
     @CircuitBreaker(name = CIRCUIT_BREAKER_ID)
     open fun process(record: ConsumerRecord<String, Any?>) {
         val event = record.value() ?: return
-        LOGGER.debug("Received message - offset: {}", record.offset())
+        LOGGER.info("Received message - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
         val eventData = getKafkaEventData(event)
+        if (eventData == null) {
+            LOGGER.info("Ignoring message (wrong type, missing required fields, or unknown schema) - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
+        }
 
         val startTime = Instant.now()
 
@@ -247,7 +250,7 @@ open class KafkaHarvestedEventCircuitBreaker(
         eventData: EventData,
         startTime: Instant,
     ) {
-        LOGGER.debug("Reason {} - id: {}", eventData.resourceType, eventData.fdkId)
+        LOGGER.info("Reasoning {} - id: {}", eventData.resourceType, eventData.fdkId)
         val timeElapsed =
             measureTimedValue {
                 reasoningService.reasonGraph(eventData.graph, eventData.resourceType)
