@@ -48,69 +48,88 @@ class KafkaReasonedEventProducer(
                 CatalogType.PUBLICSERVICES -> TOPIC_NAME_SERVICE
                 CatalogType.EVENTS -> TOPIC_NAME_EVENT
             }
-        val msg = getKafkaEvent(fdkId!!, graph!!, timestamp, resourceType, harvestRunId, uri)
-        LOGGER.debug("Sending message with fdkId $fdkId to Kafka topic: $topicName")
+        val msg = getKafkaEvent(fdkId, graph, timestamp, resourceType, harvestRunId, uri)
+        LOGGER.info("Sending reasoned event topic={} msg={}", topicName, formatRecordForLog(msg))
         kafkaTemplate.send(topicName, msg)
         return true
     }
 
+    private fun formatRecordForLog(record: SpecificRecord): String {
+        return record.schema.fields.joinToString(", ") { field ->
+            val value = record.get(field.pos())
+            val str = when (value) {
+                is CharSequence -> if (value.length > 80) "${value.toString().take(80)}...(${value.length} chars)" else value.toString()
+                else -> value?.toString() ?: "null"
+            }
+            "${field.name()}=$str"
+        }
+    }
+
+    /**
+     * Kotlin can pass a "non-null" String that is null at runtime (e.g. from Java/GenericRecord).
+     * The Java Avro builder then stores null and serialization fails. Force a non-null value for
+     * required fields by copying through a fresh String so the JVM never sees null.
+     */
+    private fun requireNonBlank(value: String?, name: String): String =
+        (value?.takeIf { it.isNotBlank() } ?: throw IllegalArgumentException("$name must not be null or blank"))
+
     private fun getKafkaEvent(
-        fdkId: String,
-        graph: String,
+        fdkId: String?,
+        graph: String?,
         timestamp: Long,
         resourceType: CatalogType,
         harvestRunId: String?,
         uri: String?,
     ): SpecificRecord {
-        require(fdkId.isNotBlank()) { "fdkId must not be null or blank" }
-        require(graph.isNotBlank()) { "graph must not be null or blank" }
+        val safeFdkId = requireNonBlank(fdkId, "fdkId")
+        val safeGraph = requireNonBlank(graph, "graph")
         return when (resourceType) {
             CatalogType.DATASETS -> DatasetEvent.newBuilder()
                 .setType(DatasetEventType.DATASET_REASONED)
                 .setHarvestRunId(harvestRunId)
                 .setUri(uri)
-                .setFdkId(fdkId)
-                .setGraph(graph)
+                .setFdkId(safeFdkId)
+                .setGraph(safeGraph)
                 .setTimestamp(timestamp)
                 .build()
             CatalogType.CONCEPTS -> ConceptEvent.newBuilder()
                 .setType(ConceptEventType.CONCEPT_REASONED)
                 .setHarvestRunId(harvestRunId)
                 .setUri(uri)
-                .setFdkId(fdkId)
-                .setGraph(graph)
+                .setFdkId(safeFdkId)
+                .setGraph(safeGraph)
                 .setTimestamp(timestamp)
                 .build()
             CatalogType.DATASERVICES -> DataServiceEvent.newBuilder()
                 .setType(DataServiceEventType.DATA_SERVICE_REASONED)
                 .setHarvestRunId(harvestRunId)
                 .setUri(uri)
-                .setFdkId(fdkId)
-                .setGraph(graph)
+                .setFdkId(safeFdkId)
+                .setGraph(safeGraph)
                 .setTimestamp(timestamp)
                 .build()
             CatalogType.INFORMATIONMODELS -> InformationModelEvent.newBuilder()
                 .setType(InformationModelEventType.INFORMATION_MODEL_REASONED)
                 .setHarvestRunId(harvestRunId)
                 .setUri(uri)
-                .setFdkId(fdkId)
-                .setGraph(graph)
+                .setFdkId(safeFdkId)
+                .setGraph(safeGraph)
                 .setTimestamp(timestamp)
                 .build()
             CatalogType.PUBLICSERVICES -> ServiceEvent.newBuilder()
                 .setType(ServiceEventType.SERVICE_REASONED)
                 .setHarvestRunId(harvestRunId)
                 .setUri(uri)
-                .setFdkId(fdkId)
-                .setGraph(graph)
+                .setFdkId(safeFdkId)
+                .setGraph(safeGraph)
                 .setTimestamp(timestamp)
                 .build()
             CatalogType.EVENTS -> EventEvent.newBuilder()
                 .setType(EventEventType.EVENT_REASONED)
                 .setHarvestRunId(harvestRunId)
                 .setUri(uri)
-                .setFdkId(fdkId)
-                .setGraph(graph)
+                .setFdkId(safeFdkId)
+                .setGraph(safeGraph)
                 .setTimestamp(timestamp)
                 .build()
         }
