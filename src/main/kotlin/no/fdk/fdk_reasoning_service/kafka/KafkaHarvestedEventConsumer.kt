@@ -1,6 +1,7 @@
 package no.fdk.fdk_reasoning_service.kafka
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
+import org.slf4j.LoggerFactory
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.Acknowledgment
 import org.springframework.stereotype.Component
@@ -30,17 +31,27 @@ class KafkaHarvestedEventConsumer(
     ) {
         try {
             if (record.value() == null) {
+                LOGGER.debug("Ignoring null value - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
                 ack.acknowledge()
                 return
             }
             circuitBreaker.process(record)
             ack.acknowledge()
         } catch (e: Exception) {
+            LOGGER.warn(
+                "Reasoning failed, nacking message - topic: {} partition: {} offset: {} error: {}",
+                record.topic(),
+                record.partition(),
+                record.offset(),
+                e.message,
+                e,
+            )
             ack.nack(Duration.ZERO)
         }
     }
 
-    companion object Const {
+    companion object {
+        private val LOGGER = LoggerFactory.getLogger(KafkaHarvestedEventConsumer::class.java)
         const val REASONING_LISTENER_ID = "reasoning"
     }
 }
