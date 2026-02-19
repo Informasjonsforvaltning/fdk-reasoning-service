@@ -23,14 +23,22 @@ import org.springframework.stereotype.Component
 class KafkaReasonedEventProducer(
     private val kafkaTemplate: KafkaTemplate<String, SpecificRecord>,
 ) {
+    /**
+     * Sends a reasoned event to the appropriate topic.
+     * @return true if the message was sent, false if skipped (e.g. fdkId or graph null/blank)
+     */
     fun sendMessage(
-        fdkId: String,
-        graph: String,
+        fdkId: String?,
+        graph: String?,
         timestamp: Long,
         resourceType: CatalogType,
         harvestRunId: String? = null,
         uri: String? = null,
-    ) {
+    ): Boolean {
+        if (fdkId.isNullOrBlank() || graph.isNullOrBlank()) {
+            LOGGER.warn("Skipping reasoned event send: fdkId or graph is null or blank (resourceType={})", resourceType)
+            return false
+        }
         val topicName =
             when (resourceType) {
                 CatalogType.DATASETS -> TOPIC_NAME_DATASET
@@ -40,9 +48,10 @@ class KafkaReasonedEventProducer(
                 CatalogType.PUBLICSERVICES -> TOPIC_NAME_SERVICE
                 CatalogType.EVENTS -> TOPIC_NAME_EVENT
             }
-        val msg = getKafkaEvent(fdkId, graph, timestamp, resourceType, harvestRunId, uri)
+        val msg = getKafkaEvent(fdkId!!, graph!!, timestamp, resourceType, harvestRunId, uri)
         LOGGER.debug("Sending message with fdkId $fdkId to Kafka topic: $topicName")
         kafkaTemplate.send(topicName, msg)
+        return true
     }
 
     private fun getKafkaEvent(
@@ -52,61 +61,60 @@ class KafkaReasonedEventProducer(
         resourceType: CatalogType,
         harvestRunId: String?,
         uri: String?,
-    ): SpecificRecord =
-        when (resourceType) {
-            CatalogType.DATASETS -> DatasetEvent(
-                DatasetEventType.DATASET_REASONED,
-                harvestRunId,
-                uri,
-                fdkId,
-                graph,
-                timestamp,
-            )
-            CatalogType.CONCEPTS -> ConceptEvent(
-                ConceptEventType.CONCEPT_REASONED,
-                harvestRunId,
-                uri,
-                fdkId,
-                graph,
-                timestamp,
-            )
-            CatalogType.DATASERVICES ->
-                DataServiceEvent(
-                    DataServiceEventType.DATA_SERVICE_REASONED,
-                    harvestRunId,
-                    uri,
-                    fdkId,
-                    graph,
-                    timestamp,
-                )
-
-            CatalogType.INFORMATIONMODELS ->
-                InformationModelEvent(
-                    InformationModelEventType.INFORMATION_MODEL_REASONED,
-                    harvestRunId,
-                    uri,
-                    fdkId,
-                    graph,
-                    timestamp,
-                )
-
-            CatalogType.PUBLICSERVICES -> ServiceEvent(
-                ServiceEventType.SERVICE_REASONED,
-                harvestRunId,
-                uri,
-                fdkId,
-                graph,
-                timestamp,
-            )
-            CatalogType.EVENTS -> EventEvent(
-                EventEventType.EVENT_REASONED,
-                harvestRunId,
-                uri,
-                fdkId,
-                graph,
-                timestamp,
-            )
+    ): SpecificRecord {
+        require(fdkId.isNotBlank()) { "fdkId must not be null or blank" }
+        require(graph.isNotBlank()) { "graph must not be null or blank" }
+        return when (resourceType) {
+            CatalogType.DATASETS -> DatasetEvent.newBuilder()
+                .setType(DatasetEventType.DATASET_REASONED)
+                .setHarvestRunId(harvestRunId)
+                .setUri(uri)
+                .setFdkId(fdkId)
+                .setGraph(graph)
+                .setTimestamp(timestamp)
+                .build()
+            CatalogType.CONCEPTS -> ConceptEvent.newBuilder()
+                .setType(ConceptEventType.CONCEPT_REASONED)
+                .setHarvestRunId(harvestRunId)
+                .setUri(uri)
+                .setFdkId(fdkId)
+                .setGraph(graph)
+                .setTimestamp(timestamp)
+                .build()
+            CatalogType.DATASERVICES -> DataServiceEvent.newBuilder()
+                .setType(DataServiceEventType.DATA_SERVICE_REASONED)
+                .setHarvestRunId(harvestRunId)
+                .setUri(uri)
+                .setFdkId(fdkId)
+                .setGraph(graph)
+                .setTimestamp(timestamp)
+                .build()
+            CatalogType.INFORMATIONMODELS -> InformationModelEvent.newBuilder()
+                .setType(InformationModelEventType.INFORMATION_MODEL_REASONED)
+                .setHarvestRunId(harvestRunId)
+                .setUri(uri)
+                .setFdkId(fdkId)
+                .setGraph(graph)
+                .setTimestamp(timestamp)
+                .build()
+            CatalogType.PUBLICSERVICES -> ServiceEvent.newBuilder()
+                .setType(ServiceEventType.SERVICE_REASONED)
+                .setHarvestRunId(harvestRunId)
+                .setUri(uri)
+                .setFdkId(fdkId)
+                .setGraph(graph)
+                .setTimestamp(timestamp)
+                .build()
+            CatalogType.EVENTS -> EventEvent.newBuilder()
+                .setType(EventEventType.EVENT_REASONED)
+                .setHarvestRunId(harvestRunId)
+                .setUri(uri)
+                .setFdkId(fdkId)
+                .setGraph(graph)
+                .setTimestamp(timestamp)
+                .build()
         }
+    }
 
     companion object {
         private val LOGGER: Logger = LoggerFactory.getLogger(KafkaReasonedEventProducer::class.java)

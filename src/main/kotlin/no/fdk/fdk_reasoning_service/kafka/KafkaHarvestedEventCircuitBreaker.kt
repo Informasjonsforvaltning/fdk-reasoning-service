@@ -273,7 +273,7 @@ open class KafkaHarvestedEventCircuitBreaker(
                 "type",
                 eventData.resourceType.toString().lowercase(),
             ).record(timeElapsed.duration.toJavaDuration())
-            kafkaReasonedEventProducer.sendMessage(
+            val sent = kafkaReasonedEventProducer.sendMessage(
                 eventData.fdkId,
                 reasonedGraph,
                 eventData.timestamp,
@@ -281,7 +281,7 @@ open class KafkaHarvestedEventCircuitBreaker(
                 eventData.harvestRunId,
                 eventData.uri,
             )
-            if (eventData.harvestRunId != null) {
+            if (sent && eventData.harvestRunId != null) {
                 kafkaHarvestEventProducer.sendReasoningSuccessEvent(
                     harvestRunId = eventData.harvestRunId,
                     catalogType = eventData.resourceType,
