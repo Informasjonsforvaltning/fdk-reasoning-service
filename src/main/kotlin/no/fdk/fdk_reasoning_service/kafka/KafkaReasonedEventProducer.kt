@@ -49,7 +49,7 @@ class KafkaReasonedEventProducer(
                 CatalogType.EVENTS -> TOPIC_NAME_EVENT
             }
         val msg = getKafkaEvent(fdkId, graph, timestamp, resourceType, harvestRunId, uri)
-        LOGGER.info("Sending reasoned event topic={} msg={}", topicName, formatRecordForLog(msg))
+        LOGGER.debug("Sending reasoned event topic={} msg={}", topicName, formatRecordForLog(msg))
         kafkaTemplate.send(topicName, msg)
         return true
     }
