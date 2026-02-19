@@ -29,6 +29,7 @@ class KafkaHarvestedEventConsumer(
         record: ConsumerRecord<String, Any?>,
         ack: Acknowledgment,
     ) {
+        LOGGER.info("Listener received record - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
         try {
             if (record.value() == null) {
                 LOGGER.debug("Ignoring null value - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
