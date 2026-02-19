@@ -84,17 +84,17 @@ open class KafkaHarvestedEventCircuitBreaker(
     }
 
     private fun getEventDataFromGenericRecord(value: GenericRecord): EventData? {
-        val typeStr = value.get("type")?.toString() ?: return null
+        val typeStr = safeGet(value, "type")?.toString() ?: return null
         if (!typeStr.endsWith("_HARVESTED")) return null
-        val fdkId = value.get("fdkId")?.toString()
-        val graph = value.get("graph")?.toString()
-        val timestamp = value.get("timestamp") as? Long
+        val fdkId = safeGet(value, "fdkId")?.toString()
+        val graph = safeGet(value, "graph")?.toString()
+        val timestamp = safeGet(value, "timestamp") as? Long
         if (!hasRequiredFields(fdkId, graph, timestamp)) {
             LOGGER.debug("Ignoring message: required fields (fdkId, graph, timestamp) not set")
             return null
         }
-        val harvestRunId = value.get("harvestRunId")?.toString()
-        val uri = value.get("uri")?.toString()
+        val harvestRunId = safeGet(value, "harvestRunId")?.toString()
+        val uri = safeGet(value, "uri")?.toString()
         val catalogType = when (value.schema.fullName) {
             "no.fdk.dataset.DatasetEvent" -> CatalogType.DATASETS
             "no.fdk.concept.ConceptEvent" -> CatalogType.CONCEPTS
@@ -112,6 +112,15 @@ open class KafkaHarvestedEventCircuitBreaker(
 
     private fun hasRequiredFields(fdkId: CharSequence?, graph: CharSequence?, timestamp: Long?): Boolean {
         return !fdkId.isNullOrBlank() && !graph.isNullOrBlank() && timestamp != null
+    }
+
+    private fun safeGet(record: GenericRecord, fieldName: String): Any? {
+        return try {
+            record.get(fieldName)
+        } catch (e: Exception) {
+            LOGGER.debug("Could not read field '{}' from GenericRecord: {}", fieldName, e.message)
+            null
+        }
     }
 
     private fun getEventDataFromSpecificRecord(event: SpecificRecord): EventData? {
