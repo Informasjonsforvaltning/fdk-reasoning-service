@@ -21,7 +21,6 @@ class KafkaHarvestedEventConsumer(
             "event-events",
         ],
         groupId = "fdk-reasoning-service",
-        concurrency = "2",
         containerFactory = "kafkaListenerContainerFactory",
         id = REASONING_LISTENER_ID,
     )
@@ -29,7 +28,7 @@ class KafkaHarvestedEventConsumer(
         record: ConsumerRecord<String, Any?>,
         ack: Acknowledgment,
     ) {
-        LOGGER.info("Listener received record - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
+        LOGGER.debug("Listener received record - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
         try {
             if (record.value() == null) {
                 LOGGER.debug("Ignoring null value - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())

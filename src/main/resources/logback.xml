@@ -29,7 +29,7 @@
         <appender-ref ref="json"/>
     </appender>
 
-    <logger name="no.fdk" level="debug" additivity="false">
+    <logger name="no.fdk" level="info" additivity="false">
         <appender-ref ref="${LOG_FORMAT:-json-async}" />
     </logger>
 

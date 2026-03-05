@@ -1,5 +1,6 @@
 package no.fdk.fdk_reasoning_service.unit
 
+import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.mockk.mockk
 import no.fdk.concept.ConceptEvent
 import no.fdk.concept.ConceptEventType
@@ -24,7 +25,12 @@ import kotlin.test.assertEquals
 
 @Tag("unit")
 class Kafka {
-    private val circuitBreaker = KafkaHarvestedEventCircuitBreaker(mockk(), mockk(), mockk())
+    private val circuitBreaker = KafkaHarvestedEventCircuitBreaker(
+        mockk(),
+        mockk(),
+        mockk(),
+        CircuitBreaker.ofDefaults("test-cb"),
+    )
 
     @Nested
     inner class GetDataEvent {
