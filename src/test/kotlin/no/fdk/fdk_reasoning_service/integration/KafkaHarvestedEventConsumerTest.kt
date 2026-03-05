@@ -1,5 +1,6 @@
 package no.fdk.fdk_reasoning_service.integration
 
+import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
@@ -34,7 +35,12 @@ class KafkaHarvestedEventConsumerTest {
     private val ack: Acknowledgment = mockk()
     private val kafkaReasonedEventProducer = KafkaReasonedEventProducer(kafkaTemplate)
     private val kafkaHarvestEventProducer = KafkaHarvestEventProducer(kafkaTemplate)
-    private val circuitBreaker = KafkaHarvestedEventCircuitBreaker(kafkaReasonedEventProducer, reasoningService, kafkaHarvestEventProducer)
+    private val circuitBreaker = KafkaHarvestedEventCircuitBreaker(
+        kafkaReasonedEventProducer,
+        reasoningService,
+        kafkaHarvestEventProducer,
+        CircuitBreaker.ofDefaults("test-cb"),
+    )
     private val kafkaHarvestedEventConsumer = KafkaHarvestedEventConsumer(circuitBreaker)
 
     /* Ignores checking the mocked graph returned from reasoningService,
