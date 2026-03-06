@@ -1,6 +1,6 @@
 package no.fdk.fdk_reasoning_service.kafka
 
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker
+import io.github.resilience4j.circuitbreaker.CircuitBreaker
 import io.micrometer.core.instrument.Metrics
 import no.fdk.concept.ConceptEvent
 import no.fdk.concept.ConceptEventType
@@ -21,54 +21,55 @@ import org.apache.avro.specific.SpecificRecord
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import java.time.Instant
 import kotlin.time.measureTimedValue
 import kotlin.time.toJavaDuration
 
 @Component
-open class KafkaHarvestedEventCircuitBreaker(
+class KafkaHarvestedEventCircuitBreaker(
     private val kafkaReasonedEventProducer: KafkaReasonedEventProducer,
     private val reasoningService: ReasoningService,
     private val kafkaHarvestEventProducer: KafkaHarvestEventProducer,
+    @param:Qualifier("reasoningCircuitBreaker")
+    private val circuitBreaker: CircuitBreaker,
 ) {
-    @CircuitBreaker(name = CIRCUIT_BREAKER_ID)
-    open fun process(record: ConsumerRecord<String, Any?>) {
-        val event = record.value() ?: return
-        LOGGER.info("Received message - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
-        val eventData = getKafkaEventData(event)
-        if (eventData == null) {
-            LOGGER.info("Ignoring message (wrong type, missing required fields, or unknown schema) - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
-        }
-
-        val startTime = Instant.now()
-
-        try {
-            eventData?.let { data ->
-                reasonAndProduceEvent(data, startTime)
+    fun process(record: ConsumerRecord<String, Any?>) {
+        circuitBreaker.executeRunnable {
+            val event = record.value() ?: return@executeRunnable
+            LOGGER.debug("Received message - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
+            val eventData = getKafkaEventData(event)
+            if (eventData == null) {
+                LOGGER.debug("Ignoring message (wrong type, missing required fields, or unknown schema) - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
+                return@executeRunnable
             }
-        } catch (e: Exception) {
-            LOGGER.error("Error occurred during reasoning (fdkId={})", eventData?.fdkId, e)
-            val endTime = Instant.now()
-            eventData?.let { data ->
-                if (data.harvestRunId != null) {
+
+            val startTime = Instant.now()
+
+            try {
+                reasonAndProduceEvent(eventData, startTime)
+            } catch (e: Exception) {
+                LOGGER.error("Error occurred during reasoning (fdkId={})", eventData.fdkId, e)
+                val endTime = Instant.now()
+                if (eventData.harvestRunId != null) {
                     kafkaHarvestEventProducer.sendReasoningFailureEvent(
-                        harvestRunId = data.harvestRunId,
-                        catalogType = data.resourceType,
-                        fdkId = data.fdkId,
-                        resourceUri = data.uri,
+                        harvestRunId = eventData.harvestRunId,
+                        catalogType = eventData.resourceType,
+                        fdkId = eventData.fdkId,
+                        resourceUri = eventData.uri,
                         startTime = startTime,
                         endTime = endTime,
                         errorMessage = e.message ?: "Unknown error during reasoning",
                     )
                 }
+                Metrics.counter(
+                    "reasoning_error",
+                    "type",
+                    eventData.resourceType.toString().lowercase(),
+                ).increment()
+                throw e
             }
-            Metrics.counter(
-                "reasoning_error",
-                "type",
-                (eventData?.resourceType?.toString() ?: "unknown").lowercase(),
-            ).increment()
-            throw e
         }
     }
 
@@ -259,7 +260,7 @@ open class KafkaHarvestedEventCircuitBreaker(
         eventData: EventData,
         startTime: Instant,
     ) {
-        LOGGER.info("Reasoning {} - id: {}", eventData.resourceType, eventData.fdkId)
+        LOGGER.debug("Reasoning {} - id: {}", eventData.resourceType, eventData.fdkId)
         val timeElapsed =
             measureTimedValue {
                 reasoningService.reasonGraph(eventData.graph, eventData.resourceType)
@@ -307,6 +308,5 @@ open class KafkaHarvestedEventCircuitBreaker(
 
     companion object {
         private val LOGGER: Logger = LoggerFactory.getLogger(KafkaHarvestedEventCircuitBreaker::class.java)
-        const val CIRCUIT_BREAKER_ID = "reasoning-cb"
     }
 }

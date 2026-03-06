@@ -86,7 +86,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.orgInternal, Lang.TURTLE)) {
                 ORGANIZATIONS.removeAll().add(this)
             }
-            logger.info("successfully updated organization cache")
+            logger.debug("successfully updated organization cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.orgInternal}", ex)
         }
@@ -98,7 +98,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.los, Lang.TURTLE)) {
                 LOS.removeAll().add(this)
             }
-            logger.info("successfully updated LOS cache")
+            logger.debug("successfully updated LOS cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.los}", ex)
         }
@@ -110,7 +110,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.eurovocs, Lang.TURTLE)) {
                 EUROVOCS.removeAll().add(this)
             }
-            logger.info("successfully updated EUROVOCS cache")
+            logger.debug("successfully updated EUROVOCS cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.eurovocs}", ex)
         }
@@ -122,7 +122,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.dataThemes, Lang.TURTLE)) {
                 DATA_THEMES.removeAll().add(this)
             }
-            logger.info("successfully updated data themes cache")
+            logger.debug("successfully updated data themes cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.dataThemes}", ex)
         }
@@ -134,7 +134,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.mobilityThemes, Lang.TURTLE)) {
                 MOBILITY_THEMES.removeAll().add(this)
             }
-            logger.info("successfully updated mobility themes cache")
+            logger.debug("successfully updated mobility themes cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.mobilityThemes}", ex)
         }
@@ -146,7 +146,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.conceptStatuses, Lang.TURTLE)) {
                 CONCEPT_STATUSES.removeAll().add(this)
             }
-            logger.info("successfully updated concept status cache")
+            logger.debug("successfully updated concept status cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.conceptStatuses}", ex)
         }
@@ -158,7 +158,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.conceptSubjects, Lang.TURTLE)) {
                 CONCEPT_SUBJECTS.removeAll().add(this)
             }
-            logger.info("successfully updated concept subjects cache")
+            logger.debug("successfully updated concept subjects cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.conceptSubjects}", ex)
         }
@@ -170,7 +170,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.ianaMediaTypes, Lang.TURTLE)) {
                 MEDIA_TYPES.removeAll().add(this)
             }
-            logger.info("successfully updated IANA media types cache")
+            logger.debug("successfully updated IANA media types cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.ianaMediaTypes}", ex)
         }
@@ -182,7 +182,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.fileTypes, Lang.TURTLE)) {
                 FILE_TYPES.removeAll().add(this)
             }
-            logger.info("successfully updated EU file types cache")
+            logger.debug("successfully updated EU file types cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.fileTypes}", ex)
         }
@@ -194,7 +194,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.openLicenses, Lang.TURTLE)) {
                 OPEN_LICENSES.removeAll().add(this)
             }
-            logger.info("successfully updated open licenses cache")
+            logger.debug("successfully updated open licenses cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.openLicenses}", ex)
         }
@@ -206,7 +206,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.linguisticSystems, Lang.TURTLE)) {
                 LINGUISTIC_SYSTEMS.removeAll().add(this)
             }
-            logger.info("successfully updated linguistic systems cache")
+            logger.debug("successfully updated linguistic systems cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.linguisticSystems}", ex)
         }
@@ -218,7 +218,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.administrativeEnheter, Lang.TURTLE)) {
                 LOCATIONS.removeAll().add(this)
             }
-            logger.info("successfully updated locations cache")
+            logger.debug("successfully updated locations cache")
         } catch (ex: Exception) {
             logger.error("Update of locations failed", ex)
         }
@@ -230,7 +230,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.accessRights, Lang.TURTLE)) {
                 ACCESS_RIGHTS.removeAll().add(this)
             }
-            logger.info("successfully updated access rights cache")
+            logger.debug("successfully updated access rights cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.accessRights}", ex)
         }
@@ -242,7 +242,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.frequencies, Lang.TURTLE)) {
                 FREQUENCIES.removeAll().add(this)
             }
-            logger.info("successfully updated frequencies cache")
+            logger.debug("successfully updated frequencies cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.frequencies}", ex)
         }
@@ -254,7 +254,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.provenance, Lang.TURTLE)) {
                 PROVENANCE.removeAll().add(this)
             }
-            logger.info("successfully updated provenance cache")
+            logger.debug("successfully updated provenance cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.provenance}", ex)
         }
@@ -266,7 +266,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.publisherTypes, Lang.TURTLE)) {
                 PUBLISHER_TYPES.removeAll().add(this)
             }
-            logger.info("successfully updated publisher types cache")
+            logger.debug("successfully updated publisher types cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.publisherTypes}", ex)
         }
@@ -278,7 +278,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.admsStatuses, Lang.TURTLE)) {
                 ADMS_STATUSES.removeAll().add(this)
             }
-            logger.info("successfully updated adms statuses cache")
+            logger.debug("successfully updated adms statuses cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.admsStatuses}", ex)
         }
@@ -290,7 +290,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.roleTypes, Lang.TURTLE)) {
                 ROLE_TYPES.removeAll().add(this)
             }
-            logger.info("successfully updated role types cache")
+            logger.debug("successfully updated role types cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.roleTypes}", ex)
         }
@@ -302,7 +302,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.evidenceTypes, Lang.TURTLE)) {
                 EVIDENCE_TYPES.removeAll().add(this)
             }
-            logger.info("successfully updated evidence types cache")
+            logger.debug("successfully updated evidence types cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.evidenceTypes}", ex)
         }
@@ -314,7 +314,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.channelTypes, Lang.TURTLE)) {
                 CHANNEL_TYPES.removeAll().add(this)
             }
-            logger.info("successfully updated channel types cache")
+            logger.debug("successfully updated channel types cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.channelTypes}", ex)
         }
@@ -326,7 +326,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.mainActivities, Lang.TURTLE)) {
                 MAIN_ACTIVITIES.removeAll().add(this)
             }
-            logger.info("successfully updated main activities cache")
+            logger.debug("successfully updated main activities cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.mainActivities}", ex)
         }
@@ -338,7 +338,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.weekDays, Lang.TURTLE)) {
                 WEEK_DAYS.removeAll().add(this)
             }
-            logger.info("successfully updated week days cache")
+            logger.debug("successfully updated week days cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.weekDays}", ex)
         }
@@ -350,7 +350,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.datasetTypes, Lang.TURTLE)) {
                 DATASET_TYPES.removeAll().add(this)
             }
-            logger.info("successfully updated dataset types cache")
+            logger.debug("successfully updated dataset types cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.datasetTypes}", ex)
         }
@@ -362,7 +362,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.distributionStatuses, Lang.TURTLE)) {
                 DISTRIBUTION_STATUSES.removeAll().add(this)
             }
-            logger.info("successfully updated distribution statuses cache")
+            logger.debug("successfully updated distribution statuses cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.distributionStatuses}", ex)
         }
@@ -374,7 +374,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.mobilityDataStandards, Lang.TURTLE)) {
                 MOBILITY_DATA_STANDARDS.removeAll().add(this)
             }
-            logger.info("successfully updated mobility data standards cache")
+            logger.debug("successfully updated mobility data standards cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.mobilityDataStandards}", ex)
         }
@@ -386,7 +386,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.mobilityConditions, Lang.TURTLE)) {
                 MOBILITY_CONDITIONS.removeAll().add(this)
             }
-            logger.info("successfully updated mobility conditions cache")
+            logger.debug("successfully updated mobility conditions cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.mobilityConditions}", ex)
         }
@@ -398,7 +398,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.highValueCategories, Lang.TURTLE)) {
                 HIGH_VALUE_CATEGORIES.removeAll().add(this)
             }
-            logger.info("successfully updated high value categories cache")
+            logger.debug("successfully updated high value categories cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.highValueCategories}", ex)
         }
@@ -410,7 +410,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.qualityDimensions, Lang.TURTLE)) {
                 QUALITY_DIMENSIONS.removeAll().add(this)
             }
-            logger.info("successfully updated quality dimensions cache")
+            logger.debug("successfully updated quality dimensions cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.qualityDimensions}", ex)
         }
@@ -422,7 +422,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             with(RDFDataMgr.loadModel(uris.legalResourceTypes, Lang.TURTLE)) {
                 LEGAL_RESOURCE_TYPES.removeAll().add(this)
             }
-            logger.info("successfully updated legal resource types cache")
+            logger.debug("successfully updated legal resource types cache")
         } catch (ex: Exception) {
             logger.error("Download failed for ${uris.legalResourceTypes}", ex)
         }
