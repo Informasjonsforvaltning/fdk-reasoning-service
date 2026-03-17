@@ -133,6 +133,23 @@ class ReferenceData {
 
             assertTrue(result.isIsomorphicWith(expected))
         }
+
+        @Test
+        fun `test open licenses are added from reference data`() {
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/data_service.ttl")
+            input.add(input.getResource(dataServiceURI), DCTerms.license, input.createResource("http://publications.europa.eu/resource/authority/licence/CC_BY_4_0"))
+
+            val result = referenceDataService.reason(input, CatalogType.DATASERVICES)
+
+            assertTrue(
+                result.contains(
+                    ResourceFactory.createResource("http://publications.europa.eu/resource/authority/licence/CC_BY_4_0"),
+                    SKOS.prefLabel,
+                    "Creative Commons Attribution 4.0 International",
+                    "en"
+                )
+            )
+        }
     }
 
 

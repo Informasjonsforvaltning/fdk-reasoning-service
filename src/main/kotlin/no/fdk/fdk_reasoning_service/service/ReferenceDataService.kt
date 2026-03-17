@@ -51,9 +51,13 @@ class ReferenceDataService(
         val fileTypes = referenceDataCache.fileTypes()
         if (fileTypes.isEmpty) throw Exception("File types are missing in reference data cache")
 
+        val openLicenses = referenceDataCache.openLicenses()
+        if (openLicenses.isEmpty) throw Exception("Open licenses are missing in reference data cache")
+
         val m = ModelFactory.createDefaultModel()
         m.add(ianaMediaTypes)
         m.add(fileTypes)
+        m.add(openLicenses)
         return m
     }
 
