@@ -59,6 +59,12 @@ fun startMockServer() {
             .willReturn(ok(File("src/test/resources/rdf-data/reference-data/quality-dimension.ttl").readText())))
         mockserver.stubFor(get(urlEqualTo("/reference-data/digdir/legal-resource-types"))
             .willReturn(ok(File("src/test/resources/rdf-data/reference-data/legal-resource-type.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/geonames"))
+            .willReturn(ok(File("src/test/resources/rdf-data/reference-data/geonames.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/eu/continents"))
+            .willReturn(ok(File("src/test/resources/rdf-data/reference-data/eu_continents.ttl").readText())))
+        mockserver.stubFor(get(urlEqualTo("/reference-data/eu/countries"))
+            .willReturn(ok(File("src/test/resources/rdf-data/reference-data/eu_countries.ttl").readText())))
 
         mockserver.start()
     }

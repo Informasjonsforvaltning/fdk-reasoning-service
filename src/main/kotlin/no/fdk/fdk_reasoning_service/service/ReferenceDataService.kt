@@ -107,6 +107,15 @@ class ReferenceDataService(
         val legalResourceTypes = referenceDataCache.legalResourceTypes()
         if (legalResourceTypes.isEmpty) throw Exception("Legal resource types are missing in reference data cache")
 
+        val geonames = referenceDataCache.geonames()
+        if (geonames.isEmpty) throw Exception("Geonames are missing in reference data cache")
+
+        val euContinents = referenceDataCache.euContinents()
+        if (euContinents.isEmpty) throw Exception("EU continents are missing in reference data cache")
+
+        val euCountries = referenceDataCache.euCountries()
+        if (euCountries.isEmpty) throw Exception("EU countries are missing in reference data cache")
+
         val m = ModelFactory.createDefaultModel()
         m.add(ianaMediaTypes)
         m.add(fileTypes)
@@ -123,6 +132,9 @@ class ReferenceDataService(
         m.add(highValueCategories)
         m.add(qualityDimensions)
         m.add(legalResourceTypes)
+        m.add(geonames)
+        m.add(euContinents)
+        m.add(euCountries)
         return m
     }
 
@@ -171,6 +183,15 @@ class ReferenceDataService(
         val weekDays = referenceDataCache.weekDays()
         if (weekDays.isEmpty) throw Exception("Week days are missing in reference data cache")
 
+        val geonames = referenceDataCache.geonames()
+        if (geonames.isEmpty) throw Exception("Geonames are missing in reference data cache")
+
+        val euContinents = referenceDataCache.euContinents()
+        if (euContinents.isEmpty) throw Exception("EU continents are missing in reference data cache")
+
+        val euCountries = referenceDataCache.euCountries()
+        if (euCountries.isEmpty) throw Exception("EU countries are missing in reference data cache")
+
         val m = ModelFactory.createDefaultModel()
         m.add(linguisticSystems)
         m.add(locations)
@@ -181,6 +202,9 @@ class ReferenceDataService(
         m.add(channelTypes)
         m.add(mainActivities)
         m.add(weekDays)
+        m.add(geonames)
+        m.add(euContinents)
+        m.add(euCountries)
         return m
     }
 }

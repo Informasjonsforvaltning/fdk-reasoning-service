@@ -1,0 +1,6 @@
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://publications.europa.eu/resource/authority/country/> .
+
+ns1:NOR a dct:Location ;
+    dct:identifier "NOR" ;
+    dct:title "Norway"@en, "Norge"@no .

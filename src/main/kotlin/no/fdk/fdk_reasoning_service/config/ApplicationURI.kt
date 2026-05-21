@@ -33,5 +33,8 @@ data class ApplicationURI(
     val mobilityConditions: String,
     val highValueCategories: String,
     val qualityDimensions: String,
-    val legalResourceTypes: String
+    val legalResourceTypes: String,
+    val geonames: String,
+    val euContinents: String,
+    val euCountries: String
 )
