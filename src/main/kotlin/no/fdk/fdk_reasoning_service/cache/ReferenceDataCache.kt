@@ -46,6 +46,9 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun highValueCategories(): Model = HIGH_VALUE_CATEGORIES
     fun qualityDimensions(): Model = QUALITY_DIMENSIONS
     fun legalResourceTypes(): Model = LEGAL_RESOURCE_TYPES
+    fun geonames(): Model = GEONAMES
+    fun euContinents(): Model = EU_CONTINENTS
+    fun euCountries(): Model = EU_COUNTRIES
 
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
@@ -78,6 +81,9 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         updateHighValueCategories()
         updateQualityDimensions()
         updateLegalResourceTypes()
+        updateGeonames()
+        updateEuContinents()
+        updateEuCountries()
     }
 
     @Scheduled(cron = "0 10 */3 * * ?")
@@ -428,6 +434,42 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         }
     }
 
+    @Scheduled(cron = "0 35 20 * * ?")
+    fun updateGeonames() {
+        try {
+            with(RDFDataMgr.loadModel(uris.geonames, Lang.TURTLE)) {
+                GEONAMES.removeAll().add(this)
+            }
+            logger.debug("successfully updated geonames cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.geonames}", ex)
+        }
+    }
+
+    @Scheduled(cron = "0 30 20 * * ?")
+    fun updateEuContinents() {
+        try {
+            with(RDFDataMgr.loadModel(uris.euContinents, Lang.TURTLE)) {
+                EU_CONTINENTS.removeAll().add(this)
+            }
+            logger.debug("successfully updated EU continents cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.euContinents}", ex)
+        }
+    }
+
+    @Scheduled(cron = "0 25 20 * * ?")
+    fun updateEuCountries() {
+        try {
+            with(RDFDataMgr.loadModel(uris.euCountries, Lang.TURTLE)) {
+                EU_COUNTRIES.removeAll().add(this)
+            }
+            logger.debug("successfully updated EU countries cache")
+        } catch (ex: Exception) {
+            logger.error("Download failed for ${uris.euCountries}", ex)
+        }
+    }
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -458,5 +500,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val HIGH_VALUE_CATEGORIES: Model = ModelFactory.createDefaultModel()
         val QUALITY_DIMENSIONS: Model = ModelFactory.createDefaultModel()
         val LEGAL_RESOURCE_TYPES: Model = ModelFactory.createDefaultModel()
+        val GEONAMES: Model = ModelFactory.createDefaultModel()
+        val EU_CONTINENTS: Model = ModelFactory.createDefaultModel()
+        val EU_COUNTRIES: Model = ModelFactory.createDefaultModel()
     }
 }

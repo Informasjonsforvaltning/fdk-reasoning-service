@@ -74,6 +74,12 @@ class ReferenceData {
             .parseTurtleFile("rdf-data/reference-data/quality-dimension.ttl")
         every { referenceDataCache.legalResourceTypes() } returns responseReader
             .parseTurtleFile("rdf-data/reference-data/legal-resource-type.ttl")
+        every { referenceDataCache.geonames() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/geonames.ttl")
+        every { referenceDataCache.euContinents() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/eu_continents.ttl")
+        every { referenceDataCache.euCountries() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/eu_countries.ttl")
     }
 
     @Nested
@@ -345,7 +351,7 @@ class ReferenceData {
             input.add(
                 datasetResource,
                 ResourceFactory.createProperty(DCTerms.spatial.uri),
-                ResourceFactory.createProperty("https://data.geonorge.no/administrativeEnheter/fylke/id/11")
+                ResourceFactory.createProperty("http://sws.geonames.org/3162656/")
             )
 
             val result = referenceDataService.reason(input, CatalogType.PUBLICSERVICES)

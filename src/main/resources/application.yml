@@ -52,6 +52,9 @@ application:
     highValueCategories: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/high-value-categories
     qualityDimensions: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/quality-dimensions
     legalResourceTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/legal-resource-types
+    geonames: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/geonames
+    euContinents: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/continents
+    euCountries: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/countries
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -128,3 +131,6 @@ application:
     highValueCategories: http://localhost:5050/reference-data/eu/high-value-categories
     qualityDimensions: http://localhost:5050/reference-data/digdir/quality-dimensions
     legalResourceTypes: http://localhost:5050/reference-data/digdir/legal-resource-types
+    geonames: http://localhost:5050/reference-data/geonames
+    euContinents: http://localhost:5050/reference-data/eu/continents
+    euCountries: http://localhost:5050/reference-data/eu/countries

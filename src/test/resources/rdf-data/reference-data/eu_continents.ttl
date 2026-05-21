@@ -1,0 +1,6 @@
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix ns1: <http://publications.europa.eu/resource/authority/continent/> .
+
+ns1:EUROPE a dct:Location ;
+    dct:identifier "EUROPE" ;
+    dct:title "Europe"@en .
