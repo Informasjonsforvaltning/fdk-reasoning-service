@@ -54,13 +54,13 @@ class KafkaHarvestedEventConsumerTest {
                 <http://data.test.no/catalogs/1/concepts/1> a <http://www.w3.org/2004/02/skos/core#Concept> .
                 <http://data.test.no/catalogs/1/datasets/1> <http://www.w3.org/2004/02/skos/core#prefLabel> "Tittel"@nb .
             """.trimMargin()
-        every { reasoningService.reasonGraph(inputGraph, CatalogType.CONCEPTS) } returns outputGraph
+        every { reasoningService.reasonGraph(inputGraph, CatalogType.CONCEPTS, null) } returns outputGraph
         every { kafkaTemplate.send(any(), any()) } returns CompletableFuture()
         every { ack.acknowledge() } returns Unit
         every { ack.nack(Duration.ZERO) } returns Unit
 
         val conceptEvent =
-            ConceptEvent(ConceptEventType.CONCEPT_HARVESTED, null, null, "my-id", inputGraph, System.currentTimeMillis())
+            ConceptEvent(ConceptEventType.CONCEPT_HARVESTED, null, null, "my-id", inputGraph, System.currentTimeMillis(), null)
         kafkaHarvestedEventConsumer.listen(
             record = ConsumerRecord("concept-events", 0, 0, "my-id", conceptEvent),
             ack = ack,
@@ -94,13 +94,13 @@ class KafkaHarvestedEventConsumerTest {
                 <http://data.test.no/catalogs/1/datasets/1> a <http://www.w3.org/ns/dcat#Dataset> .
                 <http://data.test.no/catalogs/1/datasets/1> a <http://www.w3.org/ns/dcat#Resource> .
             """.trimMargin()
-        every { reasoningService.reasonGraph(inputGraph, CatalogType.DATASETS) } returns outputGraph
+        every { reasoningService.reasonGraph(inputGraph, CatalogType.DATASETS, null) } returns outputGraph
         every { kafkaTemplate.send(any(), any()) } returns CompletableFuture()
         every { ack.acknowledge() } returns Unit
         every { ack.nack(Duration.ZERO) } returns Unit
 
         val datasetEvent =
-            DatasetEvent(DatasetEventType.DATASET_HARVESTED, null, null, "my-id", inputGraph, System.currentTimeMillis())
+            DatasetEvent(DatasetEventType.DATASET_HARVESTED, null, null, "my-id", inputGraph, System.currentTimeMillis(), null)
         kafkaHarvestedEventConsumer.listen(
             record = ConsumerRecord("dataset-events", 0, 0, "my-id", datasetEvent),
             ack = ack,
@@ -127,13 +127,13 @@ class KafkaHarvestedEventConsumerTest {
     fun `empty reasoned graph should throw error`() {
         val inputGraph = """<http://data.test.no/catalogs/1/datasets/1> a <http://www.w3.org/ns/dcat#Dataset> ."""
         val outputGraph = ""
-        every { reasoningService.reasonGraph(inputGraph, CatalogType.DATASETS) } returns outputGraph
+        every { reasoningService.reasonGraph(inputGraph, CatalogType.DATASETS, null) } returns outputGraph
         every { kafkaTemplate.send(any(), any()) } returns CompletableFuture()
         every { ack.acknowledge() } returns Unit
         every { ack.nack(Duration.ZERO) } returns Unit
 
         val datasetEvent =
-            DatasetEvent(DatasetEventType.DATASET_HARVESTED, null, null, "my-id", inputGraph, System.currentTimeMillis())
+            DatasetEvent(DatasetEventType.DATASET_HARVESTED, null, null, "my-id", inputGraph, System.currentTimeMillis(), null)
         kafkaHarvestedEventConsumer.listen(
             record = ConsumerRecord("dataset-events", 0, 0, "my-id", datasetEvent),
             ack = ack,
@@ -150,7 +150,7 @@ class KafkaHarvestedEventConsumerTest {
         every { ack.acknowledge() } returns Unit
         every { ack.nack(Duration.ZERO) } returns Unit
 
-        val datasetEvent = DatasetEvent(DatasetEventType.DATASET_REMOVED, null, null, "my-id", "uri", System.currentTimeMillis())
+        val datasetEvent = DatasetEvent(DatasetEventType.DATASET_REMOVED, null, null, "my-id", "uri", System.currentTimeMillis(), null)
         kafkaHarvestedEventConsumer.listen(
             record = ConsumerRecord("dataset-events", 0, 0, "my-id", datasetEvent),
             ack = ack,
@@ -164,10 +164,10 @@ class KafkaHarvestedEventConsumerTest {
 
     @Test
     fun `listen should not acknowledge when an exception occurs`() {
-        every { reasoningService.reasonGraph(any(), any()) } throws Exception("Error on reasoning RDF")
+        every { reasoningService.reasonGraph(any(), any(), any()) } throws Exception("Error on reasoning RDF")
         every { ack.nack(Duration.ZERO) } returns Unit
 
-        val datasetEvent = DatasetEvent(DatasetEventType.DATASET_HARVESTED, null, null, "my-id", "uri", System.currentTimeMillis())
+        val datasetEvent = DatasetEvent(DatasetEventType.DATASET_HARVESTED, null, null, "my-id", "uri", System.currentTimeMillis(), null)
         kafkaHarvestedEventConsumer.listen(
             record = ConsumerRecord("dataset-events", 0, 0, "my-id", datasetEvent),
             ack = ack,
