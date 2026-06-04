@@ -90,6 +90,7 @@ class KafkaHarvestedEventCircuitBreaker(
         val fdkId = safeGet(value, "fdkId")?.toString()
         val graph = safeGet(value, "graph")?.toString()
         val timestamp = safeGet(value, "timestamp") as? Long
+        val catalogGraph = safeGet(value, "catalogGraph")?.toString()
         if (!hasRequiredFields(fdkId, graph, timestamp)) {
             LOGGER.debug("Ignoring message: required fields (fdkId, graph, timestamp) not set")
             return null
@@ -108,7 +109,7 @@ class KafkaHarvestedEventCircuitBreaker(
                 return null
             }
         }
-        return EventData(fdkId!!, uri, graph!!, timestamp!!, catalogType, harvestRunId)
+        return EventData(fdkId!!, uri, graph!!, timestamp!!, catalogType, harvestRunId, catalogGraph)
     }
 
     private fun hasRequiredFields(fdkId: CharSequence?, graph: CharSequence?, timestamp: Long?): Boolean {
@@ -136,6 +137,7 @@ class KafkaHarvestedEventCircuitBreaker(
                     CatalogType.DATASETS,
                     harvestRunId,
                     uri,
+                    event.catalogGraph?.toString(),
                 )
 
             event is DatasetEvent -> null
@@ -148,6 +150,7 @@ class KafkaHarvestedEventCircuitBreaker(
                     CatalogType.CONCEPTS,
                     harvestRunId,
                     uri,
+                    event.catalogGraph?.toString(),
                 )
 
             event is ConceptEvent -> null
@@ -160,6 +163,7 @@ class KafkaHarvestedEventCircuitBreaker(
                     CatalogType.DATASERVICES,
                     harvestRunId,
                     uri,
+                    event.catalogGraph?.toString(),
                 )
 
             event is DataServiceEvent -> null
@@ -172,6 +176,7 @@ class KafkaHarvestedEventCircuitBreaker(
                     CatalogType.INFORMATIONMODELS,
                     harvestRunId,
                     uri,
+                    event.catalogGraph?.toString(),
                 )
 
             event is InformationModelEvent -> null
@@ -184,6 +189,7 @@ class KafkaHarvestedEventCircuitBreaker(
                     CatalogType.PUBLICSERVICES,
                     harvestRunId,
                     uri,
+                    event.catalogGraph?.toString(),
                 )
 
             event is ServiceEvent -> null
@@ -196,6 +202,7 @@ class KafkaHarvestedEventCircuitBreaker(
                     CatalogType.EVENTS,
                     harvestRunId,
                     uri,
+                    event.catalogGraph?.toString(),
                 )
 
             event is EventEvent -> null
@@ -214,12 +221,13 @@ class KafkaHarvestedEventCircuitBreaker(
         resourceType: CatalogType,
         harvestRunId: String?,
         uri: String?,
+        catalogGraph: String?,
     ): EventData? {
         if (!hasRequiredFields(fdkId, graph, timestamp)) {
             LOGGER.debug("Ignoring message: required fields (fdkId, graph, timestamp) not set")
             return null
         }
-        return EventData(fdkId!!, uri, graph!!, timestamp!!, resourceType, harvestRunId)
+        return EventData(fdkId!!, uri, graph!!, timestamp!!, resourceType, harvestRunId, catalogGraph)
     }
 
     private fun extractHarvestRunId(event: SpecificRecord): String? {
@@ -263,7 +271,7 @@ class KafkaHarvestedEventCircuitBreaker(
         LOGGER.debug("Reasoning {} - id: {}", eventData.resourceType, eventData.fdkId)
         val timeElapsed =
             measureTimedValue {
-                reasoningService.reasonGraph(eventData.graph, eventData.resourceType)
+                reasoningService.reasonGraph(eventData.graph, eventData.resourceType, eventData.catalogGraph)
             }
         val reasonedGraph = timeElapsed.value
         val endTime = Instant.now()
@@ -279,6 +287,7 @@ class KafkaHarvestedEventCircuitBreaker(
                 reasonedGraph,
                 eventData.timestamp,
                 eventData.resourceType,
+                eventData.catalogGraph,
                 eventData.harvestRunId,
                 eventData.uri,
             )
@@ -304,6 +313,7 @@ class KafkaHarvestedEventCircuitBreaker(
         val timestamp: Long,
         val resourceType: CatalogType,
         val harvestRunId: String?,
+        val catalogGraph: String?,
     )
 
     companion object {

@@ -32,6 +32,7 @@ class KafkaReasonedEventProducer(
         graph: String?,
         timestamp: Long,
         resourceType: CatalogType,
+        catalogGraph: String?,
         harvestRunId: String? = null,
         uri: String? = null,
     ): Boolean {
@@ -48,7 +49,7 @@ class KafkaReasonedEventProducer(
                 CatalogType.PUBLICSERVICES -> TOPIC_NAME_SERVICE
                 CatalogType.EVENTS -> TOPIC_NAME_EVENT
             }
-        val msg = getKafkaEvent(fdkId, graph, timestamp, resourceType, harvestRunId, uri)
+        val msg = getKafkaEvent(fdkId, graph, timestamp, resourceType, harvestRunId, uri, catalogGraph)
         LOGGER.debug("Sending reasoned event topic={} msg={}", topicName, formatRecordForLog(msg))
         kafkaTemplate.send(topicName, msg)
         return true
@@ -80,6 +81,7 @@ class KafkaReasonedEventProducer(
         resourceType: CatalogType,
         harvestRunId: String?,
         uri: String?,
+        catalogGraph: String?,
     ): SpecificRecord {
         val safeFdkId = requireNonBlank(fdkId, "fdkId")
         val safeGraph = requireNonBlank(graph, "graph")
@@ -91,6 +93,7 @@ class KafkaReasonedEventProducer(
                 .setFdkId(safeFdkId)
                 .setGraph(safeGraph)
                 .setTimestamp(timestamp)
+                .setCatalogGraph(catalogGraph)
                 .build()
             CatalogType.CONCEPTS -> ConceptEvent.newBuilder()
                 .setType(ConceptEventType.CONCEPT_REASONED)
@@ -99,6 +102,7 @@ class KafkaReasonedEventProducer(
                 .setFdkId(safeFdkId)
                 .setGraph(safeGraph)
                 .setTimestamp(timestamp)
+                .setCatalogGraph(catalogGraph)
                 .build()
             CatalogType.DATASERVICES -> DataServiceEvent.newBuilder()
                 .setType(DataServiceEventType.DATA_SERVICE_REASONED)
@@ -107,6 +111,7 @@ class KafkaReasonedEventProducer(
                 .setFdkId(safeFdkId)
                 .setGraph(safeGraph)
                 .setTimestamp(timestamp)
+                .setCatalogGraph(catalogGraph)
                 .build()
             CatalogType.INFORMATIONMODELS -> InformationModelEvent.newBuilder()
                 .setType(InformationModelEventType.INFORMATION_MODEL_REASONED)
@@ -115,6 +120,7 @@ class KafkaReasonedEventProducer(
                 .setFdkId(safeFdkId)
                 .setGraph(safeGraph)
                 .setTimestamp(timestamp)
+                .setCatalogGraph(catalogGraph)
                 .build()
             CatalogType.PUBLICSERVICES -> ServiceEvent.newBuilder()
                 .setType(ServiceEventType.SERVICE_REASONED)
@@ -123,6 +129,7 @@ class KafkaReasonedEventProducer(
                 .setFdkId(safeFdkId)
                 .setGraph(safeGraph)
                 .setTimestamp(timestamp)
+                .setCatalogGraph(catalogGraph)
                 .build()
             CatalogType.EVENTS -> EventEvent.newBuilder()
                 .setType(EventEventType.EVENT_REASONED)
@@ -131,6 +138,7 @@ class KafkaReasonedEventProducer(
                 .setFdkId(safeFdkId)
                 .setGraph(safeGraph)
                 .setTimestamp(timestamp)
+                .setCatalogGraph(catalogGraph)
                 .build()
         }
     }

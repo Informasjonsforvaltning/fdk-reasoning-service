@@ -38,7 +38,7 @@ class Reasoning : ApiTestContext() {
         every { deductionService.reason(any(), any()) } returns deductionsResult
         every { referenceDataService.reason(any(), any()) } returns refDataResult
         every { themeService.reason(any(), any()) } returns ModelFactory.createDefaultModel()
-        val result = reasoningService.reasonGraph(input.createRDFResponse(Lang.TURTLE), CatalogType.PUBLICSERVICES)
+        val result = reasoningService.reasonGraph(input.createRDFResponse(Lang.TURTLE), CatalogType.PUBLICSERVICES, null)
 
         val expected = ModelFactory.createDefaultModel()
         expected.add(input)

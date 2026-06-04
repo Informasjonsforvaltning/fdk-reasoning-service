@@ -18,16 +18,22 @@ class ReasoningService(
     fun reasonGraph(
         graph: String,
         catalogType: CatalogType,
+        catalogGraph: String?,
     ): String {
         val inputModel = parseRDFResponse(graph, Lang.TURTLE)
+        val inputModelWithCatalog = if (catalogGraph != null) {
+            inputModel.union(parseRDFResponse(catalogGraph, Lang.TURTLE))
+        } else {
+            inputModel
+        }
 
         val deductionReasoning =
             measureTimedValue {
-                deductionService.reason(inputModel, catalogType)
+                deductionService.reason(inputModelWithCatalog, catalogType)
             }
         val organizationReasoning =
             measureTimedValue {
-                organizationService.reason(inputModel, catalogType)
+                organizationService.reason(inputModelWithCatalog, catalogType)
             }
         val referenceDataReasoning =
             measureTimedValue {
