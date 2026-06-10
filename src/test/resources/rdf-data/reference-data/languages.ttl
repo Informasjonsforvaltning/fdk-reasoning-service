@@ -1,0 +1,29 @@
+@prefix atold: <http://publications.europa.eu/resource/authority/> .
+@prefix dc:    <http://purl.org/dc/elements/1.1/> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+
+<http://publications.europa.eu/resource/authority/language/NNO>
+        dc:identifier  "NNO";
+        skos:inScheme   atold:language;
+        skos:prefLabel  "Norwegian Nynorsk"@en .
+
+<http://publications.europa.eu/resource/authority/language/SMI>
+        dc:identifier  "SMI";
+        skos:inScheme   atold:language;
+        skos:prefLabel  "Sami languages"@en .
+
+<http://publications.europa.eu/resource/authority/language/NOR>
+        dc:identifier  "NOR";
+        skos:inScheme   atold:language;
+        skos:prefLabel  "Norwegian"@en , "norsk"@no .
+
+<http://publications.europa.eu/resource/authority/language/ENG>
+        dc:identifier  "ENG";
+        skos:inScheme   atold:language;
+        skos:prefLabel  "engelsk"@no , "English"@en .
+
+<http://publications.europa.eu/resource/authority/language/NOB>
+        dc:identifier  "NOB";
+        skos:inScheme   atold:language;
+        skos:prefLabel  "Norwegian Bokmål"@en , "norsk (bokmål)"@no .

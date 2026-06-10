@@ -9,35 +9,15 @@
 
 
 <http://publications.europa.eu/resource/authority/language/SMI>
-        rdf:type           skos:Concept;
-        at:authority-code  "SMI";
-        at:deprecated      "false";
-        at:op-code         "SMI";
-        at:op-mapped-code  [ rdf:type        at:MappedCode;
-                             at:legacy-code  "smi";
-                             dc:source       "iso-639-2b"
-                           ];
-        at:op-mapped-code  [ rdf:type        at:MappedCode;
-                             at:legacy-code  "smi";
-                             dc:source       "iso-639-2t"
-                           ];
-        at:start.use       "1950-05-09";
-        atold:op-code      "SMI";
-        dc:identifier      "SMI";
-        skos:inScheme      atold:language;
-        skos:prefLabel     "Sami languages"@en .
+        dc:identifier  "SMI";
+        skos:inScheme   atold:language;
+        skos:prefLabel  "Sami languages"@en .
 
 
 <http://publications.europa.eu/resource/authority/language/NOB>
-        rdf:type           skos:Concept;
-        at:authority-code  "NOB";
-        at:deprecated      "false";
-        at:op-code         "NOB";
-        at:start.use       "1950-05-09";
-        atold:op-code      "NOB";
-        dc:identifier      "NOB";
-        skos:inScheme      atold:language;
-        skos:prefLabel     "Norsk Bokmål"@nb , "Norsk Bokmål"@nn , "Norsk Bokmål"@no , "Norwegian Bokmål"@en .
+        dc:identifier  "NOB";
+        skos:inScheme   atold:language;
+        skos:prefLabel  "Norwegian Bokmål"@en , "norsk (bokmål)"@no .
 
 
 <http://publications.europa.eu/resource/authority/licence/CC_BY_4_0>

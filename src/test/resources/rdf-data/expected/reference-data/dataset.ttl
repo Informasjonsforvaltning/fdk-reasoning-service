@@ -15,30 +15,14 @@
         skos:prefLabel     "Norsk lisens for offentlige data"@no , "Norwegian Licence for Open Government Data"@en .
 
 <http://publications.europa.eu/resource/authority/language/NNO>
-        rdf:type           skos:Concept;
-        at:authority-code  "NNO";
-        at:deprecated      "false";
-        at:op-code         "NNO";
-        at:start.use       "1950-05-09";
-        atold:op-code      "NNO";
-        dc:identifier      "NNO";
-        owl:versionInfo    "20190918-0";
-        skos:exactMatch    <http://id.loc.gov/vocabulary/iso639-1/nn>;
-        skos:inScheme      atold:language;
-        skos:prefLabel     "Norsk Nynorsk"@nb , "Norwegian Nynorsk"@en , "Norsk Nynorsk"@nn , "Norsk Nynorsk"@no .
+        dc:identifier  "NNO";
+        skos:inScheme   atold:language;
+        skos:prefLabel  "Norwegian Nynorsk"@en .
 
 <http://publications.europa.eu/resource/authority/language/ENG>
-        rdf:type           skos:Concept;
-        at:authority-code  "ENG";
-        at:deprecated      "false";
-        at:op-code         "ENG";
-        at:protocol-order  "EU-08";
-        at:protocol.order  "EU-08";
-        at:start.use       "1950-05-09";
-        atold:op-code      "ENG";
-        dc:identifier      "ENG";
-        skos:inScheme      atold:language;
-        skos:prefLabel     "Engelsk"@nb , "Engelsk"@nn , "Engelsk"@no , "English"@en .
+        dc:identifier  "ENG";
+        skos:inScheme   atold:language;
+        skos:prefLabel  "engelsk"@no , "English"@en .
 
 <https://data.geonorge.no/administrativeEnheter/fylke/id/11>
         a               dct:Location;

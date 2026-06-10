@@ -47,17 +47,9 @@
 
 
 <http://publications.europa.eu/resource/authority/language/NOR>
-        a                  skos:Concept;
-        at:authority-code  "NOR";
-        at:deprecated      "false";
-        at:op-code         "NOR";
-        at:protocol-order  "EU-08";
-        at:protocol.order  "EU-08";
-        at:start.use       "1950-05-09";
-        atold:op-code      "NOR";
-        dc:identifier      "NOR";
-        skos:inScheme      atold:language;
-        skos:prefLabel     "Norwegian"@en , "Norsk"@nb , "Norsk"@nn , "Norsk"@no .
+        dc:identifier  "NOR";
+        skos:inScheme   atold:language;
+        skos:prefLabel  "Norwegian"@en , "norsk"@no .
 
 
 <http://publications.europa.eu/resource/authority/main-activity/education>

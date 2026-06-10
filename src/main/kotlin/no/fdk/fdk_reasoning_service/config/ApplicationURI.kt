@@ -15,7 +15,7 @@ data class ApplicationURI(
     val ianaMediaTypes: String,
     val fileTypes: String,
     val openLicenses: String,
-    val linguisticSystems: String,
+    val languages: String,
     val administrativeEnheter: String,
     val accessRights: String,
     val frequencies: String,

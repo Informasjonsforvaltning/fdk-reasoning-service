@@ -71,8 +71,8 @@ class ReferenceDataService(
         val openLicenses = referenceDataCache.openLicenses()
         if (openLicenses.isEmpty) throw Exception("Open licenses are missing in reference data cache")
 
-        val linguisticSystems = referenceDataCache.linguisticSystems()
-        if (linguisticSystems.isEmpty) throw Exception("Linguistic systems are missing in reference data cache")
+        val languages = referenceDataCache.languages()
+        if (languages.isEmpty) throw Exception("Languages are missing in reference data cache")
 
         val locations = referenceDataCache.locations()
         if (locations.isEmpty) throw Exception("Locations are missing in reference data cache")
@@ -120,7 +120,7 @@ class ReferenceDataService(
         m.add(ianaMediaTypes)
         m.add(fileTypes)
         m.add(openLicenses)
-        m.add(linguisticSystems)
+        m.add(languages)
         m.add(locations)
         m.add(accessRights)
         m.add(frequencies)
@@ -142,22 +142,22 @@ class ReferenceDataService(
         val openLicenses = referenceDataCache.openLicenses()
         if (openLicenses.isEmpty) throw Exception("Open licenses are missing in reference data cache")
 
-        val linguisticSystems = referenceDataCache.linguisticSystems()
-        if (linguisticSystems.isEmpty) throw Exception("Linguistic systems are missing in reference data cache")
+        val languages = referenceDataCache.languages()
+        if (languages.isEmpty) throw Exception("Languages are missing in reference data cache")
 
         val locations = referenceDataCache.locations()
         if (locations.isEmpty) throw Exception("Locations are missing in reference data cache")
 
         val m = ModelFactory.createDefaultModel()
         m.add(openLicenses)
-        m.add(linguisticSystems)
+        m.add(languages)
         m.add(locations)
         return m
     }
 
     private fun serviceReferenceData(): Model {
-        val linguisticSystems = referenceDataCache.linguisticSystems()
-        if (linguisticSystems.isEmpty) throw Exception("Linguistic systems are missing in reference data cache")
+        val languages = referenceDataCache.languages()
+        if (languages.isEmpty) throw Exception("Languages are missing in reference data cache")
 
         val locations = referenceDataCache.locations()
         if (locations.isEmpty) throw Exception("Locations are missing in reference data cache")
@@ -193,7 +193,7 @@ class ReferenceDataService(
         if (euCountries.isEmpty) throw Exception("EU countries are missing in reference data cache")
 
         val m = ModelFactory.createDefaultModel()
-        m.add(linguisticSystems)
+        m.add(languages)
         m.add(locations)
         m.add(publisherTypes)
         m.add(admsStatuses)
