@@ -27,7 +27,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun ianaMediaTypes(): Model = MEDIA_TYPES
     fun fileTypes(): Model = FILE_TYPES
     fun openLicenses(): Model = OPEN_LICENSES
-    fun linguisticSystems(): Model = LINGUISTIC_SYSTEMS
+    fun languages(): Model = LANGUAGES
     fun locations(): Model = LOCATIONS
     fun accessRights(): Model = ACCESS_RIGHTS
     fun frequencies(): Model = FREQUENCIES
@@ -62,7 +62,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         updateMediaTypes()
         updateFileTypes()
         updateOpenLicenses()
-        updateLinguisticSystems()
+        updateLanguages()
         updateLocations()
         updateAccessRights()
         updateFrequencies()
@@ -207,14 +207,14 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     }
 
     @Scheduled(cron = "0 30 22 * * ?")
-    fun updateLinguisticSystems() {
+    fun updateLanguages() {
         try {
-            with(RDFDataMgr.loadModel(uris.linguisticSystems, Lang.TURTLE)) {
-                LINGUISTIC_SYSTEMS.removeAll().add(this)
+            with(RDFDataMgr.loadModel(uris.languages, Lang.TURTLE)) {
+                LANGUAGES.removeAll().add(this)
             }
-            logger.debug("successfully updated linguistic systems cache")
+            logger.debug("successfully updated languages cache")
         } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.linguisticSystems}", ex)
+            logger.error("Download failed for ${uris.languages}", ex)
         }
     }
 
@@ -481,7 +481,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val MEDIA_TYPES: Model = ModelFactory.createDefaultModel()
         val FILE_TYPES: Model = ModelFactory.createDefaultModel()
         val OPEN_LICENSES: Model = ModelFactory.createDefaultModel()
-        val LINGUISTIC_SYSTEMS: Model = ModelFactory.createDefaultModel()
+        val LANGUAGES: Model = ModelFactory.createDefaultModel()
         val LOCATIONS: Model = ModelFactory.createDefaultModel()
         val ACCESS_RIGHTS: Model = ModelFactory.createDefaultModel()
         val FREQUENCIES: Model = ModelFactory.createDefaultModel()

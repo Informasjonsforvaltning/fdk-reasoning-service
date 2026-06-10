@@ -36,8 +36,8 @@ class ReferenceData {
             .parseTurtleFile("rdf-data/reference-data/file_types.ttl")
         every { referenceDataCache.openLicenses() } returns responseReader
             .parseTurtleFile("rdf-data/reference-data/open_licenses.ttl")
-        every { referenceDataCache.linguisticSystems() } returns responseReader
-            .parseTurtleFile("rdf-data/reference-data/linguistic_systems.ttl")
+        every { referenceDataCache.languages() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/languages.ttl")
         every { referenceDataCache.locations() } returns responseReader
             .parseTurtleFile("rdf-data/reference-data/administrative_enheter.ttl")
         every { referenceDataCache.accessRights() } returns responseReader
@@ -189,7 +189,7 @@ class ReferenceData {
         }
 
         @Test
-        fun `test licenses, linguistic systems, locations, access rights, frequencies and provenance are added from reference data`() {
+        fun `test licenses, languages, locations, access rights, frequencies and provenance are added from reference data`() {
             val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
             input.add(responseReader.parseTurtleFile("rdf-data/input-graphs/dataset_extension.ttl"))
 
@@ -296,7 +296,7 @@ class ReferenceData {
         }
 
         @Test
-        fun `test licenses, linguistic systems and locations are added from reference data`() {
+        fun `test licenses, languages and locations are added from reference data`() {
             val input = responseReader.parseTurtleFile("rdf-data/input-graphs/information_model.ttl")
             input.add(input.getResource(infoModelURI), DCTerms.language, input.createResource("http://publications.europa.eu/resource/authority/language/SMI"))
             input.add(input.getResource(infoModelURI), DCTerms.language, input.createResource("http://publications.europa.eu/resource/authority/language/NOB"))

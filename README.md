@@ -27,7 +27,7 @@ specific context on this application, see the **Harvesting** subsystem section.
       datasets
     - [open licenses](https://data.norge.no/reference-data/open-licenses) is extended for resource types: datasets,
       information models
-    - [linguistic systems](https://data.norge.no/reference-data/linguistic-systems) is extended for resource types:
+    - [languages](https://data.norge.no/reference-data/eu/languages) is extended for resource types:
       datasets, information models, services
     - [nations](https://data.norge.no/reference-data/geonorge/administrative-enheter/nasjoner) is extended for resource
       types: datasets, information models
