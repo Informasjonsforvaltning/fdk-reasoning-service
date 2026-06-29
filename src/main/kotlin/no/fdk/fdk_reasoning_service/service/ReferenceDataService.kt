@@ -51,13 +51,13 @@ class ReferenceDataService(
         val fileTypes = referenceDataCache.fileTypes()
         if (fileTypes.isEmpty) throw Exception("File types are missing in reference data cache")
 
-        val openLicenses = referenceDataCache.openLicenses()
-        if (openLicenses.isEmpty) throw Exception("Open licenses are missing in reference data cache")
+        val licences = referenceDataCache.licences()
+        if (licences.isEmpty) throw Exception("Licences are missing in reference data cache")
 
         val m = ModelFactory.createDefaultModel()
         m.add(ianaMediaTypes)
         m.add(fileTypes)
-        m.add(openLicenses)
+        m.add(licences)
         return m
     }
 
@@ -68,8 +68,8 @@ class ReferenceDataService(
         val fileTypes = referenceDataCache.fileTypes()
         if (fileTypes.isEmpty) throw Exception("File types are missing in reference data cache")
 
-        val openLicenses = referenceDataCache.openLicenses()
-        if (openLicenses.isEmpty) throw Exception("Open licenses are missing in reference data cache")
+        val licences = referenceDataCache.licences()
+        if (licences.isEmpty) throw Exception("Licences are missing in reference data cache")
 
         val languages = referenceDataCache.languages()
         if (languages.isEmpty) throw Exception("Languages are missing in reference data cache")
@@ -119,7 +119,7 @@ class ReferenceDataService(
         val m = ModelFactory.createDefaultModel()
         m.add(ianaMediaTypes)
         m.add(fileTypes)
-        m.add(openLicenses)
+        m.add(licences)
         m.add(languages)
         m.add(locations)
         m.add(accessRights)
@@ -139,8 +139,8 @@ class ReferenceDataService(
     }
 
     private fun informationModelReferenceData(): Model {
-        val openLicenses = referenceDataCache.openLicenses()
-        if (openLicenses.isEmpty) throw Exception("Open licenses are missing in reference data cache")
+        val licences = referenceDataCache.licences()
+        if (licences.isEmpty) throw Exception("Licences are missing in reference data cache")
 
         val languages = referenceDataCache.languages()
         if (languages.isEmpty) throw Exception("Languages are missing in reference data cache")
@@ -149,7 +149,7 @@ class ReferenceDataService(
         if (locations.isEmpty) throw Exception("Locations are missing in reference data cache")
 
         val m = ModelFactory.createDefaultModel()
-        m.add(openLicenses)
+        m.add(licences)
         m.add(languages)
         m.add(locations)
         return m

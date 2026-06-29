@@ -32,7 +32,7 @@ application:
     conceptSubjects: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/concept-subjects
     ianaMediaTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/iana/media-types
     fileTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/file-types
-    openLicenses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/open-licenses
+    licences: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/licences
     languages: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/languages
     administrativeEnheter: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/geonorge/administrative-enheter
     accessRights: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/access-rights
@@ -109,7 +109,7 @@ application:
     conceptSubjects: http://localhost:5050/reference-data/digdir/concept-subjects
     ianaMediaTypes: http://localhost:5050/reference-data/iana/media-types
     fileTypes: http://localhost:5050/reference-data/eu/file-types
-    openLicenses: http://localhost:5050/reference-data/open-licenses
+    licences: http://localhost:5050/reference-data/eu/licences
     languages: http://localhost:5050/reference-data/eu/languages
     geonorgeNasjoner: http://localhost:5050/reference-data/geonorge/administrative-enheter/nasjoner
     geonorgeFylker: http://localhost:5050/reference-data/geonorge/administrative-enheter/fylker

@@ -34,8 +34,8 @@ class ReferenceData {
             .parseTurtleFile("rdf-data/reference-data/media_types.ttl")
         every { referenceDataCache.fileTypes() } returns responseReader
             .parseTurtleFile("rdf-data/reference-data/file_types.ttl")
-        every { referenceDataCache.openLicenses() } returns responseReader
-            .parseTurtleFile("rdf-data/reference-data/open_licenses.ttl")
+        every { referenceDataCache.licences() } returns responseReader
+            .parseTurtleFile("rdf-data/reference-data/licences.ttl")
         every { referenceDataCache.languages() } returns responseReader
             .parseTurtleFile("rdf-data/reference-data/languages.ttl")
         every { referenceDataCache.locations() } returns responseReader

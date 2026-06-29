@@ -26,7 +26,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun conceptSubjects(): Model = CONCEPT_SUBJECTS
     fun ianaMediaTypes(): Model = MEDIA_TYPES
     fun fileTypes(): Model = FILE_TYPES
-    fun openLicenses(): Model = OPEN_LICENSES
+    fun licences(): Model = LICENCES
     fun languages(): Model = LANGUAGES
     fun locations(): Model = LOCATIONS
     fun accessRights(): Model = ACCESS_RIGHTS
@@ -61,7 +61,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         updateConceptSubjects()
         updateMediaTypes()
         updateFileTypes()
-        updateOpenLicenses()
+        updateLicences()
         updateLanguages()
         updateLocations()
         updateAccessRights()
@@ -195,14 +195,14 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     }
 
     @Scheduled(cron = "0 35 22 * * ?")
-    fun updateOpenLicenses() {
+    fun updateLicences() {
         try {
-            with(RDFDataMgr.loadModel(uris.openLicenses, Lang.TURTLE)) {
-                OPEN_LICENSES.removeAll().add(this)
+            with(RDFDataMgr.loadModel(uris.licences, Lang.TURTLE)) {
+                LICENCES.removeAll().add(this)
             }
-            logger.debug("successfully updated open licenses cache")
+            logger.debug("successfully updated licences cache")
         } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.openLicenses}", ex)
+            logger.error("Download failed for ${uris.licences}", ex)
         }
     }
 
@@ -480,7 +480,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val CONCEPT_SUBJECTS: Model = ModelFactory.createDefaultModel()
         val MEDIA_TYPES: Model = ModelFactory.createDefaultModel()
         val FILE_TYPES: Model = ModelFactory.createDefaultModel()
-        val OPEN_LICENSES: Model = ModelFactory.createDefaultModel()
+        val LICENCES: Model = ModelFactory.createDefaultModel()
         val LANGUAGES: Model = ModelFactory.createDefaultModel()
         val LOCATIONS: Model = ModelFactory.createDefaultModel()
         val ACCESS_RIGHTS: Model = ModelFactory.createDefaultModel()

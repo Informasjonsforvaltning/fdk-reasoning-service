@@ -25,7 +25,7 @@ specific context on this application, see the **Harvesting** subsystem section.
       services, datasets
     - [file types](https://data.norge.no/reference-data/eu/file-types) is extended for resource types: data services,
       datasets
-    - [open licenses](https://data.norge.no/reference-data/open-licenses) is extended for resource types: datasets,
+    - [licences](https://data.norge.no/reference-data/eu/licences) is extended for resource types: datasets,
       information models
     - [languages](https://data.norge.no/reference-data/eu/languages) is extended for resource types:
       datasets, information models, services
