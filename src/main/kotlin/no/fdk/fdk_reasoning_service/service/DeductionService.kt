@@ -8,48 +8,23 @@ import org.apache.jena.reasoner.rulesys.Rule
 import org.springframework.stereotype.Service
 
 @Service
-class DeductionService() : Reasoner {
+class DeductionService : Reasoner {
     override fun reason(
         inputModel: Model,
         catalogType: CatalogType,
     ): Model =
         when (catalogType) {
-            CatalogType.CONCEPTS -> inputModel.conceptDeductions()
-            CatalogType.DATASETS -> inputModel.fdkPrefix().datasetDeductions()
-            CatalogType.DATASERVICES -> inputModel.dataServiceDeductions()
-            CatalogType.INFORMATIONMODELS -> inputModel.informationModelDeductions()
-            CatalogType.PUBLICSERVICES -> inputModel.servicesDeductions()
+            CatalogType.CONCEPTS -> inputModel.deduce(conceptRules)
+            CatalogType.DATASETS -> inputModel.fdkPrefix().deduce(datasetRules)
+            CatalogType.DATASERVICES -> inputModel.deduce(dataServiceRules)
+            CatalogType.INFORMATIONMODELS -> inputModel.deduce(infoModelRules)
+            CatalogType.PUBLICSERVICES -> inputModel.deduce(serviceRules)
             else -> ModelFactory.createDefaultModel()
         }
 
-    private fun Model.informationModelDeductions(): Model =
+    private fun Model.deduce(rules: String): Model =
         ModelFactory.createInfModel(
-            GenericRuleReasoner(Rule.parseRules(infoModelRules)),
+            GenericRuleReasoner(Rule.parseRules(rules)),
             this,
         ).deductionsModel
-
-    private fun Model.servicesDeductions(): Model =
-        ModelFactory.createInfModel(
-            GenericRuleReasoner(Rule.parseRules(serviceRules)),
-            this,
-        ).deductionsModel
-
-    private fun Model.datasetDeductions(): Model =
-        ModelFactory.createInfModel(
-            GenericRuleReasoner(Rule.parseRules(datasetRules)),
-            this,
-        ).deductionsModel
-
-    private fun Model.conceptDeductions(): Model =
-        ModelFactory.createInfModel(
-            GenericRuleReasoner(Rule.parseRules(conceptRules)),
-            this,
-        ).deductionsModel
-
-    private fun Model.dataServiceDeductions(): Model =
-        ModelFactory.createInfModel(
-            GenericRuleReasoner(Rule.parseRules(dataServiceRules)),
-            this,
-        ).deductionsModel
-
 }

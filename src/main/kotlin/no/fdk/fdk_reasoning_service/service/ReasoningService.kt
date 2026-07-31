@@ -2,6 +2,7 @@ package no.fdk.fdk_reasoning_service.service
 
 import io.micrometer.core.instrument.Metrics
 import no.fdk.fdk_reasoning_service.model.CatalogType
+import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.riot.Lang
 import org.springframework.stereotype.Service
@@ -15,6 +16,12 @@ class ReasoningService(
     private val deductionService: DeductionService,
     private val themeService: ThemeService,
 ) {
+    private data class ReasoningStep(
+        val metric: String,
+        val useCatalogGraph: Boolean,
+        val reason: (Model, CatalogType) -> Model,
+    )
+
     fun reasonGraph(
         graph: String,
         catalogType: CatalogType,
@@ -27,52 +34,26 @@ class ReasoningService(
             inputModel
         }
 
-        val deductionReasoning =
-            measureTimedValue {
-                deductionService.reason(inputModelWithCatalog, catalogType)
-            }
-        val organizationReasoning =
-            measureTimedValue {
-                organizationService.reason(inputModelWithCatalog, catalogType)
-            }
-        val referenceDataReasoning =
-            measureTimedValue {
-                referenceDataService.reason(inputModel, catalogType)
-            }
-        val themeReasoning =
-            measureTimedValue {
-                themeService.reason(inputModel, catalogType)
-            }
+        val steps = listOf(
+            ReasoningStep("reasoning.deduction", useCatalogGraph = true, deductionService::reason),
+            ReasoningStep("reasoning.organization", useCatalogGraph = true, organizationService::reason),
+            ReasoningStep("reasoning.reference_data", useCatalogGraph = false, referenceDataService::reason),
+            ReasoningStep("reasoning.themes", useCatalogGraph = false, themeService::reason),
+        )
 
-        Metrics.timer(
-            "reasoning.deduction",
-            "type",
-            catalogType.toString().lowercase(),
-        ).record(deductionReasoning.duration.toJavaDuration())
+        val reasonedModels = steps.map { step ->
+            val input = if (step.useCatalogGraph) inputModelWithCatalog else inputModel
+            val timed = measureTimedValue { step.reason(input, catalogType) }
+            Metrics.timer(
+                step.metric,
+                "type",
+                catalogType.toString().lowercase(),
+            ).record(timed.duration.toJavaDuration())
+            timed.value
+        }
 
-        Metrics.timer(
-            "reasoning.organization",
-            "type",
-            catalogType.toString().lowercase(),
-        ).record(organizationReasoning.duration.toJavaDuration())
-
-        Metrics.timer(
-            "reasoning.reference_data",
-            "type",
-            catalogType.toString().lowercase(),
-        ).record(referenceDataReasoning.duration.toJavaDuration())
-
-        Metrics.timer(
-            "reasoning.themes",
-            "type",
-            catalogType.toString().lowercase(),
-        ).record(themeReasoning.duration.toJavaDuration())
-
-        return ModelFactory.createDefaultModel()
-            .add(deductionReasoning.value)
-            .add(organizationReasoning.value)
-            .add(referenceDataReasoning.value)
-            .add(themeReasoning.value)
+        return reasonedModels
+            .fold(ModelFactory.createDefaultModel()) { acc, model -> acc.add(model) }
             .add(inputModel)
             .createRDFResponse(Lang.TURTLE)
     }
