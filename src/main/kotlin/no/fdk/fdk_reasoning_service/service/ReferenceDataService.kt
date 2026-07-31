@@ -2,10 +2,8 @@ package no.fdk.fdk_reasoning_service.service
 
 import no.fdk.fdk_reasoning_service.cache.ReferenceDataCache
 import no.fdk.fdk_reasoning_service.model.CatalogType
-import no.fdk.fdk_reasoning_service.rdf.FDK
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
-import org.apache.jena.rdf.model.Resource
 import org.springframework.stereotype.Service
 
 @Service
@@ -18,7 +16,7 @@ class ReferenceDataService(
     ): Model =
         modelOfContainedReferenceData(
             inputModel,
-            catalogType.completeReferenceDataModel()
+            catalogType.completeReferenceDataModel(),
         )
 
     private fun CatalogType.completeReferenceDataModel(): Model =
@@ -31,180 +29,70 @@ class ReferenceDataService(
             CatalogType.PUBLICSERVICES -> serviceReferenceData()
         }
 
-    private fun conceptReferenceData(): Model {
-        val conceptStatuses = referenceDataCache.conceptStatuses()
-        if (conceptStatuses.isEmpty) throw Exception("Concept statuses are missing in reference data cache")
+    private fun conceptReferenceData(): Model =
+        requireAndUnion(
+            "Concept statuses" to referenceDataCache.conceptStatuses(),
+            "Concept subjects" to referenceDataCache.conceptSubjects(),
+        )
 
-        val conceptSubjects = referenceDataCache.conceptSubjects()
-        if (conceptSubjects.isEmpty) throw Exception("Concept subjects are missing in reference data cache")
+    private fun dataServiceReferenceData(): Model =
+        requireAndUnion(
+            "IANA media types" to referenceDataCache.ianaMediaTypes(),
+            "File types" to referenceDataCache.fileTypes(),
+            "Licences" to referenceDataCache.licences(),
+        )
 
+    private fun datasetReferenceData(): Model =
+        requireAndUnion(
+            "IANA media types" to referenceDataCache.ianaMediaTypes(),
+            "File types" to referenceDataCache.fileTypes(),
+            "Licences" to referenceDataCache.licences(),
+            "Languages" to referenceDataCache.languages(),
+            "Locations" to referenceDataCache.locations(),
+            "Access rights" to referenceDataCache.accessRights(),
+            "Frequencies" to referenceDataCache.frequencies(),
+            "Provenance" to referenceDataCache.provenance(),
+            "Dataset types" to referenceDataCache.datasetTypes(),
+            "Distribution statuses" to referenceDataCache.distributionStatuses(),
+            "Mobility data standards" to referenceDataCache.mobilityDataStandards(),
+            "Mobility conditions" to referenceDataCache.mobilityConditions(),
+            "High value categories" to referenceDataCache.highValueCategories(),
+            "Quality dimensions" to referenceDataCache.qualityDimensions(),
+            "Legal resource types" to referenceDataCache.legalResourceTypes(),
+            "Geonames" to referenceDataCache.geonames(),
+            "EU continents" to referenceDataCache.euContinents(),
+            "EU countries" to referenceDataCache.euCountries(),
+        )
+
+    private fun informationModelReferenceData(): Model =
+        requireAndUnion(
+            "Licences" to referenceDataCache.licences(),
+            "Languages" to referenceDataCache.languages(),
+            "Locations" to referenceDataCache.locations(),
+        )
+
+    private fun serviceReferenceData(): Model =
+        requireAndUnion(
+            "Languages" to referenceDataCache.languages(),
+            "Locations" to referenceDataCache.locations(),
+            "Publisher types" to referenceDataCache.publisherTypes(),
+            "ADMS statuses" to referenceDataCache.admsStatuses(),
+            "Role types" to referenceDataCache.roleTypes(),
+            "Evidence types" to referenceDataCache.evidenceTypes(),
+            "Channel types" to referenceDataCache.channelTypes(),
+            "Main activities" to referenceDataCache.mainActivities(),
+            "Week days" to referenceDataCache.weekDays(),
+            "Geonames" to referenceDataCache.geonames(),
+            "EU continents" to referenceDataCache.euContinents(),
+            "EU countries" to referenceDataCache.euCountries(),
+        )
+
+    private fun requireAndUnion(vararg sources: Pair<String, Model>): Model {
         val m = ModelFactory.createDefaultModel()
-        m.add(conceptStatuses)
-        m.add(conceptSubjects)
-        return m
-    }
-
-    private fun dataServiceReferenceData(): Model {
-        val ianaMediaTypes = referenceDataCache.ianaMediaTypes()
-        if (ianaMediaTypes.isEmpty) throw Exception("IANA media types are missing in reference data cache")
-
-        val fileTypes = referenceDataCache.fileTypes()
-        if (fileTypes.isEmpty) throw Exception("File types are missing in reference data cache")
-
-        val licences = referenceDataCache.licences()
-        if (licences.isEmpty) throw Exception("Licences are missing in reference data cache")
-
-        val m = ModelFactory.createDefaultModel()
-        m.add(ianaMediaTypes)
-        m.add(fileTypes)
-        m.add(licences)
-        return m
-    }
-
-    private fun datasetReferenceData(): Model {
-        val ianaMediaTypes = referenceDataCache.ianaMediaTypes()
-        if (ianaMediaTypes.isEmpty) throw Exception("IANA media types are missing in reference data cache")
-
-        val fileTypes = referenceDataCache.fileTypes()
-        if (fileTypes.isEmpty) throw Exception("File types are missing in reference data cache")
-
-        val licences = referenceDataCache.licences()
-        if (licences.isEmpty) throw Exception("Licences are missing in reference data cache")
-
-        val languages = referenceDataCache.languages()
-        if (languages.isEmpty) throw Exception("Languages are missing in reference data cache")
-
-        val locations = referenceDataCache.locations()
-        if (locations.isEmpty) throw Exception("Locations are missing in reference data cache")
-
-        val accessRights = referenceDataCache.accessRights()
-        if (accessRights.isEmpty) throw Exception("Access rights are missing in reference data cache")
-
-        val frequencies = referenceDataCache.frequencies()
-        if (frequencies.isEmpty) throw Exception("Frequencies are missing in reference data cache")
-
-        val provenance = referenceDataCache.provenance()
-        if (provenance.isEmpty) throw Exception("Provenance are missing in reference data cache")
-
-        val datasetTypes = referenceDataCache.datasetTypes()
-        if (datasetTypes.isEmpty) throw Exception("Dataset types are missing in reference data cache")
-
-        val distributionStatuses = referenceDataCache.distributionStatuses()
-        if (distributionStatuses.isEmpty) throw Exception("Distribution statuses are missing in reference data cache")
-
-        val mobilityDataStandards = referenceDataCache.mobilityDataStandards()
-        if (mobilityDataStandards.isEmpty) throw Exception("Mobility data standards are missing in reference data cache")
-
-        val mobilityConditions = referenceDataCache.mobilityConditions()
-        if (mobilityConditions.isEmpty) throw Exception("Mobility conditions are missing in reference data cache")
-
-        val highValueCategories = referenceDataCache.highValueCategories()
-        if (highValueCategories.isEmpty) throw Exception("High value categories are missing in reference data cache")
-
-        val qualityDimensions = referenceDataCache.qualityDimensions()
-        if (qualityDimensions.isEmpty) throw Exception("Quality dimensions are missing in reference data cache")
-
-        val legalResourceTypes = referenceDataCache.legalResourceTypes()
-        if (legalResourceTypes.isEmpty) throw Exception("Legal resource types are missing in reference data cache")
-
-        val geonames = referenceDataCache.geonames()
-        if (geonames.isEmpty) throw Exception("Geonames are missing in reference data cache")
-
-        val euContinents = referenceDataCache.euContinents()
-        if (euContinents.isEmpty) throw Exception("EU continents are missing in reference data cache")
-
-        val euCountries = referenceDataCache.euCountries()
-        if (euCountries.isEmpty) throw Exception("EU countries are missing in reference data cache")
-
-        val m = ModelFactory.createDefaultModel()
-        m.add(ianaMediaTypes)
-        m.add(fileTypes)
-        m.add(licences)
-        m.add(languages)
-        m.add(locations)
-        m.add(accessRights)
-        m.add(frequencies)
-        m.add(provenance)
-        m.add(datasetTypes)
-        m.add(distributionStatuses)
-        m.add(mobilityDataStandards)
-        m.add(mobilityConditions)
-        m.add(highValueCategories)
-        m.add(qualityDimensions)
-        m.add(legalResourceTypes)
-        m.add(geonames)
-        m.add(euContinents)
-        m.add(euCountries)
-        return m
-    }
-
-    private fun informationModelReferenceData(): Model {
-        val licences = referenceDataCache.licences()
-        if (licences.isEmpty) throw Exception("Licences are missing in reference data cache")
-
-        val languages = referenceDataCache.languages()
-        if (languages.isEmpty) throw Exception("Languages are missing in reference data cache")
-
-        val locations = referenceDataCache.locations()
-        if (locations.isEmpty) throw Exception("Locations are missing in reference data cache")
-
-        val m = ModelFactory.createDefaultModel()
-        m.add(licences)
-        m.add(languages)
-        m.add(locations)
-        return m
-    }
-
-    private fun serviceReferenceData(): Model {
-        val languages = referenceDataCache.languages()
-        if (languages.isEmpty) throw Exception("Languages are missing in reference data cache")
-
-        val locations = referenceDataCache.locations()
-        if (locations.isEmpty) throw Exception("Locations are missing in reference data cache")
-
-        val publisherTypes = referenceDataCache.publisherTypes()
-        if (publisherTypes.isEmpty) throw Exception("Publisher types are missing in reference data cache")
-
-        val admsStatuses = referenceDataCache.admsStatuses()
-        if (admsStatuses.isEmpty) throw Exception("ADMS statuses are missing in reference data cache")
-
-        val roleTypes = referenceDataCache.roleTypes()
-        if (roleTypes.isEmpty) throw Exception("Role types are missing in reference data cache")
-
-        val evidenceTypes = referenceDataCache.evidenceTypes()
-        if (evidenceTypes.isEmpty) throw Exception("Evidence types are missing in reference data cache")
-
-        val channelTypes = referenceDataCache.channelTypes()
-        if (channelTypes.isEmpty) throw Exception("Channel types are missing in reference data cache")
-
-        val mainActivities = referenceDataCache.mainActivities()
-        if (mainActivities.isEmpty) throw Exception("Main activities are missing in reference data cache")
-
-        val weekDays = referenceDataCache.weekDays()
-        if (weekDays.isEmpty) throw Exception("Week days are missing in reference data cache")
-
-        val geonames = referenceDataCache.geonames()
-        if (geonames.isEmpty) throw Exception("Geonames are missing in reference data cache")
-
-        val euContinents = referenceDataCache.euContinents()
-        if (euContinents.isEmpty) throw Exception("EU continents are missing in reference data cache")
-
-        val euCountries = referenceDataCache.euCountries()
-        if (euCountries.isEmpty) throw Exception("EU countries are missing in reference data cache")
-
-        val m = ModelFactory.createDefaultModel()
-        m.add(languages)
-        m.add(locations)
-        m.add(publisherTypes)
-        m.add(admsStatuses)
-        m.add(roleTypes)
-        m.add(evidenceTypes)
-        m.add(channelTypes)
-        m.add(mainActivities)
-        m.add(weekDays)
-        m.add(geonames)
-        m.add(euContinents)
-        m.add(euCountries)
+        sources.forEach { (label, model) ->
+            if (model.isEmpty) throw Exception("$label are missing in reference data cache")
+            m.add(model)
+        }
         return m
     }
 }
