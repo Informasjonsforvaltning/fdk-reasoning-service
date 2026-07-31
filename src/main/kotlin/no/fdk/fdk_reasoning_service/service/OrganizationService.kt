@@ -6,7 +6,12 @@ import no.fdk.fdk_reasoning_service.model.CatalogType
 import no.fdk.fdk_reasoning_service.rdf.BR
 import no.fdk.fdk_reasoning_service.rdf.CV
 import no.fdk.fdk_reasoning_service.rdf.PROV
-import org.apache.jena.rdf.model.*
+import org.apache.jena.rdf.model.Model
+import org.apache.jena.rdf.model.ModelFactory
+import org.apache.jena.rdf.model.Property
+import org.apache.jena.rdf.model.RDFNode
+import org.apache.jena.rdf.model.Resource
+import org.apache.jena.rdf.model.ResourceFactory
 import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.DCTerms
 import org.apache.jena.vocabulary.RDF
@@ -35,95 +40,70 @@ class OrganizationService(
         val organizationResources =
             if (catalogType == CatalogType.DATASETS) {
                 inputModel.extractOrganizations(organizationPredicates)
-                    .plus(inputModel.extreactQualifiedAttributionAgents())
+                    .plus(inputModel.extractQualifiedAttributionAgents())
             } else {
                 inputModel.extractOrganizations(organizationPredicates)
             }
+        val organizations = organizationResources.toSet()
+        val orgBaseURI = uris.orgExternal
+
         return orgData.createModelOfOrganizationsWithOrgData(
             organizationURIs =
-                organizationResources
-                    .filter { it.dctIdentifierIsInadequateAsOrgId() }
+                organizations
+                    .filter { it.hasNoUsableOrganizationId() }
                     .filter { it.isURIResource }
                     .mapNotNull { it.uri }
                     .toSet(),
-            orgBaseURI = uris.orgExternal,
-        ).addNameWhenMissing(organizationResources.toSet(), inputModel, orgData, uris.orgExternal)
-            .addOrgPathWhenMissing(organizationResources.toSet(), inputModel, orgData, uris.orgExternal)
+            orgBaseURI = orgBaseURI,
+        ).addPropertyWhenMissing(organizations, FOAF.name) { org ->
+            inputModel.dctIdentifierIfOrgId(org)
+                ?.let { orgId -> orgData.getResource(orgURI(orgId, orgBaseURI)) }
+                ?.getProperty(FOAF.name)
+                ?.`object`
+        }.addPropertyWhenMissing(organizations, BR.orgPath) { org ->
+            org.getOrgPathForOrgResource(inputModel, orgData, orgBaseURI)
+                ?.let { ResourceFactory.createStringLiteral(it) }
+        }
     }
 
-    private fun Model.addNameWhenMissing(
+    private fun Model.addPropertyWhenMissing(
         organizations: Set<Resource>,
-        catalogData: Model,
-        orgData: Model,
-        orgBaseURI: String,
+        property: Property,
+        resolveValue: (Resource) -> RDFNode?,
     ): Model {
-        val names = ModelFactory.createDefaultModel()
+        val additions = ModelFactory.createDefaultModel()
 
         organizations.asSequence()
-            .filterNot { it.hasProperty(FOAF.name) || containsTriple("<${it.uri}>", "<${FOAF.name.uri}>", "?o") }
-            .map {
-                Pair(
-                    it,
-                    catalogData.dctIdentifierIfOrgId(it)
-                        ?.let { orgId -> orgData.getResource(orgURI(orgId, orgBaseURI)) },
-                )
+            .filterNot {
+                it.hasProperty(property) || containsTriple("<${it.uri}>", "<${property.uri}>", "?o")
             }
+            .map { it to resolveValue(it) }
             .filter { it.second != null }
-            .forEach { names.add(names.createResource(it.first.uri), FOAF.name, it.second?.getProperty(FOAF.name)?.`object`) }
+            .forEach { (organization, value) ->
+                additions.add(additions.createResource(organization.uri), property, value)
+            }
 
-        add(names)
-        return this
-    }
-
-    private fun Model.addOrgPathWhenMissing(
-        organizations: Set<Resource>,
-        catalogData: Model,
-        orgData: Model,
-        orgBaseURI: String,
-    ): Model {
-        val orgPaths = ModelFactory.createDefaultModel()
-
-        val organizationsMissingOrgPath =
-            organizations.asSequence()
-                .filterNot { it.hasProperty(BR.orgPath) || containsTriple("<${it.uri}>", "<${BR.orgPath.uri}>", "?o") }
-
-        organizationsMissingOrgPath
-            .map { Pair(it, it.getOrgPathForOrgResource(catalogData, orgData, orgBaseURI)) }
-            .filter { it.second != null }
-            .forEach { orgPaths.add(orgPaths.createResource(it.first.uri), BR.orgPath, it.second) }
-
-        add(orgPaths)
+        add(additions)
         return this
     }
 
     private fun Resource.getOrgPathForOrgResource(
         catalogData: Model,
         orgData: Model,
-        orgBaseURI: String
+        orgBaseURI: String,
     ): String? {
         val orgId = catalogData.dctIdentifierIfOrgId(this) ?: orgIdFromURI(uri)
 
-        val orgPathFromOrgData: String? = orgId?.runCatching {
-            orgData.getResource(orgURI(orgId, orgBaseURI))
-            ?.getProperty(BR.orgPath)
-            ?.string
-        }?.getOrNull()
+        val orgPathFromOrgData: String? =
+            orgId?.runCatching {
+                orgData.getResource(orgURI(orgId, orgBaseURI))
+                    ?.getProperty(BR.orgPath)
+                    ?.string
+            }?.getOrNull()
 
         return when {
             orgPathFromOrgData != null -> orgPathFromOrgData
             else -> getOrgPath(orgId, foafName(), orgBaseURI)
-        }
-    }
-
-    private fun Model.dctIdentifierIfOrgId(organization: Resource): String? {
-        val orgId: String? = getProperty(organization, DCTerms.identifier)?.string
-        val regex = Regex("""^[0-9]{9}$""")
-        val matching = regex.findAll(orgId ?: "").toList()
-
-        return if (matching.size == 1) {
-            orgId
-        } else {
-            null
         }
     }
 
@@ -180,7 +160,7 @@ class OrganizationService(
         orgBaseURI: String,
     ): Resource? =
         orgIdFromURI(organizationURI)
-            ?.let { "$orgBaseURI/${orgIdFromURI(organizationURI)}" }
+            ?.let { orgId -> orgURI(orgId, orgBaseURI) }
             ?.let { uri ->
                 if (containsTriple("<$uri>", "?p", "?o")) {
                     getResource(uri)
@@ -200,7 +180,7 @@ class OrganizationService(
         }
     }
 
-    private fun Model.extreactQualifiedAttributionAgents(): List<Resource> =
+    private fun Model.extractQualifiedAttributionAgents(): List<Resource> =
         listResourcesWithProperty(PROV.qualifiedAttribution)
             .toList()
             .flatMap { it.listProperties(PROV.qualifiedAttribution).toList() }
@@ -223,12 +203,25 @@ class OrganizationService(
                 .toList()
         }
 
-    private fun Resource.dctIdentifierIsInadequateAsOrgId(): Boolean =
+    // --- Organization ID helpers ---
+
+    private fun Resource.hasNoUsableOrganizationId(): Boolean =
         listProperties(DCTerms.identifier)
             .toList()
             .map { it.`object` }
             .mapNotNull { it.extractOrganizationId() }
             .isEmpty()
+
+    private fun Model.dctIdentifierIfOrgId(organization: Resource): String? {
+        val orgId: String? = getProperty(organization, DCTerms.identifier)?.string
+        val matching = Regex("""^[0-9]{9}$""").findAll(orgId ?: "").toList()
+
+        return if (matching.size == 1) {
+            orgId
+        } else {
+            null
+        }
+    }
 
     private fun RDFNode.extractOrganizationId(): String? =
         when {
@@ -238,8 +231,7 @@ class OrganizationService(
         }
 
     private fun orgIdFromURI(uri: String): String? {
-        val regex = Regex("""[0-9]{9}""")
-        val allMatching = regex.findAll(uri).toList()
+        val allMatching = Regex("""[0-9]{9}""").findAll(uri).toList()
 
         return if (allMatching.size == 1) {
             allMatching.first().value

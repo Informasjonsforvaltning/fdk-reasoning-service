@@ -15,7 +15,7 @@ import java.net.URLEncoder
 @Service
 class OrganizationCatalogAdapter {
 
-    private val logger: Logger = LoggerFactory.getLogger(OrganizationService::class.java)
+    private val logger: Logger = LoggerFactory.getLogger(OrganizationCatalogAdapter::class.java)
 
     fun orgPathAdapter(value: String, orgBaseURI: String): String? {
         val uri = "$orgBaseURI/orgpath/${URLEncoder.encode(value, "UTF-8")}"
