@@ -50,425 +50,194 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     fun euContinents(): Model = EU_CONTINENTS
     fun euCountries(): Model = EU_COUNTRIES
 
+    private val startupUpdates: List<() -> Unit> = listOf(
+        ::updateOrganizations,
+        ::updateLOS,
+        ::updateEUROVOC,
+        ::updateDataThemes,
+        ::updateMobilityThemes,
+        ::updateConceptStatuses,
+        ::updateConceptSubjects,
+        ::updateMediaTypes,
+        ::updateFileTypes,
+        ::updateLicences,
+        ::updateLanguages,
+        ::updateLocations,
+        ::updateAccessRights,
+        ::updateFrequencies,
+        ::updateProvenance,
+        ::updatePublisherTypes,
+        ::updateAdmsStatuses,
+        ::updateRoleTypes,
+        ::updateEvidenceTypes,
+        ::updateChannelTypes,
+        ::updateMainActivities,
+        ::updateWeekDays,
+        ::updateDatasetTypes,
+        ::updateDistributionStatuses,
+        ::updateMobilityDataStandards,
+        ::updateMobilityConditions,
+        ::updateHighValueCategories,
+        ::updateQualityDimensions,
+        ::updateLegalResourceTypes,
+        ::updateGeonames,
+        ::updateEuContinents,
+        ::updateEuCountries,
+    )
+
     @EventListener
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
-        updateOrganizations()
-        updateLOS()
-        updateEUROVOC()
-        updateDataThemes()
-        updateMobilityThemes()
-        updateConceptStatuses()
-        updateConceptSubjects()
-        updateMediaTypes()
-        updateFileTypes()
-        updateLicences()
-        updateLanguages()
-        updateLocations()
-        updateAccessRights()
-        updateFrequencies()
-        updateProvenance()
-        updatePublisherTypes()
-        updateAdmsStatuses()
-        updateRoleTypes()
-        updateEvidenceTypes()
-        updateChannelTypes()
-        updateMainActivities()
-        updateWeekDays()
-        updateDatasetTypes()
-        updateDistributionStatuses()
-        updateMobilityDataStandards()
-        updateMobilityConditions()
-        updateHighValueCategories()
-        updateQualityDimensions()
-        updateLegalResourceTypes()
-        updateGeonames()
-        updateEuContinents()
-        updateEuCountries()
+        startupUpdates.forEach { it() }
+    }
+
+    private fun refresh(
+        label: String,
+        url: String,
+        target: Model,
+        errorMessage: String = "Download failed for $url",
+    ) {
+        try {
+            with(RDFDataMgr.loadModel(url, Lang.TURTLE)) {
+                target.removeAll().add(this)
+            }
+            logger.debug("successfully updated $label cache")
+        } catch (ex: Exception) {
+            logger.error(errorMessage, ex)
+        }
     }
 
     @Scheduled(cron = "0 10 */3 * * ?")
-    fun updateOrganizations() {
-        try {
-            with(RDFDataMgr.loadModel(uris.orgInternal, Lang.TURTLE)) {
-                ORGANIZATIONS.removeAll().add(this)
-            }
-            logger.debug("successfully updated organization cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.orgInternal}", ex)
-        }
-    }
+    fun updateOrganizations() =
+        refresh("organization", uris.orgInternal, ORGANIZATIONS)
 
     @Scheduled(cron = "0 30 23 * * ?")
-    fun updateLOS() {
-        try {
-            with(RDFDataMgr.loadModel(uris.los, Lang.TURTLE)) {
-                LOS.removeAll().add(this)
-            }
-            logger.debug("successfully updated LOS cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.los}", ex)
-        }
-    }
+    fun updateLOS() =
+        refresh("LOS", uris.los, LOS)
 
     @Scheduled(cron = "0 15 23 * * ?")
-    fun updateEUROVOC() {
-        try {
-            with(RDFDataMgr.loadModel(uris.eurovocs, Lang.TURTLE)) {
-                EUROVOCS.removeAll().add(this)
-            }
-            logger.debug("successfully updated EUROVOCS cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.eurovocs}", ex)
-        }
-    }
+    fun updateEUROVOC() =
+        refresh("EUROVOCS", uris.eurovocs, EUROVOCS)
 
     @Scheduled(cron = "0 40 23 * * ?")
-    fun updateDataThemes() {
-        try {
-            with(RDFDataMgr.loadModel(uris.dataThemes, Lang.TURTLE)) {
-                DATA_THEMES.removeAll().add(this)
-            }
-            logger.debug("successfully updated data themes cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.dataThemes}", ex)
-        }
-    }
+    fun updateDataThemes() =
+        refresh("data themes", uris.dataThemes, DATA_THEMES)
 
     @Scheduled(cron = "0 42 23 * * ?")
-    fun updateMobilityThemes() {
-        try {
-            with(RDFDataMgr.loadModel(uris.mobilityThemes, Lang.TURTLE)) {
-                MOBILITY_THEMES.removeAll().add(this)
-            }
-            logger.debug("successfully updated mobility themes cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.mobilityThemes}", ex)
-        }
-    }
+    fun updateMobilityThemes() =
+        refresh("mobility themes", uris.mobilityThemes, MOBILITY_THEMES)
 
     @Scheduled(cron = "0 45 23 * * ?")
-    fun updateConceptStatuses() {
-        try {
-            with(RDFDataMgr.loadModel(uris.conceptStatuses, Lang.TURTLE)) {
-                CONCEPT_STATUSES.removeAll().add(this)
-            }
-            logger.debug("successfully updated concept status cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.conceptStatuses}", ex)
-        }
-    }
+    fun updateConceptStatuses() =
+        refresh("concept status", uris.conceptStatuses, CONCEPT_STATUSES)
 
     @Scheduled(cron = "0 50 * * * ?")
-    fun updateConceptSubjects() {
-        try {
-            with(RDFDataMgr.loadModel(uris.conceptSubjects, Lang.TURTLE)) {
-                CONCEPT_SUBJECTS.removeAll().add(this)
-            }
-            logger.debug("successfully updated concept subjects cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.conceptSubjects}", ex)
-        }
-    }
+    fun updateConceptSubjects() =
+        refresh("concept subjects", uris.conceptSubjects, CONCEPT_SUBJECTS)
 
     @Scheduled(cron = "0 45 22 * * ?")
-    fun updateMediaTypes() {
-        try {
-            with(RDFDataMgr.loadModel(uris.ianaMediaTypes, Lang.TURTLE)) {
-                MEDIA_TYPES.removeAll().add(this)
-            }
-            logger.debug("successfully updated IANA media types cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.ianaMediaTypes}", ex)
-        }
-    }
+    fun updateMediaTypes() =
+        refresh("IANA media types", uris.ianaMediaTypes, MEDIA_TYPES)
 
     @Scheduled(cron = "0 40 22 * * ?")
-    fun updateFileTypes() {
-        try {
-            with(RDFDataMgr.loadModel(uris.fileTypes, Lang.TURTLE)) {
-                FILE_TYPES.removeAll().add(this)
-            }
-            logger.debug("successfully updated EU file types cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.fileTypes}", ex)
-        }
-    }
+    fun updateFileTypes() =
+        refresh("EU file types", uris.fileTypes, FILE_TYPES)
 
     @Scheduled(cron = "0 35 22 * * ?")
-    fun updateLicences() {
-        try {
-            with(RDFDataMgr.loadModel(uris.licences, Lang.TURTLE)) {
-                LICENCES.removeAll().add(this)
-            }
-            logger.debug("successfully updated licences cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.licences}", ex)
-        }
-    }
+    fun updateLicences() =
+        refresh("licences", uris.licences, LICENCES)
 
     @Scheduled(cron = "0 30 22 * * ?")
-    fun updateLanguages() {
-        try {
-            with(RDFDataMgr.loadModel(uris.languages, Lang.TURTLE)) {
-                LANGUAGES.removeAll().add(this)
-            }
-            logger.debug("successfully updated languages cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.languages}", ex)
-        }
-    }
+    fun updateLanguages() =
+        refresh("languages", uris.languages, LANGUAGES)
 
     @Scheduled(cron = "0 15 22 * * ?")
-    fun updateLocations() {
-        try {
-            with(RDFDataMgr.loadModel(uris.administrativeEnheter, Lang.TURTLE)) {
-                LOCATIONS.removeAll().add(this)
-            }
-            logger.debug("successfully updated locations cache")
-        } catch (ex: Exception) {
-            logger.error("Update of locations failed", ex)
-        }
-    }
+    fun updateLocations() =
+        refresh(
+            "locations",
+            uris.administrativeEnheter,
+            LOCATIONS,
+            errorMessage = "Update of locations failed",
+        )
 
     @Scheduled(cron = "0 10 22 * * ?")
-    fun updateAccessRights() {
-        try {
-            with(RDFDataMgr.loadModel(uris.accessRights, Lang.TURTLE)) {
-                ACCESS_RIGHTS.removeAll().add(this)
-            }
-            logger.debug("successfully updated access rights cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.accessRights}", ex)
-        }
-    }
+    fun updateAccessRights() =
+        refresh("access rights", uris.accessRights, ACCESS_RIGHTS)
 
     @Scheduled(cron = "0 5 22 * * ?")
-    fun updateFrequencies() {
-        try {
-            with(RDFDataMgr.loadModel(uris.frequencies, Lang.TURTLE)) {
-                FREQUENCIES.removeAll().add(this)
-            }
-            logger.debug("successfully updated frequencies cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.frequencies}", ex)
-        }
-    }
+    fun updateFrequencies() =
+        refresh("frequencies", uris.frequencies, FREQUENCIES)
 
     @Scheduled(cron = "0 50 21 * * ?")
-    fun updateProvenance() {
-        try {
-            with(RDFDataMgr.loadModel(uris.provenance, Lang.TURTLE)) {
-                PROVENANCE.removeAll().add(this)
-            }
-            logger.debug("successfully updated provenance cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.provenance}", ex)
-        }
-    }
+    fun updateProvenance() =
+        refresh("provenance", uris.provenance, PROVENANCE)
 
     @Scheduled(cron = "0 45 21 * * ?")
-    fun updatePublisherTypes() {
-        try {
-            with(RDFDataMgr.loadModel(uris.publisherTypes, Lang.TURTLE)) {
-                PUBLISHER_TYPES.removeAll().add(this)
-            }
-            logger.debug("successfully updated publisher types cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.publisherTypes}", ex)
-        }
-    }
+    fun updatePublisherTypes() =
+        refresh("publisher types", uris.publisherTypes, PUBLISHER_TYPES)
 
     @Scheduled(cron = "0 40 21 * * ?")
-    fun updateAdmsStatuses() {
-        try {
-            with(RDFDataMgr.loadModel(uris.admsStatuses, Lang.TURTLE)) {
-                ADMS_STATUSES.removeAll().add(this)
-            }
-            logger.debug("successfully updated adms statuses cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.admsStatuses}", ex)
-        }
-    }
+    fun updateAdmsStatuses() =
+        refresh("adms statuses", uris.admsStatuses, ADMS_STATUSES)
 
     @Scheduled(cron = "0 35 21 * * ?")
-    fun updateRoleTypes() {
-        try {
-            with(RDFDataMgr.loadModel(uris.roleTypes, Lang.TURTLE)) {
-                ROLE_TYPES.removeAll().add(this)
-            }
-            logger.debug("successfully updated role types cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.roleTypes}", ex)
-        }
-    }
+    fun updateRoleTypes() =
+        refresh("role types", uris.roleTypes, ROLE_TYPES)
 
     @Scheduled(cron = "0 30 21 * * ?")
-    fun updateEvidenceTypes() {
-        try {
-            with(RDFDataMgr.loadModel(uris.evidenceTypes, Lang.TURTLE)) {
-                EVIDENCE_TYPES.removeAll().add(this)
-            }
-            logger.debug("successfully updated evidence types cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.evidenceTypes}", ex)
-        }
-    }
+    fun updateEvidenceTypes() =
+        refresh("evidence types", uris.evidenceTypes, EVIDENCE_TYPES)
 
     @Scheduled(cron = "0 25 21 * * ?")
-    fun updateChannelTypes() {
-        try {
-            with(RDFDataMgr.loadModel(uris.channelTypes, Lang.TURTLE)) {
-                CHANNEL_TYPES.removeAll().add(this)
-            }
-            logger.debug("successfully updated channel types cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.channelTypes}", ex)
-        }
-    }
+    fun updateChannelTypes() =
+        refresh("channel types", uris.channelTypes, CHANNEL_TYPES)
 
     @Scheduled(cron = "0 20 21 * * ?")
-    fun updateMainActivities() {
-        try {
-            with(RDFDataMgr.loadModel(uris.mainActivities, Lang.TURTLE)) {
-                MAIN_ACTIVITIES.removeAll().add(this)
-            }
-            logger.debug("successfully updated main activities cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.mainActivities}", ex)
-        }
-    }
+    fun updateMainActivities() =
+        refresh("main activities", uris.mainActivities, MAIN_ACTIVITIES)
 
     @Scheduled(cron = "0 15 21 * * ?")
-    fun updateWeekDays() {
-        try {
-            with(RDFDataMgr.loadModel(uris.weekDays, Lang.TURTLE)) {
-                WEEK_DAYS.removeAll().add(this)
-            }
-            logger.debug("successfully updated week days cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.weekDays}", ex)
-        }
-    }
+    fun updateWeekDays() =
+        refresh("week days", uris.weekDays, WEEK_DAYS)
 
     @Scheduled(cron = "0 10 21 * * ?")
-    fun updateDatasetTypes() {
-        try {
-            with(RDFDataMgr.loadModel(uris.datasetTypes, Lang.TURTLE)) {
-                DATASET_TYPES.removeAll().add(this)
-            }
-            logger.debug("successfully updated dataset types cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.datasetTypes}", ex)
-        }
-    }
+    fun updateDatasetTypes() =
+        refresh("dataset types", uris.datasetTypes, DATASET_TYPES)
 
     @Scheduled(cron = "0 05 21 * * ?")
-    fun updateDistributionStatuses() {
-        try {
-            with(RDFDataMgr.loadModel(uris.distributionStatuses, Lang.TURTLE)) {
-                DISTRIBUTION_STATUSES.removeAll().add(this)
-            }
-            logger.debug("successfully updated distribution statuses cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.distributionStatuses}", ex)
-        }
-    }
+    fun updateDistributionStatuses() =
+        refresh("distribution statuses", uris.distributionStatuses, DISTRIBUTION_STATUSES)
 
     @Scheduled(cron = "0 0 21 * * ?")
-    fun updateMobilityDataStandards() {
-        try {
-            with(RDFDataMgr.loadModel(uris.mobilityDataStandards, Lang.TURTLE)) {
-                MOBILITY_DATA_STANDARDS.removeAll().add(this)
-            }
-            logger.debug("successfully updated mobility data standards cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.mobilityDataStandards}", ex)
-        }
-    }
+    fun updateMobilityDataStandards() =
+        refresh("mobility data standards", uris.mobilityDataStandards, MOBILITY_DATA_STANDARDS)
 
     @Scheduled(cron = "0 55 20 * * ?")
-    fun updateMobilityConditions() {
-        try {
-            with(RDFDataMgr.loadModel(uris.mobilityConditions, Lang.TURTLE)) {
-                MOBILITY_CONDITIONS.removeAll().add(this)
-            }
-            logger.debug("successfully updated mobility conditions cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.mobilityConditions}", ex)
-        }
-    }
+    fun updateMobilityConditions() =
+        refresh("mobility conditions", uris.mobilityConditions, MOBILITY_CONDITIONS)
 
     @Scheduled(cron = "0 50 20 * * ?")
-    fun updateHighValueCategories() {
-        try {
-            with(RDFDataMgr.loadModel(uris.highValueCategories, Lang.TURTLE)) {
-                HIGH_VALUE_CATEGORIES.removeAll().add(this)
-            }
-            logger.debug("successfully updated high value categories cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.highValueCategories}", ex)
-        }
-    }
+    fun updateHighValueCategories() =
+        refresh("high value categories", uris.highValueCategories, HIGH_VALUE_CATEGORIES)
 
     @Scheduled(cron = "0 45 20 * * ?")
-    fun updateQualityDimensions() {
-        try {
-            with(RDFDataMgr.loadModel(uris.qualityDimensions, Lang.TURTLE)) {
-                QUALITY_DIMENSIONS.removeAll().add(this)
-            }
-            logger.debug("successfully updated quality dimensions cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.qualityDimensions}", ex)
-        }
-    }
+    fun updateQualityDimensions() =
+        refresh("quality dimensions", uris.qualityDimensions, QUALITY_DIMENSIONS)
 
     @Scheduled(cron = "0 40 20 * * ?")
-    fun updateLegalResourceTypes() {
-        try {
-            with(RDFDataMgr.loadModel(uris.legalResourceTypes, Lang.TURTLE)) {
-                LEGAL_RESOURCE_TYPES.removeAll().add(this)
-            }
-            logger.debug("successfully updated legal resource types cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.legalResourceTypes}", ex)
-        }
-    }
+    fun updateLegalResourceTypes() =
+        refresh("legal resource types", uris.legalResourceTypes, LEGAL_RESOURCE_TYPES)
 
     @Scheduled(cron = "0 35 20 * * ?")
-    fun updateGeonames() {
-        try {
-            with(RDFDataMgr.loadModel(uris.geonames, Lang.TURTLE)) {
-                GEONAMES.removeAll().add(this)
-            }
-            logger.debug("successfully updated geonames cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.geonames}", ex)
-        }
-    }
+    fun updateGeonames() =
+        refresh("geonames", uris.geonames, GEONAMES)
 
     @Scheduled(cron = "0 30 20 * * ?")
-    fun updateEuContinents() {
-        try {
-            with(RDFDataMgr.loadModel(uris.euContinents, Lang.TURTLE)) {
-                EU_CONTINENTS.removeAll().add(this)
-            }
-            logger.debug("successfully updated EU continents cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.euContinents}", ex)
-        }
-    }
+    fun updateEuContinents() =
+        refresh("EU continents", uris.euContinents, EU_CONTINENTS)
 
     @Scheduled(cron = "0 25 20 * * ?")
-    fun updateEuCountries() {
-        try {
-            with(RDFDataMgr.loadModel(uris.euCountries, Lang.TURTLE)) {
-                EU_COUNTRIES.removeAll().add(this)
-            }
-            logger.debug("successfully updated EU countries cache")
-        } catch (ex: Exception) {
-            logger.error("Download failed for ${uris.euCountries}", ex)
-        }
-    }
+    fun updateEuCountries() =
+        refresh("EU countries", uris.euCountries, EU_COUNTRIES)
 
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
