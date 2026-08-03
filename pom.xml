@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.3</version>
+        <version>4.1.0</version>
         <relativePath/>
     </parent>
 
@@ -31,11 +31,11 @@
         <maven.compiler.source>${java.release}</maven.compiler.source>
         <maven.compiler.target>${java.release}</maven.compiler.target>
 
-        <kotlin.version>2.2.21</kotlin.version>
-        <testcontainers.version>2.0.3</testcontainers.version>
-        <jena.version>6.0.0</jena.version>
+        <kotlin.version>2.3.21</kotlin.version>
+        <testcontainers.version>2.0.5</testcontainers.version>
+        <jena.version>6.1.0</jena.version>
         <avro.version>1.12.1</avro.version>
-        <confluent.version>8.1.1</confluent.version>
+        <confluent.version>8.3.0</confluent.version>
     </properties>
 
     <dependencies>
@@ -91,7 +91,7 @@
         <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>
             <artifactId>kotlinx-coroutines-core</artifactId>
-            <version>1.10.2</version>
+            <version>1.11.0</version>
         </dependency>
 
         <!-- RDF dependencies -->
@@ -139,7 +139,7 @@
         <dependency>
             <groupId>io.github.resilience4j</groupId>
             <artifactId>resilience4j-circuitbreaker</artifactId>
-            <version>2.3.0</version>
+            <version>2.4.0</version>
         </dependency>
 
         <!-- Test -->
@@ -163,7 +163,7 @@
         <dependency>
             <groupId>io.mockk</groupId>
             <artifactId>mockk-jvm</artifactId>
-            <version>1.14.9</version>
+            <version>1.14.11</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -279,7 +279,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.14</version>
+                <version>0.8.15</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -300,7 +300,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.5</version>
+                <version>3.5.6</version>
                 <configuration>
                     <useSystemClassLoader>false</useSystemClassLoader>
                     <groups>unit</groups>
@@ -313,7 +313,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.5.5</version>
+                <version>3.5.6</version>
                 <configuration>
                     <groups>integration</groups>
                     <excludedGroups>unit</excludedGroups>
