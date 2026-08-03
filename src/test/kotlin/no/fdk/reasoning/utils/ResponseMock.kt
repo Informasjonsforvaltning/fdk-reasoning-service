@@ -1,0 +1,133 @@
+package no.fdk.reasoning.utils
+
+import com.github.tomakehurst.wiremock.WireMockServer
+import com.github.tomakehurst.wiremock.client.WireMock.aResponse
+import com.github.tomakehurst.wiremock.client.WireMock.get
+import com.github.tomakehurst.wiremock.client.WireMock.ok
+import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
+import com.github.tomakehurst.wiremock.client.WireMock.urlMatching
+import java.io.File
+
+const val LOCAL_SERVER_PORT = 5050
+
+private val mockserver = WireMockServer(LOCAL_SERVER_PORT)
+
+fun startMockServer() {
+    if (!mockserver.isRunning) {
+        mockserver.stubFor(
+            get(urlEqualTo("/ping"))
+                .willReturn(aResponse().withStatus(200)),
+        )
+
+        mockserver.stubFor(
+            get(urlEqualTo("/organizations"))
+                .willReturn(ok(File("src/test/resources/rdf-data/organization-catalog/orgs.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/organizations/972417866"))
+                .willReturn(ok(File("src/test/resources/rdf-data/organization-catalog/org.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlMatching("/organizations/orgpath/.*"))
+                .willReturn(ok("/GENERATED/ORGPATH")),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/los"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/los.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/eu/eurovocs"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/eurovocs.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/eu/data-themes"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/data_themes.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/eu/mobility-themes"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/mobility_themes.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/eu/concept-statuses"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/concept_statuses.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/digdir/concept-subjects"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/concept_subjects.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/iana/media-types"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/media_types.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/eu/licences"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/licences.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/eu/languages"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/languages.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/geonorge/administrative-enheter"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/administrative_enheter.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/eu/access-rights"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/access_rights.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/eu/frequencies"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/frequencies.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/provenance-statements"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/provenance_statements.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/eu/dataset-types"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/dataset-types.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/eu/distribution-statuses"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/distribution_statuses.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/mobility/data-standards"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/mobility_data_standards.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/mobility/conditions-for-access-and-usage"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/mobility_conditions.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/eu/high-value-categories"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/high-value-categories.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/digdir/quality-dimensions"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/quality-dimension.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/digdir/legal-resource-types"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/legal-resource-type.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/geonames"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/geonames.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/eu/continents"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/eu_continents.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/eu/countries"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/eu_countries.ttl").readText())),
+        )
+
+        mockserver.start()
+    }
+}
+
+fun stopMockServer() {
+    if (mockserver.isRunning) mockserver.stop()
+}

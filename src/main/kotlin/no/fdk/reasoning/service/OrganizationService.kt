@@ -1,0 +1,249 @@
+package no.fdk.reasoning.service
+
+import no.fdk.reasoning.cache.ReferenceDataCache
+import no.fdk.reasoning.config.ApplicationURI
+import no.fdk.reasoning.model.CatalogType
+import no.fdk.reasoning.rdf.BR
+import no.fdk.reasoning.rdf.CV
+import no.fdk.reasoning.rdf.PROV
+import org.apache.jena.rdf.model.Model
+import org.apache.jena.rdf.model.ModelFactory
+import org.apache.jena.rdf.model.Property
+import org.apache.jena.rdf.model.RDFNode
+import org.apache.jena.rdf.model.Resource
+import org.apache.jena.rdf.model.ResourceFactory
+import org.apache.jena.sparql.vocabulary.FOAF
+import org.apache.jena.vocabulary.DCTerms
+import org.apache.jena.vocabulary.RDF
+import org.apache.jena.vocabulary.ROV
+import org.springframework.stereotype.Service
+
+@Service
+class OrganizationService(
+    private val referenceDataCache: ReferenceDataCache,
+    private val uris: ApplicationURI,
+    private val orgAdapter: OrganizationCatalogAdapter,
+) : Reasoner {
+    override fun reason(
+        inputModel: Model,
+        catalogType: CatalogType,
+    ): Model {
+        val orgData = referenceDataCache.organizations()
+        if (orgData.isEmpty) throw Exception("Missing org data")
+
+        val organizationPredicates =
+            when (catalogType) {
+                CatalogType.PUBLICSERVICES -> listOf(CV.hasCompetentAuthority, CV.ownedBy, DCTerms.publisher)
+                CatalogType.CONCEPTS -> listOf(DCTerms.creator, DCTerms.publisher)
+                else -> listOf(DCTerms.publisher)
+            }
+        val organizationResources =
+            if (catalogType == CatalogType.DATASETS) {
+                inputModel
+                    .extractOrganizations(organizationPredicates)
+                    .plus(inputModel.extractQualifiedAttributionAgents())
+            } else {
+                inputModel.extractOrganizations(organizationPredicates)
+            }
+        val organizations = organizationResources.toSet()
+        val orgBaseURI = uris.orgExternal
+
+        return orgData
+            .createModelOfOrganizationsWithOrgData(
+                organizationURIs =
+                    organizations
+                        .filter { it.hasNoUsableOrganizationId() }
+                        .filter { it.isURIResource }
+                        .mapNotNull { it.uri }
+                        .toSet(),
+                orgBaseURI = orgBaseURI,
+            ).addPropertyWhenMissing(organizations, FOAF.name) { org ->
+                inputModel
+                    .dctIdentifierIfOrgId(org)
+                    ?.let { orgId -> orgData.getResource(orgURI(orgId, orgBaseURI)) }
+                    ?.getProperty(FOAF.name)
+                    ?.`object`
+            }.addPropertyWhenMissing(organizations, BR.orgPath) { org ->
+                org
+                    .getOrgPathForOrgResource(inputModel, orgData, orgBaseURI)
+                    ?.let { ResourceFactory.createStringLiteral(it) }
+            }
+    }
+
+    private fun Model.addPropertyWhenMissing(
+        organizations: Set<Resource>,
+        property: Property,
+        resolveValue: (Resource) -> RDFNode?,
+    ): Model {
+        val additions = ModelFactory.createDefaultModel()
+
+        organizations
+            .asSequence()
+            .filterNot {
+                it.hasProperty(property) || containsTriple("<${it.uri}>", "<${property.uri}>", "?o")
+            }.map { it to resolveValue(it) }
+            .filter { it.second != null }
+            .forEach { (organization, value) ->
+                additions.add(additions.createResource(organization.uri), property, value)
+            }
+
+        add(additions)
+        return this
+    }
+
+    private fun Resource.getOrgPathForOrgResource(
+        catalogData: Model,
+        orgData: Model,
+        orgBaseURI: String,
+    ): String? {
+        val orgId = catalogData.dctIdentifierIfOrgId(this) ?: orgIdFromURI(uri)
+
+        val orgPathFromOrgData: String? =
+            orgId
+                ?.runCatching {
+                    orgData
+                        .getResource(orgURI(orgId, orgBaseURI))
+                        ?.getProperty(BR.orgPath)
+                        ?.string
+                }?.getOrNull()
+
+        return when {
+            orgPathFromOrgData != null -> orgPathFromOrgData
+            else -> getOrgPath(orgId, foafName(), orgBaseURI)
+        }
+    }
+
+    private fun Resource.foafName(): String? {
+        val names = listProperties(FOAF.name)?.toList()
+        val nb = names?.find { it.language == "nb" }
+        val nn = names?.find { it.language == "nn" }
+        val en = names?.find { it.language == "en" }
+        return when {
+            names == null -> null
+            names.isEmpty() -> null
+            names.size == 1 -> names.first().string
+            nb != null -> nb.string
+            nn != null -> nn.string
+            en != null -> en.string
+            else -> names.first().string
+        }
+    }
+
+    private fun getOrgPath(
+        orgId: String?,
+        orgName: String?,
+        orgBaseURI: String,
+    ): String? =
+        when {
+            orgId != null -> orgAdapter.orgPathAdapter(orgId, orgBaseURI)
+            orgName != null -> orgAdapter.orgPathAdapter(orgName, orgBaseURI)
+            else -> null
+        }
+
+    private fun orgURI(
+        orgId: String,
+        orgBaseURI: String,
+    ) = "$orgBaseURI/$orgId"
+
+    private fun Model.createModelOfOrganizationsWithOrgData(
+        organizationURIs: Set<String>,
+        orgBaseURI: String,
+    ): Model {
+        val model = ModelFactory.createDefaultModel()
+        model.setNsPrefixes(nsPrefixMap)
+
+        organizationURIs
+            .map { Pair(it, orgResourceForOrganization(it, orgBaseURI)) }
+            .filter { it.second != null }
+            .forEach {
+                model.createResource(it.first).addPropertiesFromOrgResource(it.second)
+            }
+
+        return model
+    }
+
+    private fun Model.orgResourceForOrganization(
+        organizationURI: String,
+        orgBaseURI: String,
+    ): Resource? =
+        orgIdFromURI(organizationURI)
+            ?.let { orgId -> orgURI(orgId, orgBaseURI) }
+            ?.let { uri ->
+                if (containsTriple("<$uri>", "?p", "?o")) {
+                    getResource(uri)
+                } else {
+                    orgAdapter.downloadOrgData(uri)
+                }
+            }
+
+    private fun Resource.addPropertiesFromOrgResource(orgResource: Resource?) {
+        if (orgResource != null) {
+            safeAddProperty(RDF.type, orgResource.getProperty(RDF.type)?.`object`)
+            safeAddProperty(DCTerms.identifier, orgResource.getProperty(DCTerms.identifier)?.`object`)
+            safeAddProperty(BR.orgPath, orgResource.getProperty(BR.orgPath)?.`object`)
+            safeAddProperty(ROV.legalName, orgResource.getProperty(ROV.legalName)?.`object`)
+            safeAddProperty(FOAF.name, orgResource.getProperty(FOAF.name)?.`object`)
+            safeAddProperty(ROV.orgType, orgResource.getProperty(ROV.orgType)?.`object`)
+        }
+    }
+
+    private fun Model.extractQualifiedAttributionAgents(): List<Resource> =
+        listResourcesWithProperty(PROV.qualifiedAttribution)
+            .toList()
+            .flatMap { it.listProperties(PROV.qualifiedAttribution).toList() }
+            .asSequence()
+            .filter { it.isResourceProperty() }
+            .map { it.resource }
+            .flatMap { it.listProperties(PROV.agent).toList() }
+            .filter { it.isResourceProperty() }
+            .map { it.resource }
+            .toList()
+
+    private fun Model.extractOrganizations(organizationsPredicates: List<Property>): List<Resource> =
+        organizationsPredicates.flatMap { organizationPredicate ->
+            listResourcesWithProperty(organizationPredicate)
+                .toList()
+                .flatMap { it.listProperties(organizationPredicate).toList() }
+                .asSequence()
+                .filter { it.isResourceProperty() }
+                .map { it.resource }
+                .toList()
+        }
+
+    // --- Organization ID helpers ---
+
+    private fun Resource.hasNoUsableOrganizationId(): Boolean =
+        listProperties(DCTerms.identifier)
+            .toList()
+            .map { it.`object` }
+            .mapNotNull { it.extractOrganizationId() }
+            .isEmpty()
+
+    private fun Model.dctIdentifierIfOrgId(organization: Resource): String? {
+        val orgId: String? = getProperty(organization, DCTerms.identifier)?.string
+        val matching = Regex("""^[0-9]{9}$""").findAll(orgId ?: "").toList()
+
+        return if (matching.size == 1) {
+            orgId
+        } else {
+            null
+        }
+    }
+
+    private fun RDFNode.extractOrganizationId(): String? =
+        when {
+            isURIResource -> orgIdFromURI(asResource().uri)
+            isLiteral -> orgIdFromURI(asLiteral().string)
+            else -> null
+        }
+
+    private fun orgIdFromURI(uri: String): String? {
+        val allMatching = Regex("""[0-9]{9}""").findAll(uri).toList()
+
+        return if (allMatching.size == 1) {
+            allMatching.first().value
+        } else {
+            null
+        }
+    }
+}
