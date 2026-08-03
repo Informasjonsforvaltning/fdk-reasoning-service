@@ -7,6 +7,7 @@ import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry
 import io.github.resilience4j.circuitbreaker.event.CircuitBreakerOnStateTransitionEvent
 import no.fdk.reasoning.kafka.KafkaHarvestedEventConsumer
 import no.fdk.reasoning.kafka.KafkaManager
+import no.fdk.reasoning.metrics.KafkaReasoningMetrics
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
@@ -68,6 +69,7 @@ open class CircuitBreakerConsumerConfiguration(
             -> {
                 LOGGER.warn("Circuit breaker opened, pausing Kafka listener: {}", listenerId)
                 kafkaManager.pause(listenerId)
+                KafkaReasoningMetrics.setListenerPaused(true)
             }
 
             StateTransition.OPEN_TO_HALF_OPEN,
@@ -77,6 +79,7 @@ open class CircuitBreakerConsumerConfiguration(
             -> {
                 LOGGER.info("Circuit breaker closed, resuming Kafka listener: {}", listenerId)
                 kafkaManager.resume(listenerId)
+                KafkaReasoningMetrics.setListenerPaused(false)
             }
 
             else -> {

@@ -2,6 +2,9 @@ package no.fdk.reasoning.kafka
 
 import no.fdk.harvest.HarvestEvent
 import no.fdk.harvest.HarvestPhase
+import no.fdk.reasoning.metrics.ReasonedEventMetrics
+import no.fdk.reasoning.metrics.ReasonedEventMetrics.PublishKind
+import no.fdk.reasoning.metrics.ReasonedEventMetrics.PublishOutcome
 import no.fdk.reasoning.model.CatalogType
 import org.apache.avro.specific.SpecificRecord
 import org.slf4j.Logger
@@ -46,7 +49,7 @@ class KafkaHarvestEventProducer(
                 .build()
 
         LOGGER.debug("Sending reasoning success harvest event for runId: $harvestRunId, fdkId: $fdkId")
-        kafkaTemplate.send(TOPIC_NAME_HARVEST, harvestEvent)
+        publishHarvestEvent(catalogType, harvestEvent)
     }
 
     fun sendReasoningFailureEvent(
@@ -82,7 +85,41 @@ class KafkaHarvestEventProducer(
                 .build()
 
         LOGGER.debug("Sending reasoning failure harvest event for runId: $harvestRunId, fdkId: $fdkId, error: $errorMessage")
-        kafkaTemplate.send(TOPIC_NAME_HARVEST, harvestEvent)
+        publishHarvestEvent(catalogType, harvestEvent)
+    }
+
+    private fun publishHarvestEvent(
+        catalogType: CatalogType,
+        harvestEvent: HarvestEvent,
+    ) {
+        try {
+            kafkaTemplate
+                .send(TOPIC_NAME_HARVEST, harvestEvent)
+                .whenComplete { _, ex ->
+                    ReasonedEventMetrics.recordPublish(
+                        catalogType = catalogType,
+                        kind = PublishKind.HARVEST,
+                        outcome =
+                            if (ex == null) {
+                                PublishOutcome.SUCCESS
+                            } else {
+                                PublishOutcome.PUBLISH_FAILED
+                            },
+                    )
+                    if (ex != null) {
+                        LOGGER.error(
+                            "Failed to produce harvest event for runId={} catalogType={}",
+                            harvestEvent.runId,
+                            catalogType,
+                            ex,
+                        )
+                    }
+                }
+        } catch (e: Exception) {
+            ReasonedEventMetrics.recordPublish(catalogType, PublishKind.HARVEST, PublishOutcome.PUBLISH_FAILED)
+            LOGGER.error("Failed to enqueue harvest event for catalogType={}", catalogType, e)
+            throw e
+        }
     }
 
     private fun mapCatalogTypeToDataType(catalogType: CatalogType): no.fdk.harvest.DataType =

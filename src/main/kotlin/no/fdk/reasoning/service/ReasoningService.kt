@@ -1,13 +1,13 @@
 package no.fdk.reasoning.service
 
-import io.micrometer.core.instrument.Metrics
+import no.fdk.reasoning.metrics.ReasoningMetrics
+import no.fdk.reasoning.metrics.ReasoningMetrics.Step
 import no.fdk.reasoning.model.CatalogType
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.riot.Lang
 import org.springframework.stereotype.Service
 import kotlin.time.measureTimedValue
-import kotlin.time.toJavaDuration
 
 @Service
 class ReasoningService(
@@ -17,7 +17,7 @@ class ReasoningService(
     private val themeService: ThemeService,
 ) {
     private data class ReasoningStep(
-        val metric: String,
+        val step: Step,
         val useCatalogGraph: Boolean,
         val reason: (Model, CatalogType) -> Model,
     )
@@ -37,22 +37,17 @@ class ReasoningService(
 
         val steps =
             listOf(
-                ReasoningStep("reasoning.deduction", useCatalogGraph = true, deductionService::reason),
-                ReasoningStep("reasoning.organization", useCatalogGraph = true, organizationService::reason),
-                ReasoningStep("reasoning.reference_data", useCatalogGraph = false, referenceDataService::reason),
-                ReasoningStep("reasoning.themes", useCatalogGraph = false, themeService::reason),
+                ReasoningStep(Step.DEDUCTION, useCatalogGraph = true, deductionService::reason),
+                ReasoningStep(Step.ORGANIZATION, useCatalogGraph = true, organizationService::reason),
+                ReasoningStep(Step.REFERENCE_DATA, useCatalogGraph = false, referenceDataService::reason),
+                ReasoningStep(Step.THEMES, useCatalogGraph = false, themeService::reason),
             )
 
         val reasonedModels =
             steps.map { step ->
                 val input = if (step.useCatalogGraph) inputModelWithCatalog else inputModel
                 val timed = measureTimedValue { step.reason(input, catalogType) }
-                Metrics
-                    .timer(
-                        step.metric,
-                        "type",
-                        catalogType.toString().lowercase(),
-                    ).record(timed.duration.toJavaDuration())
+                ReasoningMetrics.recordStep(step.step, catalogType, timed.duration)
                 timed.value
             }
 

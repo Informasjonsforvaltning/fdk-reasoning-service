@@ -1,5 +1,9 @@
 package no.fdk.reasoning.kafka
 
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException
+import no.fdk.reasoning.metrics.KafkaReasoningMetrics
+import no.fdk.reasoning.metrics.KafkaReasoningMetrics.EventProcessingResult
+import no.fdk.reasoning.model.CatalogType
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.annotation.KafkaListener
@@ -37,11 +41,41 @@ class KafkaHarvestedEventConsumer(
                     record.partition(),
                     record.offset(),
                 )
+                KafkaReasoningMetrics.recordEventProcessed(null, EventProcessingResult.SKIPPED)
                 ack.acknowledge()
                 return
             }
-            circuitBreaker.process(record)
-            ack.acknowledge()
+            when (val outcome = circuitBreaker.process(record)) {
+                is KafkaHarvestedEventCircuitBreaker.ProcessOutcome.Skipped -> {
+                    KafkaReasoningMetrics.recordEventProcessed(null, EventProcessingResult.SKIPPED)
+                    ack.acknowledge()
+                }
+
+                is KafkaHarvestedEventCircuitBreaker.ProcessOutcome.Success -> {
+                    KafkaReasoningMetrics.recordEventProcessed(outcome.catalogType, EventProcessingResult.ACKED)
+                    ack.acknowledge()
+                }
+            }
+        } catch (e: CallNotPermittedException) {
+            LOGGER.warn(
+                "Circuit breaker open, nacking message - topic: {} partition: {} offset: {}",
+                record.topic(),
+                record.partition(),
+                record.offset(),
+            )
+            KafkaReasoningMetrics.recordEventProcessed(null, EventProcessingResult.CIRCUIT_OPEN)
+            ack.nack(Duration.ZERO)
+        } catch (e: ReasoningProcessingException) {
+            LOGGER.warn(
+                "Reasoning failed, nacking message - topic: {} partition: {} offset: {} error: {}",
+                record.topic(),
+                record.partition(),
+                record.offset(),
+                e.message,
+                e,
+            )
+            KafkaReasoningMetrics.recordEventProcessed(e.catalogType, EventProcessingResult.NACKED)
+            ack.nack(Duration.ZERO)
         } catch (e: Exception) {
             LOGGER.warn(
                 "Reasoning failed, nacking message - topic: {} partition: {} offset: {} error: {}",
@@ -51,6 +85,7 @@ class KafkaHarvestedEventConsumer(
                 e.message,
                 e,
             )
+            KafkaReasoningMetrics.recordEventProcessed(null, EventProcessingResult.NACKED)
             ack.nack(Duration.ZERO)
         }
     }
@@ -60,3 +95,8 @@ class KafkaHarvestedEventConsumer(
         const val REASONING_LISTENER_ID = "reasoning"
     }
 }
+
+class ReasoningProcessingException(
+    val catalogType: CatalogType,
+    cause: Throwable,
+) : RuntimeException(cause.message, cause)
