@@ -1,6 +1,7 @@
 package no.fdk.reasoning.cache
 
 import no.fdk.reasoning.config.ApplicationURI
+import no.fdk.reasoning.metrics.ReferenceDataMetrics
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.riot.Lang
@@ -11,6 +12,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
+import kotlin.time.measureTimedValue
 
 private val logger: Logger = LoggerFactory.getLogger(ReferenceDataCache::class.java)
 
@@ -129,13 +131,21 @@ class ReferenceDataCache(
         target: Model,
         errorMessage: String = "Download failed for $url",
     ) {
-        try {
-            with(RDFDataMgr.loadModel(url, Lang.TURTLE)) {
-                target.removeAll().add(this)
+        val timed =
+            measureTimedValue {
+                try {
+                    with(RDFDataMgr.loadModel(url, Lang.TURTLE)) {
+                        target.removeAll().add(this)
+                    }
+                    true
+                } catch (ex: Exception) {
+                    logger.error(errorMessage, ex)
+                    false
+                }
             }
+        ReferenceDataMetrics.recordRefresh(label, timed.value, timed.duration)
+        if (timed.value) {
             logger.debug("successfully updated $label cache")
-        } catch (ex: Exception) {
-            logger.error(errorMessage, ex)
         }
     }
 

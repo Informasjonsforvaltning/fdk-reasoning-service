@@ -1,7 +1,6 @@
 package no.fdk.reasoning.kafka
 
 import io.github.resilience4j.circuitbreaker.CircuitBreaker
-import io.micrometer.core.instrument.Metrics
 import no.fdk.concept.ConceptEvent
 import no.fdk.concept.ConceptEventType
 import no.fdk.dataservice.DataServiceEvent
@@ -12,6 +11,7 @@ import no.fdk.event.EventEvent
 import no.fdk.event.EventEventType
 import no.fdk.informationmodel.InformationModelEvent
 import no.fdk.informationmodel.InformationModelEventType
+import no.fdk.reasoning.metrics.ReasoningMetrics
 import no.fdk.reasoning.model.CatalogType
 import no.fdk.reasoning.service.ReasoningService
 import no.fdk.service.ServiceEvent
@@ -25,7 +25,6 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import java.time.Instant
 import kotlin.time.measureTimedValue
-import kotlin.time.toJavaDuration
 
 @Component
 class KafkaHarvestedEventCircuitBreaker(
@@ -35,9 +34,9 @@ class KafkaHarvestedEventCircuitBreaker(
     @param:Qualifier("reasoningCircuitBreaker")
     private val circuitBreaker: CircuitBreaker,
 ) {
-    fun process(record: ConsumerRecord<String, Any?>) {
-        circuitBreaker.executeRunnable {
-            val event = record.value() ?: return@executeRunnable
+    fun process(record: ConsumerRecord<String, Any?>): ProcessOutcome =
+        circuitBreaker.executeSupplier {
+            val event = record.value() ?: return@executeSupplier ProcessOutcome.Skipped
             LOGGER.debug("Received message - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
             val eventData = getKafkaEventData(event)
             if (eventData == null) {
@@ -47,13 +46,14 @@ class KafkaHarvestedEventCircuitBreaker(
                     record.partition(),
                     record.offset(),
                 )
-                return@executeRunnable
+                return@executeSupplier ProcessOutcome.Skipped
             }
 
             val startTime = Instant.now()
 
             try {
                 reasonAndProduceEvent(eventData, startTime)
+                ProcessOutcome.Success(eventData.resourceType)
             } catch (e: Exception) {
                 LOGGER.error("Error occurred during reasoning (fdkId={})", eventData.fdkId, e)
                 val endTime = Instant.now()
@@ -68,16 +68,10 @@ class KafkaHarvestedEventCircuitBreaker(
                         errorMessage = e.message ?: "Unknown error during reasoning",
                     )
                 }
-                Metrics
-                    .counter(
-                        "reasoning_error",
-                        "type",
-                        eventData.resourceType.toString().lowercase(),
-                    ).increment()
-                throw e
+                ReasoningMetrics.recordError(eventData.resourceType)
+                throw ReasoningProcessingException(eventData.resourceType, e)
             }
         }
-    }
 
     fun getKafkaEventData(event: Any): EventData? =
         when (event) {
@@ -327,12 +321,7 @@ class KafkaHarvestedEventCircuitBreaker(
         val endTime = Instant.now()
 
         if (reasonedGraph.isNotEmpty()) {
-            Metrics
-                .timer(
-                    "reasoning",
-                    "type",
-                    eventData.resourceType.toString().lowercase(),
-                ).record(timeElapsed.duration.toJavaDuration())
+            ReasoningMetrics.recordTotal(eventData.resourceType, timeElapsed.duration)
             val sent =
                 kafkaReasonedEventProducer.sendMessage(
                     eventData.fdkId,
@@ -356,6 +345,14 @@ class KafkaHarvestedEventCircuitBreaker(
         } else {
             throw Exception("Reasoned graph is empty")
         }
+    }
+
+    sealed class ProcessOutcome {
+        data object Skipped : ProcessOutcome()
+
+        data class Success(
+            val catalogType: CatalogType,
+        ) : ProcessOutcome()
     }
 
     data class EventData(

@@ -10,6 +10,9 @@ import no.fdk.event.EventEvent
 import no.fdk.event.EventEventType
 import no.fdk.informationmodel.InformationModelEvent
 import no.fdk.informationmodel.InformationModelEventType
+import no.fdk.reasoning.metrics.ReasonedEventMetrics
+import no.fdk.reasoning.metrics.ReasonedEventMetrics.PublishKind
+import no.fdk.reasoning.metrics.ReasonedEventMetrics.PublishOutcome
 import no.fdk.reasoning.model.CatalogType
 import no.fdk.service.ServiceEvent
 import no.fdk.service.ServiceEventType
@@ -38,6 +41,7 @@ class KafkaReasonedEventProducer(
     ): Boolean {
         if (fdkId.isNullOrBlank() || graph.isNullOrBlank()) {
             LOGGER.warn("Skipping reasoned event send: fdkId or graph is null or blank (resourceType={})", resourceType)
+            ReasonedEventMetrics.recordPublish(resourceType, PublishKind.REASONED, PublishOutcome.SKIPPED)
             return false
         }
         val topicName =
@@ -49,10 +53,37 @@ class KafkaReasonedEventProducer(
                 CatalogType.PUBLICSERVICES -> TOPIC_NAME_SERVICE
                 CatalogType.EVENTS -> TOPIC_NAME_EVENT
             }
-        val msg = getKafkaEvent(fdkId, graph, timestamp, resourceType, harvestRunId, uri, catalogGraph)
-        LOGGER.debug("Sending reasoned event topic={} msg={}", topicName, formatRecordForLog(msg))
-        kafkaTemplate.send(topicName, msg)
-        return true
+        return try {
+            val msg = getKafkaEvent(fdkId, graph, timestamp, resourceType, harvestRunId, uri, catalogGraph)
+            LOGGER.debug("Sending reasoned event topic={} msg={}", topicName, formatRecordForLog(msg))
+            kafkaTemplate
+                .send(topicName, msg)
+                .whenComplete { _, ex ->
+                    ReasonedEventMetrics.recordPublish(
+                        catalogType = resourceType,
+                        kind = PublishKind.REASONED,
+                        outcome =
+                            if (ex == null) {
+                                PublishOutcome.SUCCESS
+                            } else {
+                                PublishOutcome.PUBLISH_FAILED
+                            },
+                    )
+                    if (ex != null) {
+                        LOGGER.error(
+                            "Failed to produce reasoned event for fdkId={} resourceType={}",
+                            fdkId,
+                            resourceType,
+                            ex,
+                        )
+                    }
+                }
+            true
+        } catch (e: Exception) {
+            ReasonedEventMetrics.recordPublish(resourceType, PublishKind.REASONED, PublishOutcome.PUBLISH_FAILED)
+            LOGGER.error("Failed to build or enqueue reasoned event for fdkId={} resourceType={}", fdkId, resourceType, e)
+            throw e
+        }
     }
 
     private fun formatRecordForLog(record: SpecificRecord): String =
