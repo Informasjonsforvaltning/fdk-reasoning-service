@@ -13,10 +13,7 @@ object ReasoningMetrics {
         this.registry = registry
     }
 
-    fun recordTotal(
-        catalogType: CatalogType,
-        duration: Duration,
-    ) {
+    fun recordTotal(catalogType: CatalogType, duration: Duration) {
         registry
             .timer(
                 "reasoning",
@@ -25,11 +22,7 @@ object ReasoningMetrics {
             ).record(duration.toJavaDuration())
     }
 
-    fun recordStep(
-        step: Step,
-        catalogType: CatalogType,
-        duration: Duration,
-    ) {
+    fun recordStep(step: Step, catalogType: CatalogType, duration: Duration) {
         registry
             .timer(
                 step.metric,
@@ -49,9 +42,7 @@ object ReasoningMetrics {
 
     fun metricType(catalogType: CatalogType): String = catalogType.name.lowercase()
 
-    enum class Step(
-        val metric: String,
-    ) {
+    enum class Step(val metric: String) {
         DEDUCTION("reasoning.deduction"),
         ORGANIZATION("reasoning.organization"),
         REFERENCE_DATA("reasoning.reference_data"),

@@ -24,10 +24,7 @@ class OrganizationService(
     private val uris: ApplicationURI,
     private val orgAdapter: OrganizationCatalogAdapter,
 ) : Reasoner {
-    override fun reason(
-        inputModel: Model,
-        catalogType: CatalogType,
-    ): Model {
+    override fun reason(inputModel: Model, catalogType: CatalogType): Model {
         val orgData = referenceDataCache.organizations()
         if (orgData.isEmpty) throw Exception("Missing org data")
 
@@ -51,11 +48,11 @@ class OrganizationService(
         return orgData
             .createModelOfOrganizationsWithOrgData(
                 organizationURIs =
-                    organizations
-                        .filter { it.hasNoUsableOrganizationId() }
-                        .filter { it.isURIResource }
-                        .mapNotNull { it.uri }
-                        .toSet(),
+                organizations
+                    .filter { it.hasNoUsableOrganizationId() }
+                    .filter { it.isURIResource }
+                    .mapNotNull { it.uri }
+                    .toSet(),
                 orgBaseURI = orgBaseURI,
             ).addPropertyWhenMissing(organizations, FOAF.name) { org ->
                 inputModel
@@ -91,11 +88,7 @@ class OrganizationService(
         return this
     }
 
-    private fun Resource.getOrgPathForOrgResource(
-        catalogData: Model,
-        orgData: Model,
-        orgBaseURI: String,
-    ): String? {
+    private fun Resource.getOrgPathForOrgResource(catalogData: Model, orgData: Model, orgBaseURI: String): String? {
         val orgId = catalogData.dctIdentifierIfOrgId(this) ?: orgIdFromURI(uri)
 
         val orgPathFromOrgData: String? =
@@ -129,26 +122,15 @@ class OrganizationService(
         }
     }
 
-    private fun getOrgPath(
-        orgId: String?,
-        orgName: String?,
-        orgBaseURI: String,
-    ): String? =
-        when {
-            orgId != null -> orgAdapter.orgPathAdapter(orgId, orgBaseURI)
-            orgName != null -> orgAdapter.orgPathAdapter(orgName, orgBaseURI)
-            else -> null
-        }
+    private fun getOrgPath(orgId: String?, orgName: String?, orgBaseURI: String): String? = when {
+        orgId != null -> orgAdapter.orgPathAdapter(orgId, orgBaseURI)
+        orgName != null -> orgAdapter.orgPathAdapter(orgName, orgBaseURI)
+        else -> null
+    }
 
-    private fun orgURI(
-        orgId: String,
-        orgBaseURI: String,
-    ) = "$orgBaseURI/$orgId"
+    private fun orgURI(orgId: String, orgBaseURI: String) = "$orgBaseURI/$orgId"
 
-    private fun Model.createModelOfOrganizationsWithOrgData(
-        organizationURIs: Set<String>,
-        orgBaseURI: String,
-    ): Model {
+    private fun Model.createModelOfOrganizationsWithOrgData(organizationURIs: Set<String>, orgBaseURI: String): Model {
         val model = ModelFactory.createDefaultModel()
         model.setNsPrefixes(nsPrefixMap)
 
@@ -162,19 +144,15 @@ class OrganizationService(
         return model
     }
 
-    private fun Model.orgResourceForOrganization(
-        organizationURI: String,
-        orgBaseURI: String,
-    ): Resource? =
-        orgIdFromURI(organizationURI)
-            ?.let { orgId -> orgURI(orgId, orgBaseURI) }
-            ?.let { uri ->
-                if (containsTriple("<$uri>", "?p", "?o")) {
-                    getResource(uri)
-                } else {
-                    orgAdapter.downloadOrgData(uri)
-                }
+    private fun Model.orgResourceForOrganization(organizationURI: String, orgBaseURI: String): Resource? = orgIdFromURI(organizationURI)
+        ?.let { orgId -> orgURI(orgId, orgBaseURI) }
+        ?.let { uri ->
+            if (containsTriple("<$uri>", "?p", "?o")) {
+                getResource(uri)
+            } else {
+                orgAdapter.downloadOrgData(uri)
             }
+        }
 
     private fun Resource.addPropertiesFromOrgResource(orgResource: Resource?) {
         if (orgResource != null) {
@@ -187,17 +165,16 @@ class OrganizationService(
         }
     }
 
-    private fun Model.extractQualifiedAttributionAgents(): List<Resource> =
-        listResourcesWithProperty(PROV.qualifiedAttribution)
-            .toList()
-            .flatMap { it.listProperties(PROV.qualifiedAttribution).toList() }
-            .asSequence()
-            .filter { it.isResourceProperty() }
-            .map { it.resource }
-            .flatMap { it.listProperties(PROV.agent).toList() }
-            .filter { it.isResourceProperty() }
-            .map { it.resource }
-            .toList()
+    private fun Model.extractQualifiedAttributionAgents(): List<Resource> = listResourcesWithProperty(PROV.qualifiedAttribution)
+        .toList()
+        .flatMap { it.listProperties(PROV.qualifiedAttribution).toList() }
+        .asSequence()
+        .filter { it.isResourceProperty() }
+        .map { it.resource }
+        .flatMap { it.listProperties(PROV.agent).toList() }
+        .filter { it.isResourceProperty() }
+        .map { it.resource }
+        .toList()
 
     private fun Model.extractOrganizations(organizationsPredicates: List<Property>): List<Resource> =
         organizationsPredicates.flatMap { organizationPredicate ->
@@ -212,12 +189,11 @@ class OrganizationService(
 
     // --- Organization ID helpers ---
 
-    private fun Resource.hasNoUsableOrganizationId(): Boolean =
-        listProperties(DCTerms.identifier)
-            .toList()
-            .map { it.`object` }
-            .mapNotNull { it.extractOrganizationId() }
-            .isEmpty()
+    private fun Resource.hasNoUsableOrganizationId(): Boolean = listProperties(DCTerms.identifier)
+        .toList()
+        .map { it.`object` }
+        .mapNotNull { it.extractOrganizationId() }
+        .isEmpty()
 
     private fun Model.dctIdentifierIfOrgId(organization: Resource): String? {
         val orgId: String? = getProperty(organization, DCTerms.identifier)?.string
@@ -230,12 +206,11 @@ class OrganizationService(
         }
     }
 
-    private fun RDFNode.extractOrganizationId(): String? =
-        when {
-            isURIResource -> orgIdFromURI(asResource().uri)
-            isLiteral -> orgIdFromURI(asLiteral().string)
-            else -> null
-        }
+    private fun RDFNode.extractOrganizationId(): String? = when {
+        isURIResource -> orgIdFromURI(asResource().uri)
+        isLiteral -> orgIdFromURI(asLiteral().string)
+        else -> null
+    }
 
     private fun orgIdFromURI(uri: String): String? {
         val allMatching = Regex("""[0-9]{9}""").findAll(uri).toList()

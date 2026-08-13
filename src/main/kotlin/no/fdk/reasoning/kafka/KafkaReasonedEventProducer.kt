@@ -23,9 +23,7 @@ import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
 
 @Component
-class KafkaReasonedEventProducer(
-    private val kafkaTemplate: KafkaTemplate<String, SpecificRecord>,
-) {
+class KafkaReasonedEventProducer(private val kafkaTemplate: KafkaTemplate<String, SpecificRecord>) {
     /**
      * Sends a reasoned event to the appropriate topic.
      * @return true if the message was sent, false if skipped (e.g. fdkId or graph null/blank)
@@ -62,12 +60,11 @@ class KafkaReasonedEventProducer(
                     ReasonedEventMetrics.recordPublish(
                         catalogType = resourceType,
                         kind = PublishKind.REASONED,
-                        outcome =
-                            if (ex == null) {
-                                PublishOutcome.SUCCESS
-                            } else {
-                                PublishOutcome.PUBLISH_FAILED
-                            },
+                        outcome = if (ex == null) {
+                            PublishOutcome.SUCCESS
+                        } else {
+                            PublishOutcome.PUBLISH_FAILED
+                        },
                     )
                     if (ex != null) {
                         LOGGER.error(
@@ -86,26 +83,23 @@ class KafkaReasonedEventProducer(
         }
     }
 
-    private fun formatRecordForLog(record: SpecificRecord): String =
-        record.schema.fields.joinToString(", ") { field ->
-            val value = record.get(field.pos())
-            val str =
-                when (value) {
-                    is CharSequence -> if (value.length > 80) "${value.toString().take(80)}...(${value.length} chars)" else value.toString()
-                    else -> value?.toString() ?: "null"
-                }
-            "${field.name()}=$str"
-        }
+    private fun formatRecordForLog(record: SpecificRecord): String = record.schema.fields.joinToString(", ") { field ->
+        val value = record.get(field.pos())
+        val str =
+            when (value) {
+                is CharSequence -> if (value.length > 80) "${value.toString().take(80)}...(${value.length} chars)" else value.toString()
+                else -> value?.toString() ?: "null"
+            }
+        "${field.name()}=$str"
+    }
 
     /**
      * Kotlin can pass a "non-null" String that is null at runtime (e.g. from Java/GenericRecord).
      * The Java Avro builder then stores null and serialization fails. Force a non-null value for
      * required fields by copying through a fresh String so the JVM never sees null.
      */
-    private fun requireNonBlank(
-        value: String?,
-        name: String,
-    ): String = (value?.takeIf { it.isNotBlank() } ?: throw IllegalArgumentException("$name must not be null or blank"))
+    private fun requireNonBlank(value: String?, name: String): String =
+        (value?.takeIf { it.isNotBlank() } ?: throw IllegalArgumentException("$name must not be null or blank"))
 
     private fun getKafkaEvent(
         fdkId: String?,

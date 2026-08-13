@@ -16,17 +16,9 @@ class ReasoningService(
     private val deductionService: DeductionService,
     private val themeService: ThemeService,
 ) {
-    private data class ReasoningStep(
-        val step: Step,
-        val useCatalogGraph: Boolean,
-        val reason: (Model, CatalogType) -> Model,
-    )
+    private data class ReasoningStep(val step: Step, val useCatalogGraph: Boolean, val reason: (Model, CatalogType) -> Model)
 
-    fun reasonGraph(
-        graph: String,
-        catalogType: CatalogType,
-        catalogGraph: String?,
-    ): String {
+    fun reasonGraph(graph: String, catalogType: CatalogType, catalogGraph: String?): String {
         val inputModel = parseRDFResponse(graph, Lang.TURTLE)
         val inputModelWithCatalog =
             if (catalogGraph != null) {

@@ -147,10 +147,9 @@ const val DATA_THEMES_MATCHING_LOS = """
     ]
 """
 
-private fun openDataURIVariants(uriBase: String): List<String> =
-    listOf(
-        "http://$uriBase",
-        "http://$uriBase/",
-        "https://$uriBase",
-        "https://$uriBase/",
-    )
+private fun openDataURIVariants(uriBase: String): List<String> = listOf(
+    "http://$uriBase",
+    "http://$uriBase/",
+    "https://$uriBase",
+    "https://$uriBase/",
+)

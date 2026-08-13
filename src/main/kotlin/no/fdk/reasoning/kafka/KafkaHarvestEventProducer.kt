@@ -14,9 +14,7 @@ import org.springframework.stereotype.Component
 import java.time.Instant
 
 @Component
-class KafkaHarvestEventProducer(
-    private val kafkaTemplate: KafkaTemplate<String, SpecificRecord>,
-) {
+class KafkaHarvestEventProducer(private val kafkaTemplate: KafkaTemplate<String, SpecificRecord>) {
     fun sendReasoningSuccessEvent(
         harvestRunId: String?,
         catalogType: CatalogType,
@@ -88,10 +86,7 @@ class KafkaHarvestEventProducer(
         publishHarvestEvent(catalogType, harvestEvent)
     }
 
-    private fun publishHarvestEvent(
-        catalogType: CatalogType,
-        harvestEvent: HarvestEvent,
-    ) {
+    private fun publishHarvestEvent(catalogType: CatalogType, harvestEvent: HarvestEvent) {
         try {
             kafkaTemplate
                 .send(TOPIC_NAME_HARVEST, harvestEvent)
@@ -99,12 +94,11 @@ class KafkaHarvestEventProducer(
                     ReasonedEventMetrics.recordPublish(
                         catalogType = catalogType,
                         kind = PublishKind.HARVEST,
-                        outcome =
-                            if (ex == null) {
-                                PublishOutcome.SUCCESS
-                            } else {
-                                PublishOutcome.PUBLISH_FAILED
-                            },
+                        outcome = if (ex == null) {
+                            PublishOutcome.SUCCESS
+                        } else {
+                            PublishOutcome.PUBLISH_FAILED
+                        },
                     )
                     if (ex != null) {
                         LOGGER.error(
@@ -122,15 +116,14 @@ class KafkaHarvestEventProducer(
         }
     }
 
-    private fun mapCatalogTypeToDataType(catalogType: CatalogType): no.fdk.harvest.DataType =
-        when (catalogType) {
-            CatalogType.DATASETS -> no.fdk.harvest.DataType.dataset
-            CatalogType.CONCEPTS -> no.fdk.harvest.DataType.concept
-            CatalogType.INFORMATIONMODELS -> no.fdk.harvest.DataType.informationmodel
-            CatalogType.DATASERVICES -> no.fdk.harvest.DataType.dataservice
-            CatalogType.PUBLICSERVICES -> no.fdk.harvest.DataType.publicService
-            CatalogType.EVENTS -> no.fdk.harvest.DataType.event
-        }
+    private fun mapCatalogTypeToDataType(catalogType: CatalogType): no.fdk.harvest.DataType = when (catalogType) {
+        CatalogType.DATASETS -> no.fdk.harvest.DataType.dataset
+        CatalogType.CONCEPTS -> no.fdk.harvest.DataType.concept
+        CatalogType.INFORMATIONMODELS -> no.fdk.harvest.DataType.informationmodel
+        CatalogType.DATASERVICES -> no.fdk.harvest.DataType.dataservice
+        CatalogType.PUBLICSERVICES -> no.fdk.harvest.DataType.publicService
+        CatalogType.EVENTS -> no.fdk.harvest.DataType.event
+    }
 
     companion object {
         private val LOGGER: Logger = LoggerFactory.getLogger(KafkaHarvestEventProducer::class.java)

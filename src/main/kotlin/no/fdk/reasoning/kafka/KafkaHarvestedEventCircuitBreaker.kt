@@ -34,60 +34,58 @@ class KafkaHarvestedEventCircuitBreaker(
     @param:Qualifier("reasoningCircuitBreaker")
     private val circuitBreaker: CircuitBreaker,
 ) {
-    fun process(record: ConsumerRecord<String, Any?>): ProcessOutcome =
-        circuitBreaker.executeSupplier {
-            val event = record.value() ?: return@executeSupplier ProcessOutcome.Skipped
-            LOGGER.debug("Received message - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
-            val eventData = getKafkaEventData(event)
-            if (eventData == null) {
-                LOGGER.debug(
-                    "Ignoring message (wrong type, missing required fields, or unknown schema) - topic: {} partition: {} offset: {}",
-                    record.topic(),
-                    record.partition(),
-                    record.offset(),
+    fun process(record: ConsumerRecord<String, Any?>): ProcessOutcome = circuitBreaker.executeSupplier {
+        val event = record.value() ?: return@executeSupplier ProcessOutcome.Skipped
+        LOGGER.debug("Received message - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
+        val eventData = getKafkaEventData(event)
+        if (eventData == null) {
+            LOGGER.debug(
+                "Ignoring message (wrong type, missing required fields, or unknown schema) - topic: {} partition: {} offset: {}",
+                record.topic(),
+                record.partition(),
+                record.offset(),
+            )
+            return@executeSupplier ProcessOutcome.Skipped
+        }
+
+        val startTime = Instant.now()
+
+        try {
+            reasonAndProduceEvent(eventData, startTime)
+            ProcessOutcome.Success(eventData.resourceType)
+        } catch (e: Exception) {
+            LOGGER.error("Error occurred during reasoning (fdkId={})", eventData.fdkId, e)
+            val endTime = Instant.now()
+            if (eventData.harvestRunId != null) {
+                kafkaHarvestEventProducer.sendReasoningFailureEvent(
+                    harvestRunId = eventData.harvestRunId,
+                    catalogType = eventData.resourceType,
+                    fdkId = eventData.fdkId,
+                    resourceUri = eventData.uri,
+                    startTime = startTime,
+                    endTime = endTime,
+                    errorMessage = e.message ?: "Unknown error during reasoning",
                 )
-                return@executeSupplier ProcessOutcome.Skipped
             }
+            ReasoningMetrics.recordError(eventData.resourceType)
+            throw ReasoningProcessingException(eventData.resourceType, e)
+        }
+    }
 
-            val startTime = Instant.now()
-
-            try {
-                reasonAndProduceEvent(eventData, startTime)
-                ProcessOutcome.Success(eventData.resourceType)
-            } catch (e: Exception) {
-                LOGGER.error("Error occurred during reasoning (fdkId={})", eventData.fdkId, e)
-                val endTime = Instant.now()
-                if (eventData.harvestRunId != null) {
-                    kafkaHarvestEventProducer.sendReasoningFailureEvent(
-                        harvestRunId = eventData.harvestRunId,
-                        catalogType = eventData.resourceType,
-                        fdkId = eventData.fdkId,
-                        resourceUri = eventData.uri,
-                        startTime = startTime,
-                        endTime = endTime,
-                        errorMessage = e.message ?: "Unknown error during reasoning",
-                    )
-                }
-                ReasoningMetrics.recordError(eventData.resourceType)
-                throw ReasoningProcessingException(eventData.resourceType, e)
-            }
+    fun getKafkaEventData(event: Any): EventData? = when (event) {
+        is GenericRecord -> {
+            getEventDataFromGenericRecord(event)
         }
 
-    fun getKafkaEventData(event: Any): EventData? =
-        when (event) {
-            is GenericRecord -> {
-                getEventDataFromGenericRecord(event)
-            }
-
-            is SpecificRecord -> {
-                getEventDataFromSpecificRecord(event)
-            }
-
-            else -> {
-                LOGGER.warn("Unsupported event type: {}", event.javaClass.name)
-                null
-            }
+        is SpecificRecord -> {
+            getEventDataFromSpecificRecord(event)
         }
+
+        else -> {
+            LOGGER.warn("Unsupported event type: {}", event.javaClass.name)
+            null
+        }
+    }
 
     private fun getEventDataFromGenericRecord(value: GenericRecord): EventData? {
         val typeStr = safeGet(value, "type")?.toString() ?: return null
@@ -136,22 +134,15 @@ class KafkaHarvestedEventCircuitBreaker(
         return EventData(fdkId!!, uri, graph!!, timestamp!!, catalogType, harvestRunId, catalogGraph)
     }
 
-    private fun hasRequiredFields(
-        fdkId: CharSequence?,
-        graph: CharSequence?,
-        timestamp: Long?,
-    ): Boolean = !fdkId.isNullOrBlank() && !graph.isNullOrBlank() && timestamp != null
+    private fun hasRequiredFields(fdkId: CharSequence?, graph: CharSequence?, timestamp: Long?): Boolean =
+        !fdkId.isNullOrBlank() && !graph.isNullOrBlank() && timestamp != null
 
-    private fun safeGet(
-        record: GenericRecord,
-        fieldName: String,
-    ): Any? =
-        try {
-            record.get(fieldName)
-        } catch (e: Exception) {
-            LOGGER.debug("Could not read field '{}' from GenericRecord: {}", fieldName, e.message)
-            null
-        }
+    private fun safeGet(record: GenericRecord, fieldName: String): Any? = try {
+        record.get(fieldName)
+    } catch (e: Exception) {
+        LOGGER.debug("Could not read field '{}' from GenericRecord: {}", fieldName, e.message)
+        null
+    }
 
     private fun getEventDataFromSpecificRecord(event: SpecificRecord): EventData? {
         val harvestRunId = extractHarvestRunId(event)
@@ -276,42 +267,37 @@ class KafkaHarvestedEventCircuitBreaker(
         return EventData(fdkId!!, uri, graph!!, timestamp!!, resourceType, harvestRunId, catalogGraph)
     }
 
-    private fun extractHarvestRunId(event: SpecificRecord): String? =
-        try {
-            val schema = event.schema
-            val harvestRunIdField = schema.getField("harvestRunId")
-            if (harvestRunIdField != null) {
-                val fieldIndex = harvestRunIdField.pos()
-                val value = event.get(fieldIndex)
-                value?.toString()
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            LOGGER.debug("Could not extract harvestRunId from event: {}", e.message)
+    private fun extractHarvestRunId(event: SpecificRecord): String? = try {
+        val schema = event.schema
+        val harvestRunIdField = schema.getField("harvestRunId")
+        if (harvestRunIdField != null) {
+            val fieldIndex = harvestRunIdField.pos()
+            val value = event.get(fieldIndex)
+            value?.toString()
+        } else {
             null
         }
+    } catch (e: Exception) {
+        LOGGER.debug("Could not extract harvestRunId from event: {}", e.message)
+        null
+    }
 
-    private fun extractUri(event: SpecificRecord): String? =
-        try {
-            val schema = event.schema
-            val uriField = schema.getField("uri")
-            if (uriField != null) {
-                val fieldIndex = uriField.pos()
-                val value = event.get(fieldIndex)
-                value?.toString()
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            LOGGER.debug("Could not extract uri from event: {}", e.message)
+    private fun extractUri(event: SpecificRecord): String? = try {
+        val schema = event.schema
+        val uriField = schema.getField("uri")
+        if (uriField != null) {
+            val fieldIndex = uriField.pos()
+            val value = event.get(fieldIndex)
+            value?.toString()
+        } else {
             null
         }
+    } catch (e: Exception) {
+        LOGGER.debug("Could not extract uri from event: {}", e.message)
+        null
+    }
 
-    private fun reasonAndProduceEvent(
-        eventData: EventData,
-        startTime: Instant,
-    ) {
+    private fun reasonAndProduceEvent(eventData: EventData, startTime: Instant) {
         LOGGER.debug("Reasoning {} - id: {}", eventData.resourceType, eventData.fdkId)
         val timeElapsed =
             measureTimedValue {
@@ -350,9 +336,7 @@ class KafkaHarvestedEventCircuitBreaker(
     sealed class ProcessOutcome {
         data object Skipped : ProcessOutcome()
 
-        data class Success(
-            val catalogType: CatalogType,
-        ) : ProcessOutcome()
+        data class Success(val catalogType: CatalogType) : ProcessOutcome()
     }
 
     data class EventData(

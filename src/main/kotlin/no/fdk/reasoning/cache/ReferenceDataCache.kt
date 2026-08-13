@@ -17,9 +17,7 @@ import kotlin.time.measureTimedValue
 private val logger: Logger = LoggerFactory.getLogger(ReferenceDataCache::class.java)
 
 @Service
-class ReferenceDataCache(
-    private val uris: ApplicationURI,
-) {
+class ReferenceDataCache(private val uris: ApplicationURI) {
     fun organizations(): Model = ORGANIZATIONS
 
     fun los(): Model = LOS
@@ -125,12 +123,7 @@ class ReferenceDataCache(
         startupUpdates.forEach { it() }
     }
 
-    private fun refresh(
-        label: String,
-        url: String,
-        target: Model,
-        errorMessage: String = "Download failed for $url",
-    ) {
+    private fun refresh(label: String, url: String, target: Model, errorMessage: String = "Download failed for $url") {
         val timed =
             measureTimedValue {
                 try {
@@ -183,13 +176,12 @@ class ReferenceDataCache(
     fun updateLanguages() = refresh("languages", uris.languages, LANGUAGES)
 
     @Scheduled(cron = "0 15 22 * * ?")
-    fun updateLocations() =
-        refresh(
-            "locations",
-            uris.administrativeEnheter,
-            LOCATIONS,
-            errorMessage = "Update of locations failed",
-        )
+    fun updateLocations() = refresh(
+        "locations",
+        uris.administrativeEnheter,
+        LOCATIONS,
+        errorMessage = "Update of locations failed",
+    )
 
     @Scheduled(cron = "0 10 22 * * ?")
     fun updateAccessRights() = refresh("access rights", uris.accessRights, ACCESS_RIGHTS)

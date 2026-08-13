@@ -23,10 +23,7 @@ object KafkaReasoningMetrics {
         ensureListenerPausedGaugeRegistered()
     }
 
-    fun recordEventProcessed(
-        catalogType: CatalogType?,
-        result: EventProcessingResult,
-    ) {
+    fun recordEventProcessed(catalogType: CatalogType?, result: EventProcessingResult) {
         registry
             .counter(
                 "reasoning_event_processing_total",
@@ -52,9 +49,7 @@ object KafkaReasoningMetrics {
         }
     }
 
-    enum class EventProcessingResult(
-        val label: String,
-    ) {
+    enum class EventProcessingResult(val label: String) {
         ACKED("acked"),
         NACKED("nacked"),
         SKIPPED("skipped"),

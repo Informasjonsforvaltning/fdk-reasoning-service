@@ -13,28 +13,19 @@ class TestResponseReader {
 
     fun readFile(filename: String): String = resourceAsReader(filename).readText()
 
-    fun parseTurtleFile(
-        filename: String,
-        lang: String = "TURTLE",
-    ): Model {
+    fun parseTurtleFile(filename: String, lang: String = "TURTLE"): Model {
         val expected = ModelFactory.createDefaultModel()
         expected.read(resourceAsReader(filename), "", lang)
         return expected
     }
 
-    fun parseResponse(
-        response: String,
-        lang: String,
-    ): Model {
+    fun parseResponse(response: String, lang: String): Model {
         val responseModel = ModelFactory.createDefaultModel()
         responseModel.read(StringReader(response), "", lang)
         return responseModel
     }
 
-    fun parseTurtleFiles(
-        filenames: List<String>,
-        lang: String = "TURTLE",
-    ): Model {
+    fun parseTurtleFiles(filenames: List<String>, lang: String = "TURTLE"): Model {
         val m = ModelFactory.createDefaultModel()
         filenames.forEach { m.add(parseTurtleFile(it, lang)) }
         return m
