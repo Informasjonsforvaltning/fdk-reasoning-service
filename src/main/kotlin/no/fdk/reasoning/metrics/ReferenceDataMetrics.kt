@@ -12,11 +12,7 @@ object ReferenceDataMetrics {
         this.registry = registry
     }
 
-    fun recordRefresh(
-        source: String,
-        success: Boolean,
-        duration: Duration,
-    ) {
+    fun recordRefresh(source: String, success: Boolean, duration: Duration) {
         val sourceLabel = metricSource(source)
         registry
             .counter(
@@ -36,9 +32,8 @@ object ReferenceDataMetrics {
             ).record(duration.toJavaDuration())
     }
 
-    fun metricSource(label: String): String =
-        label
-            .lowercase()
-            .replace(Regex("[^a-z0-9]+"), "_")
-            .trim('_')
+    fun metricSource(label: String): String = label
+        .lowercase()
+        .replace(Regex("[^a-z0-9]+"), "_")
+        .trim('_')
 }

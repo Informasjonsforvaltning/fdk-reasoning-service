@@ -9,21 +9,15 @@ import org.apache.jena.reasoner.rulesys.Rule
 import org.springframework.stereotype.Service
 
 @Service
-class ThemeService(
-    private val referenceDataCache: ReferenceDataCache,
-) : Reasoner {
-    override fun reason(
-        inputModel: Model,
-        catalogType: CatalogType,
-    ): Model =
-        when (catalogType) {
-            CatalogType.CONCEPTS -> ModelFactory.createDefaultModel()
-            CatalogType.DATASERVICES -> baseThemeReferenceData(inputModel)
-            CatalogType.DATASETS -> datasetThemeReasoning(inputModel)
-            CatalogType.EVENTS -> ModelFactory.createDefaultModel()
-            CatalogType.INFORMATIONMODELS -> baseThemeReferenceData(inputModel)
-            CatalogType.PUBLICSERVICES -> serviceThemeReferenceData(inputModel)
-        }
+class ThemeService(private val referenceDataCache: ReferenceDataCache) : Reasoner {
+    override fun reason(inputModel: Model, catalogType: CatalogType): Model = when (catalogType) {
+        CatalogType.CONCEPTS -> ModelFactory.createDefaultModel()
+        CatalogType.DATASERVICES -> baseThemeReferenceData(inputModel)
+        CatalogType.DATASETS -> datasetThemeReasoning(inputModel)
+        CatalogType.EVENTS -> ModelFactory.createDefaultModel()
+        CatalogType.INFORMATIONMODELS -> baseThemeReferenceData(inputModel)
+        CatalogType.PUBLICSERVICES -> serviceThemeReferenceData(inputModel)
+    }
 
     private fun datasetThemeReasoning(inputModel: Model): Model {
         val matchingThemes = ModelFactory.createDefaultModel()

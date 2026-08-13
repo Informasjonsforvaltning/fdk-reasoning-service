@@ -9,34 +9,24 @@ import org.apache.jena.rdf.model.Resource
 import org.apache.jena.rdf.model.ResourceRequiredException
 import org.apache.jena.rdf.model.Statement
 
-fun Model.fdkPrefix(): Model =
-    setNsPrefix(
-        "fdk",
-        "https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#",
-    )
+fun Model.fdkPrefix(): Model = setNsPrefix(
+    "fdk",
+    "https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-reasoning-service/main/src/main/resources/ontology/fdk.owl#",
+)
 
-fun Resource.safeAddProperty(
-    property: Property,
-    value: RDFNode?,
-): Resource =
-    if (value == null) {
-        this
-    } else {
-        addProperty(property, value)
-    }
+fun Resource.safeAddProperty(property: Property, value: RDFNode?): Resource = if (value == null) {
+    this
+} else {
+    addProperty(property, value)
+}
 
-fun Statement.isResourceProperty(): Boolean =
-    try {
-        resource.isResource
-    } catch (ex: ResourceRequiredException) {
-        false
-    }
+fun Statement.isResourceProperty(): Boolean = try {
+    resource.isResource
+} catch (ex: ResourceRequiredException) {
+    false
+}
 
-fun Model.containsTriple(
-    subj: String,
-    pred: String,
-    obj: String,
-): Boolean {
+fun Model.containsTriple(subj: String, pred: String, obj: String): Boolean {
     val askQuery = "ASK { $subj $pred $obj }"
 
     return try {

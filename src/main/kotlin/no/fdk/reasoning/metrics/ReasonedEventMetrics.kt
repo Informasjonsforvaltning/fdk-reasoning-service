@@ -11,11 +11,7 @@ object ReasonedEventMetrics {
         this.registry = registry
     }
 
-    fun recordPublish(
-        catalogType: CatalogType,
-        kind: PublishKind,
-        outcome: PublishOutcome,
-    ) {
+    fun recordPublish(catalogType: CatalogType, kind: PublishKind, outcome: PublishOutcome) {
         registry
             .counter(
                 "reasoned_event_publish_total",
@@ -30,17 +26,12 @@ object ReasonedEventMetrics {
             ).increment()
     }
 
-    enum class PublishKind(
-        val label: String,
-    ) {
+    enum class PublishKind(val label: String) {
         REASONED("reasoned"),
         HARVEST("harvest"),
     }
 
-    enum class PublishOutcome(
-        val status: String,
-        val reason: String,
-    ) {
+    enum class PublishOutcome(val status: String, val reason: String) {
         SUCCESS("success", "published"),
         PUBLISH_FAILED("error", "publish_failed"),
         SKIPPED("error", "skipped"),

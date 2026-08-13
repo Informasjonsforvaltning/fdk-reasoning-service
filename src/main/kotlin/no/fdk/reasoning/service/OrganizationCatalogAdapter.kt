@@ -16,10 +16,7 @@ import java.net.URLEncoder
 class OrganizationCatalogAdapter {
     private val logger: Logger = LoggerFactory.getLogger(OrganizationCatalogAdapter::class.java)
 
-    fun orgPathAdapter(
-        value: String,
-        orgBaseURI: String,
-    ): String? {
+    fun orgPathAdapter(value: String, orgBaseURI: String): String? {
         val uri = "$orgBaseURI/orgpath/${URLEncoder.encode(value, "UTF-8")}"
         with(URI(uri).toURL().openConnection() as HttpURLConnection) {
             setRequestProperty("Accept", "text/plain")
@@ -41,11 +38,10 @@ class OrganizationCatalogAdapter {
         }
     }
 
-    fun downloadOrgData(uri: String): Resource? =
-        try {
-            RDFDataMgr.loadModel(uri, Lang.TURTLE).getResource(uri)
-        } catch (ex: Exception) {
-            logger.debug("Failed to fetch organization data for $uri")
-            null
-        }
+    fun downloadOrgData(uri: String): Resource? = try {
+        RDFDataMgr.loadModel(uri, Lang.TURTLE).getResource(uri)
+    } catch (ex: Exception) {
+        logger.debug("Failed to fetch organization data for $uri")
+        null
+    }
 }

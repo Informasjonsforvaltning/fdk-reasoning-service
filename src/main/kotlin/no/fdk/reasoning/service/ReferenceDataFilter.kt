@@ -4,10 +4,7 @@ import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.rdf.model.Resource
 
-fun modelOfContainedReferenceData(
-    inputModel: Model,
-    referenceDataModel: Model,
-): Model {
+fun modelOfContainedReferenceData(inputModel: Model, referenceDataModel: Model): Model {
     val m = ModelFactory.createDefaultModel()
 
     referenceDataModel

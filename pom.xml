@@ -290,9 +290,8 @@
                 <version>3.7.1</version>
                 <executions>
                     <execution>
-                        <id>format-and-check</id>
+                        <id>ktlint-check</id>
                         <goals>
-                            <goal>format</goal>
                             <goal>check</goal>
                         </goals>
                     </execution>

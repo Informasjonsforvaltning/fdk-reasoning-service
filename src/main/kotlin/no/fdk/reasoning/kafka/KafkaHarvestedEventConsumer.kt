@@ -12,9 +12,7 @@ import org.springframework.stereotype.Component
 import java.time.Duration
 
 @Component
-class KafkaHarvestedEventConsumer(
-    private val circuitBreaker: KafkaHarvestedEventCircuitBreaker,
-) {
+class KafkaHarvestedEventConsumer(private val circuitBreaker: KafkaHarvestedEventCircuitBreaker) {
     @KafkaListener(
         topics = [
             "dataset-events",
@@ -28,10 +26,7 @@ class KafkaHarvestedEventConsumer(
         containerFactory = "kafkaListenerContainerFactory",
         id = REASONING_LISTENER_ID,
     )
-    fun listen(
-        record: ConsumerRecord<String, Any?>,
-        ack: Acknowledgment,
-    ) {
+    fun listen(record: ConsumerRecord<String, Any?>, ack: Acknowledgment) {
         LOGGER.debug("Listener received record - topic: {} partition: {} offset: {}", record.topic(), record.partition(), record.offset())
         try {
             if (record.value() == null) {
@@ -96,7 +91,4 @@ class KafkaHarvestedEventConsumer(
     }
 }
 
-class ReasoningProcessingException(
-    val catalogType: CatalogType,
-    cause: Throwable,
-) : RuntimeException(cause.message, cause)
+class ReasoningProcessingException(val catalogType: CatalogType, cause: Throwable) : RuntimeException(cause.message, cause)
