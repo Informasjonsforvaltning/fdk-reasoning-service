@@ -7,9 +7,11 @@ import no.fdk.reasoning.model.CatalogType
 import no.fdk.reasoning.service.ReferenceDataService
 import no.fdk.reasoning.utils.TestResponseReader
 import org.apache.jena.rdf.model.ModelFactory
+import org.apache.jena.rdf.model.RDFNode
 import org.apache.jena.rdf.model.ResourceFactory
 import org.apache.jena.vocabulary.DCAT
 import org.apache.jena.vocabulary.DCTerms
+import org.apache.jena.vocabulary.DC_11
 import org.apache.jena.vocabulary.SKOS
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Tag
@@ -85,6 +87,9 @@ class ReferenceData {
         every { referenceDataCache.distributionStatuses() } returns
             responseReader
                 .parseTurtleFile("rdf-data/reference-data/distribution_statuses.ttl")
+        every { referenceDataCache.plannedAvailabilities() } returns
+            responseReader
+                .parseTurtleFile("rdf-data/reference-data/planned_availabilities.ttl")
         every { referenceDataCache.mobilityDataStandards() } returns
             responseReader
                 .parseTurtleFile("rdf-data/reference-data/mobility_data_standards.ttl")
@@ -191,6 +196,73 @@ class ReferenceData {
                     SKOS.prefLabel,
                     "Creative Commons Attribution 4.0 International",
                     "en",
+                ),
+            )
+        }
+
+        @Test
+        fun `test access rights are added from reference data`() {
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/data_service.ttl")
+            input.add(
+                input.getResource(dataServiceURI),
+                DCTerms.accessRights,
+                input.createResource("http://publications.europa.eu/resource/authority/access-right/PUBLIC"),
+            )
+
+            val result = referenceDataService.reason(input, CatalogType.DATASERVICES)
+            val accessRight =
+                ResourceFactory.createResource("http://publications.europa.eu/resource/authority/access-right/PUBLIC")
+
+            assertTrue(
+                result.contains(accessRight, DC_11.identifier, "PUBLIC"),
+                "code is resolvable from reference data",
+            )
+            assertTrue(
+                result.listStatements(accessRight, SKOS.prefLabel, null as RDFNode?).hasNext(),
+                "prefLabel is resolvable from reference data",
+            )
+        }
+
+        @Test
+        fun `test adms status is added from reference data`() {
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/data_service.ttl")
+            input.add(
+                input.getResource(dataServiceURI),
+                ResourceFactory.createProperty("http://www.w3.org/ns/adms#status"),
+                input.createResource("http://publications.europa.eu/resource/authority/distribution-status/COMPLETED"),
+            )
+
+            val result = referenceDataService.reason(input, CatalogType.DATASERVICES)
+
+            assertTrue(
+                result.contains(
+                    ResourceFactory.createResource(
+                        "http://publications.europa.eu/resource/authority/distribution-status/COMPLETED",
+                    ),
+                    DC_11.identifier,
+                    "COMPLETED",
+                ),
+            )
+        }
+
+        @Test
+        fun `test planned availability is added from reference data`() {
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/data_service.ttl")
+            input.add(
+                input.getResource(dataServiceURI),
+                ResourceFactory.createProperty("http://data.europa.eu/r5r/availability"),
+                input.createResource("http://publications.europa.eu/resource/authority/planned-availability/STABLE"),
+            )
+
+            val result = referenceDataService.reason(input, CatalogType.DATASERVICES)
+
+            assertTrue(
+                result.contains(
+                    ResourceFactory.createResource(
+                        "http://publications.europa.eu/resource/authority/planned-availability/STABLE",
+                    ),
+                    DC_11.identifier,
+                    "STABLE",
                 ),
             )
         }

@@ -1,0 +1,28 @@
+PREFIX dc:   <http://purl.org/dc/elements/1.1/>
+PREFIX ns1:  <http://publications.europa.eu/resource/authority/planned-availability/>
+PREFIX ns2:  <http://publications.europa.eu/resource/authority/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+ns1:TEMPORARY  <http://publications.europa.eu/ontology/authority/start.use>
+                "2021-12-08";
+        dc:identifier   "TEMPORARY";
+        skos:inScheme   ns2:planned-availability;
+        skos:prefLabel  "midlertidig"@nn , "midlertidig"@no , "temporary"@en , "midlertidig"@nb .
+
+ns1:AVAILABLE  <http://publications.europa.eu/ontology/authority/start.use>
+                "2021-12-08";
+        dc:identifier   "AVAILABLE";
+        skos:inScheme   ns2:planned-availability;
+        skos:prefLabel  "tilgjengelig"@no , "available"@en , "tilgjengeleg"@nn , "tilgjengelig"@nb .
+
+ns1:EXPERIMENTAL  <http://publications.europa.eu/ontology/authority/start.use>
+                "2021-12-08";
+        dc:identifier   "EXPERIMENTAL";
+        skos:inScheme   ns2:planned-availability;
+        skos:prefLabel  "experimental"@en , "eksperimentell"@nb , "eksperimentell"@nn , "eksperimentell"@no .
+
+ns1:STABLE  <http://publications.europa.eu/ontology/authority/start.use>
+                "2021-12-08";
+        dc:identifier   "STABLE";
+        skos:inScheme   ns2:planned-availability;
+        skos:prefLabel  "stabil"@nb , "stabil"@nn , "stable"@en , "stabil"@no .

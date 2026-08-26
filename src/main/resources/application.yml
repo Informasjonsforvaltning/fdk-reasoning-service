@@ -47,6 +47,7 @@ application:
     weekDays: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/schema/week-days
     datasetTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/dataset-types
     distributionStatuses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/distribution-statuses
+    plannedAvailabilities: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/planned-availabilities
     mobilityDataStandards: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/mobility/data-standards
     mobilityConditions: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/mobility/conditions-for-access-and-usage
     highValueCategories: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/high-value-categories
@@ -126,6 +127,7 @@ application:
     weekDays: http://localhost:5050/reference-data/schema/week-days
     datasetTypes: http://localhost:5050/reference-data/eu/dataset-types
     distributionStatuses: http://localhost:5050/reference-data/eu/distribution-statuses
+    plannedAvailabilities: http://localhost:5050/reference-data/eu/planned-availabilities
     mobilityDataStandards: http://localhost:5050/reference-data/mobility/data-standards
     mobilityConditions: http://localhost:5050/reference-data/mobility/conditions-for-access-and-usage
     highValueCategories: http://localhost:5050/reference-data/eu/high-value-categories
