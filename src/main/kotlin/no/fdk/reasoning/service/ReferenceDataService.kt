@@ -31,6 +31,9 @@ class ReferenceDataService(private val referenceDataCache: ReferenceDataCache) :
         "IANA media types" to referenceDataCache.ianaMediaTypes(),
         "File types" to referenceDataCache.fileTypes(),
         "Licences" to referenceDataCache.licences(),
+        "Access rights" to referenceDataCache.accessRights(),
+        "Distribution statuses" to referenceDataCache.distributionStatuses(),
+        "Planned availabilities" to referenceDataCache.plannedAvailabilities(),
     )
 
     private fun datasetReferenceData(): Model = requireAndUnion(

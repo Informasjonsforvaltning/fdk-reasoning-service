@@ -66,6 +66,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
 
     fun distributionStatuses(): Model = DISTRIBUTION_STATUSES
 
+    fun plannedAvailabilities(): Model = PLANNED_AVAILABILITIES
+
     fun mobilityDataStandards(): Model = MOBILITY_DATA_STANDARDS
 
     fun mobilityConditions(): Model = MOBILITY_CONDITIONS
@@ -108,6 +110,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             ::updateWeekDays,
             ::updateDatasetTypes,
             ::updateDistributionStatuses,
+            ::updatePlannedAvailabilities,
             ::updateMobilityDataStandards,
             ::updateMobilityConditions,
             ::updateHighValueCategories,
@@ -219,6 +222,9 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     @Scheduled(cron = "0 05 21 * * ?")
     fun updateDistributionStatuses() = refresh("distribution statuses", uris.distributionStatuses, DISTRIBUTION_STATUSES)
 
+    @Scheduled(cron = "0 07 21 * * ?")
+    fun updatePlannedAvailabilities() = refresh("planned availabilities", uris.plannedAvailabilities, PLANNED_AVAILABILITIES)
+
     @Scheduled(cron = "0 0 21 * * ?")
     fun updateMobilityDataStandards() = refresh("mobility data standards", uris.mobilityDataStandards, MOBILITY_DATA_STANDARDS)
 
@@ -268,6 +274,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val WEEK_DAYS: Model = ModelFactory.createDefaultModel()
         val DATASET_TYPES: Model = ModelFactory.createDefaultModel()
         val DISTRIBUTION_STATUSES: Model = ModelFactory.createDefaultModel()
+        val PLANNED_AVAILABILITIES: Model = ModelFactory.createDefaultModel()
         val MOBILITY_DATA_STANDARDS: Model = ModelFactory.createDefaultModel()
         val MOBILITY_CONDITIONS: Model = ModelFactory.createDefaultModel()
         val HIGH_VALUE_CATEGORIES: Model = ModelFactory.createDefaultModel()

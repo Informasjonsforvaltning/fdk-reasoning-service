@@ -29,6 +29,7 @@ data class ApplicationURI(
     val weekDays: String,
     val datasetTypes: String,
     val distributionStatuses: String,
+    val plannedAvailabilities: String,
     val mobilityDataStandards: String,
     val mobilityConditions: String,
     val highValueCategories: String,
