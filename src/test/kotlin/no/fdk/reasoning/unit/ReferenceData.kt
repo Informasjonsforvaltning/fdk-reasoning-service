@@ -114,6 +114,9 @@ class ReferenceData {
         every { referenceDataCache.euCountries() } returns
             responseReader
                 .parseTurtleFile("rdf-data/reference-data/eu_countries.ttl")
+        every { referenceDataCache.productStatuses() } returns
+            responseReader
+                .parseTurtleFile("rdf-data/reference-data/product_statuses.ttl")
     }
 
     @Nested
@@ -408,7 +411,7 @@ class ReferenceData {
         }
 
         @Test
-        fun `test licenses, languages and locations are added from reference data`() {
+        fun `test licenses, languages, locations and product statuses are added from reference data`() {
             val input = responseReader.parseTurtleFile("rdf-data/input-graphs/information_model.ttl")
             input.add(
                 input.getResource(infoModelURI),
@@ -429,6 +432,11 @@ class ReferenceData {
                 input.getResource(infoModelURI),
                 DCTerms.spatial,
                 input.createResource("https://data.geonorge.no/administrativeEnheter/nasjon/id/173163"),
+            )
+            input.add(
+                input.getResource(infoModelURI),
+                ResourceFactory.createProperty("http://www.w3.org/ns/adms#status"),
+                input.createResource("http://publications.europa.eu/resource/authority/product-status/PRODUCTION"),
             )
 
             val result = referenceDataService.reason(input, CatalogType.INFORMATIONMODELS)

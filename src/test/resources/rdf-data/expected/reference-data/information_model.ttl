@@ -32,3 +32,9 @@
         a               dct:Location;
         dct:identifier  "173163";
         dct:title       "Norge" .
+
+
+<http://publications.europa.eu/resource/authority/product-status/PRODUCTION>
+        dc:identifier   "PRODUCTION";
+        skos:inScheme   atold:product-status;
+        skos:prefLabel  "i produksjon"@no , "i produksjon"@nb , "in production"@en , "i produksjon"@nn .

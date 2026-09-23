@@ -1,0 +1,39 @@
+PREFIX dc:   <http://purl.org/dc/elements/1.1/>
+PREFIX ns1:  <http://publications.europa.eu/resource/authority/product-status/>
+PREFIX ns2:  <http://publications.europa.eu/resource/authority/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+ns1:PHASED_OUT
+        dc:identifier   "PHASED_OUT";
+        skos:inScheme   ns2:product-status;
+        skos:prefLabel  "utfasa"@nb , "phased out"@en , "utfasa"@no , "utfasa"@nn .
+
+ns1:TESTING
+        dc:identifier   "TESTING";
+        skos:inScheme   ns2:product-status;
+        skos:prefLabel  "i test"@no , "in test"@en , "i test"@nn , "i test"@nb .
+
+ns1:MVP
+        dc:identifier   "MVP";
+        skos:inScheme   ns2:product-status;
+        skos:prefLabel  "enkleste brukbare produkt"@nb , "enklaste brukbare produkt"@nn , "enkleste brukbare produkt"@no , "minimum viable product"@en .
+
+ns1:DEVELOPMENT
+        dc:identifier   "DEVELOPMENT";
+        skos:inScheme   ns2:product-status;
+        skos:prefLabel  "under utvikling"@no , "under utvikling"@nb , "under utvikling"@nn , "in development"@en .
+
+ns1:PROTOTYPE
+        dc:identifier   "PROTOTYPE";
+        skos:inScheme   ns2:product-status;
+        skos:prefLabel  "prototype"@nn , "prototype"@no , "prototype"@nb , "prototype"@en .
+
+ns1:PRODUCTION
+        dc:identifier   "PRODUCTION";
+        skos:inScheme   ns2:product-status;
+        skos:prefLabel  "i produksjon"@no , "i produksjon"@nb , "in production"@en , "i produksjon"@nn .
+
+ns1:PRODUCT_CONCEPT
+        dc:identifier   "PRODUCT_CONCEPT";
+        skos:inScheme   ns2:product-status;
+        skos:prefLabel  "produktkonsept"@nb , "produktkonsept"@nn , "produktkonsept"@no , "product concept"@en .

@@ -61,6 +61,7 @@ class ReferenceDataService(private val referenceDataCache: ReferenceDataCache) :
         "Licences" to referenceDataCache.licences(),
         "Languages" to referenceDataCache.languages(),
         "Locations" to referenceDataCache.locations(),
+        "Product statuses" to referenceDataCache.productStatuses(),
     )
 
     private fun serviceReferenceData(): Model = requireAndUnion(

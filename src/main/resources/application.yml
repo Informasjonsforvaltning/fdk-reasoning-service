@@ -56,6 +56,7 @@ application:
     geonames: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/geonames
     euContinents: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/continents
     euCountries: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/countries
+    productStatuses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/product-statuses
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -136,3 +137,4 @@ application:
     geonames: http://localhost:5050/reference-data/geonames
     euContinents: http://localhost:5050/reference-data/eu/continents
     euCountries: http://localhost:5050/reference-data/eu/countries
+    productStatuses: http://localhost:5050/reference-data/eu/product-statuses
