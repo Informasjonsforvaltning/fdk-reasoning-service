@@ -84,6 +84,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
 
     fun euCountries(): Model = EU_COUNTRIES
 
+    fun productStatuses(): Model = PRODUCT_STATUSES
+
     private val startupUpdates: List<() -> Unit> =
         listOf(
             ::updateOrganizations,
@@ -119,6 +121,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             ::updateGeonames,
             ::updateEuContinents,
             ::updateEuCountries,
+            ::updateProductStatuses,
         )
 
     @EventListener
@@ -249,6 +252,9 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     @Scheduled(cron = "0 25 20 * * ?")
     fun updateEuCountries() = refresh("EU countries", uris.euCountries, EU_COUNTRIES)
 
+    @Scheduled(cron = "0 20 20 * * ?")
+    fun updateProductStatuses() = refresh("product statuses", uris.productStatuses, PRODUCT_STATUSES)
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -283,5 +289,6 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val GEONAMES: Model = ModelFactory.createDefaultModel()
         val EU_CONTINENTS: Model = ModelFactory.createDefaultModel()
         val EU_COUNTRIES: Model = ModelFactory.createDefaultModel()
+        val PRODUCT_STATUSES: Model = ModelFactory.createDefaultModel()
     }
 }

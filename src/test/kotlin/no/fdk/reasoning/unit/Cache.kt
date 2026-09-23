@@ -129,6 +129,20 @@ class Cache : ApiTestContext() {
     }
 
     @Test
+    fun testCacheProductStatuses() {
+        every { uris.productStatuses } returns
+            "http://localhost:5050/reference-data/eu/product-statuses" andThen
+            "http://localhost:5050/404"
+
+        val expected = responseReader.parseTurtleFile("rdf-data/reference-data/product_statuses.ttl")
+
+        cache.updateProductStatuses()
+        assertTrue(expected.isIsomorphicWith(cache.productStatuses()), "able to update model")
+        cache.updateProductStatuses()
+        assertTrue(expected.isIsomorphicWith(cache.productStatuses()), "keeps old data when update fails")
+    }
+
+    @Test
     fun testCachePlannedAvailabilities() {
         every { uris.plannedAvailabilities } returns
             "http://localhost:5050/reference-data/eu/planned-availabilities" andThen
