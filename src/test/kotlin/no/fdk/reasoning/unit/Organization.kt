@@ -153,6 +153,8 @@ class Organization {
 
     @Nested
     internal inner class InformationModel {
+        private val informationModelURI = "http://test.no/catalogs/TestModell"
+
         @Test
         fun `test add triples for information model publisher`() {
             val input = responseReader.parseTurtleFile("rdf-data/input-graphs/information_model.ttl")
@@ -160,10 +162,25 @@ class Organization {
             val publisher = input.createResource("https://data.brreg.no/enhetsregisteret/oppslag/enheter/987654321")
             publisher.addProperty(RDF.type, FOAF.Agent)
             publisher.addProperty(FOAF.name, "Testetaten", "nb")
-            input.add(input.getResource("http://test.no/catalogs/TestModell"), DCTerms.publisher, publisher)
+            input.add(input.getResource(informationModelURI), DCTerms.publisher, publisher)
 
             val result = orgService.reason(input, CatalogType.INFORMATIONMODELS)
             val expected = responseReader.parseTurtleFile("rdf-data/expected/org-data/information_model_org.ttl")
+
+            assertTrue(result.isIsomorphicWith(expected))
+        }
+
+        @Test
+        fun `test add triples for information model creator`() {
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/information_model.ttl")
+            input.add(
+                input.getResource(informationModelURI),
+                DCTerms.creator,
+                input.createResource("http://localhost:5050/organizations/991825827"),
+            )
+
+            val result = orgService.reason(input, CatalogType.INFORMATIONMODELS)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/org-data/information_model_creator_org.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
         }
