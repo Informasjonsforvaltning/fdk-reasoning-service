@@ -1,5 +1,8 @@
 package no.fdk.reasoning.unit
 
+import io.mockk.every
+import io.mockk.mockk
+import no.fdk.reasoning.cache.ReferenceDataCache
 import no.fdk.reasoning.model.CatalogType
 import no.fdk.reasoning.service.DeductionService
 import no.fdk.reasoning.utils.TestResponseReader
@@ -11,8 +14,15 @@ import kotlin.test.assertTrue
 
 @Tag("unit")
 class Deduction {
-    private val deductionService = DeductionService()
+    private val referenceDataCache: ReferenceDataCache = mockk()
+    private val deductionService = DeductionService(referenceDataCache)
     private val responseReader = TestResponseReader()
+
+    init {
+        every { referenceDataCache.los() } returns
+            responseReader
+                .parseTurtleFile("rdf-data/reference-data/los.ttl")
+    }
 
     @Nested
     internal inner class Concept {
