@@ -110,3 +110,11 @@
         skos:topConceptOf  <https://psi.norge.no/los/struktur> ;
         <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
                 "trafikk-og-transport" .
+
+<https://psi.norge.no/los/tema/trafikkinformasjon>
+        rdf:type         skos:Concept ;
+        skos:broader     <https://psi.norge.no/los/tema/trafikk-og-transport> ;
+        skos:inScheme    <https://psi.norge.no/los/ontologi/tema> ;
+        skos:prefLabel   "Traffic information"@en , "Trafikkinformasjon"@nb , "Trafikkinformasjon"@nn ;
+        <https://fellesdatakatalog.digdir.no/ontology/internal/themePath>
+                "trafikk-og-transport/trafikkinformasjon" .
