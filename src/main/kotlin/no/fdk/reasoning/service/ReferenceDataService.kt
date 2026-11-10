@@ -72,6 +72,7 @@ class ReferenceDataService(private val referenceDataCache: ReferenceDataCache) :
         "Role types" to referenceDataCache.roleTypes(),
         "Evidence types" to referenceDataCache.evidenceTypes(),
         "Channel types" to referenceDataCache.channelTypes(),
+        "Service output types" to referenceDataCache.serviceOutputTypes(),
         "Main activities" to referenceDataCache.mainActivities(),
         "Week days" to referenceDataCache.weekDays(),
         "Geonames" to referenceDataCache.geonames(),

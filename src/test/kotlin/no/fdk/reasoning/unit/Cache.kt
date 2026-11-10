@@ -143,6 +143,20 @@ class Cache : ApiTestContext() {
     }
 
     @Test
+    fun testCacheServiceOutputTypes() {
+        every { uris.serviceOutputTypes } returns
+            "http://localhost:5050/reference-data/digdir/service-output-types" andThen
+            "http://localhost:5050/404"
+
+        val expected = responseReader.parseTurtleFile("rdf-data/reference-data/service_output_types.ttl")
+
+        cache.updateServiceOutputTypes()
+        assertTrue(expected.isIsomorphicWith(cache.serviceOutputTypes()), "able to update model")
+        cache.updateServiceOutputTypes()
+        assertTrue(expected.isIsomorphicWith(cache.serviceOutputTypes()), "keeps old data when update fails")
+    }
+
+    @Test
     fun testCachePlannedAvailabilities() {
         every { uris.plannedAvailabilities } returns
             "http://localhost:5050/reference-data/eu/planned-availabilities" andThen

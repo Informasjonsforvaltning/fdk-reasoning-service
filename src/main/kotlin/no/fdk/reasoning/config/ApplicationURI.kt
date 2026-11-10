@@ -39,4 +39,5 @@ data class ApplicationURI(
     val euContinents: String,
     val euCountries: String,
     val productStatuses: String,
+    val serviceOutputTypes: String,
 )

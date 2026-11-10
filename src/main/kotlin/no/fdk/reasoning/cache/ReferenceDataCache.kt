@@ -86,6 +86,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
 
     fun productStatuses(): Model = PRODUCT_STATUSES
 
+    fun serviceOutputTypes(): Model = SERVICE_OUTPUT_TYPES
+
     private val startupUpdates: List<() -> Unit> =
         listOf(
             ::updateOrganizations,
@@ -122,6 +124,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             ::updateEuContinents,
             ::updateEuCountries,
             ::updateProductStatuses,
+            ::updateServiceOutputTypes,
         )
 
     @EventListener
@@ -255,6 +258,9 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     @Scheduled(cron = "0 20 20 * * ?")
     fun updateProductStatuses() = refresh("product statuses", uris.productStatuses, PRODUCT_STATUSES)
 
+    @Scheduled(cron = "0 15 20 * * ?")
+    fun updateServiceOutputTypes() = refresh("service output types", uris.serviceOutputTypes, SERVICE_OUTPUT_TYPES)
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -290,5 +296,6 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val EU_CONTINENTS: Model = ModelFactory.createDefaultModel()
         val EU_COUNTRIES: Model = ModelFactory.createDefaultModel()
         val PRODUCT_STATUSES: Model = ModelFactory.createDefaultModel()
+        val SERVICE_OUTPUT_TYPES: Model = ModelFactory.createDefaultModel()
     }
 }

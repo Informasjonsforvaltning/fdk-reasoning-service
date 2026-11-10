@@ -1,0 +1,75 @@
+PREFIX adms:    <http://www.w3.org/ns/adms#>
+PREFIX dcat:    <http://www.w3.org/ns/dcat#>
+PREFIX dct:     <http://purl.org/dc/terms/>
+PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
+PREFIX uneskos: <http://purl.org/umu/uneskos#>
+PREFIX vcard:   <http://www.w3.org/2006/vcard/ns#>
+PREFIX xkos:    <http://rdf-vocabulary.ddialliance.org/xkos#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+<https://data.norge.no/vocabulary/service-output-type#rights>
+        a               skos:Concept;
+        dct:identifier  "https://data.norge.no/vocabulary/service-output-type#rights"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/service-output-type>;
+        skos:prefLabel  "rights"@en , "rettighet"@nb .
+
+<https://data.norge.no/vocabulary/service-output-type#recogntion>
+        a               skos:Concept;
+        dct:identifier  "https://data.norge.no/vocabulary/service-output-type#recogntion"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/service-output-type>;
+        skos:prefLabel  "recognition"@en , "anerkjennelse"@nb .
+
+<https://data.norge.no/vocabulary/service-output-type#financial-benefit>
+        a               skos:Concept;
+        dct:identifier  "https://data.norge.no/vocabulary/service-output-type#financial-benefit"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/service-output-type>;
+        skos:prefLabel  "financial benefit"@en , "økonomisk fordel"@nb .
+
+<https://data.norge.no/vocabulary/service-output-type#Digdir>
+        a                          vcard:Organization;
+        vcard:hasEmail             "informasjonsforvaltning@digdir.no"^^xsd:anyURI;
+        vcard:hasOrganizationName  "Norwegian Digitalisation Agency (Digdir)"@en , "Digitaliseringsdirektoratet (Digdir)"@nb .
+
+<https://data.norge.no/vocabulary/service-output-type#financial-obligation>
+        a               skos:Concept;
+        dct:identifier  "https://data.norge.no/vocabulary/service-output-type#financial-obligation"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/service-output-type>;
+        skos:prefLabel  "financial obligation"@en , "økonomisk forpliktelse"@nb .
+
+<https://data.norge.no/vocabulary/service-output-type#permit>
+        a               skos:Concept;
+        dct:identifier  "https://data.norge.no/vocabulary/service-output-type#permit"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/service-output-type>;
+        skos:prefLabel  "permit"@en , "tillatelse"@nb .
+
+<https://data.norge.no/vocabulary/service-output-type#declaration>
+        a               skos:Concept;
+        dct:identifier  "https://data.norge.no/vocabulary/service-output-type#declaration"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/service-output-type>;
+        skos:prefLabel  "declaration"@en , "erklæring"@nb .
+
+<https://data.norge.no/vocabulary/service-output-type#physical-object>
+        a               skos:Concept;
+        dct:identifier  "https://data.norge.no/vocabulary/service-output-type#physical-object"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/service-output-type>;
+        skos:prefLabel  "physical object"@en , "fysisk objekt"@nb .
+
+<https://data.norge.no/vocabulary/service-output-type#identifier>
+        a               skos:Concept;
+        dct:identifier  "https://data.norge.no/vocabulary/service-output-type#identifier"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/service-output-type>;
+        skos:prefLabel  "identifier"@en , "identifikator eller aksesskode"@nb .
+
+<https://data.norge.no/vocabulary/service-output-type>
+        a                    skos:ConceptScheme;
+        dct:description      "Kontrollert vokabular med predefinerte tjenesteresultattyper, primært ment for å brukes i forbindelse med å beskrive tjenester og hendelser i henhold til CPSV-AP-NO."@nb , "Controlled vocabulary with predefined output types, primarily meant to be used in connection with describing services and events in accordance with CPSV-AP-NO."@en;
+        dct:identifier       "https://data.norge.no/vocabulary/service-output-type"^^xsd:anyURI;
+        dct:issued           "2022-01-29"^^xsd:date;
+        dct:language         <http://publications.europa.eu/resource/authority/language/NOB> , <http://publications.europa.eu/resource/authority/language/ENG>;
+        dct:modified         "2024-08-16"^^xsd:date;
+        dct:publisher        <https://organization-catalog.fellesdatakatalog.digdir.no/organizations/991825827>;
+        dct:title            "Service output type"@en , "Tjenesteresultattype"@nb;
+        uneskos:contains     <https://data.norge.no/vocabulary/service-output-type#financial-benefit> , <https://data.norge.no/vocabulary/service-output-type#rights> , <https://data.norge.no/vocabulary/service-output-type#recogntion> , <https://data.norge.no/vocabulary/service-output-type#declaration> , <https://data.norge.no/vocabulary/service-output-type#permit> , <https://data.norge.no/vocabulary/service-output-type#physical-object> , <https://data.norge.no/vocabulary/service-output-type#financial-obligation> , <https://data.norge.no/vocabulary/service-output-type#identifier>;
+        xkos:numberOfLevels  "1"^^xsd:positiveInteger;
+        adms:status          <http://publications.europa.eu/resource/authority/dataset-status/DEVELOP>;
+        dcat:contactPoint    <https://data.norge.no/vocabulary/service-output-type#Digdir> .
