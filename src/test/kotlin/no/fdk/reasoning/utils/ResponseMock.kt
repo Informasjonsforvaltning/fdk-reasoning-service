@@ -131,6 +131,10 @@ fun startMockServer() {
             get(urlEqualTo("/reference-data/eu/product-statuses"))
                 .willReturn(ok(File("src/test/resources/rdf-data/reference-data/product_statuses.ttl").readText())),
         )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/digdir/service-output-types"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/service_output_types.ttl").readText())),
+        )
 
         mockserver.start()
     }

@@ -117,6 +117,9 @@ class ReferenceData {
         every { referenceDataCache.productStatuses() } returns
             responseReader
                 .parseTurtleFile("rdf-data/reference-data/product_statuses.ttl")
+        every { referenceDataCache.serviceOutputTypes() } returns
+            responseReader
+                .parseTurtleFile("rdf-data/reference-data/service_output_types.ttl")
     }
 
     @Nested
@@ -466,6 +469,38 @@ class ReferenceData {
             val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
+        }
+
+        @Test
+        fun `test service output types are added from reference data`() {
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/service.ttl")
+            val output = input.createResource("http://public-service-publisher.fellesdatakatalog.digdir.no/output/1")
+            input.add(
+                input.getResource("http://public-service-publisher.fellesdatakatalog.digdir.no/services/12"),
+                ResourceFactory.createProperty("http://purl.org/vocab/cpsv#produces"),
+                output,
+            )
+            input.add(
+                output,
+                DCTerms.type,
+                input.createResource("https://data.norge.no/vocabulary/service-output-type#permit"),
+            )
+
+            val result = referenceDataService.reason(input, CatalogType.PUBLICSERVICES)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service_output_type.ttl")
+
+            assertTrue(result.isIsomorphicWith(expected))
+        }
+
+        @Test
+        fun `test exception is thrown when service output types missing in reference data cache`() {
+            every { referenceDataCache.serviceOutputTypes() } returns ModelFactory.createDefaultModel()
+
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/service.ttl")
+
+            assertFailsWith<Exception> {
+                referenceDataService.reason(input, CatalogType.PUBLICSERVICES)
+            }
         }
 
         @Test
