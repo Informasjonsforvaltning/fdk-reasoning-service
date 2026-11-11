@@ -1,6 +1,6 @@
 package no.fdk.reasoning.service
 
-val DATASET_RULES = """
+fun datasetRules(napThemes: Set<String>) = """
     @prefix dcat: <http://www.w3.org/ns/dcat#> .
     @prefix dct: <http://purl.org/dc/terms/> .
     @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -20,8 +20,6 @@ val DATASET_RULES = """
 
     [isRelatedToTransportportal:
         (?dataset rdf:type dcat:Dataset),
-        (?dataset dct:accessRights ?rights),
-        equal(?rights, <http://publications.europa.eu/resource/authority/access-right/PUBLIC>),
         (?dataset dcat:theme ?theme),
         strConcat(?theme,?themeStr),
         regex(?themeStr, '${napThemes.joinToString(separator = "|")}')
