@@ -58,6 +58,8 @@ application:
     euCountries: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/countries
     productStatuses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/product-statuses
     serviceOutputTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/service-output-types
+    highValueDatasetTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/high-value-dataset-types
+    curatedDatasetTypes: ${CURATED_DATASET_TYPES:https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-curation/main/high-value-dataset-types.csv}
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -143,3 +145,5 @@ application:
     euCountries: http://localhost:5050/reference-data/eu/countries
     productStatuses: http://localhost:5050/reference-data/eu/product-statuses
     serviceOutputTypes: http://localhost:5050/reference-data/digdir/service-output-types
+    highValueDatasetTypes: http://localhost:5050/reference-data/digdir/high-value-dataset-types
+    curatedDatasetTypes: http://localhost:5050/curation/high-value-dataset-types.csv

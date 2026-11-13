@@ -1,0 +1,21 @@
+PREFIX dct:     <http://purl.org/dc/terms/>
+PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+
+<https://data.norge.no/vocabulary/high-value-dataset-type#eu-hvd>
+        a               skos:Concept;
+        dct:identifier  "https://data.norge.no/vocabulary/high-value-dataset-type#eu-hvd"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/high-value-dataset-type>;
+        skos:prefLabel  "High-value dataset (EU)"@en , "Datasett av høy verdi (EU)"@nb , "Datasett av høg verdi (EU)"@nn .
+
+<https://data.norge.no/vocabulary/high-value-dataset-type#national-hvd>
+        a               skos:Concept;
+        dct:identifier  "https://data.norge.no/vocabulary/high-value-dataset-type#national-hvd"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/high-value-dataset-type>;
+        skos:prefLabel  "National high-value dataset"@en , "Nasjonalt datasett av høy verdi"@nb , "Nasjonalt datasett av høg verdi"@nn .
+
+<https://data.norge.no/vocabulary/high-value-dataset-type#national-basic-data>
+        a               skos:Concept;
+        dct:identifier  "https://data.norge.no/vocabulary/high-value-dataset-type#national-basic-data"^^xsd:anyURI;
+        skos:inScheme   <https://data.norge.no/vocabulary/high-value-dataset-type>;
+        skos:prefLabel  "National basic data"@en , "Nasjonale grunndata"@nb , "Nasjonale grunndata"@nn .

@@ -49,6 +49,11 @@ specific context on this application, see the **Harvesting** subsystem section.
     - [main activities](https://data.norge.no/reference-data/eu/main-activities) is extended for resource types:
       services
     - [week days](https://data.norge.no/reference-data/schema/week-days) is extended for resource types: services
+    - [high-value dataset types](https://data.norge.no/reference-data/digdir/high-value-dataset-types) is extended for
+      resource types: datasets
+- Datasets get high-value dataset types (`dct:type`) from the curated list
+  in [fdk-curation](https://github.com/Informasjonsforvaltning/fdk-curation). Types from this vocabulary set by the
+  publisher are removed
 
 ## Getting Started
 These instructions will give you a copy of the project up and running on your local machine for development and testing purposes.

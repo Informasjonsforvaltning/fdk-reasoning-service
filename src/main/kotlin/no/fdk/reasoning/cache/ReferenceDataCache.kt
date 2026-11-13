@@ -88,6 +88,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
 
     fun serviceOutputTypes(): Model = SERVICE_OUTPUT_TYPES
 
+    fun highValueDatasetTypes(): Model = HIGH_VALUE_DATASET_TYPES
+
     private val startupUpdates: List<() -> Unit> =
         listOf(
             ::updateOrganizations,
@@ -125,6 +127,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             ::updateEuCountries,
             ::updateProductStatuses,
             ::updateServiceOutputTypes,
+            ::updateHighValueDatasetTypes,
         )
 
     @EventListener
@@ -261,6 +264,9 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     @Scheduled(cron = "0 15 20 * * ?")
     fun updateServiceOutputTypes() = refresh("service output types", uris.serviceOutputTypes, SERVICE_OUTPUT_TYPES)
 
+    @Scheduled(cron = "0 10 20 * * ?")
+    fun updateHighValueDatasetTypes() = refresh("high value dataset types", uris.highValueDatasetTypes, HIGH_VALUE_DATASET_TYPES)
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -297,5 +303,6 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val EU_COUNTRIES: Model = ModelFactory.createDefaultModel()
         val PRODUCT_STATUSES: Model = ModelFactory.createDefaultModel()
         val SERVICE_OUTPUT_TYPES: Model = ModelFactory.createDefaultModel()
+        val HIGH_VALUE_DATASET_TYPES: Model = ModelFactory.createDefaultModel()
     }
 }

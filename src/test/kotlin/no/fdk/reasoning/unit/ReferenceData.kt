@@ -120,6 +120,9 @@ class ReferenceData {
         every { referenceDataCache.serviceOutputTypes() } returns
             responseReader
                 .parseTurtleFile("rdf-data/reference-data/service_output_types.ttl")
+        every { referenceDataCache.highValueDatasetTypes() } returns
+            responseReader
+                .parseTurtleFile("rdf-data/reference-data/high_value_dataset_types.ttl")
     }
 
     @Nested
@@ -490,6 +493,30 @@ class ReferenceData {
             val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/service_output_type.ttl")
 
             assertTrue(result.isIsomorphicWith(expected))
+        }
+
+        @Test
+        fun `test high value dataset types are added from reference data`() {
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
+            input.add(
+                input.getResource("http://brreg.no/catalogs/910244132/datasets/c32b7a4f-655f-45f6-88f6-d01f05d0f7c2"),
+                DCTerms.type,
+                input.createResource("https://data.norge.no/vocabulary/high-value-dataset-type#eu-hvd"),
+            )
+
+            val result = referenceDataService.reason(input, CatalogType.DATASETS)
+            val expected = responseReader.parseTurtleFile("rdf-data/expected/reference-data/high_value_dataset_type.ttl")
+
+            assertTrue(result.containsAll(expected))
+        }
+
+        @Test
+        fun `test no exception is thrown when high value dataset types missing in reference data cache`() {
+            every { referenceDataCache.highValueDatasetTypes() } returns ModelFactory.createDefaultModel()
+
+            val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
+
+            referenceDataService.reason(input, CatalogType.DATASETS)
         }
 
         @Test
