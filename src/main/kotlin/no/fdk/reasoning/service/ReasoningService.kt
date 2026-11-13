@@ -21,13 +21,9 @@ class ReasoningService(
 
     fun reasonGraph(graph: String, catalogType: CatalogType, catalogGraph: String?): String {
         val inputModel = parseRDFResponse(graph, Lang.TURTLE)
-        curationService.curate(inputModel, catalogType)
-        val inputModelWithCatalog =
-            if (catalogGraph != null) {
-                inputModel.union(parseRDFResponse(catalogGraph, Lang.TURTLE))
-            } else {
-                inputModel
-            }
+        val catalogModel = catalogGraph?.let { parseRDFResponse(it, Lang.TURTLE) }
+        curationService.curate(inputModel, catalogModel, catalogType)
+        val inputModelWithCatalog = catalogModel?.let { inputModel.union(it) } ?: inputModel
 
         val steps =
             listOf(

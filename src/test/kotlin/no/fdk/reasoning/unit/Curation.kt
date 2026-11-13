@@ -10,7 +10,11 @@ import no.fdk.reasoning.service.CurationService
 import no.fdk.reasoning.utils.ApiTestContext
 import no.fdk.reasoning.utils.TestResponseReader
 import org.apache.jena.rdf.model.Model
+import org.apache.jena.rdf.model.ModelFactory
+import org.apache.jena.rdf.model.RDFNode
+import org.apache.jena.vocabulary.DCAT
 import org.apache.jena.vocabulary.DCTerms
+import org.apache.jena.vocabulary.RDF
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
@@ -96,9 +100,28 @@ class Curation : ApiTestContext() {
             every { curationCache.datasetTypes(FDK_ID) } returns setOf("${NAMESPACE}eu-hvd")
 
             val input = inputWithPublisherTypes()
-            curationService.curate(input, CatalogType.DATASETS)
+            curationService.curate(input, null, CatalogType.DATASETS)
 
             assertEquals(setOf("${NAMESPACE}eu-hvd", EU_DATASET_TYPE), input.datasetTypes())
+        }
+
+        @Test
+        fun `finds catalog record in catalog graph`() {
+            every { curationCache.isLoaded() } returns true
+            every { curationCache.datasetTypes(FDK_ID) } returns setOf("${NAMESPACE}eu-hvd")
+
+            val input = inputWithPublisherTypes()
+            val catalogModel = ModelFactory.createDefaultModel()
+            input
+                .listResourcesWithProperty(RDF.type, DCAT.CatalogRecord)
+                .toList()
+                .forEach { record -> catalogModel.add(record.listProperties()) }
+            catalogModel.listStatements().toList().forEach { input.remove(it) }
+
+            curationService.curate(input, catalogModel, CatalogType.DATASETS)
+
+            assertEquals(setOf("${NAMESPACE}eu-hvd", EU_DATASET_TYPE), input.datasetTypes())
+            assertTrue(catalogModel.listStatements(null, DCTerms.type, null as RDFNode?).toList().isEmpty())
         }
 
         @Test
@@ -107,7 +130,7 @@ class Curation : ApiTestContext() {
             every { curationCache.datasetTypes(FDK_ID) } returns emptySet()
 
             val input = inputWithPublisherTypes()
-            curationService.curate(input, CatalogType.DATASETS)
+            curationService.curate(input, null, CatalogType.DATASETS)
 
             assertEquals(setOf(EU_DATASET_TYPE), input.datasetTypes())
         }
@@ -116,7 +139,7 @@ class Curation : ApiTestContext() {
         fun `does not change other catalog types`() {
             val input = inputWithPublisherTypes()
             val expected = inputWithPublisherTypes()
-            curationService.curate(input, CatalogType.DATASERVICES)
+            curationService.curate(input, null, CatalogType.DATASERVICES)
 
             assertTrue(input.isIsomorphicWith(expected))
         }
@@ -126,7 +149,7 @@ class Curation : ApiTestContext() {
             every { curationCache.isLoaded() } returns false
 
             assertFailsWith<Exception> {
-                curationService.curate(inputWithPublisherTypes(), CatalogType.DATASETS)
+                curationService.curate(inputWithPublisherTypes(), null, CatalogType.DATASETS)
             }
         }
     }

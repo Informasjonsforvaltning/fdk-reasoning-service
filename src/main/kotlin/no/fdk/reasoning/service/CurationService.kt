@@ -13,17 +13,19 @@ import org.springframework.stereotype.Service
 
 @Service
 class CurationService(private val curationCache: CurationCache) {
-    fun curate(model: Model, catalogType: CatalogType) {
+    fun curate(model: Model, catalogModel: Model?, catalogType: CatalogType) {
         if (catalogType != CatalogType.DATASETS) return
         if (!curationCache.isLoaded()) throw Exception("Curated dataset types are missing in curation cache")
 
-        model
+        val recordModel = catalogModel?.union(model) ?: model
+        recordModel
             .listResourcesWithProperty(RDF.type, DCAT.CatalogRecord)
             .toList()
             .forEach { record ->
                 val fdkId = record.getProperty(DCTerms.identifier)?.string
-                val dataset = record.getPropertyResourceValue(FOAF.primaryTopic)
-                if (fdkId != null && dataset != null && model.contains(dataset, RDF.type, DCAT.Dataset)) {
+                val datasetUri = record.getPropertyResourceValue(FOAF.primaryTopic)?.uri
+                if (fdkId != null && datasetUri != null && model.contains(model.getResource(datasetUri), RDF.type, DCAT.Dataset)) {
+                    val dataset = model.getResource(datasetUri)
                     model
                         .listStatements(dataset, DCTerms.type, null as RDFNode?)
                         .toList()
