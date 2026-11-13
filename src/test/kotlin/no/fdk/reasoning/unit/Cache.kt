@@ -157,6 +157,20 @@ class Cache : ApiTestContext() {
     }
 
     @Test
+    fun testCacheHighValueDatasetTypes() {
+        every { uris.highValueDatasetTypes } returns
+            "http://localhost:5050/reference-data/digdir/high-value-dataset-types" andThen
+            "http://localhost:5050/404"
+
+        val expected = responseReader.parseTurtleFile("rdf-data/reference-data/high_value_dataset_types.ttl")
+
+        cache.updateHighValueDatasetTypes()
+        assertTrue(expected.isIsomorphicWith(cache.highValueDatasetTypes()), "able to update model")
+        cache.updateHighValueDatasetTypes()
+        assertTrue(expected.isIsomorphicWith(cache.highValueDatasetTypes()), "keeps old data when update fails")
+    }
+
+    @Test
     fun testCachePlannedAvailabilities() {
         every { uris.plannedAvailabilities } returns
             "http://localhost:5050/reference-data/eu/planned-availabilities" andThen

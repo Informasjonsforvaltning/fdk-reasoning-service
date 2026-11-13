@@ -15,17 +15,15 @@ class ReasoningService(
     private val referenceDataService: ReferenceDataService,
     private val deductionService: DeductionService,
     private val themeService: ThemeService,
+    private val curationService: CurationService,
 ) {
     private data class ReasoningStep(val step: Step, val useCatalogGraph: Boolean, val reason: (Model, CatalogType) -> Model)
 
     fun reasonGraph(graph: String, catalogType: CatalogType, catalogGraph: String?): String {
         val inputModel = parseRDFResponse(graph, Lang.TURTLE)
-        val inputModelWithCatalog =
-            if (catalogGraph != null) {
-                inputModel.union(parseRDFResponse(catalogGraph, Lang.TURTLE))
-            } else {
-                inputModel
-            }
+        val catalogModel = catalogGraph?.let { parseRDFResponse(it, Lang.TURTLE) }
+        curationService.curate(inputModel, catalogModel, catalogType)
+        val inputModelWithCatalog = catalogModel?.let { inputModel.union(it) } ?: inputModel
 
         val steps =
             listOf(

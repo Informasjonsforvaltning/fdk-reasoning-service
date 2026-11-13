@@ -40,4 +40,6 @@ data class ApplicationURI(
     val euCountries: String,
     val productStatuses: String,
     val serviceOutputTypes: String,
+    val highValueDatasetTypes: String,
+    val curatedDatasetTypes: String,
 )
