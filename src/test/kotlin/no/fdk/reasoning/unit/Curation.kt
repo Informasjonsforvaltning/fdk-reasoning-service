@@ -1,8 +1,13 @@
 package no.fdk.reasoning.unit
 
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
+import io.mockk.runs
+import io.mockk.verify
 import no.fdk.reasoning.cache.CurationCache
+import no.fdk.reasoning.cache.InvalidCurationFileException
+import no.fdk.reasoning.cache.ReferenceDataCache
 import no.fdk.reasoning.cache.parseDatasetTypes
 import no.fdk.reasoning.config.ApplicationURI
 import no.fdk.reasoning.model.CatalogType
@@ -26,6 +31,7 @@ private const val FDK_ID = "4667277a-9d27-32c1-aed5-612fa601f393"
 private const val DATASET_URI = "http://brreg.no/catalogs/910244132/datasets/c32b7a4f-655f-45f6-88f6-d01f05d0f7c2"
 private const val NAMESPACE = "https://data.norge.no/vocabulary/high-value-dataset-type#"
 private const val EU_DATASET_TYPE = "http://publications.europa.eu/resource/authority/dataset-type/STATISTICAL"
+private val KNOWN_TYPES = setOf("${NAMESPACE}eu-hvd", "${NAMESPACE}national-hvd", "${NAMESPACE}national-basic-data")
 
 @Tag("unit")
 class Curation : ApiTestContext() {
@@ -33,15 +39,18 @@ class Curation : ApiTestContext() {
 
     @Nested
     internal inner class Parse {
+        private val header = "fdkId,title,eu-hvd,national-hvd,national-basic-data"
+
         @Test
         fun `parses codes marked ja`() {
             val result =
                 parseDatasetTypes(
                     """
-                    fdkId,title,eu-hvd,national-hvd,national-basic-data
+                    $header
                     $FDK_ID,"Tittel, med komma",ja,nei,Ja
-                    other-id,Annet,nei,nei,
+                    other-id,Annet,nei,nei,nei
                     """.trimIndent(),
+                    KNOWN_TYPES,
                 )
 
             assertEquals(setOf("${NAMESPACE}eu-hvd", "${NAMESPACE}national-basic-data"), result[FDK_ID])
@@ -50,19 +59,80 @@ class Curation : ApiTestContext() {
 
         @Test
         fun `ignores byte order mark and empty lines`() {
-            val result = parseDatasetTypes("﻿fdkId,title,eu-hvd\n\n$FDK_ID,Tittel,ja\n")
+            val result = parseDatasetTypes("\uFEFFfdkId,title,eu-hvd\n\n$FDK_ID,Tittel,ja\n", KNOWN_TYPES)
 
             assertEquals(setOf("${NAMESPACE}eu-hvd"), result[FDK_ID])
+        }
+
+        @Test
+        fun `header only gives empty result`() {
+            assertEquals(emptyMap(), parseDatasetTypes("$header\n", KNOWN_TYPES))
+        }
+
+        @Test
+        fun `fails when required columns are missing`() {
+            assertFailsWith<InvalidCurationFileException> {
+                parseDatasetTypes("id,title,eu-hvd\n$FDK_ID,Tittel,ja\n", KNOWN_TYPES)
+            }
+            assertFailsWith<InvalidCurationFileException> {
+                parseDatasetTypes("fdkId;title;eu-hvd\n", KNOWN_TYPES)
+            }
+        }
+
+        @Test
+        fun `fails when type columns are unknown or missing`() {
+            assertFailsWith<InvalidCurationFileException> {
+                parseDatasetTypes("fdkId,title,eu-hvd,unknown-type\n$FDK_ID,Tittel,ja,nei\n", KNOWN_TYPES)
+            }
+            assertFailsWith<InvalidCurationFileException> {
+                parseDatasetTypes("fdkId,title\n$FDK_ID,Tittel\n", KNOWN_TYPES)
+            }
+        }
+
+        @Test
+        fun `skips invalid rows and keeps valid rows`() {
+            val result =
+                parseDatasetTypes(
+                    """
+                    $header
+                    $FDK_ID,Tittel,ja,nei,nei
+                    wrong-columns,Tittel,ja,nei
+                    ,Mangler fdkId,ja,nei,nei
+                    wrong-value,Tittel,x,nei,nei
+                    empty-value,Tittel,ja,,nei
+                    """.trimIndent(),
+                    KNOWN_TYPES,
+                )
+
+            assertEquals(mapOf(FDK_ID to setOf("${NAMESPACE}eu-hvd")), result)
+        }
+
+        @Test
+        fun `uses last line when fdkId appears more than once`() {
+            val result =
+                parseDatasetTypes(
+                    """
+                    $header
+                    $FDK_ID,Tittel,ja,nei,nei
+                    $FDK_ID,Tittel,nei,ja,nei
+                    """.trimIndent(),
+                    KNOWN_TYPES,
+                )
+
+            assertEquals(setOf("${NAMESPACE}national-hvd"), result[FDK_ID])
         }
     }
 
     @Nested
     internal inner class Cache {
         private val uris: ApplicationURI = mockk()
-        private val cache = CurationCache(uris)
+        private val referenceDataCache: ReferenceDataCache = mockk()
+        private val cache = CurationCache(uris, referenceDataCache)
 
         @Test
         fun `able to update and keeps old data when update fails`() {
+            every { referenceDataCache.highValueDatasetTypes() } returns
+                responseReader.parseTurtleFile("rdf-data/reference-data/high_value_dataset_types.ttl")
             every { uris.curatedDatasetTypes } returns
                 "http://localhost:5050/curation/high-value-dataset-types.csv" andThen
                 "http://localhost:5050/404"
@@ -73,6 +143,31 @@ class Curation : ApiTestContext() {
             cache.updateDatasetTypes()
             assertTrue(cache.isLoaded())
             assertEquals(setOf("${NAMESPACE}eu-hvd", "${NAMESPACE}national-basic-data"), cache.datasetTypes(FDK_ID))
+        }
+
+        @Test
+        fun `updates high value dataset types when missing`() {
+            every { referenceDataCache.highValueDatasetTypes() } returns
+                ModelFactory.createDefaultModel() andThen
+                responseReader.parseTurtleFile("rdf-data/reference-data/high_value_dataset_types.ttl")
+            every { referenceDataCache.updateHighValueDatasetTypes() } just runs
+            every { uris.curatedDatasetTypes } returns "http://localhost:5050/curation/high-value-dataset-types.csv"
+
+            cache.updateDatasetTypes()
+
+            verify { referenceDataCache.updateHighValueDatasetTypes() }
+            assertTrue(cache.isLoaded())
+        }
+
+        @Test
+        fun `is not loaded when file has invalid structure`() {
+            every { referenceDataCache.highValueDatasetTypes() } returns ModelFactory.createDefaultModel()
+            every { referenceDataCache.updateHighValueDatasetTypes() } just runs
+            every { uris.curatedDatasetTypes } returns "http://localhost:5050/curation/high-value-dataset-types.csv"
+
+            cache.updateDatasetTypes()
+
+            assertTrue(!cache.isLoaded())
         }
     }
 

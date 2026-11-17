@@ -43,6 +43,7 @@ object ReasoningMetrics {
     fun metricType(catalogType: CatalogType): String = catalogType.name.lowercase()
 
     enum class Step(val metric: String) {
+        CURATION("reasoning.curation"),
         DEDUCTION("reasoning.deduction"),
         ORGANIZATION("reasoning.organization"),
         REFERENCE_DATA("reasoning.reference_data"),

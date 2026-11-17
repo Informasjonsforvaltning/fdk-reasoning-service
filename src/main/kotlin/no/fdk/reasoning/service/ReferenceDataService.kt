@@ -55,7 +55,8 @@ class ReferenceDataService(private val referenceDataCache: ReferenceDataCache) :
         "Geonames" to referenceDataCache.geonames(),
         "EU continents" to referenceDataCache.euContinents(),
         "EU countries" to referenceDataCache.euCountries(),
-    ).add(referenceDataCache.highValueDatasetTypes())
+        "High value dataset types" to referenceDataCache.highValueDatasetTypes(),
+    )
 
     private fun informationModelReferenceData(): Model = requireAndUnion(
         "Licences" to referenceDataCache.licences(),

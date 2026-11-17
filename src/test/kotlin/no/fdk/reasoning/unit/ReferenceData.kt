@@ -511,12 +511,14 @@ class ReferenceData {
         }
 
         @Test
-        fun `test no exception is thrown when high value dataset types missing in reference data cache`() {
+        fun `test exception is thrown when high value dataset types missing in reference data cache`() {
             every { referenceDataCache.highValueDatasetTypes() } returns ModelFactory.createDefaultModel()
 
             val input = responseReader.parseTurtleFile("rdf-data/input-graphs/dataset.ttl")
 
-            referenceDataService.reason(input, CatalogType.DATASETS)
+            assertFailsWith<Exception> {
+                referenceDataService.reason(input, CatalogType.DATASETS)
+            }
         }
 
         @Test
