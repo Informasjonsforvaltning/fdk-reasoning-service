@@ -1,10 +1,7 @@
 package no.fdk.reasoning.unit
 
 import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
-import io.mockk.runs
-import io.mockk.verify
 import no.fdk.reasoning.cache.CurationCache
 import no.fdk.reasoning.cache.InvalidCurationFileException
 import no.fdk.reasoning.cache.ReferenceDataCache
@@ -23,6 +20,8 @@ import org.apache.jena.vocabulary.RDF
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import org.springframework.boot.context.event.ApplicationReadyEvent
+import org.springframework.core.annotation.Order
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -146,23 +145,22 @@ class Curation : ApiTestContext() {
         }
 
         @Test
-        fun `updates high value dataset types when missing`() {
-            every { referenceDataCache.highValueDatasetTypes() } returns
-                ModelFactory.createDefaultModel() andThen
-                responseReader.parseTurtleFile("rdf-data/reference-data/high_value_dataset_types.ttl")
-            every { referenceDataCache.updateHighValueDatasetTypes() } just runs
-            every { uris.curatedDatasetTypes } returns "http://localhost:5050/curation/high-value-dataset-types.csv"
+        fun `loads after reference data on startup`() {
+            val curationOrder = CurationCache::class.java.getMethod(
+                "loadCacheOnStartup",
+                ApplicationReadyEvent::class.java,
+            ).getAnnotation(Order::class.java).value
+            val referenceDataOrder = ReferenceDataCache::class.java.getMethod(
+                "loadCacheOnStartup",
+                ApplicationReadyEvent::class.java,
+            ).getAnnotation(Order::class.java).value
 
-            cache.updateDatasetTypes()
-
-            verify { referenceDataCache.updateHighValueDatasetTypes() }
-            assertTrue(cache.isLoaded())
+            assertTrue(referenceDataOrder < curationOrder)
         }
 
         @Test
         fun `is not loaded when file has invalid structure`() {
             every { referenceDataCache.highValueDatasetTypes() } returns ModelFactory.createDefaultModel()
-            every { referenceDataCache.updateHighValueDatasetTypes() } just runs
             every { uris.curatedDatasetTypes } returns "http://localhost:5050/curation/high-value-dataset-types.csv"
 
             cache.updateDatasetTypes()

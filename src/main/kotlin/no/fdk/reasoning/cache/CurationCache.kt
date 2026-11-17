@@ -7,6 +7,8 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
+import org.springframework.core.Ordered
+import org.springframework.core.annotation.Order
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.io.StringReader
@@ -38,6 +40,7 @@ class CurationCache(private val uris: ApplicationURI, private val referenceDataC
     fun datasetTypes(fdkId: String): Set<String> = datasetTypes?.get(fdkId) ?: emptySet()
 
     @EventListener
+    @Order(Ordered.LOWEST_PRECEDENCE)
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
         updateDatasetTypes()
     }
@@ -47,7 +50,6 @@ class CurationCache(private val uris: ApplicationURI, private val referenceDataC
         val timed =
             measureTimedValue {
                 try {
-                    if (referenceDataCache.highValueDatasetTypes().isEmpty) referenceDataCache.updateHighValueDatasetTypes()
                     val knownTypes =
                         referenceDataCache
                             .highValueDatasetTypes()

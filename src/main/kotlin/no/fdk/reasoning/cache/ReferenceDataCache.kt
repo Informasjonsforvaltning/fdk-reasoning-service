@@ -10,6 +10,8 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
+import org.springframework.core.Ordered
+import org.springframework.core.annotation.Order
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import kotlin.time.measureTimedValue
@@ -131,6 +133,7 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         )
 
     @EventListener
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
         startupUpdates.forEach { it() }
     }
