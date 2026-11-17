@@ -135,6 +135,14 @@ fun startMockServer() {
             get(urlEqualTo("/reference-data/digdir/service-output-types"))
                 .willReturn(ok(File("src/test/resources/rdf-data/reference-data/service_output_types.ttl").readText())),
         )
+        mockserver.stubFor(
+            get(urlEqualTo("/reference-data/digdir/high-value-dataset-types"))
+                .willReturn(ok(File("src/test/resources/rdf-data/reference-data/high_value_dataset_types.ttl").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo("/curation/high-value-dataset-types.csv"))
+                .willReturn(ok(File("src/test/resources/curation/high-value-dataset-types.csv").readText())),
+        )
 
         mockserver.start()
     }

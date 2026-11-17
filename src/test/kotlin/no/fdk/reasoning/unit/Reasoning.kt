@@ -1,8 +1,11 @@
 package no.fdk.reasoning.unit
 
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
+import io.mockk.runs
 import no.fdk.reasoning.model.CatalogType
+import no.fdk.reasoning.service.CurationService
 import no.fdk.reasoning.service.DeductionService
 import no.fdk.reasoning.service.OrganizationService
 import no.fdk.reasoning.service.ReasoningService
@@ -23,7 +26,9 @@ class Reasoning : ApiTestContext() {
     private val referenceDataService: ReferenceDataService = mockk()
     private val deductionService: DeductionService = mockk()
     private val themeService: ThemeService = mockk()
-    private val reasoningService = ReasoningService(organizationService, referenceDataService, deductionService, themeService)
+    private val curationService: CurationService = mockk()
+    private val reasoningService =
+        ReasoningService(organizationService, referenceDataService, deductionService, themeService, curationService)
     private val responseReader = TestResponseReader()
 
     @Test
@@ -40,6 +45,7 @@ class Reasoning : ApiTestContext() {
         every { deductionService.reason(any(), any()) } returns deductionsResult
         every { referenceDataService.reason(any(), any()) } returns refDataResult
         every { themeService.reason(any(), any()) } returns ModelFactory.createDefaultModel()
+        every { curationService.curate(any(), any(), any()) } just runs
         val result = reasoningService.reasonGraph(input.createRDFResponse(Lang.TURTLE), CatalogType.PUBLICSERVICES, null)
 
         val expected = ModelFactory.createDefaultModel()

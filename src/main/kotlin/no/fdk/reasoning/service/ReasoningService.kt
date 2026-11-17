@@ -15,17 +15,18 @@ class ReasoningService(
     private val referenceDataService: ReferenceDataService,
     private val deductionService: DeductionService,
     private val themeService: ThemeService,
+    private val curationService: CurationService,
 ) {
     private data class ReasoningStep(val step: Step, val useCatalogGraph: Boolean, val reason: (Model, CatalogType) -> Model)
 
     fun reasonGraph(graph: String, catalogType: CatalogType, catalogGraph: String?): String {
         val inputModel = parseRDFResponse(graph, Lang.TURTLE)
-        val inputModelWithCatalog =
-            if (catalogGraph != null) {
-                inputModel.union(parseRDFResponse(catalogGraph, Lang.TURTLE))
-            } else {
-                inputModel
-            }
+        val catalogModel = catalogGraph?.let { parseRDFResponse(it, Lang.TURTLE) }
+        // Curation modifies the input model, so later steps see the curated dataset types
+        // (reference data adds their labels) and the publisher's own codes are gone from the result.
+        val curationDuration = measureTimedValue { curationService.curate(inputModel, catalogModel, catalogType) }.duration
+        ReasoningMetrics.recordStep(Step.CURATION, catalogType, curationDuration)
+        val inputModelWithCatalog = catalogModel?.let { inputModel.union(it) } ?: inputModel
 
         val steps =
             listOf(

@@ -10,6 +10,8 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.event.EventListener
+import org.springframework.core.Ordered
+import org.springframework.core.annotation.Order
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import kotlin.time.measureTimedValue
@@ -88,6 +90,8 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
 
     fun serviceOutputTypes(): Model = SERVICE_OUTPUT_TYPES
 
+    fun highValueDatasetTypes(): Model = HIGH_VALUE_DATASET_TYPES
+
     private val startupUpdates: List<() -> Unit> =
         listOf(
             ::updateOrganizations,
@@ -125,9 +129,11 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
             ::updateEuCountries,
             ::updateProductStatuses,
             ::updateServiceOutputTypes,
+            ::updateHighValueDatasetTypes,
         )
 
     @EventListener
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     fun loadCacheOnStartup(event: ApplicationReadyEvent) {
         startupUpdates.forEach { it() }
     }
@@ -261,6 +267,9 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
     @Scheduled(cron = "0 15 20 * * ?")
     fun updateServiceOutputTypes() = refresh("service output types", uris.serviceOutputTypes, SERVICE_OUTPUT_TYPES)
 
+    @Scheduled(cron = "0 10 20 * * ?")
+    fun updateHighValueDatasetTypes() = refresh("high value dataset types", uris.highValueDatasetTypes, HIGH_VALUE_DATASET_TYPES)
+
     private companion object {
         val ORGANIZATIONS: Model = ModelFactory.createDefaultModel()
         val LOS: Model = ModelFactory.createDefaultModel()
@@ -297,5 +306,6 @@ class ReferenceDataCache(private val uris: ApplicationURI) {
         val EU_COUNTRIES: Model = ModelFactory.createDefaultModel()
         val PRODUCT_STATUSES: Model = ModelFactory.createDefaultModel()
         val SERVICE_OUTPUT_TYPES: Model = ModelFactory.createDefaultModel()
+        val HIGH_VALUE_DATASET_TYPES: Model = ModelFactory.createDefaultModel()
     }
 }
