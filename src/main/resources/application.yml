@@ -21,6 +21,8 @@ management:
 server:
   port: 8080
 application:
+  curation:
+    refreshInterval: ${CURATION_REFRESH_INTERVAL:PT5M}
   uri:
     orgExternal: ${ORGANIZATION_CATALOG_EXTERNAL}/organizations
     orgInternal: ${ORGANIZATION_CATALOG_INTERNAL}/organizations
@@ -59,7 +61,7 @@ application:
     productStatuses: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/eu/product-statuses
     serviceOutputTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/service-output-types
     highValueDatasetTypes: ${REFERENCE_DATA_HOST:https://staging.fellesdatakatalog.digdir.no}/reference-data/digdir/high-value-dataset-types
-    curatedDatasetTypes: ${CURATED_DATASET_TYPES:https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-curation/main/high-value-dataset-types.csv}
+    curatedDatasetTypes: ${CURATED_DATASET_TYPES:http://fdk-curation:8080/high-value-dataset-types.csv}
   databases:
     datasets: datasetHarvester
     dataServices: dataServiceHarvester
@@ -101,6 +103,7 @@ application:
   uri:
     orgExternal: https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations
     orgInternal: https://organization-catalog.staging.fellesdatakatalog.digdir.no/organizations
+    curatedDatasetTypes: https://raw.githubusercontent.com/Informasjonsforvaltning/fdk-curation/main/high-value-dataset-types.csv
 
 ---
 spring:

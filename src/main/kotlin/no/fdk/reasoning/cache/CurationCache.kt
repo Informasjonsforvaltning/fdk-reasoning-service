@@ -23,6 +23,7 @@ private val logger: Logger = LoggerFactory.getLogger(CurationCache::class.java)
 
 const val HIGH_VALUE_DATASET_TYPE_NAMESPACE = "https://data.norge.no/vocabulary/high-value-dataset-type#"
 
+private const val VERSION_HEADER = "X-Curation-Version"
 private val REQUIRED_COLUMNS = listOf("fdkId", "title")
 private val VALUES = setOf("ja", "nei")
 
@@ -35,7 +36,15 @@ class CurationCache(private val uris: ApplicationURI, private val referenceDataC
     @Volatile
     private var datasetTypes: Map<String, Set<String>>? = null
 
+    @Volatile
+    private var etag: String? = null
+
+    @Volatile
+    private var version: String? = null
+
     fun isLoaded(): Boolean = datasetTypes != null
+
+    fun version(): String? = version
 
     fun datasetTypes(fdkId: String): Set<String> = datasetTypes?.get(fdkId) ?: emptySet()
 
@@ -45,43 +54,51 @@ class CurationCache(private val uris: ApplicationURI, private val referenceDataC
         updateDatasetTypes()
     }
 
-    @Scheduled(cron = "0 */15 * * * ?")
+    @Scheduled(
+        fixedDelayString = "\${application.curation.refreshInterval:PT5M}",
+        initialDelayString = "\${application.curation.refreshInterval:PT5M}",
+    )
     fun updateDatasetTypes() {
         val timed =
             measureTimedValue {
                 try {
-                    val knownTypes =
-                        referenceDataCache
-                            .highValueDatasetTypes()
-                            .listSubjects()
-                            .toList()
-                            .mapNotNull { it.uri }
-                            .toSet()
-                    datasetTypes = parseDatasetTypes(download(), knownTypes)
-                    true
+                    download()?.let { response ->
+                        val knownTypes =
+                            referenceDataCache
+                                .highValueDatasetTypes()
+                                .listSubjects()
+                                .toList()
+                                .mapNotNull { it.uri }
+                                .toSet()
+                        val parsed = parseDatasetTypes(response.body(), knownTypes)
+                        datasetTypes = parsed
+                        etag = response.headers().firstValue("ETag").orElse(null)
+                        version = response.headers().firstValue(VERSION_HEADER).orElse(null)
+                        logger.info("Loaded curated dataset types version $version with ${parsed.size} datasets")
+                        true
+                    }
                 } catch (ex: Exception) {
                     logger.error("Update of curated dataset types from ${uris.curatedDatasetTypes} failed", ex)
                     false
                 }
             }
-        ReferenceDataMetrics.recordRefresh("curated dataset types", timed.value, timed.duration)
-        if (timed.value) {
-            logger.debug("successfully updated curated dataset types cache")
-        }
+        timed.value?.let { ReferenceDataMetrics.recordRefresh("curated dataset types", it, timed.duration) }
     }
 
-    private fun download(): String {
+    private fun download(): HttpResponse<String>? {
         val request =
             HttpRequest
                 .newBuilder(URI(uris.curatedDatasetTypes))
                 .timeout(Duration.ofSeconds(30))
                 .GET()
+                .apply { if (datasetTypes != null) etag?.let { header("If-None-Match", it) } }
                 .build()
         val response = httpClient.send(request, HttpResponse.BodyHandlers.ofString())
-        if (response.statusCode() != 200) {
-            throw IllegalStateException("Unexpected status ${response.statusCode()}")
+        return when (response.statusCode()) {
+            200 -> response
+            304 -> null
+            else -> throw IllegalStateException("Unexpected status ${response.statusCode()}")
         }
-        return response.body()
     }
 }
 

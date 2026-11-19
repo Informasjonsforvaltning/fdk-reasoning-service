@@ -2,7 +2,9 @@ package no.fdk.reasoning.utils
 
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.aResponse
+import com.github.tomakehurst.wiremock.client.WireMock.equalTo
 import com.github.tomakehurst.wiremock.client.WireMock.get
+import com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor
 import com.github.tomakehurst.wiremock.client.WireMock.ok
 import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import com.github.tomakehurst.wiremock.client.WireMock.urlMatching
@@ -11,6 +13,14 @@ import java.io.File
 const val LOCAL_SERVER_PORT = 5050
 
 private val mockserver = WireMockServer(LOCAL_SERVER_PORT)
+
+const val VERSIONED_CURATION_PATH = "/curation/versioned.csv"
+const val CURATION_ETAG = "\"v1\""
+
+fun conditionalCurationRequests(): Int = mockserver
+    .countRequestsMatching(
+        getRequestedFor(urlEqualTo(VERSIONED_CURATION_PATH)).withHeader("If-None-Match", equalTo(CURATION_ETAG)).build(),
+    ).count
 
 fun startMockServer() {
     if (!mockserver.isRunning) {
@@ -142,6 +152,19 @@ fun startMockServer() {
         mockserver.stubFor(
             get(urlEqualTo("/curation/high-value-dataset-types.csv"))
                 .willReturn(ok(File("src/test/resources/curation/high-value-dataset-types.csv").readText())),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo(VERSIONED_CURATION_PATH))
+                .willReturn(
+                    ok(File("src/test/resources/curation/high-value-dataset-types.csv").readText())
+                        .withHeader("ETag", CURATION_ETAG)
+                        .withHeader("X-Curation-Version", "abc123"),
+                ),
+        )
+        mockserver.stubFor(
+            get(urlEqualTo(VERSIONED_CURATION_PATH))
+                .withHeader("If-None-Match", equalTo(CURATION_ETAG))
+                .willReturn(aResponse().withStatus(304)),
         )
 
         mockserver.start()
