@@ -10,7 +10,10 @@ import no.fdk.reasoning.config.ApplicationURI
 import no.fdk.reasoning.model.CatalogType
 import no.fdk.reasoning.service.CurationService
 import no.fdk.reasoning.utils.ApiTestContext
+import no.fdk.reasoning.utils.LOCAL_SERVER_PORT
 import no.fdk.reasoning.utils.TestResponseReader
+import no.fdk.reasoning.utils.VERSIONED_CURATION_PATH
+import no.fdk.reasoning.utils.conditionalCurationRequests
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.rdf.model.ModelFactory
 import org.apache.jena.rdf.model.RDFNode
@@ -141,6 +144,21 @@ class Curation : ApiTestContext() {
             assertEquals(setOf("${NAMESPACE}eu-hvd", "${NAMESPACE}national-basic-data"), cache.datasetTypes(FDK_ID))
             cache.updateDatasetTypes()
             assertTrue(cache.isLoaded())
+            assertEquals(setOf("${NAMESPACE}eu-hvd", "${NAMESPACE}national-basic-data"), cache.datasetTypes(FDK_ID))
+        }
+
+        @Test
+        fun `keeps data and version when file is not modified`() {
+            every { referenceDataCache.highValueDatasetTypes() } returns
+                responseReader.parseTurtleFile("rdf-data/reference-data/high_value_dataset_types.ttl")
+            every { uris.curatedDatasetTypes } returns "http://localhost:$LOCAL_SERVER_PORT$VERSIONED_CURATION_PATH"
+            val conditionalRequestsBefore = conditionalCurationRequests()
+
+            cache.updateDatasetTypes()
+            cache.updateDatasetTypes()
+
+            assertEquals(conditionalRequestsBefore + 1, conditionalCurationRequests())
+            assertEquals("abc123", cache.version())
             assertEquals(setOf("${NAMESPACE}eu-hvd", "${NAMESPACE}national-basic-data"), cache.datasetTypes(FDK_ID))
         }
 
