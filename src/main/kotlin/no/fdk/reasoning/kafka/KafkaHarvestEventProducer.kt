@@ -44,6 +44,7 @@ class KafkaHarvestEventProducer(private val kafkaTemplate: KafkaTemplate<String,
                 .setErrorMessage(null)
                 .setChangedResourcesCount(null)
                 .setRemovedResourcesCount(null)
+                .setForcedFdkIds(null)
                 .build()
 
         LOGGER.debug("Sending reasoning success harvest event for runId: $harvestRunId, fdkId: $fdkId")
@@ -80,6 +81,7 @@ class KafkaHarvestEventProducer(private val kafkaTemplate: KafkaTemplate<String,
                 .setAcceptHeader(null)
                 .setChangedResourcesCount(null)
                 .setRemovedResourcesCount(null)
+                .setForcedFdkIds(null)
                 .build()
 
         LOGGER.debug("Sending reasoning failure harvest event for runId: $harvestRunId, fdkId: $fdkId, error: $errorMessage")
